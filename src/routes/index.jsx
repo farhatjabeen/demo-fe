@@ -23,9 +23,7 @@ const AppRoutes = () => {
                             return (
                                 childrens.map(({ component, childPath, exact }, i) => {
                                     let comp = `${component}`.charAt(0).toLowerCase() + `${component}`.slice(1);
-                                    // debugger;
                                     const Component = require(`../pages/${comp}`).default;
-                                    // debugger;
                                     return (
                                         <Route
                                             key={index}
@@ -44,7 +42,6 @@ const AppRoutes = () => {
                                 })
                             )
                         } else {
-                            // debugger;
                             return (
                                 path === "*" ?
                                     <Route

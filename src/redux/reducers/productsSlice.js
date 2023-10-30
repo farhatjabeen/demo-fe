@@ -31,7 +31,7 @@ export const fetchProducts = () => async (dispatch) => {
     }
 }
 
-export const { saveProductsInfo } = productsSlice.actions;
+export const { saveProductsInfo, clearData } = productsSlice.actions;
 export const productsInfo = (state) => state.products?.productsInfo;
 
 export default productsSlice.reducer;
