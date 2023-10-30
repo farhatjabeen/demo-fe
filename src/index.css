@@ -1,0 +1,305 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Lato-Regular', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: 'Lato-Bold', 'sans-serif';
+  src: url('./assets/fonts/Lato-Bold.ttf');
+  src: local(''),
+    url('./assets/fonts/Lato-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-BoldItalic', 'sans-serif';
+  src: url('./assets/fonts/Lato-BoldItalic.ttf');
+  src: local(''),
+    url('./assets/fonts/Lato-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-Italic', 'sans-serif';
+  src: url('./assets/fonts/Lato-Italic.ttf');
+  src: local(''),
+    url('./assets/fonts/Lato-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-Light', 'sans-serif';
+  src: url('./assets/fonts/Lato-Light.ttf');
+  src: local(''),
+    url('./assets/fonts/Lato-Light.ttf') format('truetype');
+}
+
+/*  */
+@font-face {
+  font-family: 'Lato-LightItalic', 'sans-serif';
+  src: url('./assets/fonts/Lato-LightItalic.ttf');
+  src: local(''),
+    url('./assets/fonts/Lato-LightItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato-Regular', 'sans-serif';
+  src: url('./assets/fonts/Lato-Regular.ttf');
+  src: local(''),
+    url('./assets/fonts/Lato-Regular.ttf') format('truetype');
+}
+
+
+body {
+  background-color: black;
+  font-style: normal;
+}
+
+.font-regular-10 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-size: 10px;
+}
+
+.font-regular-12 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-size: 12px;
+}
+
+
+.font-regular-14 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-size: 14px;
+}
+
+.font-regular-16 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-size: 16px;
+}
+
+.font-regular-18 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-size: 18px;
+}
+
+.font-regular-20 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-size: 20px;
+}
+
+.font-italic-10 {
+  font-family: 'Lato-Italic', 'sans-serif';
+  font-style: normal;
+  font-size: 10px;
+}
+
+.font-italic-12 {
+  font-family: 'Lato-Italic', 'sans-serif';
+  font-style: normal;
+  font-size: 12px;
+}
+
+.font-italic-14 {
+  font-family: 'Lato-Italic', 'sans-serif';
+  font-style: normal;
+  font-size: 14px;
+}
+
+.font-italic-16 {
+  font-family: 'Lato-Italic', 'sans-serif';
+  font-style: normal;
+  font-size: 16px;
+}
+
+.font-italic-18 {
+  font-family: 'Lato-Italic', 'sans-serif';
+  font-style: normal;
+  font-size: 18px;
+}
+
+.font-italic-20 {
+  font-family: 'Lato-Italic', 'sans-serif';
+  font-style: normal;
+  font-size: 20px;
+}
+
+.font-bold-10 {
+  font-family: 'Lato-Bold', 'sans-serif';
+  font-style: normal;
+  font-size: 10px;
+}
+
+
+.font-bold-12 {
+  font-family: 'Lato-Bold', 'sans-serif';
+  font-style: normal;
+  font-size: 12px;
+}
+
+
+.font-bold-14 {
+  font-family: 'Lato-Bold', 'sans-serif';
+  font-style: normal;
+  font-size: 14px;
+}
+
+.font-bold-16 {
+  font-family: 'Lato-Bold', 'sans-serif';
+  font-style: normal;
+  font-size: 16px;
+}
+
+.font-bold-18 {
+  font-family: 'Lato-Bold', 'sans-serif';
+  font-style: normal;
+  font-size: 18px;
+}
+
+.font-bold-20 {
+  font-family: 'Lato-Bold', 'sans-serif';
+  font-style: normal;
+  font-size: 20px;
+}
+
+
+.font-bold-24 {
+  font-family: 'Lato-Bold', 'sans-serif';
+  font-style: normal;
+  font-size: 24px;
+}
+
+
+.font-bold-italic-10 {
+  font-family: 'Lato-BoldItalic', 'sans-serif';
+  font-style: normal;
+  font-size: 10px;
+}
+
+
+.font-bold-italic-12 {
+  font-family: 'Lato-BoldItalic', 'sans-serif';
+  font-style: normal;
+  font-size: 12px;
+}
+
+
+.font-bold-italic-14 {
+  font-family: 'Lato-BoldItalic', 'sans-serif';
+  font-style: normal;
+  font-size: 14px;
+}
+
+.font-bold-italic-16 {
+  font-family: 'Lato-BoldItalic', 'sans-serif';
+  font-style: normal;
+  font-size: 16px;
+}
+
+.font-bold-italic-18 {
+  font-family: 'Lato-BoldItalic', 'sans-serif';
+  font-style: normal;
+  font-size: 18px;
+}
+
+.font-bold-italic-20 {
+  font-family: 'Lato-BoldItalic', 'sans-serif';
+  font-style: normal;
+  font-size: 20px;
+}
+
+
+
+.font-light-10 {
+  font-family: 'Lato-Light', 'sans-serif';
+  font-style: normal;
+  font-size: 10px;
+}
+
+.font-light-12 {
+  font-family: 'Lato-Light', 'sans-serif';
+  font-style: normal;
+  font-size: 12px;
+}
+
+.font-light-14 {
+  font-family: 'Lato-Light', 'sans-serif';
+  font-style: normal;
+  font-size: 14px;
+}
+
+.font-light-16 {
+  font-family: 'Lato-Light', 'sans-serif';
+  font-style: normal;
+  font-size: 16px;
+}
+
+.font-light-18 {
+  font-family: 'Lato-Light', 'sans-serif';
+  font-style: normal;
+  font-size: 18px;
+}
+
+.font-light-20 {
+  font-family: 'Lato-Light', 'sans-serif';
+  font-style: normal;
+  font-size: 20px;
+}
+
+
+.font-regular-10 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+
+.font-regular-12 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+
+.font-regular-14 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.font-regular-16 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.font-regular-18 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.font-regular-20 {
+  font-family: 'Lato-Regular', 'sans-serif';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+}
+

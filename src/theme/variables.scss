@@ -1,0 +1,70 @@
+$primary-color: #E8B810;
+$white: #ffffff;
+$black: #000000;
+$grey: #8A92A6;
+$green: #3AA96A;
+$grey-F5F6FA: #F5F6FA;
+$background-white: #ffffff;
+$navy-blue: #232D42;
+$grey-F5F6FA: #F5F6FA;
+$gray-sideBar: #bdbdbd;
+$border: #F2F3F7;
+$menu_icon:#8A92A6;
+
+$myColors: (
+  "white": $white,
+  "grey": $gray-sideBar,
+  "grey-82": $grey,
+  "green": $green,
+  "primary-color": $primary-color,
+);
+@each $name,
+$colors in $myColors {
+  $index: index($myColors, $colors);
+
+  .text-#{$name} {
+    color: $colors;
+  }
+
+  .bg-#{$name} {
+    background-color: $colors;
+  }
+
+  .bc-#{$name} {
+    border-color: $colors;
+  }
+}
+
+$full-height: 100vh;
+
+.text-black {
+  color: $black;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.makeStyles-toolbar-151 {
+  min-height: 0px !important;
+}
+
+.makeStyles-drawer-147 {
+  width: 220px !important;
+}
+
+.makeStyles-content-8 {
+  margin-left: 22px !important;
+}
+
+.ant-select-selector {
+  border: none !important;
+}
+
+.ant-switch-checked {
+  background-color: #0655a3 !important;
+}
+
+body {
+  background-color: #f6f8fa !important;
+}

@@ -1,0 +1,20 @@
+.login-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -70%);
+    
+}
+
+.login-fields-container{
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 10px #fff;
+    box-shadow: 0px 0px 5px 2px rgb(193, 193, 193);
+    margin-top: 25px;
+}
+
+.salutation-container{
+    text-align: center;
+}

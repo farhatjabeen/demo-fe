@@ -1,0 +1,29 @@
+.bg-trans-white {
+    background-color: #ffffff2e;
+}
+
+.copy-rights {
+    background-color: #B38C00;
+}
+
+.footer-links li::before {
+    position: absolute;
+    content: '';
+    background-color: #FCFCFC80;
+    width: 10px;
+    height: 10px;
+    top: 8px;
+    border-radius: 10px;
+    left: -4px;
+}
+
+.footer-links li {
+    position: relative;
+}
+
+
+@media (min-width: 640px) {
+    .footer-links li:first-child::before {
+        content: none; // Hide the dot for the first child
+    }
+}
