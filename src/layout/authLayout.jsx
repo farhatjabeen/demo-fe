@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './layout.scss'
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export function AuthLayout(props) {
 
@@ -23,10 +25,13 @@ export function AuthLayout(props) {
 
 
   return (
-    <div className="authLayout">
-      <div dangerouslySetInnerHTML={{ __html: headerContent }} />
-      <div className="login-wrapper">{props?.children}</div>
-      <div dangerouslySetInnerHTML={{ __html: footerContent }} className='footer-item' />
+    
+    <div className="authLayout flex flex-col min-h-screen">
+      <Header />
+      <div className="flex-grow">
+        <main id="mainLayoutContainer">{props?.children}</main>
+      </div>
+      <Footer />
     </div>
   );
 }

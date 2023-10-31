@@ -2,16 +2,6 @@ const routers = [
 
   {
     layout: "AuthLayout",
-    path: "/auth",
-    childrens: [
-      {
-        component: "Login",
-        childPath: "/login",
-      },
-    ]
-  },
-  {
-    layout: "MainLayout",
     path: "/",
     childrens: [
       {
@@ -22,6 +12,18 @@ const routers = [
         component: "findMissingItem",
         childPath: "/findMissingItem",
       },
+      {
+        component: "Login",
+        childPath: "/login",
+      },
+    ]
+  },
+  {
+    layout: "MainLayout",
+    path: "/user",
+    childrens: [
+      
+      
     ]
   },
   // {
