@@ -3,6 +3,8 @@ $white: #ffffff;
 $black: #000000;
 $grey: #8A92A6;
 $green: #3AA96A;
+$blue:#4094f7;
+$light-green:#00B8B8;
 $grey-F5F6FA: #F5F6FA;
 $background-white: #ffffff;
 $navy-blue: #232D42;
@@ -16,6 +18,8 @@ $myColors: (
   "grey": $gray-sideBar,
   "grey-82": $grey,
   "green": $green,
+  "light-green": $light-green,
+  "blue": $blue,
   "primary-color": $primary-color,
 );
 @each $name,

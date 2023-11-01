@@ -1,5 +1,4 @@
 const routers = [
-
   {
     layout: "AuthLayout",
     path: "/",
@@ -16,25 +15,31 @@ const routers = [
         component: "Login",
         childPath: "/login",
       },
-    ]
+      {
+        component: "signIn",
+        childPath: "/signIn",
+      },
+     {
+      component:"drawer",
+      childPath:"/drawer",
+     },
+     {
+      component:"foundItems",
+      childPath:"/foundItems"
+     }
+    ],
   },
   {
     layout: "MainLayout",
     path: "/user",
-    childrens: [
-      
-      
-    ]
+    childrens: [],
   },
-  // {
-  //   init: '/auth/login',
-  //   path: '/'
-  // },
   {
-    component: 'Page404',
-    path: '*'
+    component: "Page404",
+    path: "*",
   },
-]
+ 
+ 
+];
 
-
-export default routers
+export default routers;
