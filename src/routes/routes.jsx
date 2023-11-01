@@ -10,7 +10,11 @@ const routers = [
       },
       {
         component: "findMissingItem",
-        childPath: "/findMissingItem",
+        childPath: "/findMissingItem/:itemName",
+      },
+      {
+        component: "MyProfile",
+        childPath: "/myProfile",
       },
       {
         component: "Login",
