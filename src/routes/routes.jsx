@@ -19,14 +19,22 @@ const routers = [
         component: "signIn",
         childPath: "/signIn",
       },
-     {
-      component:"drawer",
-      childPath:"/drawer",
-     },
-     {
-      component:"foundItems",
-      childPath:"/foundItems"
-     }
+      {
+        component: "drawer",
+        childPath: "/drawer",
+      },
+      {
+        component: "foundItems",
+        childPath: "/foundItems",
+      },
+      {
+        component: "itemDetails",
+        childPath: "/itemsDetails",
+      },
+      {
+        component: "user",
+        childPath: "/user",
+      },
     ],
   },
   {
@@ -38,8 +46,6 @@ const routers = [
     component: "Page404",
     path: "*",
   },
- 
- 
 ];
 
 export default routers;

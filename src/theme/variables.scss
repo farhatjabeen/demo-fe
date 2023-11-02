@@ -1,17 +1,17 @@
-$primary-color: #E8B810;
+$primary-color: #e8b810;
 $white: #ffffff;
 $black: #000000;
-$grey: #8A92A6;
-$green: #3AA96A;
-$blue:#4094f7;
-$light-green:#00B8B8;
-$grey-F5F6FA: #F5F6FA;
+$grey: #8a92a6;
+$green: #3aa96a;
+$blue: #1d73e8;
+$light-green: #00b8b8;
+$grey-F5F6FA: #f5f6fa;
 $background-white: #ffffff;
-$navy-blue: #232D42;
-$grey-F5F6FA: #F5F6FA;
+$navy-blue: #232d42;
+$grey-F5F6FA: #f5f6fa;
 $gray-sideBar: #bdbdbd;
-$border: #F2F3F7;
-$menu_icon:#8A92A6;
+$border: #f2f3f7;
+$menu_icon: #8a92a6;
 
 $myColors: (
   "white": $white,
@@ -22,8 +22,7 @@ $myColors: (
   "blue": $blue,
   "primary-color": $primary-color,
 );
-@each $name,
-$colors in $myColors {
+@each $name, $colors in $myColors {
   $index: index($myColors, $colors);
 
   .text-#{$name} {

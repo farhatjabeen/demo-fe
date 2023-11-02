@@ -86,9 +86,12 @@ const DashBoard = () => {
           {isDrawerOpen && showUsers && (
             <div className="pl-8">
               <div>
+                <Link to ='/user'>
                 <p className="cursor-pointer hover:text-blue-800 hover:bg-sky-200   rounded-lg   p-2">
                   General Users
                 </p>
+                </Link>
+                
               </div>
               <div>
                 <p className="cursor-pointer hover:text-blue-800 hover:bg-sky-200  rounded-lg   p-2">

@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { HiPlus } from "react-icons/hi";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
@@ -6,15 +6,21 @@ import { MdOutlineRefresh } from "react-icons/md";
 import DropdownMenu from "../../components/common/dropdown";
 import CustomCombinedButton from "../../components/common/button";
 import Table from "../../components/tables";
-
-const handleExport = () => {};
-
-const handleReset = () => {};
-const handleSearch = () => {};
-
-const handleAddItem = () => {};
+import Pagination from "../../components/common/pagination";
 
 function FoundItems() {
+  const handleAddItem = () => {};
+  const handleExport = () => {};
+
+  const handleReset = () => {};
+  const handleSearch = () => {};
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 10;
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <>
       <div>
@@ -39,15 +45,15 @@ function FoundItems() {
           <h1 className="text-black font-bold my-10 text-4xl">Found Items</h1>
         </div>
         <div className="flex ">
-            <input
-              type="text"
-              placeholder="Search by item id or name"
-              className=" border pl-2 basis-5/12 rounded-md mr-4 py-2 "
-            />
-            <div className="basis-5/12">
+          <input
+            type="text"
+            placeholder="Search by item id or name"
+            className=" border pl-2 basis-5/12 rounded-md mr-4 py-2 "
+          />
+          <div className="basis-5/12">
             <DropdownMenu />
-            </div>
-            <div className="basis-1/12">
+          </div>
+          <div className="basis-1/12">
             <CustomCombinedButton
               text="Reset"
               icon={<MdOutlineRefresh size={20} className="mr-2" />}
@@ -55,8 +61,8 @@ function FoundItems() {
               isReset={true}
               buttonColor="blue"
             />
-            </div>
-            <div className="basis-1/12"> 
+          </div>
+          <div className="basis-1/12">
             <CustomCombinedButton
               text="Search"
               icon={<BsSearch size={20} className="mr-2" />}
@@ -64,10 +70,15 @@ function FoundItems() {
               isReset={true}
               buttonColor="other"
             />
-            </div>
           </div>
         </div>
-        <Table/>
+      </div>
+      <Table />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 }
