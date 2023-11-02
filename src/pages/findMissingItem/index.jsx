@@ -7,18 +7,18 @@ export default function FindMissingItem() {
     const [searchKey, setSearchKey] = useState('');
     const [data, setData] = useState([]);
     const newKey = useParams();
-    
+
     useEffect(() => {
-        if (newKey.itemName) {
+        if (newKey.itemName && newKey.location) {
             axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
                 .then(response => {
-                    const filteredData = response.data.filter(f => f.itemname.toLowerCase().includes(newKey.itemName));
+                    const filteredData = response.data.filter(f => f.itemname.toLowerCase().includes(newKey.itemName) && f.location.toLowerCase().includes(newKey.location));
                     console.log(filteredData, 'filteredData')
                     setData(filteredData);
                 })
                 .catch(er => console.log(er));
         }
-    }, [newKey.itemName]);
+    }, [newKey]);
 
     const handleSearch = () => {
         if (searchKey) {
@@ -45,7 +45,7 @@ export default function FindMissingItem() {
             <div className='flex flex-wrap justify-center items-center w-[1300px] mt-[50px]'>
                 {data.map((items, i) => {
                     return (
-                        <SearchCards idx={i} itemName={items.itemname} location={items.location} date={items.date} time={items.time} />
+                        <SearchCards idx={i} itemId={items.id} itemName={items.itemname} location={items.location} date={items.date} time={items.time} />
                     );
                 })}
             </div>

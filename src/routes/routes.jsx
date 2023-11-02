@@ -10,11 +10,27 @@ const routers = [
       },
       {
         component: "findMissingItem",
-        childPath: "/findMissingItem/:itemName",
+        childPath: "/findMissingItem/:itemName/:location",
+      },
+      {
+        component: "AddMoreDetails",
+        childPath: "/addMoreDetails",
+      },
+      {
+        component: "QueryPublished",
+        childPath: "/queryPublished",
       },
       {
         component: "MyProfile",
         childPath: "/myProfile",
+      },
+      {
+        component: "ViewItem",
+        childPath: "/viewItem/:id",
+      },
+      {
+        component: "ContactUs",
+        childPath: "/contactUs",
       },
       {
         component: "Login",

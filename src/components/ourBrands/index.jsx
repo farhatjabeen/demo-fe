@@ -8,7 +8,7 @@ import './index.scss';
 export default function OurBrands() {
     const businessbrands = [starbucks, amazon, airarabia, suitcase, amazon, starbucks, suitcase, airarabia, amazon];
     return (
-        <div className='h-80'>
+        <div className='h-80 bg-[#F5F5F5]'>
             <div className='font-bold text-4xl text-[#676767] opacity-90 ml-20 pt-9 mb-7'>Businesses that use our platform</div>
             <div className='flex flex-row w-[1519px] pl-20 overflow-x-scroll no-scrollbar'>
                 {businessbrands.map((items) => {

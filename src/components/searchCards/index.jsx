@@ -1,7 +1,9 @@
 import React from 'react'
 import {FaMap, FaCalendar, FaClock, FaArrowRight} from 'react-icons/fa'
+import { useNavigate } from 'react-router'
 
 export default function SearchCards(props) {
+    const navigate = useNavigate();
     return (
         <div className='mt-[20px] h-[438.75px] w-[320.75px] flex flex-col items-center relative'>
 
@@ -19,7 +21,7 @@ export default function SearchCards(props) {
                     <div className='flex justify-between'>
                         <div ><button className='h-[42.75px] w-[120px] rounded-[7.5px] bg-[#E8B810] border-none text-sm font-normal mt-[26px]'>Contact</button></div>
                         <div className='mt-[30px] h-[32px] w-[120px] flex justify-center items-center text-sm font-normal' >
-                            <button>View item</button>
+                            <button onClick={()=>navigate(`/viewitem/${props.itemId}`)}>View item</button>
                             <FaArrowRight className=' ml-[5px]'/>
                         </div>
                     </div>

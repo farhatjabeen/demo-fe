@@ -5,6 +5,7 @@ import addressMan from '../../assets/images/AddressMan.png';
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
     const [searchKey, setSearchKey] = useState('');
+    const[locationKey,setLocationKey]=useState('');
     const navigate = useNavigate();
 
 
@@ -17,8 +18,7 @@ export default function SearchReport() {
     }
 
     const handleSearchKey = () => {
-        console.log(`/findMissingItem/${searchKey}`,'sk');
-        navigate(`/findMissingItem/${searchKey}`);
+        navigate(`/findMissingItem/${searchKey}/${locationKey}`);
     }
     return (
         <div className='flex'>
@@ -34,14 +34,15 @@ export default function SearchReport() {
         </div> */}
 
             <div className='ml-[70px] mt-[80px]'>
-                <div className='flex justify-center items-center p-[7px] bg-white border-solid rounded-[20px] sm:h-[48px] lg:h-[56px] xl:h-[75px] sm:w-[250px] lg:w-[330px] xl:w-[440px] border border-neutral-200 border-solid'>
-                    <button onClick={handleSearchButton} className=' sm:h-[35px] lg:h-[45px] xl:h-[59px] sm:w-[130px] lg:w-[165px] xl:w-[220px] rounded-[16px] sm:text-sm lg:text-lg xl:text-xl font-normal' style={{ backgroundColor: buttonActive ? '#266867' : 'white', color: buttonActive ? 'white' : 'black' }}>Search lost item</button>
-                    <button onClick={handleReportButton} className='sm:h-[35px] lg:h-[45px] xl:h-[59px] sm:w-[135px] lg:w-[165px] xl:w-[220px] rounded-[16px] sm:text-sm lg:text-lg xl:text-xl font-normal' style={{ backgroundColor: buttonActive ? 'white' : '#266867', color: buttonActive ? 'black' : 'white' }}>Report found item</button>
+                <div className='flex justify-center items-center p-[7px] bg-white border-solid rounded-[20px] max-sm:h-[48px] max-lg:h-[56px] xl:h-[72px] max-sm:w-[250px] max-lg:w-[330px] xl:w-[410px] border border-neutral-200 border-solid'>
+                    <button onClick={handleSearchButton} className=' max-sm:h-[35px] max-lg:h-[45px] xl:h-[59px] max-sm:w-[130px] max-lg:w-[165px] xl:w-[220px] rounded-[16px] max-sm:text-sm max-lg:text-lg xl:text-xl font-normal' style={{ backgroundColor: buttonActive ? '#266867' : 'white', color: buttonActive ? 'white' : 'black' }}>Search lost item</button>
+                    <button onClick={handleReportButton} className='max-sm:h-[35px] max-lg:h-[45px] xl:h-[59px] max-sm:w-[135px] max-lg:w-[165px] xl:w-[220px] rounded-[16px] max-sm:text-sm max-lg:text-lg xl:text-xl font-normal' style={{ backgroundColor: buttonActive ? 'white' : '#266867', color: buttonActive ? 'black' : 'white' }}>Report found item</button>
                 </div>
                 {
                     buttonActive ?
                         <div className='flex items-center mt-[25px] h-[82px] w-[760px] rounded-[24px] bg-white border border-neutral-200 border-solid'>
-                            <input className=' placeholder:text-black placeholder:text-xl placeholder:pl-[20px] w-[494px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Search...' value={searchKey} onChange={(e) => setSearchKey(e.target.value)} />
+                            <input className=' placeholder:text-black placeholder:text-xl placeholder:pl-[20px] w-[248px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Search...' value={searchKey} onChange={(e) => setSearchKey(e.target.value)} />
+                            <input className=' placeholder:text-black placeholder:text-xl placeholder:pl-[20px] w-[248px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Location...' value={locationKey} onChange={(e)=>setLocationKey(e.target.value)}/>
                             <button className='w-[230px] h-[60px] rounded-[16px] border border-solid border-neutral-200 ml-[10px] mr-[10px] text-2xl font-semibold text-white bg-[#E8B810]' onClick={handleSearchKey}>Search</button>
                         </div>
                         :
