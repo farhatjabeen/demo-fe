@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 
 const Table = () => {
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-
   const handleDropdownClick = (index) => {
     if (selectedRow === index) {
       setSelectedRow(null);
@@ -14,7 +15,6 @@ const Table = () => {
       setShowDropdown(true);
     }
   };
-
   const tableData = [
     {
       id: 1,
@@ -50,21 +50,123 @@ const Table = () => {
     },
   ];
 
+  const requestSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedData = () => {
+    const sorted = [...tableData];
+    if (sortConfig.key !== null) {
+      sorted.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sorted;
+  };
+  
   return (
     <div className="my-5">
       <table className="w-full">
         <thead>
-          <tr className=" border border-x-0 border-y-gray-300">
-            <th className="py-6 px-6 text-left">Item ID</th>
-            <th className="py-6 px-6 text-left">Item Name</th>
-            <th className="py-6 px-6 text-left">Location</th>
-            <th className="py-6 px-6 text-left">Time Found</th>
-            <th className="py-6 px-6 text-left">Found By</th>
-            <th className="py-6 px-6 text-left">Phone Number</th>
+          <tr className="border border-x-0 border-y-gray-300">
+            <th
+              onClick={() => requestSort("id")}
+              className="px-6 text-left cursor-pointer"
+            >
+              <div className="flex">
+                <div>
+                  <p>Item ID</p>
+                </div>
+                <div>
+                  <TiArrowSortedUp size={12}className="text-gray-500 hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black"/>
+                </div>
+              </div>
+            </th>
+            <th
+              onClick={() => requestSort("itemName")}
+              className="px-6 py-6 text-left cursor-pointer"
+            >
+              <div className="flex">
+                <div>
+                  <p>Item Name</p>
+                </div>
+                <div>
+                  <TiArrowSortedUp size={12}className="text-gray-500 hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black"/>
+                </div>
+              </div>
+            </th>
+            <th
+              onClick={() => requestSort("location")}
+              className="py-6 px-6 text-left cursor-pointer"
+            >
+              <div className="flex">
+                <div>
+                  <p>Location</p>
+                </div>
+                <div>
+                  <TiArrowSortedUp size={12} className="text-gray-500 hover:text-black"/>
+                  <TiArrowSortedDown size={12}className="text-gray-500 hover:text-black" />
+                </div>
+              </div>
+            </th>
+            <th
+              onClick={() => requestSort("timeFound")}
+              className="py-6 px-6 text-left cursor-pointer"
+            >
+              <div className="flex">
+                <div>
+                  <p>Time Found</p>
+                </div>
+                <div>
+                  <TiArrowSortedUp size={12}className="text-gray-500 hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black" />
+                </div>
+              </div>
+            </th>
+            <th
+              onClick={() => requestSort("foundBy")}
+              className="py-6 px-6 text-left cursor-pointer"
+            >
+              <div className="flex">
+                <div>
+                  <p>Found By</p>
+                </div>
+                <div>
+                  <TiArrowSortedUp size={12} className="text-gray-500 hover:text-black"/>
+                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black"/>
+                </div>
+              </div>
+            </th>
+            <th
+              onClick={() => requestSort("phoneNumber")}
+              className="py-6 px-6 text-left cursor-pointer"
+            >
+              <div className="flex">
+                <div>
+                  <p>Phone Number</p>
+                </div>
+                <div>
+                  <TiArrowSortedUp size={12}  className="text-gray-500 hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black" />
+                </div>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {tableData.map((data, index) => (
+          {sortedData().map((data, index) => (
             <tr
               key={data.id}
               className={index % 2 === 0 ? "bg-gray-200" : "bg-gray-100"}
