@@ -7,14 +7,13 @@ const categories = [
   'Category 3',
 ];
 
-export default function DropdownMenu() {
+export default function DropdownMenu({ categories }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setIsDropdownOpen(false);
-   
   };
 
   return (

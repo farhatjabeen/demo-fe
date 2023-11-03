@@ -27,50 +27,48 @@ function SignInView() {
   };
 
   return (
-    <>
-      <div className=" pt-28  px-28">
-        <div>
-          <img src={logo} alt="" className="h-14 w-32" />
-        </div>
-        <div className="pt-20 ">
-          <h1 className="font-bold text-4xl">Sign In</h1>
-          <p className="text-slate-400 font-bold pt-2">
-            Sign in to the admin portal of ilost
-          </p>
-        </div>
-        <div className="mt-6 pt-2">
-          <input
-            type="text"
-            placeholder="Enter username"
-            className="w-full py-4 px-3 border border-gray-300 rounded-md"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <p className="text-red-500">{usernameError}</p>
-        </div>
-        <div className="mt-2">
-          <input
-            type="password"
-            placeholder="Enter password"
-            className="w-full py-4 px-3 border border-gray-300 rounded-md"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <p className="text-red-500">{passwordError}</p>
-        </div>
-        <div className="mt-14">
-          <button
-            type="button"
-            onClick={handleSignIn}
-            className="w-full bg-light-green hover:bg-light-green text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
-          >
-            Sign in
-          </button>
-        </div>
+    <div className=" pt-28  px-28">
+      <div>
+        <img src={logo} alt="" className="h-14 w-32" />
       </div>
-    </>
+      <div className="pt-20 ">
+        <h1 className="font-bold text-4xl">Sign In</h1>
+        <p className="text-slate-400 font-bold pt-2">
+          Sign in to the admin portal of ilost
+        </p>
+      </div>
+      <div className="mt-6 pt-2">
+        <input
+          type="text"
+          placeholder="Enter username"
+          className="w-full py-4 px-3 border border-gray-300 rounded-md"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <p className="text-red-500">{usernameError}</p>
+      </div>
+      <div className="mt-2">
+        <input
+          type="password"
+          placeholder="Enter password"
+          className="w-full py-4 px-3 border border-gray-300 rounded-md"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <p className="text-red-500">{passwordError}</p>
+      </div>
+      <div className="mt-14">
+        <button
+          type="button"
+          onClick={handleSignIn}
+          className="w-full bg-light-green hover:bg-light-green text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
+        >
+          Sign in
+        </button>
+      </div>
+    </div>
   );
 }
 

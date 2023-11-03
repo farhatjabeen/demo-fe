@@ -2,8 +2,10 @@ import React from 'react'
 import Logo from "../../assets/images/footer_logo.png"
 
 import './index.scss'
+import { useNavigate } from 'react-router'
 
 const Footer = () => {
+    const navigate = useNavigate();
     return (
         <div>
             <div className='bg-primary flex flex-col justify-center items-center p-10 pb-5'>
@@ -14,7 +16,7 @@ const Footer = () => {
                     <div >
                         <ul className='footer-links flex p-3 sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:flex-col relative'>
                             <li className='px-8 text-white'>About Us</li>
-                            <li className='px-8 text-white'>Contact Us</li>
+                            <li className='px-8 text-white'><a href='/contactUs'>Contact Us</a></li>
                             <li className='px-8 text-white'>Terms of Use</li>
                             <li className='px-8 text-white'>Privacy Policy</li>
                         </ul>
