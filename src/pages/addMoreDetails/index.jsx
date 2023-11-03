@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 export default function AddMoreDetails() {
     const [newreport, setNewreport] = useState({
@@ -18,6 +18,7 @@ export default function AddMoreDetails() {
         reporterid: ''
     })
     const navigate = useNavigate();
+    const reportDetails = useParams();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -29,27 +30,9 @@ export default function AddMoreDetails() {
         const date = new Date();
         const formattedDate = dayjs(date).format('DD[th] MMMM YYYY');
         const formattedTime = dayjs(date).format('hh : mm A');
-        const curruserid = localStorage.getItem("currentuserid");
         e.preventDefault();
         console.log(newreport, 'newreport');
-        // axios.post('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu', {
-        //     ...newreport,
-        //     date: formattedDate,
-        //     time: formattedTime,
-        //     reporterid: curruserid
-        // })
-        // .then((response) => {
-        //     const newReportId = response.data.id;
-        //     // setReports(newReportId);
-        //     axios.get(`https://64dc7b7ce64a8525a0f68ee2.mockapi.io/newfields/${curruserid}`)
-        //     .then(getresponse=>{
-        //         const existingreports = getresponse.data.reports;
-        //         existingreports.push(newReportId);
-        //         axios.put(`https://64dc7b7ce64a8525a0f68ee2.mockapi.io/newfields/${curruserid}`, {reports: existingreports})
-        //     })
-        //     .then(()=>{navigate(`/querypublished/${newReportId}`);})
-        // })
-        // .catch(err=>console.log(err));
+        
     };
     return (
         <div className='flex flex-col items-center'>
@@ -65,7 +48,7 @@ export default function AddMoreDetails() {
                             <label>Item Name</label>
                             <div className='font-medium text-sm'>Item Name</div>
                         </div>
-                        <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='itemname' value={newreport.itemname} onChange={handleInputChange} placeholder='Type Name' />
+                        <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='itemname' value={newreport.itemname? newreport.itemname:reportDetails.itemName} onChange={handleInputChange} placeholder='Type Name' />
 
                     </div>
 

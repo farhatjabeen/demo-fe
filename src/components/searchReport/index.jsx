@@ -5,7 +5,8 @@ import addressMan from '../../assets/images/AddressMan.png';
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
     const [searchKey, setSearchKey] = useState('');
-    const[locationKey,setLocationKey]=useState('');
+    const [reportKey,setReportKey] = useState('');
+    const [locationKey, setLocationKey] = useState('');
     const navigate = useNavigate();
 
 
@@ -20,18 +21,13 @@ export default function SearchReport() {
     const handleSearchKey = () => {
         navigate(`/findMissingItem/${searchKey}/${locationKey}`);
     }
+
+    const handleReportKey = () => {
+        navigate(`/addMoreDetails/${reportKey}/${locationKey}`);
+    }
+
     return (
         <div className='flex'>
-            {/* <div>
-                    {
-                        {loginbutton} ? 
-                        <Dialog open={loginbutton} style={{ marginLeft: '48%', marginTop:'5%', backgroundColor: 'transparent'}} PaperProps={{style:{height:'500px', width:'540px',display:'flex', alignItems:'center', justifyContent:'center'}}} className='logindialogboxactive'>
-                            <Loginorregister orimage={orimage} linksymbol={linksymbol} handleloginbutton={handleloginbutton} xcircle={xcircle} ></Loginorregister>
-                        </Dialog>
-                        :
-                        null
-                    }
-        </div> */}
 
             <div className='ml-[70px] mt-[80px]'>
                 <div className='flex justify-center items-center p-[7px] bg-white border-solid rounded-[20px] max-sm:h-[48px] max-lg:h-[56px] xl:h-[72px] max-sm:w-[250px] max-lg:w-[330px] xl:w-[410px] border border-neutral-200 border-solid'>
@@ -41,14 +37,15 @@ export default function SearchReport() {
                 {
                     buttonActive ?
                         <div className='flex items-center mt-[25px] h-[82px] w-[760px] rounded-[24px] bg-white border border-neutral-200 border-solid'>
-                            <input className=' placeholder:text-black placeholder:text-xl placeholder:pl-[20px] w-[248px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Search...' value={searchKey} onChange={(e) => setSearchKey(e.target.value)} />
-                            <input className=' placeholder:text-black placeholder:text-xl placeholder:pl-[20px] w-[248px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Location...' value={locationKey} onChange={(e)=>setLocationKey(e.target.value)}/>
+                            <input className=' placeholder:text-black placeholder:text-base w-[248px] h-[60px] p-4 rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Search...' value={searchKey} onChange={(e) => setSearchKey(e.target.value)} />
+                            <input className=' placeholder:text-black placeholder:text-base w-[248px] h-[60px] p-4 rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Location' value={locationKey} onChange={(e) => setLocationKey(e.target.value)} />
                             <button className='w-[230px] h-[60px] rounded-[16px] border border-solid border-neutral-200 ml-[10px] mr-[10px] text-2xl font-semibold text-white bg-[#E8B810]' onClick={handleSearchKey}>Search</button>
                         </div>
                         :
                         <div className='flex items-center mt-[25px] h-[82px] w-[760px] rounded-[24px] bg-white border border-neutral-200 border-solid'>
-                            <input className='placeholder:text-black placeholder:text-xl placeholder:pl-[20px] w-[494px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Report...' />
-                            <button className='w-[230px] h-[60px] rounded-[16px] border border-solid border-neutral-200 ml-[10px] mr-[10px] text-2xl font-semibold text-white bg-[#E8B810]'>Report</button>
+                            <input className='placeholder:text-black placeholder:text-base p-4 w-[248px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Describe Item' value={reportKey} onChange={(e) => setReportKey(e.target.value)} />
+                            <input className=' placeholder:text-black placeholder:text-base p-4 w-[248px] h-[60px] rounded-[16px] ml-[10px] border border-solid border-neutral-200' type='text' placeholder='Location' value={locationKey} onChange={(e) => setLocationKey(e.target.value)} />
+                            <button className='w-[230px] h-[60px] rounded-[16px] border border-solid border-neutral-200 ml-[10px] mr-[10px] text-2xl font-semibold text-white bg-[#E8B810]' onClick={handleReportKey}>Report</button>
                         </div>
 
                 }
