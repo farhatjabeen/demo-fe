@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-import addressMan from '../../assets/images/AddressMan.png';
+import addressMan from '../../assets/images/location.png';
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
