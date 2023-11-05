@@ -20,10 +20,6 @@ const routers = [
         childPath: "/queryPublished",
       },
       {
-        component: "MyProfile",
-        childPath: "/myProfile",
-      },
-      {
         component: "ViewItem",
         childPath: "/viewItem/:id",
       },
@@ -36,31 +32,44 @@ const routers = [
         childPath: "/login",
       },
       {
+        component: "itemDetails",
+        childPath: "/itemDetails",
+      },
+    ]
+  },
+  {
+    layout: "MainLayout",
+    path: "/user",
+    childrens: [
+      {
+        component: "MyProfile",
+        childPath: "/myProfile",
+      },
+    ]
+  },
+  {
+    layout: "AdminAuthLayout",
+    path: "/admin",
+    childrens: [
+      {
         component: "signIn",
         childPath: "/signIn",
       },
-      {
-        component: "drawer",
-        childPath: "/drawer",
-      },
+    ]
+  },
+  {
+    layout: "AdminMainLayout",
+    path: "/admin/user",
+    childrens: [
       {
         component: "foundItems",
         childPath: "/foundItems",
       },
       {
-        component: "itemDetails",
-        childPath: "/itemsDetails",
-      },
-      {
         component: "user",
         childPath: "/user",
       },
-    ],
-  },
-  {
-    layout: "MainLayout",
-    path: "/user",
-    childrens: [],
+    ]
   },
   {
     component: "Page404",

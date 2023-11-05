@@ -9,6 +9,9 @@ module.exports = {
       'lg': '1024px', // Custom large breakpoint
       'xl': '1280px', // Custom extra-large breakpoint
     },
+    colors: {
+      'primary-color': '#e8b810',
+    },
     extend: {},
   },
   plugins: [],
