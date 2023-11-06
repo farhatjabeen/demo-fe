@@ -1,14 +1,14 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router';
 
 export default function AddMoreDetails() {
+    const [itemname,setItemname] = useState('');
+    const [location,setLocation] = useState('');
     const [newreport, setNewreport] = useState({
-        itemname: '',
         category: '',
         description: '',
         keywords: '',
-        location: '',
         locationidentifier: '',
         name: '',
         mobilenumber: '',
@@ -17,9 +17,22 @@ export default function AddMoreDetails() {
         time: '',
         reporterid: ''
     })
+
+    useEffect(()=>{
+        if(!itemname){
+            setItemname(reportDetails.itemName);
+        }
+        if(!location){
+            setLocation(reportDetails.location);
+        }
+    },[]);
+
     const navigate = useNavigate();
     const reportDetails = useParams();
 
+    const handleName = () =>{
+        
+    }
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewreport({ ...newreport, [name]: value });
@@ -45,16 +58,16 @@ export default function AddMoreDetails() {
                 <div className='border-b border-b-[#949494] mb-10'>
                     <div className='flex justify-between h-12 mb-9 relative'>
                         <div>
-                            <label>Item Name</label>
+                            <label className='font-bold text-lg'>Item Name</label>
                             <div className='font-medium text-sm'>Item Name</div>
                         </div>
-                        <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='itemname' value={newreport.itemname? newreport.itemname:reportDetails.itemName} onChange={handleInputChange} placeholder='Type Name' />
+                        <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='itemname' value={itemname} onChange={(e)=>setItemname(e.target.value)} placeholder='Type Name' />
 
                     </div>
 
                     <div className='flex justify-between h-12 mb-9 relative'>
                         <div>
-                            <label>Item Category</label>
+                            <label className='font-bold text-lg'>Item Category</label>
                             <div className='font-medium text-sm'>Item Category</div>
                         </div>
                         <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='category' value={newreport.category} onChange={handleInputChange} placeholder='Select Category' />
@@ -63,7 +76,7 @@ export default function AddMoreDetails() {
 
                     <div className='flex justify-between h-12 mb-48 relative'>
                         <div>
-                            <label>Item Description</label>
+                            <label className='font-bold text-lg'>Item Description</label>
                             <div className='font-medium text-sm'>Item Description</div>
                         </div>
                         <input className='w-[472px] h-[203.23px] border border-[#B6B6B6] rounded-lg p-5' name='description' value={newreport.description} onChange={handleInputChange} id='itemdescription' type='text' placeholder='Type desc' />
@@ -72,7 +85,7 @@ export default function AddMoreDetails() {
 
                     <div className='flex justify-between h-12 mb-16 relative keywordbox'>
                         <div>
-                            <label>Keywords</label>
+                            <label className='font-bold text-lg'>Keywords</label>
                             <div className='font-medium text-sm'>Keywords</div>
                         </div>
                         <input className='w-[472px] h-[86px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='keywords' value={newreport.keywords} onChange={handleInputChange} placeholder='Keywords' />
@@ -81,7 +94,7 @@ export default function AddMoreDetails() {
 
                     <div className='flex justify-between h-12 mb-9 relative'>
                         <div>
-                            <label>Upload Images</label>
+                            <label className='font-bold text-lg'>Upload Images</label>
                             <div className='font-medium text-sm'>Upload Images</div>
                         </div>
                         <button className='w-[472px] h[42.75px] rounded-lg bg-[#E8B810]'>Upload Image</button>
@@ -93,16 +106,16 @@ export default function AddMoreDetails() {
                 <div className='border-b border-b-[#949494] mb-10'>
                     <div className='flex justify-between h-12 mb-9 relative location'>
                         <div>
-                            <label>Location</label>
+                            <label className='font-bold text-lg'>Location</label>
                             <div className='font-medium text-sm'>Location</div>
                         </div>
-                        <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='location' value={newreport.location} onChange={handleInputChange} placeholder='Type Address' />
+                        <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='location' value={location} onChange={(e)=>setLocation(e.target.value)} placeholder='Type Address' />
 
                     </div>
 
                     <div className='flex justify-between h-12 mb-9 relative'>
                         <div>
-                            <label>Location Identifiers</label>
+                            <label className='font-bold text-lg'>Location Identifiers</label>
                             <div className='font-medium text-sm'>Location Identifiers</div>
                         </div>
                         <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='locationidentifier' value={newreport.locationidentifier} onChange={handleInputChange} placeholder='Landmarks of the location' />
@@ -111,7 +124,7 @@ export default function AddMoreDetails() {
 
                 <div className='flex justify-between h-12 mb-9 relative location'>
                     <div>
-                        <label>Your Name</label>
+                        <label className='font-bold text-lg'>Your Name</label>
                         <div className='font-medium text-sm'>Your Name</div>
                     </div>
                     <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='text' name='name' value={newreport.name} onChange={handleInputChange} placeholder='Full name' />
@@ -119,7 +132,7 @@ export default function AddMoreDetails() {
 
                 <div className='flex justify-between h-12 mb-9 relative'>
                     <div>
-                        <label>Your Phone Number</label>
+                        <label className='font-bold text-lg'>Your Phone Number</label>
                         <div className='font-medium text-sm'>Your Phone Number</div>
                     </div>
                     <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='tel' name='mobilenumber' value={newreport.mobilenumber} onChange={handleInputChange} placeholder='Phone number' />
@@ -127,7 +140,7 @@ export default function AddMoreDetails() {
 
                 <div className='flex justify-between h-12 mb-9 relative'>
                     <div>
-                        <label>Your Mail address</label>
+                        <label className='font-bold text-lg'>Your Mail address</label>
                         <div className='font-medium text-sm'>Your Mail address</div>
                     </div>
                     <input className='w-[472px] h-[51.75px] border border-[#B6B6B6] rounded-lg p-5' type='email' name='mail' value={newreport.mail} onChange={handleInputChange} placeholder='Mail address' />
