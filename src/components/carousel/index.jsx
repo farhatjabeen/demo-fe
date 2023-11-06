@@ -71,7 +71,7 @@ const Carousel = () => {
             <li key={index} className="mx-1">
               <button
                 className={`h-2 w-2 rounded-full ${
-                  index === activeIndex ? "bg-light-green" : "bg-gray-500"
+                  index === activeIndex? "bg-light-green"   :"bg-grey"
                 }`}
               ></button>
             </li>

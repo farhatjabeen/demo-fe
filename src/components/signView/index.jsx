@@ -22,7 +22,7 @@ function SignInView() {
     }
 
     if (username && password) {
-      navigate("/drawer");
+      navigate("/admin/user/foundItems");
     }
   };
 
@@ -33,8 +33,8 @@ function SignInView() {
       </div>
       <div className="pt-20 ">
         <h1 className="font-bold text-4xl">Sign In</h1>
-        <p className="text-slate-400 font-bold pt-2">
-          Sign in to the admin portal of ilost
+        <p className="text-grey font-bold pt-2">
+          Sign in to the admin portal of Ilost
         </p>
       </div>
       <div className="mt-6 pt-2">
@@ -46,7 +46,7 @@ function SignInView() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-        <p className="text-red-500">{usernameError}</p>
+        <p className="text-red">{usernameError}</p>
       </div>
       <div className="mt-2">
         <input
@@ -57,13 +57,13 @@ function SignInView() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <p className="text-red-500">{passwordError}</p>
+        <p className="text-red">{passwordError}</p>
       </div>
       <div className="mt-14">
         <button
           type="button"
           onClick={handleSignIn}
-          className="w-full bg-light-green hover:bg-light-green text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
+          className="w-full bg-light-green  text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
         >
           Sign in
         </button>

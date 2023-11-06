@@ -6,7 +6,7 @@ export function AdminMainLayout(props) {
   return (
     <div className="flex min-h-screen">
       <Drawer />
-      <div className="flex-grow overflow-y-auto bg-[#ffffff]">
+      <div className="flex-grow overflow-y-auto bg-[#ffffff] ml-64">
         <main>{props?.children}</main>
       </div>
     </div>

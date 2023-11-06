@@ -67,7 +67,11 @@ const routers = [
       },
       {
         component: "user",
-        childPath: "/user",
+        childPath: "/users",
+      },
+      {
+        component: "itemDetails",
+        childPath: "/itemDetails",
       },
     ]
   },

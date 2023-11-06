@@ -4,6 +4,7 @@ $black: #000000;
 $grey: #8a92a6;
 $green: #3aa96a;
 $blue: #1d73e8;
+$red: #ff0000;
 $light-green: #00b8b8;
 $grey-F5F6FA: #f5f6fa;
 $background-white: #ffffff;
@@ -21,6 +22,7 @@ $myColors: (
   "light-green": $light-green,
   "blue": $blue,
   "primary-color": $primary-color,
+  "red":$red,
 );
 @each $name, $colors in $myColors {
   $index: index($myColors, $colors);
