@@ -78,7 +78,7 @@ const Table = () => {
     <div className="my-5">
       <table className="w-full">
         <thead>
-          <tr className="border border-x-0 border-y-gray-300">
+          <tr className="border border-x-0 border-y-grey">
             <th
               onClick={() => requestSort("id")}
               className="px-6 text-left cursor-pointer"
@@ -88,8 +88,8 @@ const Table = () => {
                   <p>Item ID</p>
                 </div>
                 <div>
-                  <TiArrowSortedUp size={12}className="text-gray-500 hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black"/>
+                  <TiArrowSortedUp size={12}className="text-grey hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-grey hover:text-black"/>
                 </div>
               </div>
             </th>
@@ -102,8 +102,8 @@ const Table = () => {
                   <p>Item Name</p>
                 </div>
                 <div>
-                  <TiArrowSortedUp size={12}className="text-gray-500 hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black"/>
+                  <TiArrowSortedUp size={12}className="text-grey hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-grey hover:text-black"/>
                 </div>
               </div>
             </th>
@@ -116,8 +116,8 @@ const Table = () => {
                   <p>Location</p>
                 </div>
                 <div>
-                  <TiArrowSortedUp size={12} className="text-gray-500 hover:text-black"/>
-                  <TiArrowSortedDown size={12}className="text-gray-500 hover:text-black" />
+                  <TiArrowSortedUp size={12} className="text-grey hover:text-black"/>
+                  <TiArrowSortedDown size={12}className="text-grey hover:text-black" />
                 </div>
               </div>
             </th>
@@ -130,8 +130,8 @@ const Table = () => {
                   <p>Time Found</p>
                 </div>
                 <div>
-                  <TiArrowSortedUp size={12}className="text-gray-500 hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black" />
+                  <TiArrowSortedUp size={12}className="text-grey hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
                 </div>
               </div>
             </th>
@@ -144,8 +144,8 @@ const Table = () => {
                   <p>Found By</p>
                 </div>
                 <div>
-                  <TiArrowSortedUp size={12} className="text-gray-500 hover:text-black"/>
-                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black"/>
+                  <TiArrowSortedUp size={12} className="text-grey hover:text-black"/>
+                  <TiArrowSortedDown size={12} className="text-grey hover:text-black"/>
                 </div>
               </div>
             </th>
@@ -158,8 +158,8 @@ const Table = () => {
                   <p>Phone Number</p>
                 </div>
                 <div>
-                  <TiArrowSortedUp size={12}  className="text-gray-500 hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-gray-500 hover:text-black" />
+                  <TiArrowSortedUp size={12}  className="text-grey hover:text-black" />
+                  <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
                 </div>
               </div>
             </th>
@@ -169,7 +169,7 @@ const Table = () => {
           {sortedData().map((data, index) => (
             <tr
               key={data.id}
-              className={index % 2 === 0 ? "bg-gray-200" : "bg-gray-100"}
+              className={index % 2 === 0 ? "bg-gray" : "bg-white"}
             >
               <td className="py-6 px-6">{data.id}</td>
               <td className="py-6 px-6">{data.itemName}</td>
@@ -184,20 +184,20 @@ const Table = () => {
                     className="focus:outline-none"
                   >
                     <div className="w-6 h-6 flex flex-col items-center justify-between">
-                      <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
-                      <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
-                      <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+                      <span className="w-1 h-1 bg-grey rounded-full"></span>
+                      <span className="w-1 h-1 bg-grey rounded-full"></span>
+                      <span className="w-1 h-1 bg-grey rounded-full"></span>
                     </div>
                   </button>
                   {showDropdown && selectedRow === index && (
-                    <div className="absolute right-14 mt-0 mb-32 w-9/12 bg-white border border-gray-300 rounded-lg shadow-lg">
+                    <div className="absolute right-10 mt-0 mb-32 bg-white rounded-lg shadow">
                       <ul>
-                        <Link to="/itemsDetails">
-                          <li className="py-2 px-4 cursor-pointer hover:bg-gray-200">
+                        <Link to="/admin/user/itemDetails">
+                          <li className="py-2 px-6 cursor-pointer  hover:bg-grey">
                             Edit
                           </li>
                         </Link>
-                        <li className="py-2 px-4 cursor-pointer hover:bg-gray-200">
+                        <li className="py-2 px-6 cursor-pointer hover:bg-grey">
                           Delete
                         </li>
                       </ul>

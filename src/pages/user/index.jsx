@@ -18,7 +18,7 @@ function User() {
 
   return (
     <>
-      <div>
+      <div className="m-4"> 
         <h1 className="text-black font-bold my-10 text-4xl">User Management</h1>
         <Tabs>
           <div label="General">
