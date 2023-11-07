@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
 
 export default function MyProfile() {
-    const [editButton, SetEditButton] = useState(false);
+    const [editButton, setEditButton] = useState(false);
 
     const [name, setName] = useState('');
     const [mobileNumber, setMobileNumber] = useState('');
@@ -28,7 +28,7 @@ export default function MyProfile() {
         // axios.put(`https://64dc7b7ce64a8525a0f68ee2.mockapi.io/newfields/` + cid, {
         //     mobilenumber: mobilenumber, email: email, name: name, password: reenterpassword
         // });
-        SetEditButton(false);
+        setEditButton(false);
     }
 
     // useEffect(() => {
@@ -42,14 +42,14 @@ export default function MyProfile() {
     // }
 
     const handleEditButton = () => {
-        SetEditButton(!editButton);
+        setEditButton(!editButton);
     }
 
     return (
         <div className='flex flex-col justify-center items-center'>
             <div className='flex justify-center mb-[50px]'>
                 <div className='font-bold text-4xl mr-[20px]'>My Profile</div>
-                {editButton ? null : <div><button className='w-[92px] h-[38px] rounded-[12px] bg-[#E8B810] border-none text-[13.5px] flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{marginLeft:"5px"}} /></button> </div>}
+                {editButton ? null : <div><button className='w-[92px] h-[38px] rounded-[12px] bg-[#E8B810] border-none text-[13.5px] flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
             </div>
 
             <div className='h-[551.5px] w-[1060px] mb-[130px]'>
@@ -109,8 +109,16 @@ export default function MyProfile() {
 
             {editButton ?
                 <div className='w-[360px] flex justify-between'>
-                    <div><button onClick={handleEditButton} className='w-[173.41px] h-[57px] border-[0.8px] border-[solid] border-[#B6B6B6] bg-white rounded-[10px] text-lg cursor-grab'>Cancel</button></div>
-                    <div><button disabled={allowSubmit} onClick={handleSubmit} className='w-[173.41px] h-[57px] border-[0.8px] border-[solid] border-[#E8B810] bg-[#E8B810] rounded-[10px] text-lg cursor-grab'>Save Changes</button></div>
+                    <div>
+                        <button onClick={handleEditButton} className='w-[173.41px] h-[57px] border-[0.8px] border-[solid] border-[#B6B6B6] bg-white rounded-[10px] text-lg cursor-grab'>
+                            Cancel
+                        </button>
+                    </div>
+                    <div>
+                        <button disabled={allowSubmit} onClick={handleSubmit} className='w-[173.41px] h-[57px] border-[0.8px] border-[solid] border-[#E8B810] bg-[#E8B810] rounded-[10px] text-lg cursor-grab'>
+                            Save Changes
+                        </button>
+                    </div>
                 </div>
                 :
                 null}

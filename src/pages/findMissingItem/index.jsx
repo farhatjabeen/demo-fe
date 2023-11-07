@@ -47,7 +47,7 @@ export default function FindMissingItem() {
       <div className='flex flex-wrap justify-center items-center w-[1300px] mt-[50px]'>
         {data.map((items, i) => {
           return (
-            <SearchCards idx={i} itemId={items.id} itemName={items.itemname} location={items.location} date={items.date} time={items.time} />
+            <SearchCards key={i} idx={i} itemId={items.id} itemName={items.itemname} location={items.location} date={items.date} time={items.time} />
           );
         })}
       </div>

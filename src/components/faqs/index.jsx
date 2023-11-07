@@ -20,10 +20,17 @@ export default function Faq({ questions }) {
                 <div className='mt-10 xl:w-4/6 md:w-[800px] sm:w-[600px] md:flex md:flex-col sm:w-full sm:flex sm:flex-col'>
                     {questions.map((items, idx) => {
                         return (
-                            <div className={plusMinus === idx ? 'xl:h-20 xl:w-4/5 mb-6 border-solid border-b border-[#EAECF0]' : 'xl:h-14 xl:w-4/5 mb-6 border-solid border-b border-[#EAECF0]'} >
+                            <div className={`${plusMinus === idx ? "xl:h-20" : "xl:h-14"} xl:w-4/5 mb-6 border-solid border-b border-[#EAECF0`} key={idx}>
                                 <div className='flex justify-between '>
                                     <div className='xl:text-xl md:text-base sm:text-sm font-medium text-[#101828]' key={idx}>{items.questions}</div>
-                                    <div><button onClick={() => handlePlusMinusIcon(idx)}>{plusMinus === idx ? <FiMinusCircle style={{ color: "#E8B810", height: "25px", width: "25px" }} /> : <FiPlusCircle style={{ color: "#E8B810", height: "25px", width: "25px" }} />}</button></div>
+                                    <div>
+                                        <button onClick={() => handlePlusMinusIcon(idx)}>
+                                            {plusMinus === idx ?
+                                                <FiMinusCircle style={{ color: "#E8B810", height: "25px", width: "25px" }} />
+                                                :
+                                                <FiPlusCircle style={{ color: "#E8B810", height: "25px", width: "25px" }} />}
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <div className='text-base text-[#667085] font-normal mt-2'>
