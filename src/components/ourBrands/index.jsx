@@ -8,9 +8,9 @@ import './index.scss';
 export default function OurBrands() {
     const businessbrands = [starbucks, amazon, airarabia, suitcase,starbucks, amazon, airarabia, suitcase];
     return (
-        <div className='h-80 bg-[#F5F5F5] overflow-hidden'>
-            <div className='font-bold text-4xl text-[#676767] opacity-90 ml-20 pt-9 mb-7'>Businesses that use our platform</div>
-            <div className='flex flex-row w-[1519px] pl-20 whitespace-nowrap animate-marquee'>
+        <div className='xl:h-80 sm:h-80 xl:w-[1519px] bg-[#F5F5F5] sm:w-screen overflow-hidden'>
+            <div className='font-bold text-4xl text-[#676767] opacity-90 xl:ml-20 sm:ml-10 md:text-3xl sm:text-3xl pt-9 mb-7'>Businesses that use our platform</div>
+            <div className='flex xl:w-screen md:w-screen xl:pl-20 sm:pl-10 whitespace-nowrap animate-marquee'>
             
                 {businessbrands.map((items,i) => {
                     return (

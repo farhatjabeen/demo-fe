@@ -21,7 +21,7 @@ const Home = () => {
       <SearchReport />
       </div>
 
-      <div className='w-[1519px]'>
+      <div>
         <ImageWorkFlow />
       </div>
 

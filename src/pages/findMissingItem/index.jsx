@@ -12,7 +12,7 @@ export default function FindMissingItem() {
     if (newKey.itemName && newKey.location) {
       axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
         .then(response => {
-          const filteredData = response.data.filter(f => f.itemname.toLowerCase().includes(newKey.itemName) && f.location.toLowerCase().includes(newKey.location));
+          const filteredData = response.data.filter(f => f.itemname.toLowerCase().includes(newKey.itemName.toLowerCase()) && f.location.toLowerCase().includes(newKey.location.toLowerCase()));
           console.log(filteredData, 'filteredData')
           setData(filteredData);
         })
