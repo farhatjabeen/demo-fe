@@ -17,8 +17,8 @@ const Header = (props) => {
                     <img className="h-auto" src={Logo} alt="logo" />
                 </div>
                 <div className='flex justify-end grow items-center px-3 pr-6'>
-                    <button className="btn-secondary mx-3">Ilost for Business</button>
-                    <button className="btn-primary mx-3" onClick={handleLoginButton}>Login / Register</button>
+                    <button className="w-64 h-14 border rounded-full border-[#E8B810] text-[#E8B810] text-2xl font-bold mx-3">Ilost for Business</button>
+                    <button className="h-14 w-64 bg-[#E8B810] text-white rounded-full font-bold text-2xl mx-3" onClick={handleLoginButton}>Login / Register</button>
                 </div>
                 <div>
                     <UserLogin isOpen={loginButton} onClose={()=>setLoginButton(false)} />

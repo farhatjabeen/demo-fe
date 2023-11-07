@@ -61,7 +61,7 @@ export default function MyProfile() {
                             <div className='font-medium text-[13px]'>Your Name</div>
                         </div>
 
-                        <input className={`w-[480px] h-[51.75px] border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' />
+                        <input className={`w-[480px] h-[51.75px] p-4 border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' />
 
                     </div>
 
@@ -71,7 +71,7 @@ export default function MyProfile() {
                             <label className='text-lg font-bold mt-[13px]'>Mobile Number</label>
                             <div className='font-medium text-[13px]'>Your Mobile Number</div>
                         </div>
-                        <input className={`w-[480px] h-[51.75px] border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="tel" name='mobilenumber' value={mobileNumber} disabled={!editButton} onChange={(e) => setMobileNumber(e.target.value)} placeholder='Enter your Number' />
+                        <input className={`w-[480px] h-[51.75px] p-4 border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="tel" name='mobilenumber' value={mobileNumber} disabled={!editButton} onChange={(e) => setMobileNumber(e.target.value)} placeholder='Enter your Number' />
                     </div>
 
                     <div className='flex justify-between h-[51.75px] mb-[35px]'>
@@ -79,7 +79,7 @@ export default function MyProfile() {
                             <label className='text-lg font-bold mt-[13px]'>Mail ID</label>
                             <div className='font-medium text-[13px]'>Your Mail ID</div>
                         </div>
-                        <input className={`w-[480px] h-[51.75px] border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='email' name='email' value={email} disabled={!editButton} onChange={(e) => setEmail(e.target.value)} placeholder='abc@xyz.com' />
+                        <input className={`w-[480px] h-[51.75px] p-4 border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='email' name='email' value={email} disabled={!editButton} onChange={(e) => setEmail(e.target.value)} placeholder='abc@xyz.com' />
 
                     </div>
                 </div>
@@ -91,17 +91,17 @@ export default function MyProfile() {
                     <div className='flex justify-between h-[51.75px] mb-[35px]'>
 
                         <label className='text-lg font-bold mt-[13px]'>Enter Current password</label>
-                        <input className={`w-[480px] h-[51.75px] border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px]  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' />
+                        <input className={`w-[480px] h-[51.75px] p-4 border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px]  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' />
                     </div>
 
                     <div className='flex justify-between h-[51.75px] mb-[35px]'>
                         <label className='text-lg font-bold mt-[13px]'>Enter New password</label>
-                        <input className={`w-[480px] h-[51.75px] border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='newPassword' value={newPassword} disabled={!editButton} onChange={(e) => setNewPassword(e.target.value)} placeholder='New password' />
+                        <input className={`w-[480px] h-[51.75px] p-4 border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='newPassword' value={newPassword} disabled={!editButton} onChange={(e) => setNewPassword(e.target.value)} placeholder='New password' />
                     </div>
 
                     <div className='flex justify-between h-[51.75px] mb-[35px]'>
                         <label className='text-lg font-bold mt-[13px]'>Re - Enter New password</label>
-                        <input className={`w-[480px] h-[51.75px] border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='reenterpassword' value={reEnterPassword} disabled={!editButton} onChange={handlePassword} placeholder='New password' />
+                        <input className={`w-[480px] h-[51.75px] p-4 border-[0.75px] border-solid border-[#B6B6B6] rounded-[12px] ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='reenterpassword' value={reEnterPassword} disabled={!editButton} onChange={handlePassword} placeholder='New password' />
                     </div>
                 </div>
 
