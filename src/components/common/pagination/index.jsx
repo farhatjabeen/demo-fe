@@ -2,7 +2,7 @@ import React from "react";
 
 const Pagination = () => {
   return (
-    <div className="flex items-center justify-between bg-white">
+    <div className="flex items-center justify-between bg-white pb-20">
       <div>
         <nav className="inline-flex rounded-md ">
           <a

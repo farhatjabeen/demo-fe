@@ -3,7 +3,7 @@ import CustomCombinedButton from "../../components/common/button";
 import keys from "../../assets/images/keys.png";
 const itemDetails = () => {
   return (
-    <>
+    <div className="m-4">
       <div>
         <h1 className="text-black font-bold my-10 text-4xl">
           Item Details(#123412)
@@ -75,20 +75,12 @@ const itemDetails = () => {
             <p>Keys</p>
           </div>
         </div>
-        <div></div>
         <div className="p-4">
           <p className="font-bold mb-2">Item Description</p>
           <p>
-            {" "}
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure,
             repudiandae. Voluptas qui quibusdam quos enim, modi quisquam
             veritatis sapiente fugiat labore maiores voluptatibus sequi impedit
-            facere reprehenderit animi odit explicabo! Three keys with a
-            keychain Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Iure, repudiandae. Voluptas qui quibusdam quos enim, modi quisquam
-            veritatis sapiente fugiat labore maiores voluptatibus sequi impedit
-            facere reprehenderit animi odit explicabo! Three keys with a
-            keychain
           </p>
         </div>
         <div className="p-4">
@@ -99,7 +91,7 @@ const itemDetails = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
