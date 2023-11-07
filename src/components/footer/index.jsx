@@ -14,7 +14,7 @@ const Footer = () => {
                         <img className="w-4/5 h-auto" src={Logo} alt="logo" />
                     </div>
                     <div >
-                        <ul className='footer-links flex p-3 sm:flex-row md:flex-row lg:flex-row xl:flex-row xs:flex-col relative'>
+                        <ul className='footer-links flex p-3 sm:flex-col md:flex-row lg:flex-row xl:flex-row xs:flex-col relative'>
                             <li className='px-8 text-white'>About Us</li>
                             <li className='px-8 text-white'><a href='/contactUs'>Contact Us</a></li>
                             <li className='px-8 text-white'>Terms of Use</li>
