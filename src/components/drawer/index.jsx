@@ -28,7 +28,7 @@ const SideMenu = () => {
           <div className="flex justify-between ">
             <img src={VectorLogo} alt="Logo" className="h-16 w-auto p-2" />
             <div className="py-4 px-1 cursor-pointer ">
-              {/* <AiOutlineMenuUnfold size={30} color="grey" /> */}
+              <AiOutlineMenuUnfold size={30} color="grey" />
             </div>
           </div>
         ) : (
