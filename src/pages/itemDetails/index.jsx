@@ -5,7 +5,7 @@ const itemDetails = () => {
   return (
     <div className="m-4">
       <div>
-        <h1 className="text-black font-bold my-10 text-4xl">
+        <h1 className="text-black font-bold my-10 text-4xl mt-32">
           Item Details(#123412)
         </h1>
       </div>

@@ -171,7 +171,9 @@ const Table = () => {
               key={data.id}
               className={index % 2 === 0 ? "bg-gray" : "bg-white"}
             >
-              <td className="py-6 px-6">{data.id}</td>
+              <td className="py-6 px-6">
+                <Link to="/admin/user/itemDetails">{data.id}</Link>
+              </td>
               <td className="py-6 px-6">{data.itemName}</td>
               <td className="py-6 px-6">{data.location}</td>
               <td className="py-6 px-6">{data.timeFound}</td>
@@ -192,11 +194,9 @@ const Table = () => {
                   {showDropdown && selectedRow === index && (
                     <div className="absolute right-10 mt-0 mb-32 bg-white rounded-lg shadow">
                       <ul>
-                        <Link to="/admin/user/itemDetails">
-                          <li className="py-2 px-6 cursor-pointer  hover:bg-grey">
-                            Edit
-                          </li>
-                        </Link>
+                        <li className="py-2 px-6 cursor-pointer  hover:bg-grey">
+                          Edit
+                        </li>
                         <li className="py-2 px-6 cursor-pointer hover:bg-grey">
                           Delete
                         </li>

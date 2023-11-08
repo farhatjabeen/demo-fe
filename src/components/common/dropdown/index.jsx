@@ -22,13 +22,13 @@ export default function DropdownMenu({ categories }) {
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           type="button"
-          className="inline-flex justify-between rounded-md border border-gray-300 bg-white pl-4 w-full py-2 mr-2 shadow-sm text-sm font-medium text-gray-700 hover:border-gray-400 focus:outline-none focus:ring focus:ring-blue-300"
+          className="inline-flex justify-between rounded-md border border-grey bg-white pl-4 w-full py-3 mr-2 text-grey shadow-sm text-sm font-medium  hover:border-grey"
           id="options-menu"
           aria-haspopup="true"
           aria-expanded="true"
         >
           {selectedCategory ? selectedCategory : 'Filter by category'}
-          <HiOutlineChevronDown className="mr-1 ml-2 h-5 w-5" />
+          <HiOutlineChevronDown className="mr-1 ml-2 h-5 w-5 text-black" />
         </button>
       </div>
 
@@ -39,7 +39,7 @@ export default function DropdownMenu({ categories }) {
               <button
                 key={index}
                 onClick={() => handleCategorySelect(category)}
-                className="block px-4 py-2 text-sm text-gray-700 w-full text-left hover:bg-gray-100"
+                className="block px-4 py-2 text-sm  w-full text-left hover:bg-grey"
                 role="menuitem"
               >
                 {category}

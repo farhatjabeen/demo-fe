@@ -8,21 +8,19 @@ import { Link } from "react-router-dom";
 
 const SideMenu = () => {
   const [isCollapsed, setCollapsed] = useState(false);
-  const [showSubItems, setShowSubItems] = useState(false);
   const [showSubUser, setShowSubUSer] = useState(false);
 
 
   const handleToggleCollapse = () => {
     setCollapsed(!isCollapsed);
     if (isCollapsed) {
-      setShowSubItems(false);
-      setShowSubUSer(false);
+      setShowSubUSer(true);
     }
   };
 
   return (
     // <div className={`sidebar   fixed left-0 top-0 h-screen bg-[#F6F8F9] shadow-slate-50 text-black p-4 ${isCollapsed ? 'collapsed w-28' : 'w-64'}`}>
-      <div className="sidebar fixed relative  bg-[#F6F8F9] shadow-slate-50 m-4">
+    <div className="sidebar fixed relative  bg-[#F6F8F9] shadow-slate-50 m-4">
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
         {isCollapsed ? (
           <div className="flex justify-between ">
@@ -41,69 +39,55 @@ const SideMenu = () => {
         )}
       </div>
       <ul>
-        <li class="mb-4 mt-14" onClick={() => setShowSubItems(!showSubItems)}>
-          <a href="#" class="flex items-center">
+        <li class="mb-4 mt-14">
+          <Link to="/admin/user/foundItems" class="flex items-center">
             <span class="ml-2 flex">
               <AiOutlineYoutube size={24} color="grey" />
-              <div className="pl-4">
-              <p className={!isCollapsed ? '' : 'hidden'} >Items</p>
-              </div>
-            </span>
-          </a>
-        </li>
-
-        {!isCollapsed && showSubItems && (
-          <>
-            <li className="mb-4 ml-4">
-              <Link to="#" className="flex items-center text-black hover:text-blue">
-                <span className="pl-8">Lost Items</span>
-              </Link>
-            </li>
-            <li className="mb-4 ml-4">
-              <Link to="/admin/user/foundItems" className="flex items-center text-black hover:text-blue-500">
-                <span className="pl-8">Found Items</span>
-              </Link>
-            </li>
-          </>
-        )}
-        <li class="mb-4" onClick={() => setShowSubUSer(!showSubUser)}>
-          <a href="#" class="flex items-center">
-            <span class="ml-2 flex">
-              <FaUserCircle size={24} color="grey" />
-              <div className="pl-4">
+              <div className="pl-4 flex items-center text-black hover:text-blue">
+                <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
+            </div>
+          </span>
+        </Link>
+      </li>
+      <li class="mb-4" onClick={() => setShowSubUSer(!showSubUser)}>
+        <div class="flex items-center">
+          <span class="ml-2 flex">
+            <FaUserCircle size={24} color="grey" />
+            <div className="pl-4">
               <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
-              </div>
-            </span>
-          </a>
-        </li>
-        {!isCollapsed && showSubUser && (
-          <>
-            <li className="mb-4 ml-4">
-              <Link to="/admin/user/users" >
-                <span className="pl-8">General Users</span>
-              </Link>
-            </li>
-            <li className="mb-4 ml-4">
-              <Link>
-                <span className="pl-8">Business Users</span>
-              </Link>
-            </li>
-          </>
-        )}
-        <li class="mb-4">
-          <a href="#" class="flex items-center">
-            <span class="ml-2 mt-80 flex">
-              <MdSettings size={24} color="grey" />
-              <div className="pl-4">
+            </div>
+          </span>
+        </div>
+      </li>
+      {!isCollapsed && showSubUser && (
+        <>
+          <li className="mb-4 ml-4">
+            <Link to="/admin/user/users" >
+              <span className="pl-8">General Users</span>
+            </Link>
+          </li>
+          <li className="mb-4 ml-4">
+            <Link  to="/admin/user/businessUser" >
+              <span className="pl-8">Business Users</span>
+            </Link>
+          </li>
+        </>
+      )}
+      <li class="mb-4">
+        <div class="flex items-center">
+          <span class="ml-2 mt-80 flex">
+            <MdSettings size={24} color="grey" />
+            <div className="pl-4">
               <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>
-              </div>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </div>
+            </div>
+          </span>
+        </div>
+      </li>
+    </ul>
+    </div >
   );
 };
 
 export default SideMenu;
+
 

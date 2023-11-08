@@ -11,7 +11,7 @@ const settings = {
   dots: false,
   infinite: true,
   speed: 5000,
-  slidesToShow: 2,
+  slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 0,
@@ -42,7 +42,7 @@ const OurBrands = () => {
 
   return (
     <div className="w-full overflow-hidden py-6">
-      <div className='font-bold text-4xl text-grey py-6'>Businesses that use our platform</div>
+      <div className='font-bold text-4xl text-grey py-6 ml-20'>Businesses that use our platform</div>
       <div>
         <Slider {...settings}>
           {generateImageSlides()}

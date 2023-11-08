@@ -21,12 +21,16 @@ function FoundItems() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const categories = ['Category 1', 'Category 2', 'Category 3'];
+
   return (
     <>
       <div className="m-4">
-
-        <div>
-          <div className="w-full flex  justify-end  mt-20  ">
+        <div className="flex justify-between mb-5 mt-32">
+          <div>
+            <h1 className="text-black font-bold text-4xl">Found Items</h1>
+          </div>
+          <div className="flex">
             <CustomCombinedButton
               text="Export"
               icon={<AiOutlineArrowUp className="mr-2" />}
@@ -43,17 +47,17 @@ function FoundItems() {
               buttonColor="other"
             />
           </div>
-          <div>
-            <h1 className="text-black font-bold my-10 text-4xl">Found Items</h1>
-          </div>
+        </div>
+        <div>
+
           <div className="flex ">
             <input
               type="text"
               placeholder="Search by item id or name"
-              className=" border pl-2 basis-5/12 rounded-md mr-4 py-2 "
+              className=" border text-grey pl-2 basis-5/12 rounded-md mr-4 py-2 "
             />
             <div className="basis-5/12">
-              <DropdownMenu />
+              <DropdownMenu  categories={categories}/>
             </div>
             <div className="basis-1/12">
               <CustomCombinedButton
