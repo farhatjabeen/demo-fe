@@ -16,31 +16,31 @@ export default function ViewItem() {
         <div>
             <div className='flex flex-col items-center'>
                 <div >
-                    <div className='font-bold text-4xl'>Prove your authenticity to claim the item</div>
+                    <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl'>Prove your authenticity to claim the item</div>
                 </div>
-                <div className='mt-10 flex items-center'>
-                    <div><img src='' alt='keys' className='rounded-3xl h-72 w-96 bg-green'></img></div>
-                    <div className='bg-white w-[820px] h-[295px] rounded-[24px] p-8 ml-5 border border-solid border-[#B2B2B2]'>
-                        <div className='font-bold text-4xl' >{currentItem.itemname} (#{currentItem.id})</div>
-                        <div className='  mt-6'>
-                            <div className='w-[250px] flex'><div className='flex items-center'><FaMap style={{ color: "#00b8b8", height: "17px", width: "20px" }} /> </div> <div className='font-semibold text-lg ml-2'>{currentItem.location}</div></div>
-                            <div className='w-[250px] mt-2 flex'><div className='flex items-center'><FaCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold text-lg ml-2'>{currentItem.date}</div></div>
-                            <div className='w-[250px] mt-2 flex'><div className='flex items-center'> <FaClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold text-lg ml-2'>{currentItem.time}</div> </div>
+                <div className='mt-10 xl:w-10/12 md:w-11/12 sm:w-11/12 flex justify-center items-center'>
+                    <div><img src='' alt='keys' className='rounded-3xl xl:h-72 xl:w-96 md:h-60 md:w-64 sm:h-48 sm:w-48 bg-green'></img></div>
+                    <div className='bg-white xl:w-8/12 xl:h-72 md:w-9/12 md:h-60 sm:w-11/12 sm:h-48 rounded-3xl xl:p-8 md:p-8 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
+                        <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl' >{currentItem.itemname} (#{currentItem.id})</div>
+                        <div className='xl:mt-6 md:mt-6 sm:mt-3'>
+                            <div className='w-64 flex'><div className='flex items-center'><FaMap style={{ color: "#00b8b8", height: "17px", width: "20px" }} /> </div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.location}</div></div>
+                            <div className='w-64 mt-2 flex'><div className='flex items-center'><FaCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.date}</div></div>
+                            <div className='w-64 mt-2 flex'><div className='flex items-center'> <FaClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.time}</div> </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className='font-bold text-4xl mt-10 ml-32'>Contact iLost to claim the item</div>
+            <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl mt-10 xl:ml-36 md:ml-12 sm:ml-8'>Contact iLost to claim the item</div>
             <div className='flex justify-center items-center mt-10 mb-16'>
-                <div className='bg-white rounded-3xl h-48 w-96 shadow-lg flex flex-col items-center justify-center'>
-                    <div className='mb-5'><FaPhoneAlt style={{height:"36px",width:"36px", color:"#E3A903"}} /></div>
-                    <div className='text-[#E3A903] font-bold text-4xl mb-2'>Phone</div>
+                <div className='bg-white rounded-3xl xl:h-48 xl:w-96 md:h-44 md:w-80 sm:h-40 sm:w-60 shadow-lg flex flex-col items-center justify-center'>
+                    <div className='xl:mb-5 md:mb-5 sm:mb-4'><FaPhoneAlt className='xl:h-10 xl:w-10 md:h-9 md:w-9 sm:h-7 sm:w-7' style={{color:"#E3A903"}} /></div>
+                    <div className='text-[#E3A903] font-bold xl:text-4xl md:text-3xl mb-2'>Phone</div>
                     <div className='text-sm font-normal'>+91 12345 12323</div>
                 </div>
-                <div className='bg-white rounded-3xl h-48 w-96 ml-14 shadow-lg flex flex-col items-center justify-center'>
-                    <div className='mb-5'><HiMail style={{height:"40px",width:"40px", color:"#E3A903"}} /></div>
-                    <div className='text-[#E3A903] font-bold text-4xl mb-2'>Mail address</div>
+                <div className='bg-white rounded-3xl xl:h-48 xl:w-96 md:h-44 md:w-80 sm:h-40 sm:w-60 ml-14 shadow-lg flex flex-col items-center justify-center'>
+                    <div className='xl:mb-5 md:mb-5 sm:mb-4'><HiMail className='xl:h-10 xl:w-10 md:h-9 md:w-9 sm:h-8 sm:w-8 ' style={{color:"#E3A903"}} /></div>
+                    <div className='text-[#E3A903] font-bold xl:text-4xl md:text-3xl mb-2'>Mail address</div>
                     <div className='text-sm font-normal'>admin@ilost.com</div>
                 </div>
             </div>

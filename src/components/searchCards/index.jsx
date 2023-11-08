@@ -5,24 +5,24 @@ import { useNavigate } from 'react-router'
 export default function SearchCards(props) {
     const navigate = useNavigate();
     return (
-        <div className='mt-[20px] h-[438.75px] w-[320.75px] flex flex-col items-center relative'>
+        <div className='mt-5 h-96 w-80 flex flex-col items-center relative'>
 
             <div>
-                <img src={props.keys} className='rounded-[18px]' alt='keys' height='280px' width='280px' />
+                <img src={props.keys} className='rounded-2xl xl:h-56 xl:w-72 md:h-48 md:w-56 sm:h-44 sm:w-52 bg-green' alt='keys' />
             </div>
-            <div className='absolute bg-white w-[280px] h-[214px] top-[165px] rounded-[18px] flex justify-center items-center'>
-                <div className='w-[240px] h-[180px] mt-[20px]' key={props.idx}>
-                    <div className='font-bold text-2xl'>{props.itemName}</div>
-                    <div className='h-[66px] w-[133px] mt-[12px]'>
-                        <div className=' w-[150px] flex'><FaMap style={{ color: "#00b8b8", margin: '3px' }} />  <h1 className='ml-[5px] font-medium text-sm' >{props.location}</h1></div>
-                        <div className=' w-[150px] flex'><FaCalendar style={{ color: "#00b8b8", margin: '3px' }} /> <h1 className='ml-[5px] font-medium text-sm' >{props.date}</h1></div>
-                        <div className='text-sm w-[150px] flex'><FaClock style={{ color: "#00b8b8", margin: '3px' }} /> <h1 className='ml-[5px] font-medium text-sm' >{props.time}</h1></div>
+            <div className='absolute bg-white xl:w-72 xl:h-56 md:h-48 md:w-56 sm:h-44 sm:w-52 border border-[#D8FFFF] xl:top-44 md:top-40 sm:top-36 rounded-2xl flex justify-center items-center'>
+                <div className='xl:h-44 xl:w-60 md:w-48 md:h-40 sm:w-44 sm:h-36  xl:mt-5' key={props.idx}>
+                    <div className='font-bold xl:text-2xl md:text-xl sm:text-xl'>{props.itemName}</div>
+                    <div className='h-16 mt-3'>
+                        <div className='flex sm:items-center'><FaMap style={{ color: "#00b8b8", margin: '3px' }} />  <h1 className='ml-1.5 font-medium xl:text-base md:text-sm sm:text-xs' >{props.location}</h1></div>
+                        <div className='flex sm:items-center'><FaCalendar style={{ color: "#00b8b8", margin: '3px' }} /> <h1 className='ml-1.5 font-medium xl:text-base md:text-sm sm:text-xs' >{props.date}</h1></div>
+                        <div className='flex sm:items-center'><FaClock style={{ color: "#00b8b8", margin: '3px' }} /> <h1 className='ml-1.5 font-medium xl:text-base md:text-sm sm:text-xs' >{props.time}</h1></div>
                     </div>
                     <div className='flex justify-between'>
-                        <div ><button className='h-[42.75px] w-[120px] rounded-[7.5px] bg-[#E8B810] border-none text-sm font-normal mt-[26px]'>Contact</button></div>
-                        <div className='mt-[30px] h-[32px] w-[120px] flex justify-center items-center text-sm font-normal' >
+                        <div ><button className='xl:h-10 xl:w-32 md:h-8 md:w-24 sm:h-8 sm:w-20 rounded-lg bg-[#E8B810] border-none text-sm font-normal xl:mt-7 md:mt-5 sm:mt-2'>Contact</button></div>
+                        <div className='xl:mt-8 md:mt-6 sm:mt-2 flex justify-center items-center text-sm font-normal' >
                             <button onClick={() => navigate(`/viewItem/${props.itemId}`)}>View item</button>
-                            <FaArrowRight className=' ml-[5px]' />
+                            <FaArrowRight className=' ml-1.5' />
                         </div>
                     </div>
                 </div>
