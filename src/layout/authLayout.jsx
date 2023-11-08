@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import './layout.scss'
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -25,7 +24,6 @@ export function AuthLayout(props) {
 
 
   return (
-    
     <div className="authLayout flex flex-col min-h-screen">
       <Header />
       <div className="flex-grow">

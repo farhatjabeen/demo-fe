@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import './layout.scss'
-import Header from "../components/header";
-import Footer from "../components/footer";
 
 export function AdminAuthLayout(props) {
 
@@ -25,7 +22,7 @@ export function AdminAuthLayout(props) {
 
 
   return (
-    
+
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <main>{props?.children}</main>

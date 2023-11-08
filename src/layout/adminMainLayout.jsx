@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Drawer from "../components/drawer";
-import './layout.scss'
 
 export function AdminMainLayout(props) {
   return (
     <div className="flex min-h-screen">
-        <Drawer/>
+      <Drawer />
       <div className="flex-grow overflow-y-auto bg-[#ffffff]">
         <main>{props?.children}</main>
       </div>

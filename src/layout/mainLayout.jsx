@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/header";
-import './layout.scss'
 import Footer from "../components/footer/index";
 
 export function MainLayout(props) {
@@ -8,7 +7,7 @@ export function MainLayout(props) {
     <div className="mainLayout flex flex-col min-h-screen">
       <Header />
       <div className="flex-grow">
-        <main id="mainLayoutContainer">{props?.children}</main>
+        <main>{props?.children}</main>
       </div>
       <Footer />
     </div>

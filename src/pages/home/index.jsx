@@ -29,7 +29,7 @@ const Home = () => {
         <OurBrands />
       </div>
 
-      <div>
+      <div className='w-full'>
         <Faq questions={questions} />
       </div>
     </div>
