@@ -10,6 +10,9 @@ const Header = (props) => {
     const handleLoginButton = () =>{
         setLoginButton(true);
     }
+    const handleLogoutButton = () =>{
+        setLoginButton(false);
+    }
     return (
         <div className="headerContainer">
             <div className="flex justify-between h-22 m-16 rounded-full bg-white">
@@ -21,7 +24,7 @@ const Header = (props) => {
                     <button className="h-14 w-64 bg-[#E8B810] text-white rounded-full font-bold text-2xl mx-3" onClick={handleLoginButton}>Login / Register</button>
                 </div>
                 <div>
-                    <UserLogin isOpen={loginButton} onClose={()=>setLoginButton(false)} />
+                    <UserLogin isOpen={loginButton} onClose={handleLogoutButton} />
                 </div>
             </div>
         </div>

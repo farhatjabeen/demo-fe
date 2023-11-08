@@ -42,17 +42,13 @@ export default function UserLogin({ isOpen, onClose }) {
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailPattern.test(email);
   };
-
-  if (isOpen) {
-    document.body.style.overflow = 'hidden';
-  }
-  else {
-    document.body.style.overflow = 'auto';
-  }
+  
   return (
     <div>
-      {isOpen ? <div className="fixed inset-0 bg-black opacity-50"></div> : null}
-      <div className={`fixed inset-0 xl:ml-[880px] xl:mt-[165px] z-50 ${isOpen ? '' : 'hidden'}`}>
+      {isOpen && (
+    <div className="fixed inset-0 z-50 bg-black opacity-50 overflow-hidden"></div>
+  )}
+      <div  className={`fixed inset-0 xl:ml-[880px] xl:mt-[165px] z-50 ${isOpen ? '' : 'hidden'}`}>
 
         <div className="bg-white flex flex-col items-center rounded-3xl shadow-lg p-8 w-[531px] h-[470px]">
           <div className='h-[109px] w-[430px] flex flex-col justify-center'>

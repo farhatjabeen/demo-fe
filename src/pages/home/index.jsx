@@ -21,11 +21,11 @@ const Home = () => {
         <SearchReport />
       </div>
 
-      <div>
+      <div className='w-full'>
         <ImageWorkFlow />
       </div>
 
-      <div className='w-full'>
+      <div className='w-full '>
         <OurBrands />
       </div>
 
