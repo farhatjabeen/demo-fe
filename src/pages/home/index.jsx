@@ -25,7 +25,7 @@ const Home = () => {
         <ImageWorkFlow />
       </div>
 
-      <div>
+      <div className='w-full'>
         <OurBrands />
       </div>
 
