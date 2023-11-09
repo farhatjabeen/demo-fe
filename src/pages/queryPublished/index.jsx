@@ -14,14 +14,14 @@ export default function QueryPublished() {
         <div>
             <div>
                 <div className='flex justify-center'>
-                    <div className='w-[553px] h-11 font-bold text-4xl'>Your query has been published!</div>
+                    <div className='h-11 font-bold text-4xl'>Your query has been published!</div>
                 </div>
-                <div className='flex justify-center h-72 mt-10 mb-10'>
-                    <div><img src='' alt='keys' className=' bg-green w-96 h-72 rounded-[24px]'></img></div>
-                    <div className='h-72 w-[820px] ml-7 rounded-[24px] border border-[#B2B2B2] bg-white'>
-                        <div className='p-7'>
+                <div className='flex justify-center xl:my-12 sm:mt-12 px-4'>
+                    <div><img src='' alt='keys' className=' bg-green xl:w-96 xl:h-72 md:w-72 md:h-60 sm:w-48 sm:h-48 rounded-[24px]'></img></div>
+                    <div className='xl:h-72 xl:w-6/12 md:h-60 md:w-8/12 sm:h-48 sm:w-10/12 ml-7 rounded-[24px] border border-[#B2B2B2] bg-white'>
+                        <div className='xl:p-7 md:px-5 md:pt-4 sm:pl-4'>
                             <div className='h-11 w-28 font-bold text-4xl' >{newProduct.itemname}</div>
-                            <div className='m-5'>
+                            <div className='m-2'>
                                 <div className='w-[250px] flex'>
                                     <div className='flex items-center'>
                                         <FaMap style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
@@ -38,14 +38,14 @@ export default function QueryPublished() {
                                     <p className='font-semibold text-lg ml-2'>{newProduct.time}</p>
                                 </div>
                             </div>
-                            <div className='flex justify-between w-96 mt-10'>
+                            <div className='flex justify-between xl:w-96 xl:mt-10 md:w-80 md:mt-7 sm:w-72 sm:mt-5'>
                                 <div >
-                                    <button className='h-14 w-44 rounded-lg bg-[#E8B810] border-none font-normal text-lg'>
+                                    <button className='xl:h-14 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-primary-color border-none font-normal sm:text-base text-lg'>
                                         Edit Content
                                     </button>
                                 </div>
                                 <div >
-                                    <button className='h-14 w-44 rounded-lg bg-white border border-[#E8B810] text-[#E8B810] font-normal text-lg'>
+                                    <button className='xl:h-14 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
                                         Contact Us
                                     </button>
                                 </div>

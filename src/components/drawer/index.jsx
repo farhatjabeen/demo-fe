@@ -20,7 +20,7 @@ const SideMenu = () => {
 
   return (
     // <div className={`sidebar   fixed left-0 top-0 h-screen bg-[#F6F8F9] shadow-slate-50 text-black p-4 ${isCollapsed ? 'collapsed w-28' : 'w-64'}`}>
-    <div className="sidebar fixed relative  bg-[#F6F8F9] shadow-slate-50 m-4">
+    <div className="sidebar relative bg-[#F6F8F9] shadow-slate-50 m-4">
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
         {isCollapsed ? (
           <div className="flex justify-between ">
@@ -40,51 +40,51 @@ const SideMenu = () => {
       </div>
       <ul>
         <li class="mb-4 mt-14">
-          <Link to="/admin/user/foundItems" class="flex items-center">
+          <Link to="/admin/user/foundItems">
             <span class="ml-2 flex">
               <AiOutlineYoutube size={24} color="grey" />
               <div className="pl-4 flex items-center text-black hover:text-blue">
                 <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
-            </div>
-          </span>
-        </Link>
-      </li>
-      <li class="mb-4" onClick={() => setShowSubUSer(!showSubUser)}>
-        <div class="flex items-center">
-          <span class="ml-2 flex">
-            <FaUserCircle size={24} color="grey" />
-            <div className="pl-4">
-              <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
-            </div>
-          </span>
-        </div>
-      </li>
-      {!isCollapsed && showSubUser && (
-        <>
-          <li className="mb-4 ml-4">
-            <Link to="/admin/user/users" >
-              <span className="pl-8">General Users</span>
-            </Link>
-          </li>
-          <li className="mb-4 ml-4">
-            <Link  to="/admin/user/businessUser" >
-              <span className="pl-8">Business Users</span>
-            </Link>
-          </li>
-        </>
-      )}
-      <li class="mb-4">
-        <div class="flex items-center">
-          <span class="ml-2 mt-80 flex">
-            <MdSettings size={24} color="grey" />
-            <div className="pl-4">
-              <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>
-            </div>
-          </span>
-        </div>
-      </li>
-    </ul>
-    </div >
+              </div>
+            </span>
+          </Link>
+        </li>
+        <li class="mb-4" onClick={() => setShowSubUSer(!showSubUser)}>
+          <div>
+            <span class="ml-2 flex">
+              <FaUserCircle size={24} color="grey" />
+              <div className="pl-4">
+                <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
+              </div>
+            </span>
+          </div>
+        </li>
+        {!isCollapsed && showSubUser && (
+          <>
+            <li className="mb-4 ml-4">
+              <Link to="/admin/user/users" >
+                <span className="pl-8">General Users</span>
+              </Link>
+            </li>
+            <li className="mb-4 ml-4">
+              <Link to="/admin/user/businessUser" >
+                <span className="pl-8">Business Users</span>
+              </Link>
+            </li>
+          </>
+        )}
+        <li class="mb-4">
+          <div>
+            <span class="ml-2 mt-80 flex">
+              <MdSettings size={24} color="grey" />
+              <div className="pl-4">
+                <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>
+              </div>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
   );
 };
 
