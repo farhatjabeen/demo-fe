@@ -13,7 +13,7 @@ const CustomCombinedButton = ({ text, icon, onClick, isReset, buttonColor, addit
 
   const otherButton = (
     <button
-      className={` border bg-blue text-white bg- py-2 px-4 rounded-lg flex items-center ml-2 ${additionalClasses}`}
+      className={` border bg-blue text-white  py-2 px-4 rounded-lg flex items-center ml-2 ${additionalClasses}`}
       onClick={onClick}
     >
       {icon && <span className="mr-2">{icon}</span>}

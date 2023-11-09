@@ -12,11 +12,20 @@ function FoundItems() {
   const handleAddItem = () => {};
   const handleExport = () => {};
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    setSelectedCategory("null");
+    setSearchTerm("");
+  };
   const handleSearch = () => {};
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
   const totalPages = 10;
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setIsDropdownOpen(false);
+  };
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -55,9 +64,13 @@ function FoundItems() {
               type="text"
               placeholder="Search by item id or name"
               className=" border text-grey pl-2 basis-5/12 rounded-md mr-4 py-2 "
+              value={searchTerm} 
+              onChange={(event) => setSearchTerm(event.target.value)}
             />
             <div className="basis-5/12">
-              <DropdownMenu  categories={categories}/>
+              <DropdownMenu  categories={categories}
+               selectedCategory={selectedCategory} 
+               onCategorySelect={handleCategorySelect}/>
             </div>
             <div className="basis-1/12">
               <CustomCombinedButton
