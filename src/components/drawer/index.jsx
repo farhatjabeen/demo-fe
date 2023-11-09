@@ -41,7 +41,7 @@ const SideMenu = () => {
       <ul>
         <div class="mb-4 mt-14 " >
         <li className={`${window.location.pathname === "/admin/user/foundItems"
-              ? " bg-light-blue text-blue font-bold  py-2  pr-6 rounded-lg "
+              ? " bg-light-blue text-blue font-bold  py-2   rounded-lg "
               : ""
             }`}>
           <Link to="/admin/user/foundItems"  >
@@ -68,7 +68,7 @@ const SideMenu = () => {
           <>
             <li className="mb-4 ml-4">
               <Link to="/admin/user/users" className={`${window.location.pathname === "/admin/user/users"
-                  ? " bg-light-blue text-blue font-bold  py-3  pr-20 rounded-lg "
+                  ? " bg-light-blue text-blue font-bold  py-3  pr-16 rounded-lg "
                   : " "
                 }`}>
                 <span className="pl-8">General Users</span>
@@ -76,7 +76,7 @@ const SideMenu = () => {
             </li>
             <li className="mb-4 ml-4 ">
               <Link to="/admin/user/businessUser" className={`${window.location.pathname === "/admin/user/businessUser"
-                  ? " bg-light-blue text-blue font-bold  py-3  pr-20 rounded-lg "
+                  ? " bg-light-blue text-blue font-bold  py-3  pr-14  rounded-lg "
                   : ""
                 }`}>
                 <span className="pl-8">Business Users</span>
