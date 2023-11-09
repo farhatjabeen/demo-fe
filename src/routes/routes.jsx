@@ -34,7 +34,7 @@ const routers = [
       {
         component: "itemDetails",
         childPath: "/itemDetails",
-      },
+      }
     ]
   },
   {

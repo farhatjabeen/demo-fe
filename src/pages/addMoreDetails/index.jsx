@@ -18,6 +18,9 @@ export default function AddMoreDetails() {
         reporterid: ''
     })
 
+    const navigate = useNavigate();
+    const reportDetails = useParams();
+
     useEffect(()=>{
         if(!itemname){
             setItemname(reportDetails.itemName);
@@ -26,9 +29,6 @@ export default function AddMoreDetails() {
             setLocation(reportDetails.location);
         }
     },[]);
-
-    const navigate = useNavigate();
-    const reportDetails = useParams();
 
     const handleName = () =>{
         
@@ -146,8 +146,8 @@ export default function AddMoreDetails() {
                     <input className='w-2/4 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5' type='email' name='mail' value={newreport.mail} onChange={handleInputChange} placeholder='Mail address' />
                 </div>
             </div>
-            <div className='xl:w-7/12 md:w-2/5 sm:w-80 flex justify-between mb-10'>
-                    <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'>Cancel</button></div>
+            <div className='xl:w-3/12 md:w-2/5 sm:w-80 flex justify-between mb-10'>
+                    <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab' onClick={() => { window.history.back()}}>Cancel</button></div>
                     <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab' onClick={handleSubmit}>Submit form</button></div>
                 </div>
         </div>
