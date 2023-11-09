@@ -26,7 +26,7 @@ function FoundItems() {
   return (
     <>
       <div className="m-4">
-        <div className="flex justify-between mb-5 mt-32">
+        <div className="flex justify-between mt-10">
           <div>
             <h1 className="text-black font-bold text-4xl">Found Items</h1>
           </div>
@@ -48,8 +48,8 @@ function FoundItems() {
             />
           </div>
         </div>
-        <div>
-
+        {/* Filters */}
+        <div className="my-8">
           <div className="flex ">
             <input
               type="text"

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../assets/images/logo.png"
 
-import "./index.scss"
 import UserLogin from "../userLogin";
 
 const Header = (props) => {

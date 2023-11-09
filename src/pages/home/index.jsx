@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.scss'
 // import { Link } from 'react-router-dom';
 import ImageWorkFlow from '../../components/imageWorkFlow';
 import OurBrands from '../../components/ourBrands';

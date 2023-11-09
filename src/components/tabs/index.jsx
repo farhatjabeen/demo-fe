@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom'
 
 
-const Tabs = ({ children }) => {
+const Tabs = ({ children, className }) => {
   const location = useLocation();
   useEffect(() => {
     if (location.pathname === '/admin/user/businessUser') {
@@ -18,7 +18,7 @@ const Tabs = ({ children }) => {
   };
 
   return (
-    <div>
+    <div className={className}>
       <ul className="flex  border-b border-gray-300 mx-2">
         {children.map((child, index) => (
           <div>
