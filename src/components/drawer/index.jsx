@@ -42,7 +42,7 @@ const SideMenu = () => {
         <div class="mb-4 mt-14 " >
         <li className={`${window.location.pathname === "/admin/user/foundItems"
               ? " bg-light-blue text-blue font-bold  py-2   rounded-lg "
-              : ""
+              : " "
             }`}>
           <Link to="/admin/user/foundItems"  >
             <span class="ml-2 flex">

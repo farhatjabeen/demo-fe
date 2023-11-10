@@ -8,7 +8,7 @@ const categories = [
 ];
 
 export default function DropdownMenu({ categories }) {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleCategorySelect = (category) => {
@@ -21,6 +21,7 @@ export default function DropdownMenu({ categories }) {
       <div>
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          onChange={(e) => setSelectedCategory(e.target.value)}
           type="button"
           className="inline-flex justify-between rounded-md border border-grey bg-white pl-4 w-full py-3 mr-2 text-grey shadow-sm text-sm font-medium  hover:border-grey"
           id="options-menu"
@@ -35,7 +36,7 @@ export default function DropdownMenu({ categories }) {
       {isDropdownOpen && (
         <div className="origin-top-right absolute  right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-            {categories.map((category, index) => (
+          {categories &&categories.map((category, index) => (
               <button
                 key={index}
                 onClick={() => handleCategorySelect(category)}

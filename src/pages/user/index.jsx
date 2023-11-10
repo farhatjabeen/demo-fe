@@ -18,7 +18,38 @@ function User() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const headers2 = [
+    { key: "id", label: "User ID" },
+    { key: "userName", label: "User Name" },
+    { key: "listingCount", label: "Listing Count" },
+    { key: "mailID", label: "Mail ID" },
+    { key: "mobileNumber", label: "Mobile Number" },
+  ];
 
+  const data2 = [
+    { id: "#1543", userName: "Item A", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1542", userName: "Item B", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1543", userName: "Item C", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1143", userName: "Item D", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+  ];
+  const headers3= [
+    { key: "id", label: "Business ID" },
+    { key: "companyName", label: "Company Name" },
+    { key: "category", label: "Category" },
+    { key: "contactName", label: "Contact Name" },
+    { key: "mailID", label: "Mail ID" },
+    { key: "contactPhone", label: "Contact Phone" },
+    { key: "listingCount", label: "Listing Count" },
+  ];
+
+  const data3 = [
+    { id: "#1543", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
+    { id: "#1542", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
+    { id: "#1543", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
+    { id: "#1143", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
+  ];
   return (
     <>
       <div className="m-4">
@@ -52,7 +83,7 @@ function User() {
                 />
               </div>
             </div>
-            <Table />
+            <Table headers={headers2} data={data2} />
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -87,7 +118,7 @@ function User() {
                 />
               </div>
             </div>
-            <Table />
+            <Table headers={headers3} data={data3}/>
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

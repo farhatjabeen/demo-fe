@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 
-const Table = () => {
+const Table = ({ headers, data }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -15,40 +15,6 @@ const Table = () => {
       setShowDropdown(true);
     }
   };
-  const tableData = [
-    {
-      id: 1,
-      itemName: "Item A",
-      location: "Location A",
-      timeFound: "10:00 AM",
-      foundBy: "John Doe",
-      phoneNumber: "123-456-7890",
-    },
-    {
-      id: 2,
-      itemName: "Item B",
-      location: "Location B",
-      timeFound: "11:30 AM",
-      foundBy: "Jane Smith",
-      phoneNumber: "987-654-3210",
-    },
-    {
-      id: 3,
-      itemName: "Item C",
-      location: "Location C",
-      timeFound: "1:00 PM",
-      foundBy: "Emily Johnson",
-      phoneNumber: "555-555-5555",
-    },
-    {
-      id: 4,
-      itemName: "Item D",
-      location: "Location D",
-      timeFound: "2:45 PM",
-      foundBy: "Mark Davis",
-      phoneNumber: "789-123-4567",
-    },
-  ];
 
   const requestSort = (key) => {
     let direction = "asc";
@@ -59,7 +25,7 @@ const Table = () => {
   };
 
   const sortedData = () => {
-    const sorted = [...tableData];
+    const sorted = [...data];
     if (sortConfig.key !== null) {
       sorted.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -73,112 +39,46 @@ const Table = () => {
     }
     return sorted;
   };
-  
+
   return (
     <div className="my-5">
       <table className="w-full">
         <thead>
           <tr className="border border-x-0 border-y-grey">
+          {headers.map((header) => (
             <th
-              onClick={() => requestSort("id")}
-              className="px-6 text-left cursor-pointer"
-            >
-              <div className="flex">
-                <div>
-                  <p>Item ID</p>
-                </div>
-                <div>
-                  <TiArrowSortedUp size={12}className="text-grey hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-grey hover:text-black"/>
-                </div>
-              </div>
-            </th>
-            <th
-              onClick={() => requestSort("itemName")}
+              key={header.key}
+              onClick={() => requestSort(header.key)}
               className="px-6 py-6 text-left cursor-pointer"
             >
               <div className="flex">
                 <div>
-                  <p>Item Name</p>
+                  <p>{header.label}</p>
                 </div>
                 <div>
-                  <TiArrowSortedUp size={12}className="text-grey hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-grey hover:text-black"/>
-                </div>
-              </div>
-            </th>
-            <th
-              onClick={() => requestSort("location")}
-              className="py-6 px-6 text-left cursor-pointer"
-            >
-              <div className="flex">
-                <div>
-                  <p>Location</p>
-                </div>
-                <div>
-                  <TiArrowSortedUp size={12} className="text-grey hover:text-black"/>
-                  <TiArrowSortedDown size={12}className="text-grey hover:text-black" />
-                </div>
-              </div>
-            </th>
-            <th
-              onClick={() => requestSort("timeFound")}
-              className="py-6 px-6 text-left cursor-pointer"
-            >
-              <div className="flex">
-                <div>
-                  <p>Time Found</p>
-                </div>
-                <div>
-                  <TiArrowSortedUp size={12}className="text-grey hover:text-black" />
+                  <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
                   <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
                 </div>
               </div>
             </th>
-            <th
-              onClick={() => requestSort("foundBy")}
-              className="py-6 px-6 text-left cursor-pointer"
-            >
-              <div className="flex">
-                <div>
-                  <p>Found By</p>
-                </div>
-                <div>
-                  <TiArrowSortedUp size={12} className="text-grey hover:text-black"/>
-                  <TiArrowSortedDown size={12} className="text-grey hover:text-black"/>
-                </div>
-              </div>
-            </th>
-            <th
-              onClick={() => requestSort("phoneNumber")}
-              className="py-6 px-6 text-left cursor-pointer"
-            >
-              <div className="flex">
-                <div>
-                  <p>Phone Number</p>
-                </div>
-                <div>
-                  <TiArrowSortedUp size={12}  className="text-grey hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                </div>
-              </div>
-            </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {sortedData().map((data, index) => (
+          {sortedData().map((rowData, index) => (
             <tr
-              key={data.id}
+              key={index}
               className={index % 2 === 0 ? "bg-gray" : "bg-white"}
             >
-              <td className="py-6 px-6">
-                <Link to="/admin/user/itemDetails">{data.id}</Link>
-              </td>
-              <td className="py-6 px-6">{data.itemName}</td>
-              <td className="py-6 px-6">{data.location}</td>
-              <td className="py-6 px-6">{data.timeFound}</td>
-              <td className="py-6 px-6">{data.foundBy}</td>
-              <td className="py-6 px-6">{data.phoneNumber}</td>
+              {headers.map((header) => (
+              <td key={header.key} className="py-6 px-6">
+                  {header.key === "id" ? (
+                <Link to="/admin/user/itemDetails">{rowData[header.key]}</Link>
+                  ):(
+                    rowData[header.key]
+                    )}
+                </td>
+              ))}
               <td className="py-6 px-6 relative">
                 <div className="flex items-center justify-center">
                   <button
@@ -192,7 +92,7 @@ const Table = () => {
                     </div>
                   </button>
                   {showDropdown && selectedRow === index && (
-                    <div className="absolute right-10 mt-0 mb-32 bg-white rounded-lg shadow">
+                    <div className="absolute right-8 mt-0 mb-32 bg-white rounded-lg shadow">
                       <ul>
                         <li className="py-2 px-6 cursor-pointer  hover:bg-grey">
                           Edit
