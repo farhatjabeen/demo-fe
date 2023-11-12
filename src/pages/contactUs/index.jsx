@@ -33,7 +33,7 @@ export default function ContactUs() {
                     <div className='sm:w-[500px] xl:w-[600px] mt-7 flex flex-col sm:items-center xl:items-end'>
                             <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="email" placeholder='Enter your email' />
                             <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="text" placeholder='Subject' />
-                        <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' name="text" placeholder='Message' />
+                        <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' type="text" placeholder='Message' />
                         <input className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit" value="Submit" />
                     </div>
                 </div>
