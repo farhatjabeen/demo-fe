@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.svg";
 import VectorLogo from "../../assets/images/VectorLogo.png";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold, AiOutlineYoutube } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";

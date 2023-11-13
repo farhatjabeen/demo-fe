@@ -58,7 +58,7 @@ export default function MyProfile() {
                     <div className='flex justify-between mb-9'>
                         <div>
                             <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Name</label>
-                            <div className='font-medium xl:text-sm sm:text-xs'>Your Name</div>
+                            <div className='font-medium text-xs'>Your Name</div>
                         </div>
 
                         <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' />
@@ -69,7 +69,7 @@ export default function MyProfile() {
 
                         <div>
                             <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Mobile Number</label>
-                            <div className='font-medium xl:text-sm sm:text-xs'>Your Mobile Number</div>
+                            <div className='font-medium text-xs'>Your Mobile Number</div>
                         </div>
                         <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="tel" name='mobilenumber' value={mobileNumber} disabled={!editButton} onChange={(e) => setMobileNumber(e.target.value)} placeholder='Enter your Number' />
                     </div>
@@ -77,7 +77,7 @@ export default function MyProfile() {
                     <div className='flex justify-between mb-9'>
                         <div>
                             <label className='xl:text-lg sm:text-base font-bold mt-[13px]'>Mail ID</label>
-                            <div className='font-medium xl:text-sm sm:text-xs'>Your Mail ID</div>
+                            <div className='font-medium text-xs'>Your Mail ID</div>
                         </div>
                         <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='email' name='email' value={email} disabled={!editButton} onChange={(e) => setEmail(e.target.value)} placeholder='abc@xyz.com' />
 

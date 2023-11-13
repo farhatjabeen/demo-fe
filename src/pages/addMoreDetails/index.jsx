@@ -125,7 +125,7 @@ export default function AddMoreDetails() {
                 <div className='flex justify-between h-12 mb-9 relative location'>
                     <div>
                         <label className='font-bold text-lg'>Your Name</label>
-                        <div className='font-medium text-sm'>Your Name</div>
+                        <div className='font-medium text-xs'>Your Name</div>
                     </div>
                     <input className='w-2/4 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5' type='text' name='name' value={newreport.name} onChange={handleInputChange} placeholder='Full name' />
                 </div>
@@ -133,7 +133,7 @@ export default function AddMoreDetails() {
                 <div className='flex justify-between h-12 mb-9 relative'>
                     <div>
                         <label className='font-bold text-lg'>Your Phone Number</label>
-                        <div className='font-medium text-sm'>Your Phone Number</div>
+                        <div className='font-medium text-xs'>Your Phone Number</div>
                     </div>
                     <input className='w-2/4 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5' type='tel' name='mobilenumber' value={newreport.mobilenumber} onChange={handleInputChange} placeholder='Phone number' />
                 </div>
@@ -141,7 +141,7 @@ export default function AddMoreDetails() {
                 <div className='flex justify-between h-12 mb-9 relative'>
                     <div>
                         <label className='font-bold text-lg'>Your Mail address</label>
-                        <div className='font-medium text-sm'>Your Mail address</div>
+                        <div className='font-medium text-xs'>Your Mail address</div>
                     </div>
                     <input className='w-2/4 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5' type='email' name='mail' value={newreport.mail} onChange={handleInputChange} placeholder='Mail address' />
                 </div>

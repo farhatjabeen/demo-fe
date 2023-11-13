@@ -42,7 +42,7 @@ const OurBrands = () => {
 
   return (
     <div className="w-full overflow-hidden py-6">
-      <div className='font-bold xl:text-4xl md:text-3xl sm:text-3xl text-grey px-12 py-6'>Businesses that use our platform</div>
+      <div className='font-bold xl:text-4xl md:text-3xl sm:text-3xl text-[#676767] px-12 py-6'>Businesses that use our platform</div>
       <div>
         <Slider {...settings}>
           {generateImageSlides()}
