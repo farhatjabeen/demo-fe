@@ -6,7 +6,10 @@ import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import Tabs from "../../components/tabs";
 function User() {
-  const handleReset = () => { };
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleReset = () => { 
+    setSearchTerm("");
+  };
   const handleSearch = () => { };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,6 +30,8 @@ function User() {
                 type="text"
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)} 
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
@@ -60,6 +65,8 @@ function User() {
                 type="text"
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)} 
               />
               <div className="basis-1/12">
                 <CustomCombinedButton

@@ -39,21 +39,26 @@ const SideMenu = () => {
         )}
       </div>
       <ul>
-        <li class="mb-4 mt-14">
-          <Link to="/admin/user/foundItems">
+        <div class="mb-4 mt-14 " >
+        <li className={`${window.location.pathname === "/admin/user/foundItems"
+              ? " bg-light-blue text-blue font-bold  py-2   rounded-lg "
+              : ""
+            }`}>
+          <Link to="/admin/user/foundItems"  >
             <span class="ml-2 flex">
               <AiOutlineYoutube size={24} color="grey" />
-              <div className="pl-4 flex items-center text-black hover:text-blue">
+              <div className="pl-4 ">
                 <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
               </div>
             </span>
           </Link>
         </li>
+        </div>
         <li class="mb-4" onClick={() => setShowSubUSer(!showSubUser)}>
-          <div>
+          <div className="cursor-pointer">
             <span class="ml-2 flex">
-              <FaUserCircle size={24} color="grey" />
-              <div className="pl-4">
+              <FaUserCircle size={24} color="grey"  />
+              <div className="pl-4 cursor-pointer">
                 <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
               </div>
             </span>
@@ -62,27 +67,34 @@ const SideMenu = () => {
         {!isCollapsed && showSubUser && (
           <>
             <li className="mb-4 ml-4">
-              <Link to="/admin/user/users" >
+              <Link to="/admin/user/users" className={`${window.location.pathname === "/admin/user/users"
+                  ? " bg-light-blue text-blue font-bold  py-3  pr-16 rounded-lg "
+                  : " "
+                }`}>
                 <span className="pl-8">General Users</span>
               </Link>
             </li>
-            <li className="mb-4 ml-4">
-              <Link to="/admin/user/businessUser" >
+            <li className="mb-4 ml-4 ">
+              <Link to="/admin/user/businessUser" className={`${window.location.pathname === "/admin/user/businessUser"
+                  ? " bg-light-blue text-blue font-bold  py-3  pr-14  rounded-lg "
+                  : ""
+                }`}>
                 <span className="pl-8">Business Users</span>
               </Link>
             </li>
           </>
         )}
-        <li class="mb-4">
+        <li >
           <div>
-            <span class="ml-2 mt-80 flex">
-              <MdSettings size={24} color="grey" />
+            <span class="ml-2 mt-96 pt-24 flex">
+              <MdSettings size={24}  color="grey"/>
               <div className="pl-4">
                 <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>
               </div>
             </span>
           </div>
         </li>
+
       </ul>
     </div>
   );
