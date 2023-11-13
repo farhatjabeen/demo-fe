@@ -14,7 +14,7 @@ function FoundItems() {
 
   const handleReset = () => {
     setSearchTerm("");
-    setSelectedCategory(null); 
+    setSelectedCategory(null);
   };
   const handleSearch = () => { };
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -105,6 +105,7 @@ function FoundItems() {
         </div>
         <Table headers={headers1} data={data1} />
         <Pagination
+          isBlueBackground={true}
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}

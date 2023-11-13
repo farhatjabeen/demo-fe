@@ -1,13 +1,14 @@
 import React from "react";
 
-const Pagination = () => {
+const Pagination = ({ isBlueBackground }) => {
+  const backgroundColor = isBlueBackground ? "bg-blue" : "bg-primary-color";
   return (
     <div className="flex items-center justify-between ">
       <div>
         <nav className="inline-flex rounded-md ">
           <a
             href="#"
-            className="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 mr-1"
+            className="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0 mr-1"
           >
             <span className="sr-only">Previous</span>
             <svg
@@ -26,25 +27,25 @@ const Pagination = () => {
           <a
             href="/signin"
             aria-current="page"
-            className="relative z-10 inline-flex  rounded-md items-center bg-blue px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue mr-1"
+            className={`relative z-10 inline-flex  rounded-md items-center  px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue mr-1 ${backgroundColor}`}
           >
             1
           </a>
           <a
             href="#"
-            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold   rounded-md  text-gray-900 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
+            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold   rounded-md  text-gray-900 hover:bg-gray focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
           >
             2
           </a>
           <a
             href="#"
-            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold   rounded-md  text-gray-900 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
+            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold   rounded-md  text-gray-900 hover:bg-gray focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
           >
             3
           </a>
           <a
             href="#"
-            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold    rounded-md text-gray-900 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
+            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold    rounded-md text-gray-900 hover:bg-gray focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
           >
             4
           </a>
@@ -53,19 +54,19 @@ const Pagination = () => {
           </span>
           <a
             href="#"
-            className="relative hidden items-center px-4 py-2 text-sm font-semibold   rounded-md  text-gray-900 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
+            className="relative hidden items-center px-4 py-2 text-sm font-semibold   rounded-md  text-gray-900 hover:bg-gray focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
           >
             7
           </a>
           <a
             href="#"
-            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold   rounded-md text-gray-900 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
+            className="relative inline-flex items-center px-4 py-2 text-sm font-semibold   rounded-md text-gray-900 hover:bg-gray focus:z-20 focus:outline-offset-0 md:inline-flex mr-1"
           >
             8
           </a>
           <a
             href="#"
-            className="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+            className="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0"
           >
             <span className="sr-only">Next</span>
             <svg

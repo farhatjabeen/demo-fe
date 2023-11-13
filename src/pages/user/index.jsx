@@ -7,7 +7,7 @@ import Pagination from "../../components/common/pagination";
 import Tabs from "../../components/tabs";
 function User() {
   const [searchTerm, setSearchTerm] = useState("");
-  const handleReset = () => { 
+  const handleReset = () => {
     setSearchTerm("");
   };
   const handleSearch = () => { };
@@ -44,11 +44,11 @@ function User() {
   ];
 
   const data3 = [
-    { id: "#1543", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
-    { id: "#1542", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
-    { id: "#1543", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
-    { id: "#1143", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
-    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891" ,listingCount:"12"},
+    { id: "#1543", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1542", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1543", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1143", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
   ];
   return (
     <>
@@ -62,7 +62,7 @@ function User() {
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
                 value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)} 
+                onChange={(event) => setSearchTerm(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
@@ -85,6 +85,7 @@ function User() {
             </div>
             <Table headers={headers2} data={data2} />
             <Pagination
+              isBlueBackground={true}
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}
@@ -97,7 +98,7 @@ function User() {
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
                 value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)} 
+                onChange={(event) => setSearchTerm(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
@@ -118,8 +119,9 @@ function User() {
                 />
               </div>
             </div>
-            <Table headers={headers3} data={data3}/>
+            <Table headers={headers3} data={data3} />
             <Pagination
+              isBlueBackground={true}
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}

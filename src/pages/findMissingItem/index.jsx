@@ -55,7 +55,8 @@ export default function FindMissingItem() {
         })}
       </div>
       <div className='mt-10'>
-      <Pagination />
+      <Pagination 
+       isBlueBackground={false}/>
       </div>
       <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
         <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
