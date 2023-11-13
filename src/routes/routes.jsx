@@ -46,6 +46,10 @@ const routers = [
       {
         component: "AllItems",
         childPath: "/allItems",
+      },
+      {
+        component: "BusinessHome",
+        childPath: "/businessHome",
       }
     ]
   },

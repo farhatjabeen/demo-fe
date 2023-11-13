@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import { HiPlus } from "react-icons/hi";
+import { AiOutlineArrowUp } from "react-icons/ai";
 
 export default function AllItems() {
     const[tableData,setTableData] = useState([]);
@@ -15,8 +17,8 @@ export default function AllItems() {
         <div className='px-28'>
             <div className='flex justify-end mb-5'>
                 <div className=' flex justify-between w-72'>
-                    <button className='h-10 w-32 bg-white rounded-lg'>Export</button>
-                    <button className=' h-10 w-36 bg-primary-color rounded-lg'>Add Item</button>
+                    <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button>
+                    <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center'><HiPlus className='mr-2' /> Add Item</button>
                 </div>
             </div>
 
@@ -27,14 +29,14 @@ export default function AllItems() {
 
             <div className='mt-10 mb-4 font-semibold text-2xl'>All Items</div>
 
-            <div className='mb-20'>
-                <table className="w-full">
+            <div className='mb-20 md:flex md:justify-center '>
+                <table className="xl:w-full md:w-full">
                     <thead>
                         <tr >
                             <th className="px-6 py-6 text-left cursor-pointer">
-                                <div className="flex">
+                                <div className="flex w-fit">
                                     <div>
-                                        <p className='text-[#1B2E6B]'>Item Code</p>
+                                        <p className='text-[#1B2E6B]  md:text-base'>Item Code</p>
                                     </div>
                                     <div>
                                         <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
