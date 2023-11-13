@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 
-const categories = [
-  'Category 1',
-  'Category 2',
-  'Category 3',
-];
 
-export default function DropdownMenu({ categories }) {
-  const [selectedCategory, setSelectedCategory] = useState("");
+
+export default function DropdownMenu({ categories , selectedCategory, onSelectCategory }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+    onSelectCategory(category);
     setIsDropdownOpen(false);
   };
 
@@ -21,8 +16,6 @@ export default function DropdownMenu({ categories }) {
       <div>
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          type="button"
           className="inline-flex justify-between rounded-md border border-grey bg-white pl-4 w-full py-3 mr-2 text-grey shadow-sm text-sm font-medium  hover:border-grey"
           id="options-menu"
           aria-haspopup="true"

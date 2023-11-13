@@ -84,9 +84,9 @@ const SideMenu = () => {
             </li>
           </>
         )}
-        <li >
+        <li className="fixed bottom-4" >
           <div>
-            <span class="ml-2 mt-96 pt-24 flex">
+            <span class="ml-2  flex">
               <MdSettings size={24}  color="grey"/>
               <div className="pl-4">
                 <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>
@@ -94,8 +94,7 @@ const SideMenu = () => {
             </span>
           </div>
         </li>
-
-      </ul>
+        </ul>
     </div>
   );
 };

@@ -14,8 +14,10 @@ function FoundItems() {
 
   const handleReset = () => {
     setSearchTerm("");
+    setSelectedCategory(null); 
   };
   const handleSearch = () => { };
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const totalPages = 10;
@@ -77,7 +79,9 @@ function FoundItems() {
               onChange={(event) => setSearchTerm(event.target.value)}
             />
             <div className="basis-5/12">
-              <DropdownMenu categories={categories} />
+              <DropdownMenu categories={categories}
+                selectedCategory={selectedCategory}
+                onSelectCategory={(category) => setSelectedCategory(category)} />
             </div>
             <div className="basis-1/12">
               <CustomCombinedButton

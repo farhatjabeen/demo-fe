@@ -6,6 +6,7 @@ const Table = ({ headers, data }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  
   const handleDropdownClick = (index) => {
     if (selectedRow === index) {
       setSelectedRow(null);
