@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import { BsFillEyeFill,BsFillEyeSlashFill } from "react-icons/bs";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
 export default function BusinessSignIn() {
-    const[seePassword,setSeePassword]=useState(false)
+    const [seePassword, setSeePassword] = useState(false)
     return (
         <div className='flex justify-center mb-28'>
             <div className='bg-white xl:w-2/6 md:w-3/5 sm:w-4/5 border-[#878787] border rounded-lg p-8'>
@@ -15,11 +15,11 @@ export default function BusinessSignIn() {
                         <input type='text' className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4' placeholder='Enter your Email address' />
                         <label className='font-normal text-base mt-8 mb-3'>Password</label>
                         <div className='relative'>
-                        <input type={`${seePassword?"password":"text"}`} className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4' placeholder='Enter your Password' />
-                        <div className='absolute top-4 left-3/4 ml-16' onClick={()=>setSeePassword(!seePassword)}>
-                            {seePassword?<BsFillEyeSlashFill className='h-6 w-6' />:<BsFillEyeFill className='h-6 w-6' />}
+                            <input type={`${seePassword ? "password" : "text"}`} className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4' placeholder='Enter your Password' />
+                            <div className='absolute top-4 left-3/4 ml-16' onClick={() => setSeePassword(!seePassword)}>
+                                {seePassword ? <BsFillEyeSlashFill className='h-6 w-6' /> : <BsFillEyeFill className='h-6 w-6' />}
 
-                        </div>
+                            </div>
                         </div>
                     </div>
                     <div className='flex justify-between mt-3'>
