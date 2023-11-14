@@ -3,17 +3,17 @@ import React, { useEffect, useState } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
 import { AiOutlineArrowUp } from "react-icons/ai";
+import Pagination from '../../components/common/pagination';
 
 export default function AllItems() {
     const[tableData,setTableData] = useState([]);
-    
     useEffect(()=>{
         axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
         .then(res=>setTableData(res.data))
         .catch(e=>console.log(e));
     },[])
-        
     return (
+     <>
         <div className='px-28'>
             <div className='flex justify-end mb-5'>
                 <div className=' flex justify-between w-72'>
@@ -29,7 +29,7 @@ export default function AllItems() {
 
             <div className='mt-10 mb-4 font-semibold text-2xl'>All Items</div>
 
-            <div className='mb-20 md:flex md:justify-center '>
+            <div className='mb-10 md:flex md:justify-center '>
                 <table className="xl:w-full md:w-full">
                     <thead>
                         <tr >
@@ -122,5 +122,10 @@ export default function AllItems() {
             </div>
 
         </div>
+        <div className=' flex justify-center mb-20'>
+            <Pagination
+                isBlueBackground={false} />
+            </div>
+        </>
     )
 }

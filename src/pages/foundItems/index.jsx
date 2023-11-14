@@ -81,7 +81,8 @@ function FoundItems() {
             <div className="basis-5/12">
               <DropdownMenu categories={categories}
                 selectedCategory={selectedCategory}
-                onSelectCategory={(category) => setSelectedCategory(category)} />
+                onSelectCategory={(category) => setSelectedCategory(category)} 
+                isFilterMode={true}/>
             </div>
             <div className="basis-1/12">
               <CustomCombinedButton

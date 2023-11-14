@@ -5,6 +5,7 @@ import quotes from '../../assets/images/quotes.png';
 import OurBrands from '../../components/ourBrands';
 import { useEffect } from 'react';
 import Slider from 'react-slick';
+import { Link } from 'react-router-dom';
 
 export default function BusinessHome() {
     const [readmore, setReadmore] = useState(false);
@@ -13,7 +14,6 @@ export default function BusinessHome() {
     const contentData = [{content:"“I have points across so many programs. Thanks to BTZapp, I can now use all these points together to get what I want.”",
     author:"Mark"},
 {content:"“Rise up & attack the day with Passion. The struggle you're in today is developing the strength you need for tomorrow.”",author:"Antony"},{content:"“life isn't about black and white,look around and you will see that the world is much more colorful than you thought”",author:"John"}];
-
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveIndex((prevIndex) => (prevIndex + 1) % contentData.length);
@@ -29,8 +29,7 @@ export default function BusinessHome() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
-    
-    };
+};
 
     return (
         <div className='flex flex-col justify-center'>
@@ -39,7 +38,9 @@ export default function BusinessHome() {
                 <div className='font-normal text-lg text-center mt-3 mb-8 text-[#404041]'>Reassure your customers, save time & money and return <br></br> more items of lost property with our lost and found software.</div>
                 <div>
                     <button className='border border-[#FF9900] w-48 h-14 rounded-lg text-[#834F00]'>Sign in</button>
-                    <button className='w-48 h-14 rounded-lg bg-[#FF9900] ml-5'>Sign Up</button>
+                    <Link to='/businessignup'>
+                        <button className='w-48 h-14 rounded-lg bg-[#FF9900] ml-5'>Sign Up</button>
+                    </Link>
                 </div>
             </div>
 

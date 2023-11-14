@@ -26,7 +26,7 @@ const ImageSlide = ({ imageSrc, altText, margin }) => (
   </div>
 );
 
-const OurBrands = () => {
+const OurBrands = ({ asTrustedBy = false }) => {
   const images = [
     { src: starbucks, alt: 'Starbucks', margin: 'my-4 mx-6' },
     { src: amazon, alt: 'Amazon', margin: 'my-16 mx-6' },
@@ -42,7 +42,9 @@ const OurBrands = () => {
 
   return (
     <div className="w-full overflow-hidden py-6">
-      <div className='font-bold xl:text-4xl md:text-3xl sm:text-3xl text-[#676767] px-12 py-6'>Businesses that use our platform</div>
+      <div className='font-bold xl:text-4xl md:text-3xl sm:text-3xl text-[#676767] px-12 py-6'>
+      {asTrustedBy ? 'As Trusted By' : 'Businesses that use our platform'}
+      </div>
       <div>
         <Slider {...settings}>
           {generateImageSlides()}
@@ -54,3 +56,4 @@ const OurBrands = () => {
 };
 
 export default OurBrands;
+

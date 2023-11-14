@@ -32,7 +32,7 @@ const SideMenu = () => {
         ) : (
           <div className="flex justify-between">
             <img src={logo} alt="Logo" className="h-16 w-auto" />
-            <div className="p-4 cursor-pointer ml-4">
+            <div className="p-4 cursor-pointer pl-4">
               <AiOutlineMenuFold size={30} color="grey" />
             </div>
           </div>
@@ -41,11 +41,11 @@ const SideMenu = () => {
       <ul>
         <div class="mb-4 mt-14 " >
         <li className={`${window.location.pathname === "/admin/user/foundItems"
-              ? " bg-light-blue text-blue font-bold  py-2   rounded-lg "
+              ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
               : " "
             }`}>
           <Link to="/admin/user/foundItems"  >
-            <span class="ml-2 flex">
+            <span class="pl-2 flex">
               <AiOutlineYoutube size={24} color="grey" />
               <div className="pl-4 ">
                 <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
@@ -56,7 +56,7 @@ const SideMenu = () => {
         </div>
         <li class="mb-4" onClick={() => setShowSubUSer(!showSubUser)}>
           <div className="cursor-pointer">
-            <span class="ml-2 flex">
+            <span class="pl-2 flex">
               <FaUserCircle size={24} color="grey"  />
               <div className="pl-4 cursor-pointer">
                 <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
@@ -66,27 +66,27 @@ const SideMenu = () => {
         </li>
         {!isCollapsed && showSubUser && (
           <>
-            <li className="mb-4 ml-4">
+            <li className="mb-4 ">
               <Link to="/admin/user/users" className={`${window.location.pathname === "/admin/user/users"
-                  ? " bg-light-blue text-blue font-bold  py-3  pr-16 rounded-lg "
+                  ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
                   : " "
                 }`}>
-                <span className="pl-8">General Users</span>
+                <span >General Users</span>
               </Link>
             </li>
-            <li className="mb-4 ml-4 ">
+            <li className="mb-4 ">
               <Link to="/admin/user/businessUser" className={`${window.location.pathname === "/admin/user/businessUser"
-                  ? " bg-light-blue text-blue font-bold  py-3  pr-14  rounded-lg "
+                  ? " bg-light-blue text-blue font-bold  py-3  rounded-lg "
                   : ""
                 }`}>
-                <span className="pl-8">Business Users</span>
+                <span >Business Users</span>
               </Link>
             </li>
           </>
         )}
         <li className="fixed bottom-4" >
           <div>
-            <span class="ml-2  flex">
+            <span class="pl-2  flex">
               <MdSettings size={24}  color="grey"/>
               <div className="pl-4">
                 <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>

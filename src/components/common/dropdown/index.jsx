@@ -3,7 +3,7 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 
 
 
-export default function DropdownMenu({ categories , selectedCategory, onSelectCategory }) {
+export default function DropdownMenu({ categories , selectedCategory, onSelectCategory ,isFilterMode}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleCategorySelect = (category) => {
@@ -21,7 +21,8 @@ export default function DropdownMenu({ categories , selectedCategory, onSelectCa
           aria-haspopup="true"
           aria-expanded="true"
         >
-          {selectedCategory ? selectedCategory : 'Filter by category'}
+                    {selectedCategory ? selectedCategory : isFilterMode ? 'Filter by category' : 'Select'}
+
           <HiOutlineChevronDown className="mr-1 ml-2 h-5 w-5 text-black" />
         </button>
       </div>

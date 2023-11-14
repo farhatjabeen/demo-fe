@@ -40,6 +40,10 @@ const routers = [
         childPath: "/businessSignIn",
       },
       {
+        component: "BusinessSignUp",
+        childPath: "/businessignup",
+      },
+      {
         component: "CompanyProfile",
         childPath: "/companyProfile",
       },
