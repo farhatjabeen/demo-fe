@@ -16,6 +16,10 @@ const routers = [
         childPath: "/addMoreDetails/:itemName/:location",
       },
       {
+        component: "AddMoreDetails",
+        childPath: "/addMoreDetails",
+      },
+      {
         component: "QueryPublished",
         childPath: "/queryPublished",
       },

@@ -47,13 +47,13 @@ export default function UserLogin({ isOpen, onClose }) {
 
   return (
     <div >
-      {/* className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-end' */}
+      {/* className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-end'
       {isOpen && (
       <div className="fixed inset-0 z-50 bg-black backdrop-blur-sm overflow-hidden"></div>
       )}
       <div className={`fixed inset-0 flex justify-end xl:mt-40 xl:mr-12 md:mt-40 md:mr-16 sm:mt-40 z-50 ${isOpen ? '' : 'hidden'}`}>
 
-        <div className="relative xl:w-2/5 xl:h-5/6 md:w-7/12 md:h-4/6 sm:w-7/12 bg-white flex flex-col items-center rounded-3xl shadow-lg xl:p-8 md-p-8 sm:p-5 ">
+        <div className="relative xl:w-2/5 xl:h-5/6 md:w-7/12 md:h-4/6 sm:w-7/12 bg-white flex flex-col items-center rounded-3xl shadow-lg xl:p-8 md-p-8 sm:p-5 "> */}
           <div className='h-28 w-11/12 flex flex-col justify-center'>
             <div className='flex'>
               <div className='xl:text-4xl md:text-3xl sm:text-2xl font-bold'>Login/Register</div>
@@ -143,8 +143,8 @@ export default function UserLogin({ isOpen, onClose }) {
             }
           </div>
           <IoTriangleSharp className='absolute top-[-24px] md:left-2/3 xl:left-96 h-7 w-7 text-white' />
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
     </div >
   )
 }

@@ -22,8 +22,10 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className='flex justify-center p-5'>
-                        <h6 className='text-white px-4 bg-trans-white rounded-lg font-semibold'>Are you a business user? Sign in here</h6>
+                        <button className='text-white px-4 bg-trans-white rounded-lg font-semibold curs' onClick={()=>navigate('/businessSignIn')}>Are you a business user? Sign in here</button>
                     </div>
+                    
+
                 </div>
             </div>
             <div className='copy-rights w-full py-2'>

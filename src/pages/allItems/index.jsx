@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
 import { AiOutlineArrowUp } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 
 export default function AllItems() {
     const[tableData,setTableData] = useState([]);
-    
+    const navigate = useNavigate();
     useEffect(()=>{
         axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
         .then(res=>setTableData(res.data))
@@ -18,7 +19,7 @@ export default function AllItems() {
             <div className='flex justify-end mb-5'>
                 <div className=' flex justify-between w-72'>
                     <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button>
-                    <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center'><HiPlus className='mr-2' /> Add Item</button>
+                    <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={()=>navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
                 </div>
             </div>
 
@@ -30,7 +31,7 @@ export default function AllItems() {
             <div className='mt-10 mb-4 font-semibold text-2xl'>All Items</div>
 
             <div className='mb-20 md:flex md:justify-center '>
-                <table className="xl:w-full md:w-full">
+                <table className="w-full">
                     <thead>
                         <tr >
                             <th className="px-6 py-6 text-left cursor-pointer">
