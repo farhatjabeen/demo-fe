@@ -31,7 +31,7 @@ export default function BusinessSignUp() {
                             type="text"
                             id="fullName"
                             placeholder="Full Name"
-                            className="border pl-2 w-full rounded-xl text-grey py-2"
+                            className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
                         />
                     </div>
 
@@ -40,7 +40,7 @@ export default function BusinessSignUp() {
                         <input
                             type="text"
                             placeholder="1234567890"
-                            className="border pl-2 w-full rounded-xl text-grey py-2"
+                            className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
                         />
                     </div>
 
@@ -49,7 +49,7 @@ export default function BusinessSignUp() {
                         <input
                             type="text"
                             placeholder="abc@xyz.com"
-                            className="border pl-2 w-full rounded-xl text-grey py-2"
+                            className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
                         />
                     </div>
 
@@ -58,7 +58,7 @@ export default function BusinessSignUp() {
                         <input
                             type="text"
                             placeholder="Galaxies"
-                            className="border pl-2 w-full rounded-xl text-grey py-2"
+                            className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
                         />
                     </div>
 
@@ -67,7 +67,7 @@ export default function BusinessSignUp() {
                         <input
                             type="text"
                             placeholder="Glorious"
-                            className="border pl-2 w-full rounded-xl text-grey py-2"
+                            className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
                         />
                     </div>
                     <div className="mb-2">
@@ -83,7 +83,7 @@ export default function BusinessSignUp() {
                     </div>
                     <div className="flex ">
                         <div className="flex items-center h-5">
-                            <input id="remember" type="checkbox" className="w-4 h-4 " />
+                            <input id="remember" type="checkbox" className="w-4 h-4"style={{accentColor:'#FF9900'}} />
                         </div>
                         <label for="remember" className="ms-2 text-sm">I agree to the <span class="underline decoration-1 text-[#FF9900]"> terms and conditions</span>  of ilost Serbia</label>
                     </div>

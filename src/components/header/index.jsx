@@ -84,8 +84,11 @@ const Header = (props) => {
                                                 <div className='xl:h-28 md:h-28 sm:h-16 xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                     <div className='flex justify-between '>
                                                         <div className='xl:text-4xl md:text-2xl sm:text-xl font-bold'>Login/Register</div>
-                                                        <div className=''><button onClick={handleLogoutButton} className='border-none bg-white w-10 flex justify-center '><AiFillCloseCircle className='h-9 w-9 text-[#00B8B8]' /></button></div>
-
+                                                        <div className=''>
+                                                            <Popover.Button className='border-none bg-white w-10 flex justify-center '>
+                                                                <AiFillCloseCircle className='h-9 w-9 text-[#00B8B8]' />
+                                                            </Popover.Button>
+                                                        </div>
                                                     </div>
 
                                                     <div className='xl:text-xl md:text-sm sm:text-sm font-normal text-[#757780] mt-2.5'>Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur</div>
@@ -93,7 +96,7 @@ const Header = (props) => {
                                             </div>
                                             <div className='xl:mt-8 md:mt-8 sm:mt-7 h-56 xl:w-11/12 md:w-11/12 sm:w-10/12'>
                                                 {
-                                                    passwordBox ?  
+                                                    passwordBox ?
                                                         <div>
                                                             {checkUser ?
                                                                 <div>
@@ -161,7 +164,7 @@ const Header = (props) => {
                                                             <div className='flex items-center justify-between w-full h-6 mt-2'>
                                                                 <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>
                                                                 <div className='flex items-center w-fit '>
-                                                                    <div className='xl:mr-2.5 md:mr-1.5 sm:mr-1'><img src={linksymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3'  /></div>
+                                                                    <div className='xl:mr-2.5 md:mr-1.5 sm:mr-1'><img src={linksymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' /></div>
                                                                     <div><a href='#' className=' xl:text-sm md:text-xs sm:text-xs font-medium text-[#00B8B8]'>Sign in for business</a></div>
                                                                 </div>
                                                             </div>
