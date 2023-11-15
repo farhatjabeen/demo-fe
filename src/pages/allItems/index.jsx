@@ -8,12 +8,23 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AllItems() {
     const [tableData, setTableData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
     const navigate = useNavigate();
     useEffect(() => {
         axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
             .then(res => setTableData(res.data))
             .catch(e => console.log(e));
     }, [])
+    const totalPages = Math.ceil(tableData.length / itemsPerPage);
+    const endIndex = currentPage * itemsPerPage;
+    const startIndex = endIndex - itemsPerPage;
+    const displayedData = tableData.slice(startIndex, endIndex);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    
     return (
         <>
             <div className='px-28'>
@@ -111,7 +122,7 @@ export default function AllItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.map((items, i) => (
+                            {displayedData.map((items, i) => (
                                 <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
                                     <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#{items.id}</td>
                                     <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemname}</td>
@@ -128,6 +139,9 @@ export default function AllItems() {
             </div>
             <div className=' flex justify-center mb-20'>
                 <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
                     isBlueBackground={false} />
             </div>
         </>
