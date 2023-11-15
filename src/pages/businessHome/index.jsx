@@ -64,7 +64,7 @@ export default function BusinessHome() {
                 xt-center mt-3 mb-8 text-[#404041]'>Reassure your customers, save time & money and return <br></br> more items of lost property with our lost and found software.</div>
                 <div>
                     <button className='border border-[#FF9900] w-48 h-14 rounded-lg text-[#834F00]' onClick={() => navigate('/businessSignIn')}>Sign in</button>
-                    <button className='w-48 h-14 rounded-lg bg-[#FF9900] ml-5 ' onClick={() => navigate('/businessSignIn')}>Sign Up</button>
+                    <button className='w-48 h-14 rounded-lg bg-[#FF9900] ml-5 ' onClick={() => navigate('/businessignup')}>Sign Up</button>
                 </div>
             </div>
 

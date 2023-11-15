@@ -20,11 +20,7 @@ function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const totalPages = 10;
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  
   const categories = ['Category 1', 'Category 2', 'Category 3'];
   const headers1 = [
     { key: "id", label: "Item ID" },
@@ -41,8 +37,39 @@ function FoundItems() {
     { id: "#1543", itemName: "Item C", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
     { id: "#1143", itemName: "Item D", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
     { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
   ];
-
+  const itemsPerPage = 5;
+  const totalItems = data1.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+  
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  const displayedData = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return data1.slice(startIndex, endIndex);
+  };
   return (
     <>
       <div className="m-4">
@@ -104,7 +131,7 @@ function FoundItems() {
             </div>
           </div>
         </div>
-        <Table headers={headers1} data={data1} />
+        <Table headers={headers1} data={displayedData()} />
         <Pagination
           isBlueBackground={true}
           currentPage={currentPage}
@@ -117,5 +144,6 @@ function FoundItems() {
 }
 
 export default FoundItems;
+
 
 

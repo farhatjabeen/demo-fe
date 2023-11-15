@@ -6,17 +6,33 @@ import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import Tabs from "../../components/tabs";
 function User() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const handleReset = () => {
-    setSearchTerm("");
+  const [searchTerm1, setSearchTerm1] = useState("");
+  const [searchTerm2, setSearchTerm2] = useState("");
+
+  const handleReset = (tab) => {
+    if (tab === 1) {
+      setSearchTerm1("");
+    } else if (tab === 2) {
+      setSearchTerm2("");
+    }
   };
-  const handleSearch = () => { };
+  const handleSearch = (tab) => {
+    if (tab === 1) {
+      // Search logic for tab 1
+    } else if (tab === 2) {
+      // Search logic for tab 2
+    }
+  };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 10;
+  const [currentPage1, setCurrentPage1] = useState(1);
+  const [currentPage2, setCurrentPage2] = useState(1);
+  const totalPages = 8;
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handlePageChange1 = (pageNumber) => {
+    setCurrentPage1(pageNumber);
+  };
+  const handlePageChange2 = (pageNumber) => {
+    setCurrentPage2(pageNumber);
   };
   const headers2 = [
     { key: "id", label: "User ID" },
@@ -49,7 +65,19 @@ function User() {
     { id: "#1543", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
     { id: "#1143", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
     { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
   ];
+  const itemsPerPage = 5;
+
+  const displayedData2 = data2.slice((currentPage1 - 1) * itemsPerPage, currentPage1 * itemsPerPage);
+  const displayedData3 = data3.slice((currentPage2 - 1) * itemsPerPage, currentPage2 * itemsPerPage);
   return (
     <>
       <div className="m-4">
@@ -61,14 +89,14 @@ function User() {
                 type="text"
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
+                value={searchTerm1}
+                onChange={(event) => setSearchTerm1(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
                   text="Reset"
                   icon={<MdOutlineRefresh size={20} className="mr-2" />}
-                  onClick={handleReset}
+                  onClick={() => handleReset(1)}
                   isReset={true}
                   buttonColor="blue"
                 />
@@ -77,18 +105,18 @@ function User() {
                 <CustomCombinedButton
                   text="Search"
                   icon={<BsSearch size={20} className="mr-2" />}
-                  onClick={handleSearch}
+                  onClick={() => handleSearch(1)}
                   isReset={true}
                   buttonColor="other"
                 />
               </div>
             </div>
-            <Table headers={headers2} data={data2} />
+            <Table headers={headers2} data={displayedData2} />
             <Pagination
               isBlueBackground={true}
-              currentPage={currentPage}
+              currentPage={currentPage1}
               totalPages={totalPages}
-              onPageChange={handlePageChange}
+              onPageChange={handlePageChange1}
             />
           </div>
           <div label="Business">
@@ -97,14 +125,14 @@ function User() {
                 type="text"
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
+                value={searchTerm2}
+                onChange={(event) => setSearchTerm2(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
                   text="Reset"
                   icon={<MdOutlineRefresh size={20} className="mr-2" />}
-                  onClick={handleReset}
+                  onClick={ () => handleReset(2)}
                   isReset={true}
                   buttonColor="blue"
                 />
@@ -113,18 +141,18 @@ function User() {
                 <CustomCombinedButton
                   text="Search"
                   icon={<BsSearch size={20} className="mr-2" />}
-                  onClick={handleSearch}
+                  onClick={ () => handleSearch(2)}
                   isReset={true}
                   buttonColor="other"
                 />
               </div>
             </div>
-            <Table headers={headers3} data={data3} />
+            <Table headers={headers3} data={displayedData3} />
             <Pagination
               isBlueBackground={true}
-              currentPage={currentPage}
+              currentPage={currentPage2}
               totalPages={totalPages}
-              onPageChange={handlePageChange}
+              onPageChange={handlePageChange2}
             />
           </div>
         </Tabs>
@@ -134,3 +162,4 @@ function User() {
 }
 
 export default User;
+

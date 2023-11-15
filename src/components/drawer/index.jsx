@@ -4,9 +4,10 @@ import VectorLogo from "../../assets/images/VectorLogo.png";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold, AiOutlineYoutube } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { MdSettings } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link ,useLocation } from "react-router-dom";
 
 const SideMenu = () => {
+  const location = useLocation();
   const [isCollapsed, setCollapsed] = useState(false);
   const [showSubUser, setShowSubUSer] = useState(false);
 
@@ -40,12 +41,12 @@ const SideMenu = () => {
       </div>
       <ul>
         <div class="mb-4 mt-14 " >
-        <li className={`${window.location.pathname === "/admin/user/foundItems"
+        <li className={`${window.location.pathname.includes( "/admin/user/foundItems")
               ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
               : " "
             }`}>
           <Link to="/admin/user/foundItems"  >
-            <span class="pl-2 flex">
+            <span className="pl-2 flex">
               <AiOutlineYoutube size={24} color="grey" />
               <div className="pl-4 ">
                 <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
@@ -54,10 +55,10 @@ const SideMenu = () => {
           </Link>
         </li>
         </div>
-        <li class="mb-4" onClick={() => setShowSubUSer(!showSubUser)}>
+        <li className={`mb-4  ${window.location.pathname.includes("/admin/user/users") || window.location.pathname.includes("/admin/user/businessUser") ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}  onClick={() => setShowSubUSer(!showSubUser)}>
           <div className="cursor-pointer">
             <span class="pl-2 flex">
-              <FaUserCircle size={24} color="grey"  />
+              <FaUserCircle size={24} color="grey"   onClick={handleToggleCollapse}/>
               <div className="pl-4 cursor-pointer">
                 <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
               </div>
@@ -66,19 +67,13 @@ const SideMenu = () => {
         </li>
         {!isCollapsed && showSubUser && (
           <>
-            <li className="mb-4 ">
-              <Link to="/admin/user/users" className={`${window.location.pathname === "/admin/user/users"
-                  ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
-                  : " "
-                }`}>
+            <li className={`mb-4 pl-2 ${window.location.pathname === "/admin/user/users" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
+              <Link to="/admin/user/users">
                 <span >General Users</span>
               </Link>
             </li>
-            <li className="mb-4 ">
-              <Link to="/admin/user/businessUser" className={`${window.location.pathname === "/admin/user/businessUser"
-                  ? " bg-light-blue text-blue font-bold  py-3  rounded-lg "
-                  : ""
-                }`}>
+            <li className={`mb-4  pl-2 ${window.location.pathname === "/admin/user/businessUser" ? "bg-light-blue text-blue font-bold py-3 rounded-lg" : ""}`}>
+              <Link to="/admin/user/businessUser" >
                 <span >Business Users</span>
               </Link>
             </li>
