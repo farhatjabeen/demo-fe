@@ -9,7 +9,7 @@ import { FormErrorMessage } from '../FormErrorMessage';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
-function TextInput({ type, placeholder, name, className: inputClassName, showPassword, setShowPassword }) {
+function TextInput({ type = 'text', placeholder, name, className: inputClassName, showPassword, setShowPassword }) {
 
     return (
         <ConnectForm>

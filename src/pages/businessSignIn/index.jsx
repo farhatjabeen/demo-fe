@@ -80,7 +80,6 @@ export default function BusinessSignIn() {
                 <div className='text-[#7D7D7D] font-light mt-14 flex justify-center'>
                     Don't have an Account&nbsp;? <span className='text-[#000000] font-semibold'>&nbsp;Get more info</span>
                 </div>
-
             </div>
         </div >
     )
