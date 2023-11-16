@@ -7,7 +7,7 @@ import UserLogin from "../userLogin";
 import { IoTriangleSharp } from "react-icons/io5";
 import linksymbol from '../../assets/images/linksymbol.png';
 import { AiFillCloseCircle } from "react-icons/ai";
-import UserLoginTwo from "../userLogin/ind";
+import businessSignIn from '../../pages/businessSignIn';
 
 const Header = (props) => {
     const [loginButton, setLoginButton] = useState(false);
@@ -79,22 +79,20 @@ const Header = (props) => {
                                         leave="transition ease-in duration-150"
                                         leaveFrom="opacity-100 translate-y-0"
                                         leaveTo="opacity-0 translate-y-1">
-                                        <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl xl:py-10 xl:px-7 md:py-9 md:px-6 sm:pt-10 sm:pb-0 sm:pl-6 sm:pr-0 xl:w-4/12 md:w-6/12 sm:w-6/12 h-fit xl:mt-44 md:mt-40 xl:mr:20 md:mr-28 sm:mt-40 '>
-                                            <div className="xl:w-full md:w-full sm:w-11/12">
+                                        <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl xl:pt-10 xl:pb-16 xl:pl-7 xl:pr-6 md:pt-6 md:pb-8 md:pl-6 md:pr-5 sm:pt-10 sm:pb-6 sm:pl-6  xl:w-4/12 md:w-6/12 sm:w-7/12 h-fit xl:mt-44 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36 '>
+                                            <div className="xl:w-full md:w-full sm:w-full">
                                                 <div className='xl:h-28 md:h-28 sm:h-16 xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                    <div className='flex justify-between '>
-                                                        <div className='xl:text-4xl md:text-2xl sm:text-xl font-bold'>Login/Register</div>
-                                                        <div className=''>
-                                                            <Popover.Button className='border-none bg-white w-10 flex justify-center '>
-                                                                <AiFillCloseCircle className='h-9 w-9 text-[#00B8B8]' />
-                                                            </Popover.Button>
-                                                        </div>
-                                                    </div>
+                                                    {/* <div className='flex justify-between '> */}
+                                                    <div className='xl:text-4xl md:text-3xl sm:text-xl font-bold'>Login/Register</div>
+                                                    {/* <div> */}
 
-                                                    <div className='xl:text-xl md:text-sm sm:text-sm font-normal text-[#757780] mt-2.5'>Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur</div>
+                                                    {/* </div> */}
+                                                    {/* </div> */}
+
+                                                    <div className='xl:text-xl md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur</div>
                                                 </div>
                                             </div>
-                                            <div className='xl:mt-8 md:mt-8 sm:mt-7 h-56 xl:w-11/12 md:w-11/12 sm:w-10/12'>
+                                            <div className='xl:pt-8 md:pt-4 sm:pt-7 h-56 xl:w-11/12 md:w-11/12 sm:w-11/12'>
                                                 {
                                                     passwordBox ?
                                                         <div>
@@ -161,18 +159,25 @@ const Header = (props) => {
                                                                 <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
                                                                 <hr className="flex-1 border border-t border-gray-300" />
                                                             </div>
-                                                            <div className='flex items-center justify-between w-full h-6 mt-2'>
+                                                            <div className='flex items-center justify-between w-11/12 h-6 mt-2'>
                                                                 <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>
                                                                 <div className='flex items-center w-fit '>
-                                                                    <div className='xl:mr-2.5 md:mr-1.5 sm:mr-1'><img src={linksymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' /></div>
-                                                                    <div><a href='#' className=' xl:text-sm md:text-xs sm:text-xs font-medium text-[#00B8B8]'>Sign in for business</a></div>
+                                                                    <div className='flex items-center xl:mr-2.5 md:mr-1.5 sm:mr-1'><img src={linksymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' /></div>
+                                                                    <Popover.Button onClick={() => navigate('/businessSignIn')} className=' xl:text-sm md:text-xs sm:text-xs font-medium text-[#00B8B8]'>Sign in for business</Popover.Button>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                 }
                                             </div>
-                                            <IoTriangleSharp className='absolute -top-6 sm:left-80 md:left-80 xl:left-96 h-7 w-7 text-white' />
+                                            <div className="w-full flex justify-end xl:pr-20 md:pr-14 sm:pr-16">
+                                            <IoTriangleSharp className='absolute xl:-top-6 md:-top-5 sm:-top-4 xl:h-7 xl:w-7 md:h-6 md:w-6 sm:h-5 sm:w-5 text-white' />
+                                            </div>
+                                            <div className="w-full flex justify-end xl:ml-6 md:ml-4 sm:pr-3">
+                                                <Popover.Button className='absolute top-4 border-none bg-white space-x-end'>
+                                                    <AiFillCloseCircle className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
+                                                </Popover.Button>
+                                            </div>
                                         </Popover.Panel>
                                     </Transition>
                                 </div>
