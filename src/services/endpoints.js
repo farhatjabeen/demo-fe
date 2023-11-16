@@ -1,5 +1,5 @@
 const EndPoints = {
-    login: '/login'
+    login: '/user/login'
 }
 
 const ApiMethods = {
