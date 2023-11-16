@@ -1,5 +1,5 @@
 import React from "react";
-import CustomCombinedButton from "../../components/common/button";
+import CustomCombinedButton from "../../components/common/adminButton";
 import keys from "../../assets/images/keys.png";
 const itemDetails = () => {
   return (
