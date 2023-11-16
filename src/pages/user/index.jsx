@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineRefresh } from "react-icons/md";
-import CustomCombinedButton from "../../components/common/button";
+import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import Tabs from "../../components/tabs";

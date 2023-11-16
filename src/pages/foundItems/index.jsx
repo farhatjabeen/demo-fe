@@ -4,7 +4,7 @@ import { AiOutlineArrowUp } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineRefresh } from "react-icons/md";
 import DropdownMenu from "../../components/common/dropdown";
-import CustomCombinedButton from "../../components/common/button";
+import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 
