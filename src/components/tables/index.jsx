@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
+import DeleteModal from "../modal";
 
-const Table = ({ headers, data }) => {
+const Table = ({ headers, data, showEdit = false }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-  
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+
   const requestSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -30,28 +33,42 @@ const Table = ({ headers, data }) => {
     }
     return sorted;
   };
+  const handleDeleteClick = (id) => {
+    setSelectedItemId(id);
+    setDeleteModalOpen(true);
+  };
 
+  const handleCancelDelete = () => {
+    setDeleteModalOpen(false);
+    setSelectedItemId(null);
+  };
+
+  const handleConfirmDelete = () => {
+    console.log(`Deleting item with ID ${selectedItemId}`);
+    setDeleteModalOpen(false);
+    setSelectedItemId(null);
+  };
   return (
     <div className="my-5">
       <table className="w-full">
         <thead>
           <tr className="border border-x-0 border-y-grey">
-          {headers.map((header) => (
-            <th
-              key={header.key}
-              onClick={() => requestSort(header.key)}
-              className="px-6 py-6 text-left cursor-pointer"
-            >
-              <div className="flex">
-                <div>
-                  <p>{header.label}</p>
+            {headers.map((header) => (
+              <th
+                key={header.key}
+                onClick={() => requestSort(header.key)}
+                className="px-6 py-6 text-left cursor-pointer"
+              >
+                <div className="flex">
+                  <div>
+                    <p>{header.label}</p>
+                  </div>
+                  <div>
+                    <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
+                    <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
+                  </div>
                 </div>
-                <div>
-                  <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                  <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                </div>
-              </div>
-            </th>
+              </th>
             ))}
           </tr>
         </thead>
@@ -62,22 +79,36 @@ const Table = ({ headers, data }) => {
               className={index % 2 === 0 ? "bg-gray" : "bg-white"}
             >
               {headers.map((header) => (
-              <td key={header.key} className="py-6 px-6">
+                <td key={header.key} className="py-6 px-6">
                   {header.key === "id" ? (
-                <Link to="/admin/user/itemDetails">{rowData[header.key]}</Link>
-                  ):(
+                    <Link to="/admin/user/foundItems/itemDetails">{rowData[header.key]}</Link>
+                  ) : (
                     rowData[header.key]
-                    )}
+                  )}
                 </td>
               ))}
-              <td>
-             {/* <AiOutlineDelete size={24} /> */}
-             <FiEdit size={24}/>
-             </td>
+              <td >
+                <div className="flex cursor-pointer ">
+                  <AiOutlineDelete size={26}
+                    onClick={() => handleDeleteClick(rowData.id)} />
+                  {showEdit &&
+                  <Link to='/admin/user/foundItems/editfoundItems'>
+                    <FiEdit size={24} className="ml-2 "
+                      />
+                  </Link>
+
+                  }
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <DeleteModal
+        isOpen={deleteModalOpen}
+        onCancel={handleCancelDelete}
+        onDelete={handleConfirmDelete}
+      />
     </div>
   );
 };

@@ -6,24 +6,8 @@ function SignInView() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
   const handleSignIn = () => {
-    setUsernameError("");
-    setPasswordError("");
-
-    if (!username) {
-      setUsernameError("Please enter a username.");
-    }
-
-    if (!password) {
-      setPasswordError("Please enter a password.");
-    }
-
-    if (username && password) {
       navigate("/admin/user/foundItems");
-    }
   };
 
   return (
@@ -46,7 +30,6 @@ function SignInView() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-        <p className="text-red">{usernameError}</p>
       </div>
       <div className="mt-2">
         <input
@@ -57,7 +40,6 @@ function SignInView() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <p className="text-red">{passwordError}</p>
       </div>
       <div className="mt-14">
         <button
