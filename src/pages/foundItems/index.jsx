@@ -9,6 +9,11 @@ import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 
 function FoundItems() {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const categories = ['Category 1', 'Category 2', 'Category 3'];
   const handleAddItem = () => { };
   const handleExport = () => { };
 
@@ -17,11 +22,6 @@ function FoundItems() {
     setSelectedCategory(null);
   };
   const handleSearch = () => { };
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  
-  const categories = ['Category 1', 'Category 2', 'Category 3'];
   const headers1 = [
     { key: "id", label: "Item ID" },
     { key: "itemName", label: "Item Name" },
@@ -56,6 +56,24 @@ function FoundItems() {
     { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
     { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
     { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
+   
   ];
   const itemsPerPage = 5;
   const totalItems = data1.length;

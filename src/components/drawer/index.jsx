@@ -1,10 +1,11 @@
 import { useState } from "react";
 import logo from "../../assets/images/logo.svg";
 import VectorLogo from "../../assets/images/VectorLogo.png";
-import { AiOutlineMenuFold, AiOutlineMenuUnfold, AiOutlineYoutube } from "react-icons/ai";
-import { FaUserCircle } from "react-icons/fa";
-import { MdSettings } from "react-icons/md";
-import { Link ,useLocation } from "react-router-dom";
+import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
+import { FiCheckCircle, FiUsers, FiUser } from "react-icons/fi";
+import { PiSuitcaseBold  } from "react-icons/pi";
+import { CiSettings } from "react-icons/ci";
+import { Link, useLocation } from "react-router-dom";
 
 const SideMenu = () => {
   const location = useLocation();
@@ -41,25 +42,25 @@ const SideMenu = () => {
       </div>
       <ul>
         <div class="mb-4 mt-14 " >
-        <li className={`${window.location.pathname.includes( "/admin/user/foundItems")
-              ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
-              : " "
+          <li className={`${window.location.pathname.includes("/admin/user/foundItems")
+            ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
+            : " "
             }`}>
-          <Link to="/admin/user/foundItems"  >
-            <span className="pl-2 flex">
-              <AiOutlineYoutube size={24} color="grey" />
-              <div className="pl-4 ">
-                <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
-              </div>
-            </span>
-          </Link>
-        </li>
+            <Link to="/admin/user/foundItems"  >
+              <span className="pl-2 flex">
+                <FiCheckCircle size={24} color="grey" />
+                <div className="pl-4 ">
+                  <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
+                </div>
+              </span>
+            </Link>
+          </li>
         </div>
-        <li className={`mb-4  ${window.location.pathname.includes("/admin/user/users") || window.location.pathname.includes("/admin/user/businessUser") ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}  onClick={() => setShowSubUSer(!showSubUser)}>
+        <li className={`mb-4  ${window.location.pathname.includes("/admin/user/users") || window.location.pathname.includes("/admin/user/businessUser") ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`} onClick={() => setShowSubUSer(!showSubUser)}>
           <div className="cursor-pointer">
             <span class="pl-2 flex">
-              <FaUserCircle size={24} color="grey"   onClick={handleToggleCollapse}/>
-              <div className="pl-4 cursor-pointer">
+              <FiUsers size={24} color="grey" onClick={handleToggleCollapse} />
+              <div className="pl-4 ">
                 <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
               </div>
             </span>
@@ -69,12 +70,17 @@ const SideMenu = () => {
           <>
             <li className={`mb-4 pl-2 ${window.location.pathname === "/admin/user/users" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
               <Link to="/admin/user/users">
-                <span >General Users</span>
+                <span className="pl-8 flex" >
+                  <FiUser size={24} color="grey" />
+                  <p className="pl-2">General Users</p></span>
               </Link>
             </li>
+            
             <li className={`mb-4  pl-2 ${window.location.pathname === "/admin/user/businessUser" ? "bg-light-blue text-blue font-bold py-3 rounded-lg" : ""}`}>
               <Link to="/admin/user/businessUser" >
-                <span >Business Users</span>
+              <span className="pl-8 flex" >
+              <PiSuitcaseBold size={24} color="grey" />
+                <p className="pl-2">Business Users</p></span>
               </Link>
             </li>
           </>
@@ -82,15 +88,16 @@ const SideMenu = () => {
         <li className="fixed bottom-4" >
           <div>
             <span class="pl-2  flex">
-              <MdSettings size={24}  color="grey"/>
-              <div className="pl-4">
+              <CiSettings size={30} color="grey" />
+              <div className="pl-2">
                 <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>
               </div>
             </span>
           </div>
         </li>
-        </ul>
+      </ul>
     </div>
+    
   );
 };
 
