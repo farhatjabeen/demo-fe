@@ -1,22 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import { AiOutlineDelete } from "react-icons/ai";
+import { FiEdit } from "react-icons/fi";
 
 const Table = ({ headers, data }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
   
-  const handleDropdownClick = (index) => {
-    if (selectedRow === index) {
-      setSelectedRow(null);
-      setShowDropdown(false);
-    } else {
-      setSelectedRow(index);
-      setShowDropdown(true);
-    }
-  };
-
   const requestSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -80,32 +70,10 @@ const Table = ({ headers, data }) => {
                     )}
                 </td>
               ))}
-              <td className="py-6 px-6 relative">
-                <div className="flex items-center justify-center">
-                  <button
-                    onClick={() => handleDropdownClick(index)}
-                    className="focus:outline-none"
-                  >
-                    <div className="w-6 h-6 flex flex-col items-center justify-between">
-                      <span className="w-1 h-1 bg-grey rounded-full"></span>
-                      <span className="w-1 h-1 bg-grey rounded-full"></span>
-                      <span className="w-1 h-1 bg-grey rounded-full"></span>
-                    </div>
-                  </button>
-                  {showDropdown && selectedRow === index && (
-                    <div className="absolute right-8 mt-0 mb-32 bg-white rounded-lg shadow">
-                      <ul>
-                        <li className="py-2 px-6 cursor-pointer  hover:bg-grey">
-                          Edit
-                        </li>
-                        <li className="py-2 px-6 cursor-pointer hover:bg-grey">
-                          Delete
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </td>
+              <td>
+             {/* <AiOutlineDelete size={24} /> */}
+             <FiEdit size={24}/>
+             </td>
             </tr>
           ))}
         </tbody>

@@ -26,7 +26,6 @@ function User() {
 
   const [currentPage1, setCurrentPage1] = useState(1);
   const [currentPage2, setCurrentPage2] = useState(1);
-  const totalPages = 8;
 
   const handlePageChange1 = (pageNumber) => {
     setCurrentPage1(pageNumber);
@@ -47,6 +46,33 @@ function User() {
     { id: "#1542", userName: "Item B", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
     { id: "#1543", userName: "Item C", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
     { id: "#1143", userName: "Item D", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
+    { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
     { id: "#1124", userName: "Item E", listingCount: "Chennai,India", mailID: "16/10/2023;0.00", mobileNumber: "1234567891" },
   ];
   const headers3= [
@@ -73,8 +99,106 @@ function User() {
     { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
     { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
     { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
+    { id: "#1124", companyName: "test", category: "12", contactName: "16/10/2023;0.00", mailID: "Nithin", contactPhone: "1234567891", listingCount: "12" },
   ];
   const itemsPerPage = 5;
+  const totalItems1 = data2.length;
+  const totalPages1= Math.ceil(totalItems1 / itemsPerPage);
+  const totalItems2 = data3.length;
+  const totalPages2= Math.ceil(totalItems2 / itemsPerPage);
 
   const displayedData2 = data2.slice((currentPage1 - 1) * itemsPerPage, currentPage1 * itemsPerPage);
   const displayedData3 = data3.slice((currentPage2 - 1) * itemsPerPage, currentPage2 * itemsPerPage);
@@ -115,7 +239,7 @@ function User() {
             <Pagination
               isBlueBackground={true}
               currentPage={currentPage1}
-              totalPages={totalPages}
+              totalPages={totalPages1}
               onPageChange={handlePageChange1}
             />
           </div>
@@ -151,7 +275,7 @@ function User() {
             <Pagination
               isBlueBackground={true}
               currentPage={currentPage2}
-              totalPages={totalPages}
+              totalPages={totalPages2}
               onPageChange={handlePageChange2}
             />
           </div>

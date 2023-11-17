@@ -5,31 +5,62 @@ const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange })
   
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(
-        <a
-          key={i}
-          href="#"
-          className={`relative inline-flex items-center px-4 py-2  rounded-md text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue mr-1 ${
-            currentPage === i ? backgroundColor : "text-black"
-          }`}
-          onClick={() => onPageChange(i)}
-        >
-          {i}
-        </a>
-      );
+    const maxVisiblePages = 5; 
+    
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(renderPageButton(i));
+      }
+    } else {
+      const firstPage = renderPageButton(1);
+      const lastPage = renderPageButton(totalPages);
+
+      pageNumbers.push(firstPage);
+    const start = Math.max(currentPage - Math.floor(maxVisiblePages / 2), 2);
+    const end = Math.min(start + maxVisiblePages - 1, totalPages -1 );
+    if (start > 2) {
+      pageNumbers.push(renderDots());
+    }
+    for (let i = start; i <= end; i++) {
+      pageNumbers.push(renderPageButton(i));
+    }
+
+    if (end < totalPages-1) {
+
+      pageNumbers.push(renderDots());
+    }
+      pageNumbers.push(lastPage);
     }
     return pageNumbers;
   };
-
+  const renderPageButton = (pageNumber) => (
+    <a
+      key={pageNumber}
+      href="#"
+      className={`relative inline-flex items-center px-4 py-2 rounded-md text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue mr-1 ${
+        currentPage === pageNumber ? backgroundColor : "text-black"
+      }`}
+      onClick={() => onPageChange(pageNumber)}
+    >
+      {pageNumber}
+    </a>
+  );
+  const renderDots = () => (
+    <span className="relative inline-flex items-center px-2 py-2 text-gray-400 ">
+      ...
+    </span>
+  );
   return (
-    <div className="flex items-center justify-between ">
+    <div className="flex  justify-center">
+    <div className="flex items-center justify-between">
       <div>
         <nav className="inline-flex rounded-md ">
           <a
             href="#"
-            className="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0 mr-1"
-            onClick={() => onPageChange(currentPage - 1)}
+            className={`relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0 mr-1
+           ${currentPage === 1 ? 'cursor-not-allowed' : ''
+          }`}
+            onClick={() => onPageChange(currentPage = 1)}
             disabled={currentPage === 1}
           >
             <span className="sr-only">Previous</span>
@@ -50,8 +81,10 @@ const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange })
           
           <a
             href="#"
-            className="relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0"
-            onClick={() => onPageChange(currentPage + 1)}
+            className={`relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0
+            ${currentPage === totalPages ? 'cursor-not-allowed' : ''
+          }`}
+            onClick={() => onPageChange(currentPage =totalPages)}
             disabled={currentPage === totalPages}
           >
             <span className="sr-only">Next</span>
@@ -71,6 +104,8 @@ const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange })
         </nav>
       </div>
     </div>
+    </div>
+
   );
 };
 
