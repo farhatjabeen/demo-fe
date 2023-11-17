@@ -70,10 +70,10 @@ export default function BusinessHome() {
             <div className='relative'>
                 <img className='w-full bg-[#00B8B8] opacity-80' src={businessDoodle} alt='businessDoodle' />
                 {/* <div className='bg-green flex items-center'> */}
-                <div className='absolute xl:top-44 md:top-12 sm:top-6 xl:pl-32 md:pl-16 sm:pl-5'>
+                <div className='absolute top-0 xl:pt-36 md:pt-16 sm:pt-14 xl:pl-32 md:pl-16 sm:pl-5 z-50'>
                     <div className='xl:text-4xl md:text-2xl sm:text-xl font-bold text-white'>BTZapp win contract to<br></br> replace Europe’s largest lost<br></br> property system</div>
                     <div className='xl:mt-4 md:mt-4 sm:mt-2'>
-                        <p className={`text-white font-medium xl:text-lg md:text-sm sm:text-xs xl:w-4/12 md:w-2/5 sm:w-6/12 overflow-hidden ${readMore ? 'h-fit' : 'xl:h-36 md:h-36 sm:h-24'}`}>
+                        <p className={`text-white font-medium xl:text-lg md:text-sm sm:text-xs xl:w-4/12 md:w-5/12 sm:w-6/12 overflow-hidden ${readMore ? 'h-fit' : 'xl:h-36 md:h-36 sm:h-16'}`}>
                             New intelligent, cloud-based solution to be introduced across Transport for London.
                             It will cover the entire underground, train and bus network of more than 400 sites and will transform the lost property experience for millions of customers and thousands of TfL staff,
                             increasing efficiency and ensuring more items can be returned. <span > New intelligent,
@@ -82,9 +82,9 @@ export default function BusinessHome() {
                         <button className='text-[#444444] font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
                     </div>
                 </div>
-                <div className='absolute xl:top-40 md:top-14 sm:top-7 xl:left-2/4 md:left-80 sm:left-52 ml-32'>
-                    <div className=''><img src={transportLondon} className='xl:h-72 xl:w-full md:h-56 md:w-full sm:h-44 sm:w-full' alt='transportLondon' /></div>
-                    <div className='flex justify-center xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-72 md:w-52 sm:w-44 xl:h-10 md:h-9 sm:h-7 xl:text-lg md:text-sm sm:text-xs'>Click here to find out more</button></div>
+                <div className='absolute xl:top-0 xl:pt-36 md:top-14 sm:top-10 w-full flex flex-col items-end md:pr-16 sm:pr-7'>
+                    <div><img src={transportLondon} className='xl:h-72 xl:w-96 md:h-56 md:w-80 sm:h-40 sm:w-60' alt='transportLondon' /></div>
+                    <div className='flex justify-center xl:w-96 md:w-80 sm:w-56 xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-72 md:w-52 sm:w-44 xl:h-10 md:h-9 sm:h-7 xl:text-lg md:text-sm sm:text-xs'>Click here to find out more</button></div>
                 </div>
                 {/* </div> */}
             </div>
@@ -126,15 +126,12 @@ export default function BusinessHome() {
                 </div>
             </div>
 
-            <div className='bg-[#FFF0DA] py-16'>
-                <div className='flex justify-center text-center text-[#404041] xl:text-lg md:text-lg sm:text-base '>
-                    BTZapp is transforming lost and found management from a recurring problem into a fast<br></br>
-                    and simple process for businesses. Free up valuable staff time, return more items of lost<br></br>
-                    property and deliver an excellent customer experience.
-                </div>
-                <div className='flex justify-center pt-8'>
-                    <button className='bg-[#FF9900] h-10 w-40 font-semibold text-white'>Request a demo</button>
-                </div>
+            <div className='bg-[#FFF0DA] py-16 flex justify-center text-center text-[#404041] xl:text-lg md:text-lg sm:text-base'>
+
+                BTZapp is transforming lost and found management from a recurring problem into a fast<br></br>
+                and simple process for businesses. Free up valuable staff time, return more items of lost<br></br>
+                property and deliver an excellent customer experience.
+
             </div>
 
             <div className='flex flex-col items-center'>

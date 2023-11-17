@@ -9,27 +9,27 @@ const routers = [
       },
       {
         component: "findMissingItem",
-        childPath: "/findMissingItem/:itemName/:location",
+        childPath: "/findmissingitem/:itemname/:location",
       },
       {
         component: "AddMoreDetails",
-        childPath: "/addMoreDetails/:itemName/:location",
+        childPath: "/addMoredetails/:itemname/:location",
       },
       {
         component: "AddMoreDetails",
-        childPath: "/addMoreDetails",
+        childPath: "/addMoredetails",
       },
       {
         component: "QueryPublished",
-        childPath: "/queryPublished",
+        childPath: "/querypublished",
       },
       {
         component: "ViewItem",
-        childPath: "/viewItem/:id",
+        childPath: "/viewitem/:id",
       },
       {
         component: "ContactUs",
-        childPath: "/contactUs",
+        childPath: "/contactus",
       },
       {
         component: "Login",
@@ -37,11 +37,11 @@ const routers = [
       },
       {
         component: "itemDetails",
-        childPath: "/itemDetails",
+        childPath: "/itemdetails",
       },
       {
         component: "BusinessSignIn",
-        childPath: "/businessSignIn",
+        childPath: "/businessSignin",
       },
       {
         component: "BusinessSignUp",
@@ -49,15 +49,19 @@ const routers = [
       },
       {
         component: "CompanyProfile",
-        childPath: "/companyProfile",
+        childPath: "/companyprofile",
       },
       {
         component: "AllItems",
-        childPath: "/allItems",
+        childPath: "/allitems",
+      },
+      {
+        component: "AboutUs",
+        childPath: "/aboutus",
       },
       {
         component: "BusinessHome",
-        childPath: "/businessHome",
+        childPath: "/businesshome",
       }
     ]
   },
