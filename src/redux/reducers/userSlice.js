@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import request from '../../services'
 import endpoints from "../../services/endpoints";
-import { Toast } from "../../components/toast";
+// import { Toast } from "../../components/toast";
 
 const initialState = {
     userData: null
@@ -21,19 +21,18 @@ export const userSlice = createSlice({
 });
 
 
-export const loginUser = (data) => {
+export const loginUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        let loginData = {
-            ...data
-        }
         request({
             url: endpoints.EndPoints.login,
             method: endpoints.ApiMethods.POST,
-            data: loginData
+            data: data
         }).then(res => {
+            dispatch(res?.data)
             return resolve(res?.data);
         }).catch(err => {
-            reject(err)
+            console.log(err)
+            return err
         })
     })
 }

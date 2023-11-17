@@ -70,21 +70,21 @@ export default function BusinessHome() {
             <div className='relative'>
                 <img className='w-full bg-[#00B8B8] opacity-80' src={businessDoodle} alt='businessDoodle' />
                 {/* <div className='bg-green flex items-center'> */}
-                <div className='absolute xl:top-52 md:top-12 sm:top-6 xl:pl-32 md:pl-24 sm:pl-11'>
-                    <div className='xl:text-3xl md:text-2xl sm:text-xl font-bold text-white'>BTZapp win contract to<br></br> replace Europe’s largest lost<br></br> property system</div>
+                <div className='absolute xl:top-44 md:top-12 sm:top-6 xl:pl-32 md:pl-16 sm:pl-5'>
+                    <div className='xl:text-4xl md:text-2xl sm:text-xl font-bold text-white'>BTZapp win contract to<br></br> replace Europe’s largest lost<br></br> property system</div>
                     <div className='xl:mt-4 md:mt-4 sm:mt-2'>
-                        <p className={`text-white font-medium xl:text-base md:text-sm sm:text-xs xl:w-1/3 md:w-2/5 sm:w-6/12 overflow-hidden ${readMore ? 'h-fit' : 'xl:h-36 md:h-36 sm:h-24'}`}>
+                        <p className={`text-white font-medium xl:text-lg md:text-sm sm:text-xs xl:w-4/12 md:w-2/5 sm:w-6/12 overflow-hidden ${readMore ? 'h-fit' : 'xl:h-36 md:h-36 sm:h-24'}`}>
                             New intelligent, cloud-based solution to be introduced across Transport for London.
                             It will cover the entire underground, train and bus network of more than 400 sites and will transform the lost property experience for millions of customers and thousands of TfL staff,
                             increasing efficiency and ensuring more items can be returned. <span > New intelligent,
                                 cloud-based solution to be introduced across Transport for London.</span>
                         </p>
-                        <button className='text-[#444444] font-medium xl:text-base md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
+                        <button className='text-[#444444] font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
                     </div>
                 </div>
-                <div className='absolute xl:top-52 md:top-14 sm:top-7 xl:left-2/4 md:left-1/2 sm:left-72 ml-32'>
-                    <div className=''><img src={transportLondon} className='xl:h-72 md:h-56 md:w-56 sm:h-44 sm:w-44' alt='transportLondon' /></div>
-                    <div className='flex justify-center xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-64 md:w-44 sm:w-40 xl:h-8 md:h-7 sm:h-7 xl:text-base md:text-sm sm:text-xs'>Click here to find out more</button></div>
+                <div className='absolute xl:top-40 md:top-14 sm:top-7 xl:left-2/4 md:left-80 sm:left-52 ml-32'>
+                    <div className=''><img src={transportLondon} className='xl:h-72 xl:w-full md:h-56 md:w-full sm:h-44 sm:w-full' alt='transportLondon' /></div>
+                    <div className='flex justify-center xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-72 md:w-52 sm:w-44 xl:h-10 md:h-9 sm:h-7 xl:text-lg md:text-sm sm:text-xs'>Click here to find out more</button></div>
                 </div>
                 {/* </div> */}
             </div>
@@ -109,7 +109,7 @@ export default function BusinessHome() {
 
             <div className='xl:px-60 md:52 pt-20 pb-80 flex flex-col justify-center items-center'>
                 <div className='text-[#404041] font-semibold xl:text-3xl md:text-2xl sm:text-xl text-center'>How our lost and found software helps<br></br> leading Siberian brands</div>
-                <div className='text-[#4C4C4C] xl:text-base md:text-sm sm:text-xs text-center py-10'>Lost and found management is a nuisance for staff and frustrating for customers. NotLost helps you get the<br></br>
+                <div className='text-[#4C4C4C] xl:text-lg md:text-sm sm:text-xs text-center py-10'>Lost and found management is a nuisance for staff and frustrating for customers. NotLost helps you get the<br></br>
                     job done with speed and ease, simplifying and automating the tasks you hate. This enables your team to<br></br>
                     respond quickly to customers and return more items, delivering an excellent customer experience. </div>
                 <div className='h-44 xl:w-6/12 md:w-7/12 sm:w-10/12 flex flex-wrap justify-between'>
@@ -127,7 +127,7 @@ export default function BusinessHome() {
             </div>
 
             <div className='bg-[#FFF0DA] py-16'>
-                <div className='flex justify-center text-center text-[#404041]'>
+                <div className='flex justify-center text-center text-[#404041] xl:text-lg md:text-lg sm:text-base '>
                     BTZapp is transforming lost and found management from a recurring problem into a fast<br></br>
                     and simple process for businesses. Free up valuable staff time, return more items of lost<br></br>
                     property and deliver an excellent customer experience.
