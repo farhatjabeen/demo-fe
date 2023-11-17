@@ -12,6 +12,7 @@ export const injectStore = _store => {
 const request = ({
     url,
     method,
+    apiVersion='v1',
     data = null,
     headers = null,
     params = null,
@@ -19,7 +20,7 @@ const request = ({
 }) => {
     return new Promise((resolve, reject) => {
         let config = {
-            url: `${process.env.REACT_APP_PRIME_SERVICE_BASE_URL}${url}`,
+            url: `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`,
             method: method,
             data: data,
             params: params,
@@ -29,7 +30,6 @@ const request = ({
                 'Content-Type': 'application/json'
             },
         }
-
         if (isLoader) {
             showLoader(true)
         }

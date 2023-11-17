@@ -1,31 +1,20 @@
-const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-const NUMBER_PATTERN = /^[0-9]*$/
-const TEXT_PATTERN = /^[a-zA-Z ]*$/
-const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,15}$/
+import * as yup from 'yup';
 
+const passwordRegExp =
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
 
-const isValidEmail = (email = "") => {
-    return EMAIL_PATTERN.test(email);
-}
+const emailRexExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-const isValidNumber = (number = "") => {
-    return NUMBER_PATTERN.test(number);
-}
+export const loginSchema = yup.object({
+    emailMailId: yup
+        .string()
+        .matches(emailRexExp, 'Invalid email address')
+        .required('Email is required'),
+    password: yup
+        .string()
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .required('Password is required')
+});
 
-const isValidAlphabet = (text = "") => {
-    return TEXT_PATTERN.test(text);
-}
-
-const isValidPassword = (password = "") => {
-    return PASSWORD_PATTERN.test(password);
-}
-
-const Validation = {
-    isValidAlphabet,
-    isValidEmail,
-    isValidNumber,
-    isValidPassword
-};
-
-
-export default Validation;
