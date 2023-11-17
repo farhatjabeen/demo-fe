@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.e3ed3c69.css",
-    "main.js": "/static/js/main.a160fd79.js",
-    "static/js/787.1c399438.chunk.js": "/static/js/787.1c399438.chunk.js",
+    "main.css": "/static/css/main.89a46623.css",
+    "main.js": "/static/js/main.8e53c1d5.js",
+    "static/js/27.64a9e9e7.chunk.js": "/static/js/27.64a9e9e7.chunk.js",
+    "static/media/containers.jpg": "/static/media/containers.39af777cf51250c3e9a4.jpg",
     "static/media/image.png": "/static/media/image.88e367f1317f559737e0.png",
     "static/media/doodle.png": "/static/media/doodle.43f345b5024794ecf380.png",
+    "static/media/transportLondon.png": "/static/media/transportLondon.17eeec61f5a64d293bec.png",
+    "static/media/businessDoodle.png": "/static/media/businessDoodle.bd01c31162d16d3766bb.png",
     "static/media/Lato-BoldItalic.ttf": "/static/media/Lato-BoldItalic.fd32b4dea61508c37b78.ttf",
     "static/media/Lato-Light.ttf": "/static/media/Lato-Light.c7400fcad9e48ca9043f.ttf",
     "static/media/keys.png": "/static/media/keys.a6137ef7cdecabd361ff.png",
@@ -12,21 +15,20 @@
     "static/media/Lato-Regular.ttf": "/static/media/Lato-Regular.9d883d540ee2b4de8024.ttf",
     "static/media/Lato-Bold.ttf": "/static/media/Lato-Bold.636be8de934918e38ed9.ttf",
     "static/media/faqlogo.png": "/static/media/faqlogo.9a8b14d76fc074a49a09.png",
+    "static/media/aboutUs.png": "/static/media/aboutUs.c7442fed262892c7883e.png",
     "static/media/Lato-LightItalic.ttf": "/static/media/Lato-LightItalic.4310bbed01b37dfcee98.ttf",
     "static/media/contactus.png": "/static/media/contactus.eb01782799d56b22034f.png",
     "static/media/location.png": "/static/media/location.d313eb910f798d217123.png",
     "static/media/header-bg.png": "/static/media/header-bg.f2ec9d4065ebed4df3f2.png",
+    "static/media/logo.svg": "/static/media/logo.e1230962fb250f88556de10ee56ce354.svg",
     "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
-    "index.html": "/index.html",
-    "main.e3ed3c69.css.map": "/static/css/main.e3ed3c69.css.map",
-    "main.a160fd79.js.map": "/static/js/main.a160fd79.js.map",
-    "787.1c399438.chunk.js.map": "/static/js/787.1c399438.chunk.js.map"
+    "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.e3ed3c69.css",
-    "static/js/main.a160fd79.js"
+    "static/css/main.89a46623.css",
+    "static/js/main.8e53c1d5.js"
   ]
 }
