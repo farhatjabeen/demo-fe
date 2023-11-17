@@ -90,6 +90,14 @@ const routers = [
         childPath: "/foundItems",
       },
       {
+        component: "addFoundItems",
+        childPath: "/foundItems/addfoundItems",
+      },
+      {
+        component: "editFoundItems",
+        childPath: "/foundItems/editfoundItems",
+      },
+      {
         component: "user",
         childPath: "/users",
       },
@@ -98,8 +106,12 @@ const routers = [
         childPath: "/businessUser",
       },
       {
+        component: "settings",
+        childPath: "/settings",
+      },
+      {
         component: "itemDetails",
-        childPath: "/itemDetails",
+        childPath: "/foundItems/itemDetails",
       },
     ]
   },

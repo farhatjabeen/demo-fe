@@ -7,12 +7,12 @@ import DropdownMenu from "../../components/common/dropdown";
 import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
-
+import {Link} from 'react-router-dom'
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const categories = ['Category 1', 'Category 2', 'Category 3'];
   const handleAddItem = () => { };
   const handleExport = () => { };
@@ -73,13 +73,13 @@ function FoundItems() {
     { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
     { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
     { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
-   
+
   ];
   const itemsPerPage = 5;
   const totalItems = data1.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  
-  
+
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -103,14 +103,15 @@ function FoundItems() {
               isReset={false}
               buttonColor="blue"
             />
-
-            <CustomCombinedButton
-              text="Add Found Item"
-              icon={<HiPlus size={20} className="mr-2" />}
-              onClick={handleAddItem}
-              isReset={true}
-              buttonColor="other"
-            />
+            <Link to='/admin/user/foundItems/addfoundItems'>
+              <CustomCombinedButton
+                text="Add Found Item"
+                icon={<HiPlus size={20} className="mr-2" />}
+                onClick={handleAddItem}
+                isReset={true}
+                buttonColor="other"
+              />
+              </Link>
           </div>
         </div>
         {/* Filters */}
@@ -126,8 +127,8 @@ function FoundItems() {
             <div className="basis-5/12">
               <DropdownMenu categories={categories}
                 selectedCategory={selectedCategory}
-                onSelectCategory={(category) => setSelectedCategory(category)} 
-                isFilterMode={true}/>
+                onSelectCategory={(category) => setSelectedCategory(category)}
+                isFilterMode={true} />
             </div>
             <div className="basis-1/12">
               <CustomCombinedButton
@@ -149,7 +150,7 @@ function FoundItems() {
             </div>
           </div>
         </div>
-        <Table headers={headers1} data={displayedData()} />
+        <Table headers={headers1} data={displayedData()} showEdit={true} />
         <Pagination
           isBlueBackground={true}
           currentPage={currentPage}

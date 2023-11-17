@@ -1,13 +1,18 @@
 import React from "react";
 import CustomCombinedButton from "../../components/common/adminButton";
 import keys from "../../assets/images/keys.png";
+import Breadcrumbs from '../../components/common/breadcrumbs';
+
 const itemDetails = () => {
   return (
     <div className="m-4">
-      <div>
-        <h1 className="text-black font-bold my-8 text-4xl mt-10">
-          Item Details(#123412)
-        </h1>
+     <div>
+        <Breadcrumbs
+          items={[
+            { label: 'Found Items', link: '/admin/user/foundItems', className: 'text-black  text-4xl mt-10' },
+            { label: 'Item Details (#123456)', className: 'text-black font-bold text-4xl mt-10' },
+          ]}
+        />
       </div>
       <div className="bg-white mt-10 rounded-lg p-4 shadow-md">
         <div className=" flex border-b pb-4 mx-4 justify-between">
