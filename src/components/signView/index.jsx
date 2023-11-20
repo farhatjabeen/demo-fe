@@ -1,13 +1,33 @@
 import React, { useState } from "react";
 import logo from "../../assets/images/logo.svg";
 import { useNavigate } from "react-router-dom";
+import { AdminsignInSchema } from '../../validations';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import useValidationResolver from '../../hooks/useValidationResolver';
+import TextInput from "../../components/common/textInput";
 
 function SignInView() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const handleSignIn = () => {
-      navigate("/admin/user/foundItems");
+
+  const dispatch = useDispatch();
+  const resolver = useValidationResolver(AdminsignInSchema);
+  console.log(resolver, "resolver");
+  const methods = useForm({
+    defaultValues: {
+      username: "",
+      password: ""
+    },
+    resolver
+  });
+  console.log(methods, "methods");
+  const submitData = async (data) => {
+    navigate('/admin/user/foundItems');
+    // try {
+    //   dispatch(loginUser(data))
+    // } catch (error) {
+    //   console.log("submitData errors", error)
+    // }
   };
 
   return (
@@ -21,35 +41,38 @@ function SignInView() {
           Sign in to the admin portal of Ilost
         </p>
       </div>
-      <div className="mt-6 pt-2">
-        <input
-          type="text"
-          placeholder="Enter username"
-          className="w-full py-4 px-3 border border-gray-300 rounded-md"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </div>
-      <div className="mt-2">
-        <input
-          type="password"
-          placeholder="Enter password"
-          className="w-full py-4 px-3 border border-gray-300 rounded-md"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <div className="mt-14">
-        <button
-          type="button"
-          onClick={handleSignIn}
-          className="w-full bg-light-green  text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
-        >
-          Sign in
-        </button>
-      </div>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(submitData)}>
+          <div className="mt-6 pt-2">
+            <TextInput
+              name="username"
+              autoComplete="off"
+              placeholder="Enter username"
+              className="w-full py-4 px-3 border border-gray-300 rounded-md"
+              required
+            />
+          </div>
+          <div className="mt-2">
+            <TextInput
+              type="password"
+              name="password"
+              autoComplete="off"
+              placeholder="Enter password"
+              className="w-full py-4 px-3 border border-gray-300 rounded-md"
+              required
+            />
+          </div>
+          <div className="mt-14">
+            <button
+              type="submit"
+              className="w-full bg-light-green  text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+      </FormProvider>
+
     </div>
   );
 }

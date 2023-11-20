@@ -60,8 +60,8 @@ export const addMoreDetailsSchema = yup.object({
     itemName: yup
         .string()
         .required('item name required')
-
-})
+   
+});
 
 export const companyProfile = yup.object({
     companyCategory: yup
@@ -85,6 +85,12 @@ export const companyProfile = yup.object({
         .number()
         .min(10)
         .required('mobile number required'),
+});
+
+export const AdminsignInSchema = yup.object({
+    username: yup
+        .string()
+        .required('username required'),
     password: yup
         .string()
         .matches(
@@ -117,11 +123,8 @@ export const contactUsSchema = yup.object({
         .string()
         .test('wordCount', 'Description must have at least 5 words', (value) => {
             if (!value) {
-                // Handle the case where the value is empty or undefined
                 return false;
             }
-
-            // Split the string into words and count them
             const words = value.trim().split(/\s+/);
             return words.length >= 5;
         })

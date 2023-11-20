@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import CustomCombinedButton from "../../components/common/adminButton";
-import { CiCalendar, CiClock2 } from "react-icons/ci";
+import { MdAttachment,MdOutlineCalendarToday } from "react-icons/md";
+import { FaRegClock } from "react-icons/fa";
 import DropdownMenu from '../../components/common/dropdown';
 import Breadcrumbs from '../../components/common/breadcrumbs';
 const EditFoundItems = () => {
@@ -45,8 +46,8 @@ const EditFoundItems = () => {
                   className="w-11/12 py-2 px-3 border border-gray rounded-md"
                   required
                 />
-                <div className="absolute inset-y-0 right-10 flex items-center pr-3">
-                  <CiCalendar size={24} />
+                <div className="absolute inset-y-0 right-10 flex items-center pr-6">
+                  <MdOutlineCalendarToday size={24}  />
                 </div>
               </div>
             </div>
@@ -80,8 +81,8 @@ const EditFoundItems = () => {
                   className="w-11/12 py-2 px-3  border border-gray rounded-md"
                   required
                 />
-                <div className="absolute inset-y-0 right-10 flex items-center pr-3">
-                  <CiClock2 size={24} />
+                <div className="absolute inset-y-0 right-10 flex items-center pr-6">
+                  <FaRegClock size={24} />
                 </div>
               </div>
             </div>
@@ -121,25 +122,40 @@ const EditFoundItems = () => {
         </div>
       </div>
       <div className="bg-white mt-10 p-4 rounded-lg shadow-md ">
-        <div className="mx-4 pb-4 ">
+        <div className="mx-4 pb-4  ">
           <h1 className="text-black font-bold text-xl">Upload</h1>
         </div>
         <div className='mx-4'>
-        <label >Item image</label>
+          <label >Item image</label>
         </div>
-        <div className='flex mx-4'>
+      <div className="flex items-center">
         <input
           type="text"
-          placeholder="Value"
-          className=" py-2 px-3  border border-gray rounded-md"
+          className="border border-gray p-2 w-96 ml-4  rounded-md"
+          placeholder="Upload "
           required
         />
-        <CustomCombinedButton
-          text="upload"
-          isReset={false}
-          buttonColor="other"
+
+        <label htmlFor="file-upload" className="cursor-pointer ">
+          <div className="flex items-center px-4 py-2 bg-blue text-white rounded-md">
+
+            <MdAttachment size={24} className='mr-2' />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+            Upload File
+          </div>
+        </label>
+
+        <input
+          type="file"
+          id="file-upload"
+          className="hidden"
         />
-        </div>
+      </div>
       </div>
       <div className=" flex justify-end mt-6">
         <CustomCombinedButton

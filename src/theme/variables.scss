@@ -15,6 +15,7 @@ $grey-F5F6FA: #f5f6fa;
 $gray-sideBar: #bdbdbd;
 $border: #f2f3f7;
 $menu_icon: #8a92a6;
+$black: #000000;
 
 $myColors: (
   "white": $white,
@@ -27,6 +28,7 @@ $myColors: (
   "primary-color": $primary-color,
   "red":$red,
   "gray":$gray,
+  "black":$black,
 );
 @each $name, $colors in $myColors {
   $index: index($myColors, $colors);
