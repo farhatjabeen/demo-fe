@@ -22,7 +22,6 @@ export default function MyProfile() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
-    console.log(resolver, "resolver");
 
     const methods = useForm({
         defaultValues: {

@@ -11,7 +11,6 @@ import TextAreaInput from '../../components/common/textAreaInput';
 export default function ContactUs() {
     const dispatch = useDispatch();
     const resolver = useValidationResolver(contactUsSchema);
-    console.log(resolver, "resolver");
 
     const methods = useForm({
         defaultValues: {

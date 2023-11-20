@@ -14,7 +14,6 @@ export default function BusinessSignUp() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(businessSignUpSchema);
-    console.log(resolver, "resolver");
 
     const methods = useForm({
         defaultValues: {
@@ -29,7 +28,7 @@ export default function BusinessSignUp() {
     });
 
     const submitData = async (data) => {
-
+        return true
     };
 
     return (
@@ -54,7 +53,7 @@ export default function BusinessSignUp() {
                     <form onSubmit={methods.handleSubmit(submitData)}>
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
-                                <label for="fullName" className="block text-sm font-bold mb-2">Your Name</label>
+                                <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
                                 <TextInput
                                     type="text"
                                     placeholder="Full Name"
@@ -73,7 +72,7 @@ export default function BusinessSignUp() {
                             </div>
 
                             <div className="mb-2">
-                                <label for="mobileNumber" className="block text-sm font-bold mb-2">Mobile Number</label>
+                                <label htmlFor="mobileNumber" className="block text-sm font-bold mb-2">Mobile Number</label>
                                 <TextInput
                                     type="text"
                                     placeholder="1234567890"
@@ -91,7 +90,7 @@ export default function BusinessSignUp() {
                             </div>
 
                             <div className="mb-2">
-                                <label for="email" className="block text-sm font-bold mb-2">Email Address</label>
+                                <label htmlFor="email" className="block text-sm font-bold mb-2">Email Address</label>
                                 <TextInput
                                     type="text"
                                     placeholder="abc@xyz.com"
@@ -109,7 +108,7 @@ export default function BusinessSignUp() {
                             </div>
 
                             <div className="mb-2">
-                                <label for="password" className="block text-sm font-bold mb-2">Password</label>
+                                <label htmlFor="password" className="block text-sm font-bold mb-2">Password</label>
                                 <TextInput
                                     type="text"
                                     placeholder="Glorpus Galaxies"
@@ -127,7 +126,7 @@ export default function BusinessSignUp() {
                             </div>
 
                             <div className="mb-2">
-                                <label for="companyName" className="block  text-sm font-bold mb-2">Company Name</label>
+                                <label htmlFor="companyName" className="block  text-sm font-bold mb-2">Company Name</label>
                                 <TextInput
                                     type="text"
                                     placeholder="Glorpus Galaxies"
@@ -144,11 +143,11 @@ export default function BusinessSignUp() {
                                 /> */}
                             </div>
                             <div className="mb-2">
-                                <label for="companyLogo" className="block text-sm font-bold mb-2">Company Logo</label>
+                                <label htmlFor="companyLogo" className="block text-sm font-bold mb-2">Company Logo</label>
                                 <button className="bg-primary-color w-full py-2 rounded-xl">Upload Image</button>
                             </div>
                             <div className="mb-2">
-                                <label for="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
+                                <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
                                 <DropdownMenu
                                     categories={categories}
                                     selectedCategory={selectedCategory}
@@ -158,7 +157,7 @@ export default function BusinessSignUp() {
                                 <div className="flex items-center h-5">
                                     <input id="remember" type="checkbox" className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                 </div>
-                                <label for="remember" className="ms-2 text-sm">I agree to the <span class="underline decoration-1 text-[#FF9900]"> terms and conditions</span>  of ilost Serbia</label>
+                                <label htmlFor="remember" className="ms-2 text-sm">I agree to the <span class="underline decoration-1 text-[#FF9900]"> terms and conditions</span>  of ilost Serbia</label>
                             </div>
                             <button className="bg-[#FF9900] w-full py-3  mt-2 rounded-lg">Continue</button>
                         </div>

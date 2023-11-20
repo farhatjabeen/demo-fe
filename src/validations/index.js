@@ -87,7 +87,7 @@ export const companyProfile = yup.object({
         .required('mobile number required'),
 });
 
-export const AdminsignInSchema = yup.object({
+export const AdminSignInSchema = yup.object({
     username: yup
         .string()
         .required('username required'),
@@ -175,14 +175,6 @@ export const businessSignUpSchema = yup.object({
 });
 
 export const searchSchema = yup.object({
-    itemName: yup
-        .string()
-        .required('item name required'),
-    location: yup
-        .string()
-        .required('location required')
-});
-export const reportSchema = yup.object({
     itemName: yup
         .string()
         .required('item name required'),

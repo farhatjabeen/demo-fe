@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from "../../assets/images/logo.svg";
 import { useNavigate } from "react-router-dom";
-import { AdminsignInSchema } from '../../validations';
+import { AdminSignInSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
 
 function SignInView() {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const resolver = useValidationResolver(AdminsignInSchema);
-  console.log(resolver, "resolver");
+  // const dispatch = useDispatch();
+  const resolver = useValidationResolver(AdminSignInSchema);
+
   const methods = useForm({
     defaultValues: {
       username: "",
@@ -20,7 +20,6 @@ function SignInView() {
     },
     resolver
   });
-  console.log(methods, "methods");
   const submitData = async (data) => {
     navigate('/admin/user/foundItems');
     // try {

@@ -30,7 +30,7 @@ export default function CompanyProfile() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(companyProfile);
-    console.log(resolver, "resolver");
+
 
     const methods = useForm({
         defaultValues: {

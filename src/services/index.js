@@ -1,7 +1,7 @@
-import axios from 'axios';
 import Loader from "../components/loader";
 import { clearUserData } from '../redux/reducers/userSlice'
 import { Toast } from '../components/toast';
+import { axiosInstance, getAuthToken } from "../utils/helper"
 
 let store;
 
@@ -17,18 +17,20 @@ const request = ({
     headers = null,
     params = null,
     isLoader = true,
+    isAuth = false
 }) => {
+    if(isAuth) axiosInstance.defaults.headers.common.Authorization = `Bearer ${getAuthToken()}`; 
     return new Promise((resolve, reject) => {
         let config = {
             url: `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`,
             method: method,
             data: data,
             params: params,
-            headers: {
-                ...headers,
-                // 'Authorization': await localStorage.getItem('TOKEN'),
-                'Content-Type': 'application/json'
-            },
+            // headers: {
+            //     ...headers,
+            //     // 'Authorization': await localStorage.getItem('TOKEN'),
+            //     'Content-Type': 'application/json'
+            // },
         }
         if (isLoader) {
             showLoader(true)
@@ -37,7 +39,7 @@ const request = ({
         //temporarily disabled because of cors issue
         // axios.defaults.withCredentials = true;
 
-        axios(config).then(response => {
+        axiosInstance(config).then(response => {
             showLoader(false)
             resolve(response?.data);
         }).catch(error => {

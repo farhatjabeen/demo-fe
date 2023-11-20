@@ -14,7 +14,7 @@ export default function BusinessSignIn() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(loginSchema);
-    console.log(resolver,"resolver");
+
     const methods = useForm({
         defaultValues: {
             emailMailId: "",
@@ -22,7 +22,7 @@ export default function BusinessSignIn() {
         },
         resolver
     });
-console.log(methods,"methods");
+
     const submitData = async (data) => {
         try {
             dispatch(loginUser(data))

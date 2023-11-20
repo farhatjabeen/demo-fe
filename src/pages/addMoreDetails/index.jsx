@@ -25,12 +25,11 @@ export default function AddMoreDetails() {
         reporterid: ''
     })
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const reportDetails = useParams();
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
-    console.log(resolver, "resolver");
 
     const methods = useForm({
         defaultValues: {
