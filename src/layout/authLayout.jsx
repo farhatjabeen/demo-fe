@@ -27,7 +27,7 @@ export function AuthLayout(props) {
     <div className="authLayout flex flex-col min-h-screen">
       <Header />
       <div className="flex-grow">
-        <main id="mainLayoutContainer">{props?.children}</main>
+        <main id="authLayoutContainer">{props?.children}</main>
       </div>
       <Footer />
     </div>
