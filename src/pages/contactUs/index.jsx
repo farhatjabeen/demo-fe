@@ -1,8 +1,33 @@
 import React from 'react';
 import { FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
 import contactUsImage from '../../assets/images/contactus.png';
+import { useDispatch } from 'react-redux';
+import useValidationResolver from '../../hooks/useValidationResolver';
+import { FormProvider, useForm } from 'react-hook-form';
+import { contactUsSchema } from '../../validations';
+import TextInput from '../../components/common/textInput';
 
 export default function ContactUs() {
+    const dispatch = useDispatch();
+    const resolver = useValidationResolver(contactUsSchema);
+    console.log(resolver, "resolver");
+
+    const methods = useForm({
+        defaultValues: {
+            emailMailId: "",
+            subject: "",
+            message: ""
+        },
+        resolver
+    });
+
+    const submitData = async (data) => {
+        // try {
+        //     dispatch(loginUser(data))
+        // } catch (error) {
+        //     console.log("submitData errors", error)
+        // }
+    };
     return (
         <div className='flex flex-col items-center'>
             <div className='font-bold text-4xl mb-5'>Contact Us</div>
@@ -28,16 +53,44 @@ export default function ContactUs() {
 
             <div className='xl:w-11/12 sm:flex-col sm:items-center md:flex-row flex justify-between mt-16'>
                 <div><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
-                <div>
-                    <div className='sm:flex sm:justify-center md:justify-start font-semibold text-3xl'>Get in Touch</div>
-                    <div className='sm:w-[500px] xl:w-[600px] mt-7 flex flex-col sm:items-center xl:items-end'>
-                            <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="email" placeholder='Enter your email' />
-                            <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="text" placeholder='Subject' />
-                        <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' type="text" placeholder='Message' />
-                        <input className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit" value="Submit" />
-                    </div>
-                </div>
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(submitData)}>
+                        <div>
+                            <div className='sm:flex sm:justify-center md:justify-start font-semibold text-3xl'>Get in Touch</div>
+                            <div className='sm:w-[500px] xl:w-[600px] mt-7 flex flex-col sm:items-center xl:items-end'>
+                                <TextInput
+                                    type="text"
+                                    placeholder="Enter your email"
+                                    name="emailMailId"
+                                    className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4'
+                                    autoComplete="off"
+                                    required
+                                />
+                                {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="email" placeholder='Enter your email' /> */}
+                                <TextInput
+                                    type="text"
+                                    placeholder="Subject"
+                                    name="subject"
+                                    className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4'
+                                    autoComplete="off"
+                                    required
+                                />
+                                {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="text" placeholder='Subject' /> */}
+                                <TextInput
+                                    type="text"
+                                    placeholder="Message"
+                                    name="message"
+                                    className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4'
+                                    autoComplete="off"
+                                    required
+                                />
+                                {/* <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' type="text" placeholder='Message' /> */}
+                                <button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </FormProvider>
             </div>
-        </div>
+        </div >
     )
 }

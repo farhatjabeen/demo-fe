@@ -22,7 +22,7 @@ function TextInput({ type = 'text', placeholder, name, disable, className: input
                             render={({
                                 field: { onChange, value: fieldValue, ref, props }
                             }) => (
-                                <div className={type === 'password' && 'relative'}>
+                                <div className={` ${type === 'password' && 'relative'}`}>
                                     <input
                                         {...props}
                                         ref={ref}

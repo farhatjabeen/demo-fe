@@ -74,7 +74,7 @@ export default function MyProfile() {
     }
 
     return (
-        <div className=''>
+        <div >
             <div className='flex justify-center mb-12'>
                 <div className='font-bold text-4xl mr-5'>My Profile</div>
                 {editButton ? null : <div><button className='w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
@@ -174,7 +174,7 @@ export default function MyProfile() {
                                     <TextInput 
                                     type="text"
                                     placeholder="New password"
-                                    name="newPassword"
+                                    name="confirmPassword"
                                     className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     autoComplete="off"
                                     required
