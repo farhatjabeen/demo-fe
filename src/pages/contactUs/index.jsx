@@ -6,6 +6,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { FormProvider, useForm } from 'react-hook-form';
 import { contactUsSchema } from '../../validations';
 import TextInput from '../../components/common/textInput';
+import TextAreaInput from '../../components/common/textAreaInput';
 
 export default function ContactUs() {
     const dispatch = useDispatch();
@@ -54,15 +55,15 @@ export default function ContactUs() {
             <div className='xl:w-11/12 sm:flex-col sm:items-center md:flex-row flex justify-between mt-16'>
                 <div><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(submitData)}>
-                        <div>
+                    <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-6/12'>
+                        <div className='w-full '>
                             <div className='sm:flex sm:justify-center md:justify-start font-semibold text-3xl'>Get in Touch</div>
-                            <div className='sm:w-[500px] xl:w-[600px] mt-7 flex flex-col sm:items-center xl:items-end'>
+                            <div className='sm:w-[500px] xl:w-full mt-7 flex flex-col sm:items-center xl:items-start'>
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your email"
                                     name="emailMailId"
-                                    className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4'
+                                    className='xl:w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
                                     autoComplete="off"
                                     required
                                 />
@@ -71,21 +72,21 @@ export default function ContactUs() {
                                     type="text"
                                     placeholder="Subject"
                                     name="subject"
-                                    className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4'
+                                    className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-5  0'
                                     autoComplete="off"
                                     required
                                 />
                                 {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="text" placeholder='Subject' /> */}
-                                <TextInput
-                                    type="text"
+                                <TextAreaInput
+                                    rows="4"
                                     placeholder="Message"
                                     name="message"
-                                    className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4'
+                                    className='border border-[#B6B6B6] rounded-lg bg-inherit p-5 w-96 border-opacity-50'
                                     autoComplete="off"
                                     required
                                 />
                                 {/* <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' type="text" placeholder='Message' /> */}
-                                <button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button>
+                                <div className='flex justify-end w-96'><button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button></div>
                             </div>
                         </div>
                     </form>

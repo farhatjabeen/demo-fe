@@ -11,7 +11,7 @@ export default function FormDropdown({editButton,selectt,dropdownValues}) {
     setSelect(false);
   }
   return (
-    <div className="xl:w-5/12 sm:w-6/12 relative inline-block text-left">
+    <div className="xl:w-96 sm:w-6/12 relative inline-block text-left">
   <div>
     <button onClick={()=>setSelect(!select)} disabled={!editButton} class={`flex w-full h-12 items-center justify-between rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'} px-4 border border-solid border-[#B6B6B6]`}>
       {options?options:"Options"}

@@ -161,10 +161,28 @@ export const businessSignUpSchema = yup.object({
         .matches(
             passwordRegExp,
             'Password must be 8-20 characters with at least one letter, one number, and one special character')
-        .required('password required')
+        .required('password required'),
+        keywords: yup
+        .string()
+        .test('wordCount', 'Keywords must have at least 2 keys', (value) => {
+            if (!value) {
+                return false;
+            }
+            const words = value.trim().split(/\s+/);
+            return words.length >= 2;
+        })
+        .required('keywords required')
 });
 
-export const searchReport = yup.object({
+export const searchSchema = yup.object({
+    itemName: yup
+        .string()
+        .required('item name required'),
+    location: yup
+        .string()
+        .required('location required')
+});
+export const reportSchema = yup.object({
     itemName: yup
         .string()
         .required('item name required'),

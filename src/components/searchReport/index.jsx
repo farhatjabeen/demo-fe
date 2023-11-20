@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import addressMan from '../../assets/images/location.png';
 import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { searchReport } from '../../validations';
+import { reportSchema, searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../common/textInput';
 
@@ -18,7 +18,8 @@ export default function SearchReport() {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const resolver = useValidationResolver(searchReport);
+    const resolver = useValidationResolver(searchSchema);
+    const resolverTwo = useValidationResolver(reportSchema);
     console.log(resolver,"resolver");
     const methods = useForm({
         defaultValues: {
@@ -26,6 +27,13 @@ export default function SearchReport() {
             location: ""
         },
         resolver
+    })
+    const methodsTwo = useForm({
+        defaultValues: {
+            itemName: "",
+            location: ""
+        },
+        resolverTwo
     })
 
     const submitData = async (data) => {
@@ -94,8 +102,8 @@ export default function SearchReport() {
                             </form>
                         </FormProvider>
                         :
-                        <FormProvider {...methods}>
-                            <form onSubmit={methods.handleSubmit(submitData)}>
+                        <FormProvider {...methodsTwo}>
+                            <form onSubmit={methodsTwo.handleSubmit(submitData)}>
                                 <div className='flex items-center mt-6 xl:h-20 xl:w-2xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-[#B6B6B6] border-solid'>
                                     <TextInput
                                         type="text"
