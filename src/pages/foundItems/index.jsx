@@ -29,6 +29,7 @@ function FoundItems() {
     { key: "timeFound", label: "Time Found" },
     { key: "foundby", label: "Found by" },
     { key: "phoneNumber", label: "Phone number" },
+    { key: "actions", label: "Actions" },
   ];
 
   const data1 = [

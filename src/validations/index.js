@@ -57,3 +57,15 @@ export const addMoreDetailsSchema = yup.object({
 
 })
 
+export const AdminsignInSchema = yup.object({
+    username: yup
+        .string()
+        .required('username required'),
+    password: yup
+        .string()
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .required('Password required')
+
+});
