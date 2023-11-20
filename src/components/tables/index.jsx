@@ -63,10 +63,12 @@ const Table = ({ headers, data, showEdit = false }) => {
                   <div>
                     <p>{header.label}</p>
                   </div>
+                  {header.key !== "actions" && (
                   <div>
                     <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
                     <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
                   </div>
+                  )}
                 </div>
               </th>
             ))}
@@ -82,24 +84,22 @@ const Table = ({ headers, data, showEdit = false }) => {
                 <td key={header.key} className="py-6 px-6">
                   {header.key === "id" ? (
                     <Link to="/admin/user/foundItems/itemDetails">{rowData[header.key]}</Link>
-                  ) : (
+                  ) : header.key === "actions" ? (
+                    <div className="flex cursor-pointer ">
+                    <AiOutlineDelete size={26}
+                      onClick={() => handleDeleteClick(rowData.id)} />
+                    {showEdit && (
+                      <Link to='/admin/user/foundItems/editfoundItems'>
+                        <FiEdit size={24} className="ml-2 "
+                        />
+                      </Link>
+                    )}
+                  </div>
+                  ):(
                     rowData[header.key]
                   )}
                 </td>
               ))}
-              <td >
-                <div className="flex cursor-pointer ">
-                  <AiOutlineDelete size={26}
-                    onClick={() => handleDeleteClick(rowData.id)} />
-                  {showEdit &&
-                  <Link to='/admin/user/foundItems/editfoundItems'>
-                    <FiEdit size={24} className="ml-2 "
-                      />
-                  </Link>
-
-                  }
-                </div>
-              </td>
             </tr>
           ))}
         </tbody>

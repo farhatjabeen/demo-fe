@@ -39,6 +39,8 @@ function User() {
     { key: "listingCount", label: "Listing Count" },
     { key: "mailID", label: "Mail ID" },
     { key: "mobileNumber", label: "Mobile Number" },
+    { key: "actions", label: "Actions" },
+
   ];
 
   const data2 = [
@@ -83,6 +85,7 @@ function User() {
     { key: "mailID", label: "Mail ID" },
     { key: "contactPhone", label: "Contact Phone" },
     { key: "listingCount", label: "Listing Count" },
+    { key: "actions", label: "Actions" },
   ];
 
   const data3 = [
