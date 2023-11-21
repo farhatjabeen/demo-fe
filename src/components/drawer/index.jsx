@@ -2,9 +2,8 @@ import { useState } from "react";
 import logo from "../../assets/images/logo.svg";
 import VectorLogo from "../../assets/images/VectorLogo.png";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
-import { FiCheckCircle, FiUsers, FiUser } from "react-icons/fi";
+import { FiCheckCircle, FiUsers, FiUser ,FiSettings} from "react-icons/fi";
 import { PiSuitcaseBold } from "react-icons/pi";
-import { CiSettings } from "react-icons/ci";
 import { Link } from "react-router-dom";
 
 const SideMenu = () => {
@@ -84,10 +83,10 @@ const SideMenu = () => {
             </li>
           </>
         )}
-        <li className={`fixed  bottom-4 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
+        <li className={`fixed bottom-4 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold py-3 rounded-lg " : ""}`}>
           <Link to="/admin/user/settings" >
             <span class="pl-2   flex">
-              <CiSettings size={26}/>
+              <FiSettings size={26}/>
               <div className="pl-4 ">
                 <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>
               </div>

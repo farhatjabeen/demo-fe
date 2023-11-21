@@ -60,6 +60,14 @@ const routers = [
         childPath: "/aboutus",
       },
       {
+        component: "termsOfUse",
+        childPath: "/termsOfUse",
+      },
+      {
+        component: "privacyPolicy",
+        childPath: "/privacyPolicy",
+      },
+      {
         component: "BusinessHome",
         childPath: "/businesshome",
       }
@@ -82,6 +90,10 @@ const routers = [
       {
         component: "signIn",
         childPath: "/signIn",
+      },
+      {
+        component: "changePassword",
+        childPath: "/changePassword",
       },
     ]
   },
@@ -113,6 +125,7 @@ const routers = [
         component: "settings",
         childPath: "/settings",
       },
+      
       {
         component: "itemDetails",
         childPath: "/foundItems/itemDetails",

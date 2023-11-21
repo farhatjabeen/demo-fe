@@ -35,7 +35,7 @@ function TextInput({ type = 'text', placeholder, name, disable, className: input
                                         disabled={disable}
                                     />
                                     {type === 'password' && <div className='absolute top-7 left-3/4 ml-16' onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? <BsFillEyeSlashFill className='h-6 w-6' /> : <BsFillEyeFill className='h-6 w-6' />}
+                                        {showPassword ? <BsFillEyeFill className='h-6 w-6' />:<BsFillEyeSlashFill className='h-6 w-6' />  }
                                     </div>}
                                 </div>
                             )}

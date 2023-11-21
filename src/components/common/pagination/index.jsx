@@ -57,7 +57,7 @@ const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange })
             <a
               href="#"
               className={`relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0 mr-1
-           ${currentPage === 1 ? 'cursor-not-allowed' : ''
+           ${currentPage === 1 ? 'cursor-not-allowed  text-grey' : ''
                 }`}
               onClick={() => {
                 if (currentPage === 1) 
@@ -86,7 +86,7 @@ const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange })
             <a
               href="#"
               className={`relative inline-flex items-center rounded-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray focus:z-20 focus:outline-offset-0
-            ${currentPage === totalPages ? 'cursor-not-allowed' : ''
+            ${currentPage === totalPages ? 'cursor-not-allowed  text-grey' : ''
                 }`}
               onClick={() => 
                 {
