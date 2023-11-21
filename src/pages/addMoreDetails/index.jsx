@@ -4,14 +4,19 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { addMoreDetailsSchema, loginSchema } from '../../validations';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, set, useForm } from 'react-hook-form';
 import { loginUser } from '../../redux/reducers/userSlice';
 import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
+import { IoMdRefresh } from "react-icons/io";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 export default function AddMoreDetails() {
     const [itemname, setItemname] = useState('');
     const [location, setLocation] = useState('');
+    const [files, setFiles] = useState();
+    const [isUploaded, setIsUploaded] = useState(false);
+    const [isReset, setIsReset] = useState(false);
     const [newreport, setNewreport] = useState({
         category: '',
         description: '',
@@ -53,6 +58,34 @@ export default function AddMoreDetails() {
         //     console.log("submitData errors", error)
         // }
     };
+
+    const handleReset = (e) => {
+        setFiles();
+        setIsUploaded(false);
+    }
+
+    const handleAdd = (e) => {
+
+    }
+    const handleFileUpload = (e) => {
+
+        const selectedFiles = e.target.files;
+        setFiles(selectedFiles);
+        if (files !== null) {
+            setIsUploaded(true);
+            if (selectedFiles.length === 1) {
+                setIsReset(true);
+            }
+            if (selectedFiles.length > 1) {
+                setIsReset(false);
+            }
+        }
+    }
+    useEffect(() => {
+        // handleFileUpload();
+    }, [files]);
+
+    console.log(files, 'files');
 
     useEffect(() => {
         if (!itemname) {
@@ -160,8 +193,50 @@ export default function AddMoreDetails() {
                                     <label className='font-bold text-lg'>Upload Images</label>
                                     <p className='font-medium text-sm'>Upload Images</p>
                                 </div>
-                                <button className='w-96 h-14 sm:h-12 rounded-lg bg-primary-color'>Upload Image</button>
+                                <div className="flex items-center">
+                                    <label
+                                        htmlFor="fileInput"
+                                        className={`${isUploaded ? "w-80 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer" : "w-96 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}`}
+                                    >
+                                        Upload Image
+                                    </label>
+                                    <input
+                                        type="file"
+                                        accept=".jpg, .jpeg, .png"
+                                        id="fileInput"
+                                        className="hidden"
+                                        multiple
+                                        onChange={handleFileUpload}
 
+                                    />
+                                    {isUploaded ?
+
+                                        <div>
+                                            <button className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'
+                                                onClick={isReset ? handleReset : handleAdd}>
+                                                {
+                                                    isReset ? <IoMdRefresh className='h-6 w-6' /> : <div>
+                                                        <label
+                                                            htmlFor="fileInputt"
+                                                        >
+                                                            <IoMdAddCircleOutline className='h-6 w-6' />
+                                                        </label>
+                                                        <input
+                                                            type="file"
+                                                            accept=".jpg, .jpeg, .png"
+                                                            id="fileInputt"
+                                                            className="hidden"
+                                                            multiple
+
+                                                        />
+                                                    </div>
+                                                }
+                                            </button>
+                                        </div>
+                                        :
+                                        ""}
+                                </div>
+                                {/* <input type='file' placeholder='Upload Image' className='w-96 h-14 sm:h-12 rounded-lg bg-primary-color' /> */}
                             </div>
                             <div className='border-b border-b-[#949494] mb-10'>
                                 <div className='flex justify-between h-12 mb-9 relative location'>
