@@ -54,7 +54,7 @@ export default function SearchReport() {
     }
 
     return (
-        <div className='flex xl:pl-3 xl:justify-center xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
+        <div className='flex  xl:pl-3 xl:justify-center xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
 
             <div className='xl:mt-20 xl:mb-20 flex xl:items-start md:flex-col sm:flex-col items-center'>
                 <div className='flex sm:items-center p-2 bg-white border-solid xl:rounded-3xl xl:h-1/5 xl:w-96 md:rounded-2xl md:h-14 md:w-80 sm:h-12 sm:rounded-2xl sm:w-64 border border-[#B6B6B6]'>
@@ -63,9 +63,10 @@ export default function SearchReport() {
                 </div>
                 {
                     buttonActive ?
+                    <div className='flex items-center mt-6 xl:h-fit xl:py-2 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-[#B6B6B6] border-solid'>
                         <FormProvider {...methods}>
                             <form onSubmit={methods.handleSubmit(submitData)}>
-                                <div className='flex items-center mt-6 xl:h-20 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-[#B6B6B6] border-solid'>
+                                <div className='flex'>
                                     <TextInput
                                         type="text"
                                         placeholder="Search..."
@@ -93,6 +94,7 @@ export default function SearchReport() {
                                 </div>
                             </form>
                         </FormProvider>
+                        </div>
                         :
                         <FormProvider {...methods}>
                             <form onSubmit={methods.handleSubmit(submitData)}>
