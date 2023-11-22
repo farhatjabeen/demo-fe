@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoLock } from "react-icons/go";
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
     return (
@@ -7,10 +8,12 @@ const Settings = () => {
             <h1 className='text-black font-bold text-4xl mt-10'>
                 Settings
             </h1>
-            <div className='flex mt-24'>
-                <GoLock size={20} color='blue' />
-                <p className='text-black font-bold ml-10'>Change Password</p>
-            </div>
+            <Link to='/admin/changePassword'>
+                <div className='flex mt-24'>
+                    <GoLock size={20} color='blue' />
+                    <p className='text-black font-bold ml-10'>Change Password</p>
+                </div>
+            </Link>
         </div>
     )
 }

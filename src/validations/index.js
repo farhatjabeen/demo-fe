@@ -90,6 +90,8 @@ export const companyProfile = yup.object({
 export const AdminSignInSchema = yup.object({
     username: yup
         .string()
+        .min(3)
+        .max(10)
         .required('username required'),
     password: yup
         .string()

@@ -20,7 +20,7 @@ const AddFoundItems = () => {
         />
       </div>
 
-      <div className="bg-white  mt-10 rounded-lg p-4 shadow-md">
+      <div className="bg-blueback  mt-10 rounded-lg p-4 ">
         <div className=" pb-4 mx-4 ">
           <h1 className="text-black font-bold text-xl mt-2">
             Founder Details
@@ -89,7 +89,7 @@ const AddFoundItems = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white mt-10 p-4 rounded-lg shadow-md">
+      <div className="bg-blueback mt-10 p-4 rounded-lg ">
         <div className="mx-4 pb-4 ">
           <h1 className="text-black font-bold text-xl">Items Details</h1>
         </div>
@@ -121,7 +121,7 @@ const AddFoundItems = () => {
           ></textarea>
         </div>
       </div>
-      <div className="bg-white mt-10 p-4 rounded-lg shadow-md ">
+      <div className="bg-blueback mt-10 p-4 rounded-lg ">
         <div className="mx-4 pb-4  ">
           <h1 className="text-black font-bold text-xl">Upload</h1>
         </div>

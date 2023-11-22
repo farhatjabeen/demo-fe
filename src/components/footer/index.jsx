@@ -15,10 +15,10 @@ const Footer = () => {
                     </div>
                     <div >
                         <ul className='footer-links flex p-3 sm:flex-col md:flex-row lg:flex-row xl:flex-row xs:flex-col relative'>
-                            <li className='px-8 text-white'>About Us</li>
+                            <li className='px-8 text-white'><a href='/aboutus'>About Us</a></li>
                             <li className='px-8 text-white'><a href='/contactUs'>Contact Us</a></li>
-                            <li className='px-8 text-white'>Terms of Use</li>
-                            <li className='px-8 text-white'>Privacy Policy</li>
+                            <li className='px-8 text-white'><a href='/termsOfUse'>Terms of Use</a></li>
+                            <li className='px-8 text-white'><a href='/privacyPolicy'>Privacy Policy</a></li>
                         </ul>
                     </div>
                     <div className='flex justify-center p-5'>
