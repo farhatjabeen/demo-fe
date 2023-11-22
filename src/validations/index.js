@@ -1,9 +1,10 @@
 import * as yup from 'yup';
 
-const passwordRegExp =
-    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
+const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
 
 const emailRexExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
 // const serbiaMobileNumberRegExp = /^(\+381|0)(6[0-9])\d{6,8}$/;
 
 export const loginSchema = yup.object({
@@ -28,7 +29,6 @@ export const addMoreDetailsSchema = yup.object({
     mobileNumber: yup
         .string()
         .min(10)
-
         // .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('mobile number required'),
     name: yup
@@ -60,7 +60,7 @@ export const addMoreDetailsSchema = yup.object({
     itemName: yup
         .string()
         .required('item name required')
-   
+
 });
 
 export const companyProfile = yup.object({
@@ -158,13 +158,7 @@ export const businessSignUpSchema = yup.object({
     companyCategory: yup
         .string()
         .required("company category required"),
-    password: yup
-        .string()
-        .matches(
-            passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character')
-        .required('password required'),
-        keywords: yup
+    keywords: yup
         .string()
         .test('wordCount', 'Keywords must have at least 2 keys', (value) => {
             if (!value) {
@@ -184,3 +178,50 @@ export const searchSchema = yup.object({
         .string()
         .required('location required')
 });
+
+export const AdminChangePasswordSchema = yup.object({
+    currentPassword: yup
+        .string()
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .required(' Current Password required'),
+    newPassword: yup
+        .string()
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .required(' New Password required'),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
+        .required('Confirm Password is required'),
+});
+export const editFoundItemsSchema = yup.object({
+    founderName: yup
+        .string()
+        .min(3)
+        .max(10)
+        .required('name required'),
+    mobileNumber: yup
+        .string()
+        .matches(phoneRegExp, 'Invalid')
+        .required('mobile number required'),
+    foundDate: yup
+        .string()
+        .required("date required"),
+    foundTime: yup
+        .string()
+        .required("time required"),
+    foundLocation: yup
+        .string()
+        .required('location required'),
+    itemName: yup
+        .string()
+        .required('item name required'),
+    itemDescription: yup
+        .string()
+        .required('item description requires'),
+
+})
+
