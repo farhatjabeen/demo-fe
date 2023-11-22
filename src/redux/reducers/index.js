@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import userSlice from "./userSlice";
-import productsSlice from "./productsSlice";
+import itemsSlice from "./itemsSlice";
 
 const reducers = combineReducers({
     user: userSlice,
-    products: productsSlice
+    items: itemsSlice
 });
 
 export default reducers;

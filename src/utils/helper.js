@@ -55,7 +55,7 @@ export const setLocalStorageData = (key, value) => {
 export const getDecryptedLocalStorageData = (key) => {
     if (!key || !storageKeyMapper[key]) return null;
     const data = localStorage.getItem(storageKeyMapper[key])
-    return Encryption.decrypt(data);
+    return Encryption.decrypt(data.toString());
 };
 
 export const setEncryptedLocalStorageData = (key, value) => {

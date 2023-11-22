@@ -9,17 +9,18 @@ export const injectStore = _store => {
     store = _store
 };
 
-const request = ({
+const apiRequest = ({
     url,
     method,
-    apiVersion='v1',
+    apiVersion = 'v1',
     data = null,
     headers = null,
     params = null,
     isLoader = true,
-    isAuth = false
+    isAuth = false,
+    tokenType = 'userToken' // possible values -> userToken, businessUserToken, adminToken
 }) => {
-    if(isAuth) axiosInstance.defaults.headers.common.Authorization = `Bearer ${getAuthToken()}`; 
+    if (isAuth) axiosInstance.defaults.headers.common.Authorization = `${getAuthToken(tokenType)}`;
     return new Promise((resolve, reject) => {
         let config = {
             url: `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`,
@@ -41,7 +42,7 @@ const request = ({
 
         axiosInstance(config).then(response => {
             showLoader(false)
-            resolve(response?.data);
+            resolve(statusHandler(response));
         }).catch(error => {
             showLoader(false);
             if (error?.code === "ERR_NETWORK") {
@@ -64,5 +65,26 @@ const showLoader = (status) => {
     }
 }
 
+export const statusHandler = (response, exposeHeaders = true) => {
+    const headers = {};
 
-export default request;
+    debugger;
+    if (response.status === 401 || response.status === 403) {
+        Toast({ type: 'error', message: response.statusText });
+        // setTimeout(() => logOutAct(), 1000);
+    }
+
+    if (exposeHeaders) {
+        headers.headers = { ...response.headers };
+    }
+    if (response.status) {
+        return {
+            status: response.status,
+            ...response.data,
+            ...headers
+        };
+    }
+    return exposeHeaders ? { ...headers, data: response.data } : response.data;
+};
+
+export default apiRequest;

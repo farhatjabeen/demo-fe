@@ -1,21 +1,29 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
-import { AiOutlineArrowUp } from "react-icons/ai";
+// import { AiOutlineArrowUp } from "react-icons/ai";
 import Pagination from '../../components/common/pagination';
 import { useNavigate } from 'react-router-dom';
+import { fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
 
 export default function AllItems() {
     const [tableData, setTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
-            .then(res => setTableData(res.data))
-            .catch(e => console.log(e));
-    }, [])
+        dispatch(fetchItems())
+        // axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
+        //     .then(res => setTableData(res.data))
+        //     .catch(e => console.log(e));
+    }, []);
+
+    useEffect(() => {
+        console.log("itemDetails", itemDetails)
+    }, [itemDetails])
     const totalPages = Math.ceil(tableData.length / itemsPerPage);
     const endIndex = currentPage * itemsPerPage;
     const startIndex = endIndex - itemsPerPage;
@@ -24,13 +32,13 @@ export default function AllItems() {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    
+
     return (
         <>
             <div className='px-28'>
                 <div className='flex justify-end mb-5'>
                     <div className=' flex justify-between w-72'>
-                        <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button>
+                        {/* <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button> */}
                         <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={() => navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
                     </div>
                 </div>

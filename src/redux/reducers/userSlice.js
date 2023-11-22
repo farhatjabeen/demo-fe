@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import request from '../../services'
+import apiRequest from '../../services'
 import endpoints from "../../services/endpoints";
+import { setEncryptedLocalStorageData } from "../../utils/helper";
 // import { Toast } from "../../components/toast";
 
 const initialState = {
@@ -23,13 +24,15 @@ export const userSlice = createSlice({
 
 export const loginUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        request({
-            url: endpoints.EndPoints.login,
+        apiRequest({
+            url: endpoints.apiPath.login,
             method: endpoints.ApiMethods.POST,
             data: data
-        }).then(res => {
-            dispatch(res?.data)
-            return resolve(res?.data);
+        }).then(async (res) => {
+            const { role, emailMailId, _id, token } = res.data
+            dispatch(saveUserData({ role, emailMailId, _id }))
+            await setEncryptedLocalStorageData("businessUserToken", token);
+            return resolve(true);
         }).catch(err => {
             console.log(err)
             return err
@@ -41,8 +44,8 @@ export const loginUser = (data) => (dispatch) => {
 export const changePassword = (data) => async (dispatch) => {
 
     return new Promise((resolve, reject) => {
-        request({
-            url: endpoints.EndPoints.login,
+        apiRequest({
+            url: endpoints.apiPath.login,
             method: endpoints.ApiMethods.POST,
             data: data
         }).then(res => {

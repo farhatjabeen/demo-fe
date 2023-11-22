@@ -1,5 +1,8 @@
-const EndPoints = {
-    login: '/user/login'
+const apiPath = {
+    login: '/user/login',
+    items: {
+        fetchItems: '/business/getItems'
+    }
 }
 
 const ApiMethods = {
@@ -11,7 +14,7 @@ const ApiMethods = {
 }
 
 let endpoints = {
-    EndPoints,
+    apiPath,
     ApiMethods
 }
 
