@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import { HiPlus } from "react-icons/hi";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineRefresh } from "react-icons/md";
@@ -7,14 +6,12 @@ import DropdownMenu from "../../components/common/dropdown";
 import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
-import {Link} from 'react-router-dom'
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
   const categories = ['Category 1', 'Category 2', 'Category 3'];
-  const handleAddItem = () => { };
   const handleExport = () => { };
 
   const handleReset = () => {
@@ -99,20 +96,11 @@ function FoundItems() {
           <div className="flex">
             <CustomCombinedButton
               text="Export"
-              icon={<AiOutlineArrowUp className="mr-2" />}
+              icon={<AiOutlineArrowUp className="mr-1" />}
               onClick={handleExport}
               isReset={false}
               buttonColor="blue"
             />
-            <Link to='/admin/user/foundItems/addfoundItems'>
-              <CustomCombinedButton
-                text="Add Found Item"
-                icon={<HiPlus size={20} className="mr-2" />}
-                onClick={handleAddItem}
-                isReset={true}
-                buttonColor="other"
-              />
-              </Link>
           </div>
         </div>
         {/* Filters */}

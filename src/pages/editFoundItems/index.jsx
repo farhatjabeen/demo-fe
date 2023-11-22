@@ -7,9 +7,10 @@ import Breadcrumbs from '../../components/common/breadcrumbs';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { editFoundItemsSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../../components/common/textInput";
+import TextAreaInput from '../../components/common/textAreaInput';
 
 
 
@@ -17,10 +18,8 @@ const EditFoundItems = () => {
   const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
-  console.log(resolver, "resolver");
-
   const methods = useForm({
     defaultValues: {
       founderName: "",
@@ -35,7 +34,7 @@ const EditFoundItems = () => {
   });
 
   const submitData = async (data) => {
-    navigate('/');
+    navigate('/admin/user/foundItems');
   };
   const categories = ['Private', 'Public', 'One person'];
   return (
@@ -71,17 +70,18 @@ const EditFoundItems = () => {
                 </div>
                 <div className="mb-2 mb-4  ">
                   <label>Found Date</label>
-                  <div className='relative flex'>
-                    <input
+                  <div >
+                    <TextInput
+                      type='date'
                       name="foundDate"
                       placeholder="Value"
                       autoComplete="off"
                       className="w-11/12 py-2 px-3 border border-gray rounded-md"
                       required
                     />
-                    <div className="absolute inset-y-0 right-10 flex items-center pr-6">
-                      {/* <MdOutlineCalendarToday size={24}  /> */}
-                    </div>
+                    {/* <div className="absolute inset-y-0 right-10 flex items-center pr-6">
+                      <MdOutlineCalendarToday size={24} />
+                    </div> */}
                   </div>
                 </div>
 
@@ -109,8 +109,8 @@ const EditFoundItems = () => {
                 </div>
                 <div className="mb-4">
                   <label >Found Time</label>
-                  <div className='relative flex'>
-                    <input
+                  <div className='relative '>
+                    <TextInput
                       name='foundTime'
                       autoComplete="off"
                       placeholder="Value"
@@ -149,13 +149,14 @@ const EditFoundItems = () => {
             </div>
             <div className="p-4">
               <label >Item Description</label>
-              <textarea
+              <TextAreaInput
                 placeholder="Value"
                 name='itemDescription'
+                autoComplete="off"
                 className="w-11/12 py-2 px-3 border border-gray rounded-md"
-                rows={5}
+                rows="4"
                 required
-              ></textarea>
+              ></TextAreaInput>
             </div>
           </div>
           <div className="bg-blueback mt-10 p-4 rounded-lg  ">

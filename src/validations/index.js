@@ -99,16 +99,6 @@ export const AdminSignInSchema = yup.object({
             passwordRegExp,
             'Password must be 8-20 characters with at least one letter, one number, and one special character')
         .required('password required'),
-    newPassword: yup
-        .string()
-        .matches(
-            passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character')
-        .required('password required'),
-    confirmPassword: yup
-        .string()
-        .oneOf([yup.ref("newPassword")], "Passwords does not match")
-        .required("Please re-type your password"),
 });
 
 export const contactUsSchema = yup.object({
@@ -212,6 +202,10 @@ export const editFoundItemsSchema = yup.object({
         .required("date required"),
     foundTime: yup
         .string()
+        .matches(
+            /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
+            'Invalid time format (HH:mm)'
+        )
         .required("time required"),
     foundLocation: yup
         .string()
@@ -221,7 +215,14 @@ export const editFoundItemsSchema = yup.object({
         .required('item name required'),
     itemDescription: yup
         .string()
-        .required('item description requires'),
+        .test('wordCount', 'Description must have at least 5 words', (value) => {
+            if (!value) {
+                return false;
+            }
+            const words = value.trim().split(/\s+/);
+            return words.length >= 5;
+        })
+        .required('description required')
 
 })
 

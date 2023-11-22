@@ -74,7 +74,11 @@ const routers = [
       {
         component: "BusinessHome",
         childPath: "/businesshome",
-      }
+      },
+      {
+        component: "changePassword",
+        childPath: "/changePassword",
+      },
     ]
   },
   {
@@ -95,10 +99,6 @@ const routers = [
         component: "signIn",
         childPath: "/signIn",
       },
-      {
-        component: "changePassword",
-        childPath: "/changePassword",
-      },
     ]
   },
   {
@@ -108,10 +108,6 @@ const routers = [
       {
         component: "foundItems",
         childPath: "/foundItems",
-      },
-      {
-        component: "addFoundItems",
-        childPath: "/foundItems/addfoundItems",
       },
       {
         component: "editFoundItems",

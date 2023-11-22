@@ -7,6 +7,7 @@ import TextInput from "../../components/common/textInput";
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { loginSchema } from '../../validations';
 import { loginUser } from '../../redux/reducers/userSlice';
+import { Link } from 'react-router-dom';
 
 export default function BusinessSignIn() {
 
@@ -64,9 +65,11 @@ export default function BusinessSignIn() {
                                         <input type='checkbox' />
                                         <div className='text-xs text-[#4D4D4D] font-light'>Remember me</div>
                                     </div>
-                                    <div className='text-xs text-[#4D4D4D] font-light'>
-                                        Forgot Password?
-                                    </div>
+                                    <Link to='/changePassword'>
+                                        <div className='text-xs text-[#4D4D4D] font-light'>
+                                            Forgot Password?
+                                        </div>
+                                    </Link>
                                 </div>
                                 <button
                                     className='bg-primary-color w-full h-14 rounded-md mt-8'
