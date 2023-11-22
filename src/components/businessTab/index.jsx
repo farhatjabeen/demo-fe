@@ -21,7 +21,7 @@ const BusinessTab = ({ children, className }) => {
         <div className={className}>
             <ul className="mx-2">
                 {children.map((child, index) => (
-                    <div className="">
+                    <div>
                         <li
                             key={index}
                             className={`cursor-pointer p-2 relative font-semibold text-2xl ${activeTab === index ? "border-b-2 border-primary-color" : "text-[#B6B6B6] text-xl"

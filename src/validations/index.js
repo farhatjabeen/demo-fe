@@ -59,7 +59,26 @@ export const addMoreDetailsSchema = yup.object({
         .required("category required"),
     itemName: yup
         .string()
-        .required('item name required')
+        .required('item name required'),
+    keywords: yup
+        .string()
+        .test('wordCount', 'Keywords must have at least 2 keys', (value) => {
+            if (!value) {
+                return false;
+            }
+            const words = value.trim().split(/\s+/);
+            return words.length >= 2;
+        })
+        .required('keywords required'),
+    imageUpload: yup
+        .mixed()
+        .test('imageCount', 'Maximum of 3 images only allowed.', (value) => {
+            if (!value) {
+                return false;
+            }
+            return value.length > 3;
+        })
+        .required('images required'),
 
 });
 

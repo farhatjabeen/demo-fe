@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
 // import { AiOutlineArrowUp } from "react-icons/ai";
 import Pagination from '../../components/common/pagination';
 import { useNavigate } from 'react-router-dom';
 import { fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
+import { data } from 'autoprefixer';
 
 export default function AllItems() {
     const [tableData, setTableData] = useState([]);
@@ -13,6 +14,7 @@ export default function AllItems() {
     const itemsPerPage = 5;
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    // const tableData = useSelector(itemDetails);
 
     useEffect(() => {
         dispatch(fetchItems())
@@ -24,6 +26,7 @@ export default function AllItems() {
     useEffect(() => {
         console.log("itemDetails", itemDetails)
     }, [itemDetails])
+
     const totalPages = Math.ceil(tableData.length / itemsPerPage);
     const endIndex = currentPage * itemsPerPage;
     const startIndex = endIndex - itemsPerPage;
@@ -130,16 +133,18 @@ export default function AllItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {displayedData.map((items, i) => (
-                                <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#{items.id}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemname}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.description}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.landmark}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.date}</td>
-                                </tr>
-                            ))}
+                            {displayedData.map((items, i) => {
+                                return (
+                                    <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#{items.id}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemname}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.description}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.landmark}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.date}</td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
