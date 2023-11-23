@@ -28,13 +28,14 @@ export const loginUser = (data) => (dispatch) => {
             url: endpoints.apiPath.login,
             method: endpoints.ApiMethods.POST,
             data: data
-        }).then(async (res) => {
+        }).then((res) => {
             const { role, emailMailId, _id, token } = res.data
             dispatch(saveUserData({ role, emailMailId, _id }))
-            await setEncryptedLocalStorageData("businessUserToken", token);
+            setEncryptedLocalStorageData("businessUserToken", token);
             return resolve(true);
         }).catch(err => {
             console.log(err)
+            resolve(false)
             return err
         })
     })

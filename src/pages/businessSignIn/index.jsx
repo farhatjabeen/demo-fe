@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router'
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -15,6 +16,7 @@ export default function BusinessSignIn() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(loginSchema);
+    const navigate = useNavigate();
 
     const methods = useForm({
         defaultValues: {
@@ -24,9 +26,12 @@ export default function BusinessSignIn() {
         resolver
     });
 
-    const submitData = async (data) => {
+    const submitData = (data) => {
         try {
-            dispatch(loginUser(data))
+            const login = dispatch(loginUser(data));
+            if (login) {
+                navigate('/allitems')
+            }
         } catch (error) {
             console.log("submitData errors", error)
         }
