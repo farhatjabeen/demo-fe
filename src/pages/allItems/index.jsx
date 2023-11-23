@@ -5,8 +5,9 @@ import { HiPlus } from "react-icons/hi";
 // import { AiOutlineArrowUp } from "react-icons/ai";
 import Pagination from '../../components/common/pagination';
 import { useNavigate } from 'react-router-dom';
-import { fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
+import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/itemsSlice';
 import { data } from 'autoprefixer';
+import axios from 'axios';
 
 export default function AllItems() {
     const [tableData, setTableData] = useState([]);
@@ -14,23 +15,27 @@ export default function AllItems() {
     const itemsPerPage = 5;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const tableData = useSelector(itemDetails);
+    const [fetchData, setFetchData] = useState([]);
+    const tableDatas = useSelector(itemDetails);
 
     useEffect(() => {
         dispatch(fetchItems())
-        // axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
-        //     .then(res => setTableData(res.data))
-        //     .catch(e => console.log(e));
     }, []);
 
-    useEffect(() => {
-        console.log("itemDetails", itemDetails)
-    }, [itemDetails])
+    console.log(tableDatas, "tabledata");
 
-    const totalPages = Math.ceil(tableData.length / itemsPerPage);
-    const endIndex = currentPage * itemsPerPage;
-    const startIndex = endIndex - itemsPerPage;
-    const displayedData = tableData.slice(startIndex, endIndex);
+    useEffect(() => {
+        // setTableData(tableDatas);
+        // console.log(tableData, "tt")
+       
+    }, [tableDatas])
+
+    // const totalPages = Math.ceil(tableData.length / itemsPerPage);
+    // const endIndex = currentPage * itemsPerPage;
+    // const startIndex = endIndex - itemsPerPage;
+    // const displayedData = tableData.slice(startIndex, endIndex);
+
+
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -133,15 +138,17 @@ export default function AllItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {displayedData.map((items, i) => {
+                            {Object.values(tableDatas.list).map((items, i) => {
+
                                 return (
+
                                     <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#{items.id}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemname}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.description}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#7</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemDescription}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.landmark}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.date}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.locationIdentifiers}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundDate}</td>
                                     </tr>
                                 );
                             })}
@@ -152,8 +159,8 @@ export default function AllItems() {
             </div>
             <div className=' flex justify-center mb-20'>
                 <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
+                    currentPage={tableDatas.pageMeta.page}
+                    totalPages={tableDatas.pageMeta.totalPages}
                     onPageChange={handlePageChange}
                     isBlueBackground={false} />
             </div>
