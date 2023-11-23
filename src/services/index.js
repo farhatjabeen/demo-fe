@@ -21,6 +21,7 @@ const apiRequest = ({
     tokenType = 'userToken' // possible values -> userToken, businessUserToken, adminToken
 }) => {
     if (isAuth) axiosInstance.defaults.headers.common.Authorization = `${getAuthToken(tokenType)}`;
+    // If token not found redirect user to the login screen
     return new Promise((resolve, reject) => {
         let config = {
             url: `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`,
@@ -68,7 +69,6 @@ const showLoader = (status) => {
 export const statusHandler = (response, exposeHeaders = true) => {
     const headers = {};
 
-    debugger;
     if (response.status === 401 || response.status === 403) {
         Toast({ type: 'error', message: response.statusText });
         // setTimeout(() => logOutAct(), 1000);
