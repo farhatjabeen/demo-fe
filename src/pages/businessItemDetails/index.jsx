@@ -3,14 +3,14 @@ import keys from '../../assets/images/keys.png';
 import BusinessTab from '../../components/businessTab';
 
 export default function BusinessItemDetails() {
-    const itemTitles = [{query:"Item name",answer:"ASUS Vantage briefcase 15.6"}, {query:"Item Category",answer:"Briefcase"},
-    {query:"Item description",answer:"Lorem ipsum"},
-    {query:"Keywords",answer:"Automatically extract keywords from description, give freedom to add more"}, 
-    {query:"Location identifiers",answer:"Lorem Ipsum is simply dummy text of the printing and typesetting industry."}];
+    const itemTitles = [{ query: "Item name", answer: "ASUS Vantage briefcase 15.6" }, { query: "Item Category", answer: "Briefcase" },
+    { query: "Item description", answer: "Lorem ipsum" },
+    { query: "Keywords", answer: "Automatically extract keywords from description, give freedom to add more" },
+    { query: "Location identifiers", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." }];
 
-    const personTitles = [{query:"Name",answer:"Harish"},
-    {query:"Phone number",answer:"78945623"},
-    {query:"Mail id",answer:"harishresto@gail.com"}];
+    const personTitles = [{ query: "Name", answer: "Harish" },
+    { query: "Phone number", answer: "78945623" },
+    { query: "Mail id", answer: "harishresto@gail.com" }];
 
     return (
         <div className='flex flex-col items-center'>
@@ -38,7 +38,7 @@ export default function BusinessItemDetails() {
                     </div>
 
                     <div label="Posted person details">
-                    {personTitles.map((items, i) => {
+                        {personTitles.map((items, i) => {
                             return (
                                 <div key={i} className='ml-32 flex w-full'>
                                     <div className='xl:w-96 p-2 text-[#455A64] xl:text-xl'>{items.query}</div>

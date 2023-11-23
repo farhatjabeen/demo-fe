@@ -10,11 +10,13 @@ import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { useRef } from 'react';
+import { MdClose } from "react-icons/md";
 
 export default function AddMoreDetails() {
     const [itemname, setItemname] = useState('');
     const [location, setLocation] = useState('');
-    const [files, setFiles] = useState();
+    const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [isReset, setIsReset] = useState(false);
     const [newreport, setNewreport] = useState({
@@ -29,6 +31,8 @@ export default function AddMoreDetails() {
         time: '',
         reporterid: ''
     })
+console.log(files,'files');
+    const fileInputRef = useRef();
 
     // const navigate = useNavigate();
     const reportDetails = useParams();
@@ -46,7 +50,8 @@ export default function AddMoreDetails() {
             itemDescription: "",
             itemCategory: "",
             itemName: "",
-            keywords: ""
+            keywords: "",
+            imageUpload:""
         },
         resolver
     });
@@ -60,32 +65,26 @@ export default function AddMoreDetails() {
     };
 
     const handleReset = (e) => {
-        setFiles();
+        setFiles([]);
         setIsUploaded(false);
     }
 
-    const handleAdd = (e) => {
-
+    const handleAddImages = (e) => {
+        fileInputRef.current.click();
     }
     const handleFileUpload = (e) => {
 
         const selectedFiles = e.target.files;
-        setFiles(selectedFiles);
-        if (files !== null) {
-            setIsUploaded(true);
-            if (selectedFiles.length === 1) {
-                setIsReset(true);
+        setFiles((prevFiles) => {
+            const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
+            if (selectedFiles) {
+                setIsUploaded(true);
+                setIsReset(newFiles.length === 1 ? true : false);
             }
-            if (selectedFiles.length > 1) {
-                setIsReset(false);
-            }
-        }
+            return newFiles;
+        });
     }
-    useEffect(() => {
-        // handleFileUpload();
-    }, [files]);
 
-    console.log(files, 'files');
 
     useEffect(() => {
         if (!itemname) {
@@ -180,61 +179,60 @@ export default function AddMoreDetails() {
                                     className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 w-96'
                                     autoComplete="off"
                                     required
-                                    value={newreport.keywords}
-                                    onChange={handleInputChange}
+                                    
                                 />
                                 {/* <input className='h-20 sm:h-16 border border-[#B6B6B6] rounded-lg p-5  w-24' 
                                 type='text' name='keywords' value={newreport.keywords} onChange={handleInputChange} placeholder='Keywords' /> */}
 
                             </div>
 
-                            <div className='flex justify-between h-12 mb-9 relative'>
+                            <div className='flex justify-between h-fit mb-9 relative'>
                                 <div>
                                     <label className='font-bold text-lg'>Upload Images</label>
                                     <p className='font-medium text-sm'>Upload Images</p>
                                 </div>
-                                <div className="flex items-center">
-                                    <label
-                                        htmlFor="fileInput"
-                                        className={`${isUploaded ? "w-80 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer" : "w-96 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}`}
-                                    >
-                                        Upload Image
-                                    </label>
-                                    <input
-                                        type="file"
-                                        accept=".jpg, .jpeg, .png"
-                                        id="fileInput"
-                                        className="hidden"
-                                        multiple
-                                        onChange={handleFileUpload}
-
-                                    />
+                                <div>
                                     {isUploaded ?
-
-                                        <div>
-                                            <button className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'
-                                                onClick={isReset ? handleReset : handleAdd}>
-                                                {
-                                                    isReset ? <IoMdRefresh className='h-6 w-6' /> : <div>
-                                                        <label
-                                                            htmlFor="fileInputt"
-                                                        >
-                                                            <IoMdAddCircleOutline className='h-6 w-6' />
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            accept=".jpg, .jpeg, .png"
-                                                            id="fileInputt"
-                                                            className="hidden"
-                                                            multiple
-
-                                                        />
+                                        <div className='flex flex-wrap w-96'>
+                                            {files.map((items, i) => {
+                                                return (
+                                                    <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color m-2'>
+                                                        <div>{items.name}</div>
+                                                        <div className='flex items-center ml-2'><MdClose /></div>
                                                     </div>
-                                                }
-                                            </button>
+                                                );
+                                            })}
                                         </div>
                                         :
-                                        ""}
+                                        null
+                                    }
+
+                                    <div className="flex items-center">
+                                        <label
+                                            htmlFor="imageUpload"
+                                            className={`${isUploaded ? "w-80 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer" : "w-96 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}`}
+                                        >
+                                            Upload Image
+                                        </label>
+                                        <input
+                                            type="file"
+                                            accept=".jpg, .jpeg, .png"
+                                            id="fileInput"
+                                            className="hidden"
+                                            multiple
+                                            onChange={handleFileUpload}
+                                            ref={fileInputRef}
+                                            // name="imageUpload"
+                                        />
+                                        {isUploaded ?
+                                            <div>
+                                                <button className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
+                                                    {isReset ? <IoMdRefresh className='h-6 w-6' onClick={handleReset} /> : <IoMdAddCircleOutline className='h-6 w-6' onClick={handleAddImages} />}
+                                                </button>
+                                            </div>
+                                            :
+                                            ""}
+                                    </div>
                                 </div>
                                 {/* <input type='file' placeholder='Upload Image' className='w-96 h-14 sm:h-12 rounded-lg bg-primary-color' /> */}
                             </div>

@@ -6,7 +6,7 @@ export default function ImageWorkFlow() {
     return (
         <div className='w-full'>
             <div className='bg-[#D8FFFF] w-full bg-no-repeat'>
-                <iframe className='w-screen' height="243" src={homepageGif} alt='doodleBackground' ></iframe>
+                <iframe className='w-96' height="243" src={homepageGif} alt='doodleBackground' ></iframe>
             </div>
         </div>
     )
