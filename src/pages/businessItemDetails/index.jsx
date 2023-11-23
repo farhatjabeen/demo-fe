@@ -1,8 +1,13 @@
 import React from 'react'
 import keys from '../../assets/images/keys.png';
 import BusinessTab from '../../components/businessTab';
+import Slider from 'react-slick';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 export default function BusinessItemDetails() {
+    const [activeIndex, setActiveIndex] = useState(0);
+
     const itemTitles = [{ query: "Item name", answer: "ASUS Vantage briefcase 15.6" }, { query: "Item Category", answer: "Briefcase" },
     { query: "Item description", answer: "Lorem ipsum" },
     { query: "Keywords", answer: "Automatically extract keywords from description, give freedom to add more" },
@@ -12,42 +17,72 @@ export default function BusinessItemDetails() {
     { query: "Phone number", answer: "78945623" },
     { query: "Mail id", answer: "harishresto@gail.com" }];
 
-    return (
-        <div className='flex flex-col items-center'>
-            <div className='font-semibold text-3xl '>Item details</div>
+    const itemImages = [keys,keys,keys];
 
-            <div className='w-3/5 mt-20 flex space-x-8'>
-                <div className='w-1/2 flex justify-end '><img className='h-96 w-fit' src={keys} alt='keys' /></div>
-                <div className='w-1/2 h-96 flex flex-col space-y-8 '>
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex((prevIndex) => (prevIndex + 1) % itemImages.length);
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        arrows: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 4000
+    };
+
+    return (
+        <div className='flex flex-col justify-center items-center'>
+            <div className='font-semibold text-3xl '>Item details</div>
+            <div className='w-3/12 mt-20 '>
+
+            <Slider {...settings}>
+                {itemImages.map((items,i)=>{
+                    return(
+                        <div key={i} className='w-1/2 flex justify-end '><img className='h-96 w-96' src={items} alt='keys' /></div>
+                    );
+                })}
+                {/* <div className='w-1/2 h-96 flex flex-col space-y-8 '>
                     <img className='w-full h-44' src={keys} alt='keys' />
                     <img className='w-full h-44 ' src={keys} alt='keys' />
-                </div>
+                </div> */}
+            </Slider>
             </div>
 
-            <div className='my-20  w-full h-96 container '>
-                <BusinessTab className="flex">
-                    <div label="Item Description">
+
+            <div className='my-20 flex'>
+                {/* <BusinessTab className="flex"> */}
+                    <div className='bg-white mr-10'>
+                        <div className='text-3xl text-primary-color pt-5 pl-10 pb-10'>Item Description</div>
                         {itemTitles.map((items, i) => {
                             return (
-                                <div key={i} className='xl:ml-32 md:ml-12 flex w-full'>
-                                    <div className='xl:w-96 md:w-72 sm:w-48 p-2 text-[#455A64] xl:text-xl md:text-lg sm:text-base'>{items.query}</div>
-                                    <div className='xl:w-72 md:w-60 sm:w-56 text-left xl:text-xl md:text-lg sm:text-base xl:font-semibold md:font-semibold sm:font-medium p-2'>{items.answer}</div>
+                                <div key={i} className='flex px-10'>
+                                    <div className='xl:w-52 md:w-48 sm:w-40 p-2 text-[#455A64] xl:text-lg md:text-lg sm:text-base'>{items.query}</div>
+                                    <div className='xl:w-72 md:w-60 sm:w-56 text-left xl:text-lg md:text-lg sm:text-base xl:font-semibold md:font-semibold sm:font-medium p-2'>{items.answer}</div>
                                 </div>
                             );
                         })}
                     </div>
 
-                    <div label="Posted person details">
+                    <div className='bg-white mr-10'>
+                        <div className='text-3xl text-primary-color pt-5 pl-10 pb-10'>Posted person details</div>
                         {personTitles.map((items, i) => {
                             return (
-                                <div key={i} className='ml-32 flex w-full'>
-                                    <div className='xl:w-96 p-2 text-[#455A64] xl:text-xl'>{items.query}</div>
-                                    <div className='xl:w-72 text-left xl:text-xl xl:font-semibold p-2'>{items.answer}</div>
+                                <div key={i} className='flex px-10'>
+                                    <div className='xl:w-52 md:w-48 sm:w-40 p-2 text-[#455A64] xl:text-xl'>{items.query}</div>
+                                    <div className='xl:w-72 md:w-60 sm:w-56 text-left xl:text-xl xl:font-semibold p-2'>{items.answer}</div>
                                 </div>
                             );
                         })}
                     </div>
-                </BusinessTab>
+                {/* </BusinessTab> */}
             </div>
 
         </div>
