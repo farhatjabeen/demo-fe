@@ -26,8 +26,8 @@ export const fetchItems = () => async (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then(async (res) => {
-            const { data } = res.data
-            dispatch(saveItemDetails({ data }))
+            const { list,pageMeta } = res.data
+            dispatch(saveItemDetails({list,pageMeta}))
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -37,6 +37,6 @@ export const fetchItems = () => async (dispatch) => {
 }
 
 export const { saveItemDetails, clearData } = itemsSlice.actions;
-export const itemDetails = (state) => state.Items?.itemDetails;
+export const itemDetails = (state) => state.items?.itemDetails;
 
 export default itemsSlice.reducer;
