@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import apiRequest from "../../services";
 import endpoints from "../../services/endpoints";
 import { data } from "autoprefixer";
-import userSlice from "./userSlice";
 
 const initialState = {
     searchKey: null
@@ -19,15 +18,15 @@ export const searchSlice = createSlice({
     }
 });
 
-export const searchItem = () => async (dispatch) => {
+export const searchItem = (searchKey) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.items.searchKey,
             method: endpoints.ApiMethods.GET,
-            data: data
+            data: {searchKey}
         }).then(async (res) => {
             const { list, pageMeta } = res.data
-            dispatch(saveItemData({ list, pageMeta }))
+            dispatch(saveItemData({list, pageMeta }))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -36,8 +35,8 @@ export const searchItem = () => async (dispatch) => {
     })
 }
 
-export const { saveItemData, clearData } = userSlice.actions;
+export const { saveItemData, clearData } = searchSlice.actions;
 
-export const searchKey = (state) => console.log(state,"state");
+export const searchKey = (state) => state.searchKeyword?.searchKey;
 
 export default searchSlice.reducer;
