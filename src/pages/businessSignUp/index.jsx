@@ -33,7 +33,7 @@ export default function BusinessSignUp() {
 
     return (
         <>
-            <div className=' flex  mx-20 my-10'>
+            <div className=' md:flex  mx-20 my-10'>
                 <div className='basis-8/12'>
                     <h1 className='text-4xl font-bold'>Transform your lost and found
                         <br></br> process with BTZ app</h1>

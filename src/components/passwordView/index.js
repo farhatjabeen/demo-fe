@@ -43,6 +43,7 @@ const PasswordView = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(submitData)}>
           <div className="mt-6 pt-2">
+            <label>Current Password</label>
             <TextInput
               type="password"
               name="currentPassword"
@@ -53,6 +54,7 @@ const PasswordView = () => {
             />
           </div>
           <div className="mt-2">
+          <label>New Password</label>
             <TextInput
               type="password"
               name="newPassword"
@@ -63,6 +65,7 @@ const PasswordView = () => {
             />
           </div>
           <div className="mt-2">
+          <label>Confirm Password</label>
             <TextInput
               type="password"
               name="confirmPassword"
