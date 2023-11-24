@@ -2,6 +2,9 @@ const apiPath = {
     login: '/user/login',
     items: {
         fetchItems: '/business/getItems'
+    },
+    foundItems: {
+        fetchFoundItems: '/admin/getAllItem'
     }
 }
 
