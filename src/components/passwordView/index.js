@@ -78,9 +78,9 @@ const PasswordView = () => {
           <div className="mt-14">
             <button
               type="submit"
-              className="w-full bg-light-green  text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
+              className="w-full bg-primary-color text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
             >
-              Submit
+              Save
             </button>
           </div>
         </form>

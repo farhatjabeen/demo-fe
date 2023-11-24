@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineRefresh } from "react-icons/md";
@@ -6,10 +6,16 @@ import DropdownMenu from "../../components/common/dropdown";
 import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
+import { useDispatch, useSelector } from 'react-redux';
+import { adminfetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+  const tableDatas = useSelector(itemDetails);
 
   const categories = ['Category 1', 'Category 2', 'Category 3'];
   const handleExport = () => { };
@@ -20,23 +26,23 @@ function FoundItems() {
   };
   const handleSearch = () => { };
   const headers1 = [
-    { key: "id", label: "Item ID" },
+    { key: "id", label: "User ID" },
     { key: "itemName", label: "Item Name" },
     { key: "location", label: "Location" },
-    { key: "timeFound", label: "Time Found" },
-    { key: "foundby", label: "Found by" },
-    { key: "phoneNumber", label: "Phone number" },
-    { key: "actions", label: "Actions" },
+    { key: "timefound", label: "Time Found" },
+    { key: "found by", label: "Found By" },
+    { key: "mobileNumber", label: "Phone Number" },
   ];
 
   const data1 = [
-    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
-    { id: "#1124", itemName: "Item E", location: "Chennai,India", timeFound: "16/10/2023;0.00", foundby: "Nithin", phoneNumber: "1234567891" },
-
   ];
+
+  useEffect(() => {
+    dispatch(adminfetchItems())
+  }, []);
   const itemsPerPage = 5;
-  const totalItems = data1.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  // const totalItems = data1.length;
+  // const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 
   const handlePageChange = (pageNumber) => {
@@ -101,10 +107,25 @@ function FoundItems() {
           </div>
         </div>
         <Table headers={headers1} data={displayedData()} showEdit={true} />
+        {/* {Object.values(tableDatas.list).map((items, i) => {
+
+          return (
+
+            <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
+              <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#7</td>
+              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
+              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
+              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.timefound}</td>
+              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundby}</td>
+              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.mobileNumber}</td>
+            </tr>
+          );
+        })} */}
+
         <Pagination
           isBlueBackground={true}
-          currentPage={currentPage}
-          totalPages={totalPages}
+          currentPage={tableDatas?.pageMeta?.page}
+          totalPages={tableDatas?.pageMeta?.totalPages}
           onPageChange={handlePageChange}
         />
       </div>

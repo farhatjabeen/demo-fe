@@ -159,8 +159,8 @@ export default function AllItems() {
             </div>
             <div className=' flex justify-center mb-20'>
                 <Pagination
-                    currentPage={tableDatas.pageMeta.page}
-                    totalPages={tableDatas.pageMeta.totalPages}
+                    currentPage={tableDatas?.pageMeta?.page}
+                    totalPages={tableDatas?.pageMeta?.totalPages}
                     onPageChange={handlePageChange}
                     isBlueBackground={false} />
             </div>

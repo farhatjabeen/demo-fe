@@ -26,6 +26,26 @@ export const fetchItems = () => async (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then(async (res) => {
+            console.log(res)
+            const { list,pageMeta } = res.data
+            dispatch(saveItemDetails({list,pageMeta}))
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            return err
+        })
+    })
+}
+//get items in admin
+export const adminfetchItems = () => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.fetchFoundItems,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'businessUserToken'
+        }).then(async (res) => {
+            console.log(res)
             const { list,pageMeta } = res.data
             dispatch(saveItemDetails({list,pageMeta}))
             return resolve(true);

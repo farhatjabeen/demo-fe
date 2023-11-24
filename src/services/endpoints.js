@@ -3,7 +3,6 @@ const apiPath = {
     items: {
         fetchItems: '/business/getItems',
         fetchFoundItems: '/admin/getAllItem',
-        fetchItems: '/business/getItems',
         searchKey: 'user/getItemByKeyword'
     }
 }
