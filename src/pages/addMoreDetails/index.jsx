@@ -209,7 +209,7 @@ console.log(files,'files');
 
                                     <div className="flex items-center">
                                         <label
-                                            htmlFor="imageUpload"
+                                            htmlFor="fileInput"
                                             className={`${isUploaded ? "w-80 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer" : "w-96 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}`}
                                         >
                                             Upload Image

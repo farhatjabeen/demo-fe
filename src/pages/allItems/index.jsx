@@ -45,7 +45,7 @@ export default function AllItems() {
         <>
             <div className='px-28'>
                 <div className='flex justify-end mb-5'>
-                    <div className=' flex justify-between w-72'>
+                    <div className=' flex justify-end w-full'>
                         {/* <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button> */}
                         <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={() => navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
                     </div>

@@ -1,10 +1,10 @@
 const apiPath = {
     login: '/user/login',
     items: {
-        fetchItems: '/business/getItems'
-    },
-    foundItems: {
-        fetchFoundItems: '/admin/getAllItem'
+        fetchItems: '/business/getItems',
+        fetchFoundItems: '/admin/getAllItem',
+        fetchItems: '/business/getItems',
+        searchKey: 'user/getItemByKeyword'
     }
 }
 

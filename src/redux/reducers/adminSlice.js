@@ -21,7 +21,7 @@ export const adminSlice = createSlice({
 export const fetchFoundItems = () => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.foundItems.fetchFoundItems,
+            url: endpoints.apiPath.items.fetchFoundItems,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminUserToken'
