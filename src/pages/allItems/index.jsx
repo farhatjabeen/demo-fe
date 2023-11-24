@@ -10,12 +10,10 @@ import { data } from 'autoprefixer';
 import axios from 'axios';
 
 export default function AllItems() {
-    const [tableData, setTableData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [fetchData, setFetchData] = useState([]);
     const tableDatas = useSelector(itemDetails);
 
     useEffect(() => {
