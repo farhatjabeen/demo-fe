@@ -3,7 +3,9 @@ import apiRequest from '../../services'
 import endpoints from "../../services/endpoints";
 
 let initialState = {
-    itemDetails: []
+    itemDetails: [],
+    searchKey: [],
+
 }
 
 export const itemsSlice = createSlice({
@@ -12,6 +14,12 @@ export const itemsSlice = createSlice({
     reducers: {
         saveItemDetails: (state, action) => {
             state.itemDetails = { ...action.payload }
+        },
+        saveItemData: (state, action) => {
+            state.searchKey = { ...action.payload }
+        },
+        saveItemDataById: (state, action) => {
+            state.searchKey = { ...action.payload }
         },
         clearData: () => initialState
     }
@@ -54,9 +62,50 @@ export const adminfetchItems = () => async (dispatch) => {
             return err
         })
     })
-}
+};
 
 export const { saveItemDetails, clearData } = itemsSlice.actions;
 export const itemDetails = (state) => state.items?.itemDetails;
+
+// get items by keyword 
+export const searchItem = (itemName) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.searchByKeyword,
+            method: endpoints.ApiMethods.GET,
+            params: { keyword: itemName }
+        }).then(async (res) => {
+            const { list, pageMeta } = res.data            
+            dispatch(saveItemData({list, pageMeta }))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+export const { saveItemData } = itemsSlice.actions;
+
+export const searchKey = (state) => state.items?.searchKey;
+
+export const searchItemById = (itemId) => async (dispatch) =>{
+    return new Promise((resolve,reject)=>{
+        apiRequest({
+            url: `${endpoints.apiPath.items.searchById}/${itemId}`,
+            method: endpoints.ApiMethods.GET
+        }).then(async (res) =>{
+            const {list} = res.data
+            dispatch(saveItemDataById({list}))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+export const {saveItemDataById} = itemsSlice.actions;
+export const searchDetailsById = (state) => console.log(state,"states");
 
 export default itemsSlice.reducer;

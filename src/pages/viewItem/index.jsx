@@ -4,15 +4,26 @@ import { FaMap, FaCalendar, FaClock, FaPhoneAlt } from 'react-icons/fa';
 import { HiMail } from "react-icons/hi";
 import { useParams } from 'react-router';
 import keys from '../../assets/images/keys.png';
+import { searchKey } from '../../redux/reducers/itemsSlice';
+import { useSelector } from 'react-redux';
 
 export default function ViewItem() {
     const [currentItem, setCurrentItem] = useState([]);
-    const viewItemId = useParams();
-    console.log(currentItem, 'viewItemId');
+    const itemId = useParams();
+    console.log(itemId.id,'ii')
+    const viewItemId = useSelector(searchKey);
+
+    console.log(viewItemId.list[0]._id, 'viewItemId');
+
     useEffect(() => {
-        axios.get(`https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu/${viewItemId.id}`)
-            .then(res => setCurrentItem(res.data))
-    }, []);
+        if(viewItemId && viewItemId.list){
+            const matchingItem = viewItemId.list.find(item => item._id === itemId.id);
+    if (matchingItem) {
+      setCurrentItem(matchingItem);
+    }
+        }
+    }, [itemId]);
+    
     return (
         <div>
             <div className='flex flex-col items-center'>
@@ -22,11 +33,11 @@ export default function ViewItem() {
                 <div className='mt-10 xl:w-10/12 md:w-11/12 sm:w-11/12 flex justify-center items-center'>
                     <div><img src={keys} alt='keys' className='rounded-3xl xl:h-72 xl:w-96 md:h-60 md:w-64 sm:h-48 sm:w-48'></img></div>
                     <div className='bg-white xl:w-8/12 xl:h-72 md:w-9/12 md:h-60 sm:w-11/12 sm:h-48 rounded-3xl xl:p-8 md:p-8 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
-                        <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl' >{currentItem.itemname} (Item #{currentItem.id})</div>
+                        <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl' >{currentItem.itemName} (Item #9382)</div>
                         <div className='xl:mt-6 md:mt-6 sm:mt-3'>
                             <div className='w-64 flex'><div className='flex items-center'><FaMap style={{ color: "#00b8b8", height: "17px", width: "20px" }} /> </div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.location}</div></div>
-                            <div className='w-64 mt-2 flex'><div className='flex items-center'><FaCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.date}</div></div>
-                            <div className='w-64 mt-2 flex'><div className='flex items-center'> <FaClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.time}</div> </div>
+                            <div className='w-64 mt-2 flex'><div className='flex items-center'><FaCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.foundDate}</div></div>
+                            <div className='w-64 mt-2 flex'><div className='flex items-center'> <FaClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{currentItem.foundTime}</div> </div>
                         </div>
                     </div>
                 </div>
