@@ -7,15 +7,14 @@ import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import { useDispatch, useSelector } from 'react-redux';
-import { adminfetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
-import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import { adminfetchItems, foundItemDetails } from '../../redux/reducers/itemsSlice';
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
-  const tableDatas = useSelector(itemDetails);
+  const tableDatas = useSelector(foundItemDetails);
 
   const categories = ['Category 1', 'Category 2', 'Category 3'];
   const handleExport = () => { };
@@ -34,25 +33,14 @@ function FoundItems() {
     { key: "mobileNumber", label: "Phone Number" },
   ];
 
-  const data1 = [
-  ];
-
   useEffect(() => {
     dispatch(adminfetchItems())
-  }, []);
-  const itemsPerPage = 5;
-  // const totalItems = data1.length;
-  // const totalPages = Math.ceil(totalItems / itemsPerPage);
-
+  },[dispatch]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  const displayedData = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return data1.slice(startIndex, endIndex);
-  };
+
   return (
     <>
       <div className="m-4">
@@ -70,7 +58,6 @@ function FoundItems() {
             />
           </div>
         </div>
-        {/* Filters */}
         <div className="my-8">
           <div className="flex ">
             <input
@@ -106,26 +93,12 @@ function FoundItems() {
             </div>
           </div>
         </div>
-        <Table headers={headers1} data={displayedData()} showEdit={true} />
-        {/* {Object.values(tableDatas.list).map((items, i) => {
-
-          return (
-
-            <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
-              <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#7</td>
-              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
-              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
-              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.timefound}</td>
-              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundby}</td>
-              <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.mobileNumber}</td>
-            </tr>
-          );
-        })} */}
+        <Table headers={headers1} data={Object.values(tableDatas.list)} showEdit={true} />
 
         <Pagination
           isBlueBackground={true}
-          currentPage={tableDatas?.pageMeta?.page}
-          totalPages={tableDatas?.pageMeta?.totalPages}
+          currentPage={tableDatas.pageMeta.page}
+          totalPages={tableDatas.pageMeta.totalPages}
           onPageChange={handlePageChange}
         />
       </div>

@@ -40,6 +40,24 @@ export const loginUser = (data) => (dispatch) => {
         })
     })
 }
+export const loginAdminUser = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.loginAdmin,
+            method: endpoints.ApiMethods.POST,
+            data: data
+        }).then((res) => {
+            const { role, emailMailId, _id, token } = res.data
+            dispatch(saveUserData({ role, emailMailId, _id }))
+            setEncryptedLocalStorageData("adminToken", token);
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            resolve(false)
+            return err
+        })
+    })
+}
 
 
 export const changePassword = (data) => async (dispatch) => {

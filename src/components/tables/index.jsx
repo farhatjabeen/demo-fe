@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
@@ -64,17 +64,17 @@ const Table = ({ headers, data, showEdit = false }) => {
                     <p>{header.label}</p>
                   </div>
                   {header.key !== "actions" && (
-                  <div>
-                    <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                    <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                  </div>
+                    <div>
+                      <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
+                      <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
+                    </div>
                   )}
                 </div>
               </th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        {/* <tbody>
           {sortedData().map((rowData, index) => (
             <tr
               key={index}
@@ -100,6 +100,18 @@ const Table = ({ headers, data, showEdit = false }) => {
                   )}
                 </td>
               ))}
+            </tr>
+          ))}
+        </tbody> */}
+        <tbody>
+          {data.map((items, i) => (
+            <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
+              <td className="py-6 px-6">{items._id}</td>
+              <td className="py-6 px-6">{items.itemName}</td>
+              <td className="py-6 px-6">{items.location}</td>
+              <td className="py-6 px-6">{items.timefound}</td>
+              <td className="py-6 px-6">{items.foundby}</td>
+              <td className="py-6 px-6">{items.mobileNumber}</td>
             </tr>
           ))}
         </tbody>

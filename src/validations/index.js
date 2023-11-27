@@ -107,11 +107,10 @@ export const companyProfile = yup.object({
 });
 
 export const AdminSignInSchema = yup.object({
-    username: yup
+    emailMailId: yup
         .string()
-        .min(3)
-        .max(10)
-        .required('username required'),
+        .matches(emailRexExp, 'Invalid email address')
+        .required('email required'),
     password: yup
         .string()
         .matches(

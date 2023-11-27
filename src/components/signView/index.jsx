@@ -1,32 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/images/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { AdminSignInSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
+import { loginAdminUser } from "../../redux/reducers/userSlice";
 
 function SignInView() {
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate();
-
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const resolver = useValidationResolver(AdminSignInSchema);
 
   const methods = useForm({
     defaultValues: {
-      username: "",
+      emailMailId: "",
       password: ""
     },
     resolver
   });
-  const submitData = async (data) => {
-    navigate('/admin/user/foundItems');
-    // try {
-    //   dispatch(loginUser(data))
-    // } catch (error) {
-    //   console.log("submitData errors", error)
-    // }
+  const submitData = (data) => {
+    try {
+      const login = dispatch(loginAdminUser(data));
+      if (login)
+        navigate('/admin/user/foundItems')
+    }
+    catch (error) {
+      console.log("submitData errors", error)
+    }
   };
 
   return (
@@ -44,9 +47,9 @@ function SignInView() {
         <form onSubmit={methods.handleSubmit(submitData)}>
           <div className="mt-6 pt-2">
             <TextInput
-              name="username"
+              name="emailMailId"
               autoComplete="off"
-              placeholder="Enter username"
+              placeholder="Enter email"
               className="w-full py-4 px-3 border border-gray-300 rounded-md"
               required
             />
@@ -59,6 +62,8 @@ function SignInView() {
               placeholder="Enter password"
               className="w-full py-4 px-3 border border-gray-300 rounded-md"
               required
+              showPassword={showPassword}
+              setShowPassword={() => setShowPassword(!showPassword)}
             />
           </div>
           <div className="mt-14">

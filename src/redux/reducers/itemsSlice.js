@@ -4,6 +4,7 @@ import endpoints from "../../services/endpoints";
 
 let initialState = {
     itemDetails: [],
+    foundItemDetails:[],
     searchKey: [],
 
 }
@@ -14,6 +15,9 @@ export const itemsSlice = createSlice({
     reducers: {
         saveItemDetails: (state, action) => {
             state.itemDetails = { ...action.payload }
+        },
+        saveFoundItemDetails: (state, action) => {
+            state.foundItemDetails = { ...action.payload }
         },
         saveItemData: (state, action) => {
             state.searchKey = { ...action.payload }
@@ -34,7 +38,7 @@ export const fetchItems = () => async (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then(async (res) => {
-            console.log(res)
+            console.log("response",res.data)
             const { list,pageMeta } = res.data
             dispatch(saveItemDetails({list,pageMeta}))
             return resolve(true);
@@ -44,6 +48,11 @@ export const fetchItems = () => async (dispatch) => {
         })
     })
 }
+export const { saveItemDetails, clearData } = itemsSlice.actions;
+export const itemDetails = (state) => state.items?.itemDetails;
+
+
+
 //get items in admin
 export const adminfetchItems = () => async (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -51,11 +60,11 @@ export const adminfetchItems = () => async (dispatch) => {
             url: endpoints.apiPath.items.fetchFoundItems,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
-            tokenType: 'businessUserToken'
+            tokenType:'adminToken'
         }).then(async (res) => {
             console.log(res)
             const { list,pageMeta } = res.data
-            dispatch(saveItemDetails({list,pageMeta}))
+            dispatch(saveFoundItemDetails({list,pageMeta}))
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -63,9 +72,9 @@ export const adminfetchItems = () => async (dispatch) => {
         })
     })
 };
+export const { saveFoundItemDetails } = itemsSlice.actions;
+export const foundItemDetails = (state) => state.items?.foundItemDetails;
 
-export const { saveItemDetails, clearData } = itemsSlice.actions;
-export const itemDetails = (state) => state.items?.itemDetails;
 
 // get items by keyword 
 export const searchItem = (itemName) => async (dispatch) => {
