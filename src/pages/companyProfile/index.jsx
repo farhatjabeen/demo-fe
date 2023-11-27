@@ -2,26 +2,37 @@ import React from 'react'
 import { useState } from 'react';
 import { FaPenToSquare } from "react-icons/fa6";
 import FormDropdown from '../../components/formDropdown';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
+import { companyProfileData, editCompanyProfileData, userProfile } from '../../redux/reducers/userSlice';
+import { useEffect } from 'react';
+import { data } from 'autoprefixer';
 
 export default function CompanyProfile() {
+
+    const profileData = useSelector(userProfile);
+    console.log(profileData.companyName,"pd");
 
     const [editButton, setEditButton] = useState(false);
     const [name, setName] = useState('');
     const [mobileNumber, setMobileNumber] = useState('');
     const [email, setEmail] = useState('');
+    const [businessCompanyName, setBusinessCompanyName] = useState(profileData.companyName);
+    console.log(businessCompanyName,"cn")
+    // const [mobileNumber, setMobileNumber] = useState('');
+    // const [email, setEmail] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
     const [dbPassword, setDbPassword] = useState('');
     const [reEnterPassword, setReEnterPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [allowSubmit, setAllowSubmit] = useState(false);
     const [selectt, setSelectt] = useState(false);
-    const companyCategory = ["General Partnership", "Sole Proprietorship", "Nonprofit Organization", "Corporation", "Limited Partnership", "Limited Liability Company", "Cooperative"];
+    const companyCategories = ["General Partnership", "Sole Proprietorship", "Nonprofit Organization", "Corporation", "Limited Partnership", "Limited Liability Company", "Cooperative"];
     const citiesInSerbia = ["Belgrade", "Novi Sad", "Niš", "Kragujevac", "Subotica", "Čačak", "Kraljevo", "Užice", "Zrenjanin", "Pančevo"];
+    
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -31,15 +42,18 @@ export default function CompanyProfile() {
     const dispatch = useDispatch();
     const resolver = useValidationResolver(companyProfile);
 
+    useEffect(()=>{
+        dispatch(companyProfileData())
+    },[])
 
     const methods = useForm({
         defaultValues: {
-            companyName: "",
-            companyCategory: "",
-            companyLocation: "",
-            name: "",
-            mobileNumber: "",
-            emailMailId: "",
+            companyName: `${profileData.companyName}`,
+            companyCategory: `${profileData.companyCategory}`,
+            companyLocation: `${profileData.location}`,
+            name: `${profileData.name}`,
+            mobileNumber: `${profileData.mobileNumber}`,
+            emailMailId: `${profileData.emailMailId}`,
             password: "",
             newPassword: "",
             confirmPassword: ""
@@ -47,12 +61,13 @@ export default function CompanyProfile() {
         resolver
     });
 
-    const submitData = async (data) => {
-        // try {
-        //     dispatch(loginUser(data))
-        // } catch (error) {
-        //     console.log("submitData errors", error)
-        // }
+    const submitData =  (data) => {
+        try {
+            console.log("submit Data", data)
+            dispatch(editCompanyProfileData(methods.getValues()))
+        } catch (error) {
+            console.log("submitData errors", error)
+        }
     };
 
     const handlePassword = (e) => {
@@ -79,7 +94,7 @@ export default function CompanyProfile() {
                 {editButton ? null : <div><button className='w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
             </div>
             <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
+                <form onSubmit={(e)=> {e.preventDefault(); submitData() }} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
                             <div className='flex justify-between mb-9'>
@@ -94,6 +109,8 @@ export default function CompanyProfile() {
                                     className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     autoComplete="off"
                                     disable={!editButton}
+                                    fieldValue={businessCompanyName}
+                                    onChange={(e)=>setBusinessCompanyName(e.target.value)}
                                 />
                                 {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' /> */}
 
@@ -105,7 +122,7 @@ export default function CompanyProfile() {
                                     <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Company Category</label>
                                     <div className='font-medium text-xs'>Company Category</div>
                                 </div>
-                                <FormDropdown editButton={editButton} selectt={selectt} dropdownValues={companyCategory} />
+                                <FormDropdown editButton={editButton} selectt={selectt} dropdownValues={companyCategories} />
                                 {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="tel" name='mobilenumber' value={mobileNumber} disabled={!editButton} onChange={(e) => setMobileNumber(e.target.value)} placeholder='Enter your Number' /> */}
                             </div>
 
