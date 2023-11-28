@@ -7,6 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { contactUsSchema } from '../../validations';
 import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
+import { contactAdmin } from '../../redux/reducers/userSlice';
 
 export default function ContactUs() {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export default function ContactUs() {
 
     const methods = useForm({
         defaultValues: {
-            emailMailId: "",
+            mail: "",
             subject: "",
             message: ""
         },
@@ -22,11 +23,11 @@ export default function ContactUs() {
     });
 
     const submitData = async (data) => {
-        // try {
-        //     dispatch(loginUser(data))
-        // } catch (error) {
-        //     console.log("submitData errors", error)
-        // }
+        try {
+            dispatch(contactAdmin(data))
+        } catch (error) {
+            console.log("submitData errors", error)
+        }
     };
     return (
         <div className='flex flex-col items-center'>
@@ -51,7 +52,7 @@ export default function ContactUs() {
                 </div>
             </div>
 
-            <div className='xl:w-11/12 sm:flex-col sm:items-center md:flex-row flex justify-between mt-16'>
+            <div className='xl:w-11/12 sm:w-full sm:flex-col sm:justify-center sm:items-center md:flex-row flex justify-between mt-16'>
                 <div><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
                 <FormProvider {...methods}>
                     <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-6/12'>
@@ -61,8 +62,8 @@ export default function ContactUs() {
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your email"
-                                    name="emailMailId"
-                                    className='xl:w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
+                                    name="mail"
+                                    className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
                                     autoComplete="off"
                                     required
                                 />
@@ -71,7 +72,7 @@ export default function ContactUs() {
                                     type="text"
                                     placeholder="Subject"
                                     name="subject"
-                                    className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-5  0'
+                                    className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
                                     autoComplete="off"
                                     required
                                 />

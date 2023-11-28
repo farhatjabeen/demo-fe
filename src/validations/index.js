@@ -120,7 +120,7 @@ export const AdminSignInSchema = yup.object({
 });
 
 export const contactUsSchema = yup.object({
-    emailMailId: yup
+    mail: yup
         .string()
         .matches(emailRexExp, 'Invalid email address')
         .required('email required'),

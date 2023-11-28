@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiRequest from '../../services'
 import endpoints from "../../services/endpoints";
+import { Toast } from "../../components/toast";
 
 let initialState = {
     itemDetails: [],
     foundItemDetails: [],
     searchKey: [],
+    searchId: []
 }
 
 export const itemsSlice = createSlice({
@@ -22,10 +24,10 @@ export const itemsSlice = createSlice({
             state.searchKey = { ...action.payload }
         },
         saveItemDataById: (state, action) => {
-            state.searchKey = { ...action.payload }
+            state.searchId = { ...action.payload }
         },
 
-        clearData: () => initialState
+        clearItemState: () => initialState
     }
 });
 
@@ -40,6 +42,7 @@ export const fetchItems = () => async (dispatch) => {
         }).then(async (res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -67,7 +70,6 @@ export const adminFetchItems = () => async (dispatch) => {
         })
     })
 };
-export const { saveFoundItemDetails } = itemsSlice.actions;
 export const foundItemDetails = (state) => state.items?.foundItemDetails;
 
 export const { saveItemDetails, clearData } = itemsSlice.actions;
@@ -75,8 +77,10 @@ export const itemDetails = (state) => state.items?.itemDetails;
 
 // get items by keyword 
 export const searchItem = (itemName) => async (dispatch) => {
+    console.log("itemName", itemName)
     return new Promise((resolve, reject) => {
         apiRequest({
+            // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
             url: endpoints.apiPath.items.searchByKeyword,
             method: endpoints.ApiMethods.GET,
             params: { keyword: itemName }
@@ -97,25 +101,36 @@ export const { saveItemData } = itemsSlice.actions;
 
 export const searchKey = (state) => state.items?.searchKey;
 
-// // company p 
-// export const searchItemById = (itemId) => async (dispatch) =>{
-//     return new Promise((resolve,reject)=>{
-//         apiRequest({
-//             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
-//             method: endpoints.ApiMethods.GET
-//         }).then(async (res) =>{
-//             const {list} = res.data
-//             dispatch(saveItemDataById({list}))
-//             return resolve(true)
-//         }).catch(err => {
-//             console.log(err)
-//             return err;
-//         })
-//     })
-// }
+// get items by id
+export const searchItemById = (itemId) => async (dispatch) =>{
+    return new Promise((resolve,reject)=>{
+        apiRequest({
+            url: `${endpoints.apiPath.items.searchById}/${itemId}`,
+            method: endpoints.ApiMethods.GET
+        }).then( (res) =>{
+            console.log("states",res.data)
+            const {itemName,location,foundDate,foundTime} = res.data
+            dispatch(saveItemDataById({itemName,location,foundDate,foundTime}))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
 
-// export const {saveItemDataById} = itemsSlice.actions;
-// export const searchDetailsById = (state) => console.log(state,"states");
+export const searchDetailsById = (state) => state.items?.searchId;
+
+export const clearItemData = (data) => async (dispatch) => {
+    try {
+        dispatch(clearItemState());
+    } catch (error) {
+        return error
+    }
+}
+
+
+export const { saveFoundItemDetails, clearItemState, saveItemDataById } = itemsSlice.actions;
 
 
 export default itemsSlice.reducer;

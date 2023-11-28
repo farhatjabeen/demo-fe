@@ -3,12 +3,12 @@ const apiPath = {
     loginAdmin: '/admin/login',
     businessProfile: '/business/userDetails',
     editBusinessProfile: '/business/editProfile',
+    contactAdmin: '/user/sendQueryToAdmin',
     items: {
         fetchItems: '/business/getItems',
         fetchFoundItems: '/admin/getAllItem',
         searchByKeyword: '/user/getItemByKeyword',
         searchById: '/user/item',
-        
     }
 }
 

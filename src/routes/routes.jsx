@@ -21,7 +21,7 @@ const routers = [
       },
       {
         component: "BusinessItemDetails",
-        childPath:"/businessitemdetails"
+        childPath:"/businessitemdetails/:id"
       },
       {
         component: "QueryPublished",

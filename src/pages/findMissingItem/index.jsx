@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-import { searchItem, searchKey } from '../../redux/reducers/itemsSlice';
+import { clearItemData, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
 import TextInput from '../../components/common/textInput';
+import { list } from 'postcss';
 
 export default function FindMissingItem() {
   const [data, setData] = useState([]);
   const newKey = useParams();
-  
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);
@@ -26,17 +26,25 @@ export default function FindMissingItem() {
     resolver
   });
 
-  const productName = methods.getValues();
+  
 
-  const submitData = () => {
+  const submitData = (e) => {
     try {
-      
-      // console.log(productName, 'pn');
+      const productName  = methods.getValues();
+      e.preventDefault()
+      console.log("1", productName.itemName)
       dispatch(searchItem(productName.itemName));
     } catch (error) {
       console.log("submitData errors", error)
     }
   };
+
+  useEffect(() => {
+    return (() => {
+      console.log("unmount")
+      dispatch(clearItemData())
+    })
+  }, [])
 
   // useEffect(() => {
   //   if (newKey.itemName && newKey.location) {
@@ -71,7 +79,7 @@ export default function FindMissingItem() {
 
       <div className='xl:h-20 xl:w-4/6 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center justify-center'>
         <FormProvider {...methods}>
-          <form onSubmit={(e) => {e.preventDefault(); submitData()}} className='w-full flex '>
+          <form onSubmit={(e) => submitData(e)} className='w-full flex '>
             <div className='w-11/12 '>
               <TextInput
                 type='text'
@@ -83,7 +91,9 @@ export default function FindMissingItem() {
               />
             </div>
             <div className='w-96'>
-              <button type='submit' className='xl:w-fit px-16 sm:w-1/4 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color ml-3.5' >Search</button>
+              <button 
+              type='submit' 
+              className='xl:w-fit px-16 sm:w-1/4 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color ml-3.5' >Search</button>
             </div>
 
           </form>
@@ -91,9 +101,9 @@ export default function FindMissingItem() {
       </div>
 
 
-      {productName ?
+      
         <div className='flex flex-wrap justify-center items-center xl:w-10/12 md:w-9/12 sm:w-11/12 mt-12'>
-          {Object.values(searchValue.list).map((items, i) => {
+          {searchValue?.list?.length && searchValue.list.map((items, i) => {
             return (
               <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
                 <SearchCards key={i} idx={i} itemId={items._id} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
@@ -101,8 +111,7 @@ export default function FindMissingItem() {
             );
           })}
         </div>
-        :
-        null}
+
       <div className='mt-10'>
         {/* <Pagination
           isBlueBackground={false} /> */}
