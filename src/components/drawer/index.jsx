@@ -38,7 +38,7 @@ const SideMenu = () => {
         )}
       </div>
       <ul>
-        <div class="mb-4 mt-14 " >
+        <div className="mb-4 mt-14" >
           <li className={`${window.location.pathname.includes("/admin/user/foundItems")
             ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
             : " "
@@ -56,7 +56,7 @@ const SideMenu = () => {
         </div>
         <li className={`mb-4  ${window.location.pathname.includes("/admin/user/users") || window.location.pathname.includes("/admin/user/businessUser") ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`} onClick={() => setShowSubUSer(!showSubUser)}>
           <div className="cursor-pointer">
-            <span class="pl-2 flex">
+            <span className="pl-2 flex">
               <FiUsers size={24}  onClick={handleToggleCollapse} />
               <div className="pl-4 ">
                 <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
@@ -85,7 +85,7 @@ const SideMenu = () => {
         )}
         <li className={`fixed bottom-4 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold py-3 rounded-lg " : ""}`}>
           <Link to="/admin/user/settings" >
-            <span class="pl-2   flex">
+            <span className="pl-2 flex">
               <FiSettings size={26}/>
               <div className="pl-4 ">
                 <p className={!isCollapsed ? '' : 'hidden'}>Settings</p>

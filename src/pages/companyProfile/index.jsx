@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
 import FormDropdown from '../../components/formDropdown';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,20 +7,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
 import { companyProfileData, editCompanyProfileData, userProfile } from '../../redux/reducers/userSlice';
-import { useEffect } from 'react';
-import { data } from 'autoprefixer';
 
 export default function CompanyProfile() {
 
     const profileData = useSelector(userProfile);
-    console.log(profileData.companyName,"pd");
+    // console.log(profileData.companyName,"pd");
 
     const [editButton, setEditButton] = useState(false);
     const [name, setName] = useState('');
     const [mobileNumber, setMobileNumber] = useState('');
     const [email, setEmail] = useState('');
     const [businessCompanyName, setBusinessCompanyName] = useState(profileData.companyName);
-    console.log(businessCompanyName,"cn")
+    // console.log(businessCompanyName,"cn")
     // const [mobileNumber, setMobileNumber] = useState('');
     // const [email, setEmail] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
@@ -29,22 +26,22 @@ export default function CompanyProfile() {
     const [reEnterPassword, setReEnterPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [allowSubmit, setAllowSubmit] = useState(false);
-    const [selectt, setSelectt] = useState(false);
+    const [select, setSelect] = useState(false);
     const companyCategories = ["General Partnership", "Sole Proprietorship", "Nonprofit Organization", "Corporation", "Limited Partnership", "Limited Liability Company", "Cooperative"];
     const citiesInSerbia = ["Belgrade", "Novi Sad", "Niš", "Kragujevac", "Subotica", "Čačak", "Kraljevo", "Užice", "Zrenjanin", "Pančevo"];
-    
+
 
     const handleEditButton = () => {
         setEditButton(!editButton);
-        setSelectt(!selectt);
+        setSelect(!select);
     }
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(companyProfile);
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(companyProfileData())
-    },[])
+    }, [])
 
     const methods = useForm({
         defaultValues: {
@@ -61,7 +58,7 @@ export default function CompanyProfile() {
         resolver
     });
 
-    const submitData =  (data) => {
+    const submitData = (data) => {
         try {
             console.log("submit Data", data)
             dispatch(editCompanyProfileData(methods.getValues()))
@@ -81,11 +78,8 @@ export default function CompanyProfile() {
     }
 
     const handleSubmit = () => {
-
         setEditButton(false);
     }
-
-
 
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
@@ -94,7 +88,7 @@ export default function CompanyProfile() {
                 {editButton ? null : <div><button className='w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
             </div>
             <FormProvider {...methods}>
-                <form onSubmit={(e)=> {e.preventDefault(); submitData() }} className='flex justify-around w-full'>
+                <form onSubmit={(e) => { e.preventDefault(); submitData() }} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
                             <div className='flex justify-between mb-9'>
@@ -110,19 +104,18 @@ export default function CompanyProfile() {
                                     autoComplete="off"
                                     disable={!editButton}
                                     fieldValue={businessCompanyName}
-                                    onChange={(e)=>setBusinessCompanyName(e.target.value)}
+                                    onChange={(e) => setBusinessCompanyName(e.target.value)}
                                 />
                                 {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' /> */}
 
                             </div>
 
                             <div className='flex justify-between mb-9'>
-
                                 <div>
                                     <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Company Category</label>
                                     <div className='font-medium text-xs'>Company Category</div>
                                 </div>
-                                <FormDropdown editButton={editButton} selectt={selectt} dropdownValues={companyCategories} />
+                                <FormDropdown editButton={editButton} selectt={select} dropdownValues={companyCategories} />
                                 {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="tel" name='mobilenumber' value={mobileNumber} disabled={!editButton} onChange={(e) => setMobileNumber(e.target.value)} placeholder='Enter your Number' /> */}
                             </div>
 
@@ -132,9 +125,8 @@ export default function CompanyProfile() {
                                     <div className='font-medium text-xs'>Company Location</div>
                                 </div>
                                 {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='email' name='email' value={email} disabled={!editButton} onChange={(e) => setEmail(e.target.value)} placeholder='abc@xyz.com' /> */}
-                                <FormDropdown editButton={editButton} selectt={selectt} dropdownValues={citiesInSerbia} />
+                                <FormDropdown editButton={editButton} selectt={select} dropdownValues={citiesInSerbia} />
                             </div>
-
 
                             <div className='border-b border-b-solid border-b-[#949494] mt-12'>
                                 <div className='flex justify-between mb-9'>
@@ -151,11 +143,9 @@ export default function CompanyProfile() {
                                         disable={!editButton}
                                     />
                                     {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' /> */}
-
                                 </div>
 
                                 <div className='flex justify-between mb-9'>
-
                                     <div>
                                         <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Mobile Number</label>
                                         <div className='font-medium text-xs'>Your Mobile Number</div>
@@ -177,7 +167,6 @@ export default function CompanyProfile() {
                                         <label className='xl:text-lg sm:text-base font-bold mt-[13px]'>Mail ID</label>
                                         <div className='font-medium text-xs'>Your Mail ID</div>
                                     </div>
-
                                     <TextInput
                                         type="text"
                                         placeholder="abc@xyz.com"
@@ -188,7 +177,6 @@ export default function CompanyProfile() {
                                         disable={!editButton}
                                     />
                                     {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='email' name='email' value={email} disabled={!editButton} onChange={(e) => setEmail(e.target.value)} placeholder='abc@xyz.com' /> */}
-
                                 </div>
                             </div>
 
@@ -197,11 +185,9 @@ export default function CompanyProfile() {
                                     Change Password
                                 </div>
                                 <div className='flex justify-between mb-9'>
-
                                     <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Enter Current password</label>
                                     <input className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' />
                                 </div>
-
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Enter New password</label>
                                     <TextInput
@@ -215,7 +201,6 @@ export default function CompanyProfile() {
                                     />
                                     {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='newPassword' value={newPassword} disabled={!editButton} onChange={(e) => setNewPassword(e.target.value)} placeholder='New password' /> */}
                                 </div>
-
                                 <div className='flex justify-between'>
                                     <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Re - Enter New password</label>
                                     <TextInput
@@ -230,7 +215,6 @@ export default function CompanyProfile() {
                                     {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='reenterpassword' value={reEnterPassword} disabled={!editButton} onChange={handlePassword} placeholder='New password' /> */}
                                 </div>
                             </div>
-
                         </div>
 
                         {editButton ?
@@ -248,7 +232,6 @@ export default function CompanyProfile() {
                                     </div>
                                 </div>
                             </div>
-
                             :
                             null}
                     </div>
@@ -256,4 +239,4 @@ export default function CompanyProfile() {
             </FormProvider>
         </div>
     )
-}
+};
