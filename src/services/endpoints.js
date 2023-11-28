@@ -1,11 +1,14 @@
 const apiPath = {
     login: '/user/login',
     loginAdmin: '/admin/login',
+    businessProfile: '/business/userDetails',
+    editBusinessProfile: '/business/editProfile',
     items: {
         fetchItems: '/business/getItems',
         fetchFoundItems: '/admin/getAllItem',
         searchByKeyword: '/user/getItemByKeyword',
-        searchById: '/user/item'
+        searchById: '/user/item',
+        
     }
 }
 

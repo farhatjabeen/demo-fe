@@ -6,12 +6,9 @@ import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
 import { useNavigate } from 'react-router-dom';
 import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/itemsSlice';
-import { data } from 'autoprefixer';
-import axios from 'axios';
 
 export default function AllItems() {
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const tableDatas = useSelector(itemDetails);
@@ -19,21 +16,6 @@ export default function AllItems() {
     useEffect(() => {
         dispatch(fetchItems())
     }, []);
-
-    console.log(tableDatas, "tabledata");
-
-    useEffect(() => {
-        // setTableData(tableDatas);
-        // console.log(tableData, "tt")
-       
-    }, [tableDatas])
-
-    // const totalPages = Math.ceil(tableData.length / itemsPerPage);
-    // const endIndex = currentPage * itemsPerPage;
-    // const startIndex = endIndex - itemsPerPage;
-    // const displayedData = tableData.slice(startIndex, endIndex);
-
-
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -136,10 +118,9 @@ export default function AllItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.values(tableDatas.list).map((items, i) => {
-
+                            {tableDatas?.list?.length && tableDatas.list.map((items, i) => {
+                                console.log("has some items", items)
                                 return (
-
                                     <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#7</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>

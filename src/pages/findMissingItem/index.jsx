@@ -11,14 +11,13 @@ import { searchItem, searchKey } from '../../redux/reducers/itemsSlice';
 import TextInput from '../../components/common/textInput';
 
 export default function FindMissingItem() {
-  const [searchhKey, setSearchKey] = useState('');
   const [data, setData] = useState([]);
   const newKey = useParams();
-
+  
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);
-console.log(searchValue,"sv")
+  console.log(searchValue, "sv")
 
   const methods = useForm({
     defaultValues: {
@@ -27,15 +26,17 @@ console.log(searchValue,"sv")
     resolver
   });
 
-  const submitData =  () => {
-    try {    
-      const productName  = methods.getValues();
-      console.log(productName,'pn');
+  const productName = methods.getValues();
+
+  const submitData = () => {
+    try {
+      
+      // console.log(productName, 'pn');
       dispatch(searchItem(productName.itemName));
     } catch (error) {
       console.log("submitData errors", error)
     }
-  }; 
+  };
 
   // useEffect(() => {
   //   if (newKey.itemName && newKey.location) {
@@ -70,37 +71,41 @@ console.log(searchValue,"sv")
 
       <div className='xl:h-20 xl:w-4/6 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center justify-center'>
         <FormProvider {...methods}>
-          <form onSubmit={()=>submitData()} className='w-full'>
-            <div className='flex w-full'>
+          <form onSubmit={(e) => {e.preventDefault(); submitData()}} className='w-full flex '>
+            <div className='w-11/12 '>
               <TextInput
                 type='text'
                 placeholder='Search...'
                 name="itemName"
-                className='w-full p-4 xl:h-14 sm:h-13 sm:w-8/12 rounded-2xl border border-solid border-[#B6B6B6]'
+                className='ml-2 p-4 xl:h-14 sm:h-13 sm:w-8/12 rounded-2xl border border-solid border-[#B6B6B6]'
                 autoComplete="off"
                 required
-                value={searchhKey}
-                onChange={(e) => setSearchKey(e.target.value)}
               />
-              <button type='submit' className='xl:w-1/5 sm:w-1/4 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color ml-3.5' >Search</button>
-            </div> 
+            </div>
+            <div className='w-96'>
+              <button type='submit' className='xl:w-fit px-16 sm:w-1/4 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color ml-3.5' >Search</button>
+            </div>
+
           </form>
         </FormProvider>
       </div>
 
 
-      <div className='flex flex-wrap justify-center items-center xl:w-10/12 md:w-9/12 sm:w-11/12 mt-12'>
-        {Object.values(searchValue.list).map((items, i) => {
-          return (
-            <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
-              <SearchCards key={i} idx={i} itemId={items._id} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
-            </div>
-          );
-        })}
-      </div>
+      {productName ?
+        <div className='flex flex-wrap justify-center items-center xl:w-10/12 md:w-9/12 sm:w-11/12 mt-12'>
+          {Object.values(searchValue.list).map((items, i) => {
+            return (
+              <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
+                <SearchCards key={i} idx={i} itemId={items._id} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
+              </div>
+            );
+          })}
+        </div>
+        :
+        null}
       <div className='mt-10'>
-        <Pagination
-          isBlueBackground={false} />
+        {/* <Pagination
+          isBlueBackground={false} /> */}
       </div>
       <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
         <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
