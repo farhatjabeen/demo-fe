@@ -6,6 +6,8 @@ let initialState = {
     itemDetails: [],
     foundItemDetails: [],
     searchKey: [],
+    userDetails:[],
+    businessUserDetails:[],
 }
 
 export const itemsSlice = createSlice({
@@ -17,6 +19,12 @@ export const itemsSlice = createSlice({
         },
         saveFoundItemDetails: (state, action) => {
             state.foundItemDetails = { ...action.payload }
+        },
+        saveUserDetails: (state, action) => {
+            state.userDetails = { ...action.payload }
+        },
+        saveBusinessUserDetails: (state, action) => {
+            state.businessUserDetails = { ...action.payload }
         },
         saveItemData: (state, action) => {
             state.searchKey = { ...action.payload }
@@ -47,12 +55,14 @@ export const fetchItems = () => async (dispatch) => {
         })
     })
 }
+export const { saveItemDetails, clearData } = itemsSlice.actions;
+export const itemDetails = (state) => state.items?.itemDetails;
 
 //get items in admin
-export const adminFetchItems = () => async (dispatch) => {
+export const adminFetchItems = (currentPage = 1, PageLimit = 5) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.items.fetchFoundItems,
+            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -62,7 +72,7 @@ export const adminFetchItems = () => async (dispatch) => {
             dispatch(saveFoundItemDetails({ list, pageMeta }))
             return resolve(true);
         }).catch(err => {
-            console.log(err)
+            console.log(err)        
             return err
         })
     })
@@ -70,8 +80,52 @@ export const adminFetchItems = () => async (dispatch) => {
 export const { saveFoundItemDetails } = itemsSlice.actions;
 export const foundItemDetails = (state) => state.items?.foundItemDetails;
 
-export const { saveItemDetails, clearData } = itemsSlice.actions;
-export const itemDetails = (state) => state.items?.itemDetails;
+
+
+//get user in admin
+export const adminFetchUser = (currentPage = 1, PageLimit = 5) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}`,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'adminToken'
+        }).then(async (res) => {
+            console.log(res)
+            const { list, pageMeta } = res.data
+            dispatch(saveUserDetails({ list, pageMeta }))
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)        
+            return err
+        })
+    })
+};
+export const { saveUserDetails } = itemsSlice.actions;
+export const userDetails = (state) => state.items?.userDetails;
+
+//get businessUser in admin
+export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}`,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'adminToken'
+        }).then(async (res) => {
+            console.log(res)
+            const { list, pageMeta } = res.data
+            dispatch(saveBusinessUserDetails({ list, pageMeta }))
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)        
+            return err
+        })
+    })
+};
+export const { saveBusinessUserDetails } = itemsSlice.actions;
+export const businessUserDetails = (state) => state.items?.businessUserDetails;
+
 
 // get items by keyword 
 export const searchItem = (itemName) => async (dispatch) => {

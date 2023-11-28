@@ -12,15 +12,16 @@ import { adminFetchItems, foundItemDetails } from '../../redux/reducers/itemsSli
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [PageLimit,setPageLimit ] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
 
   const categories = ['Category 1', 'Category 2', 'Category 3'];
-  
+
   useEffect(() => {
-    dispatch(adminFetchItems())
-  }, [dispatch]);
+    dispatch(adminFetchItems(currentPage, PageLimit))
+  }, [dispatch, currentPage, PageLimit ]);
 
   const handleExport = () => { };
 
@@ -36,6 +37,7 @@ function FoundItems() {
     { key: "timefound", label: "Time Found" },
     { key: "found by", label: "Found By" },
     { key: "mobileNumber", label: "Phone Number" },
+    { key: "actions", label: "Actions" },
   ];
 
 
