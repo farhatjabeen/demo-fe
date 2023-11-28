@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-import { AiOutlineDelete } from "react-icons/ai";
-import { FiEdit } from "react-icons/fi";
 import DeleteModal from "../modal";
 
 const Table = ({ headers, data, showEdit = false }) => {
@@ -53,7 +50,7 @@ const Table = ({ headers, data, showEdit = false }) => {
       <table className="w-full">
         <thead>
           <tr className="border border-x-0 border-y-grey">
-            {headers.map((header) => (
+            {headers?.map((header) => (
               <th
                 key={header.key}
                 onClick={() => requestSort(header.key)}
@@ -104,7 +101,7 @@ const Table = ({ headers, data, showEdit = false }) => {
           ))}
         </tbody> */}
         <tbody>
-          {data.map((items, i) => (
+          {data?.map((items, i) => (
             <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
               <td className="py-6 px-6">{items._id}</td>
               <td className="py-6 px-6">{items.itemName}</td>

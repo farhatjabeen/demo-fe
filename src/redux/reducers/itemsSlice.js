@@ -49,7 +49,7 @@ export const fetchItems = () => async (dispatch) => {
 }
 
 //get items in admin
-export const adminfetchItems = () => async (dispatch) => {
+export const adminFetchItems = () => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.items.fetchFoundItems,

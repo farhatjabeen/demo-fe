@@ -24,8 +24,9 @@ function SignInView() {
   const submitData = (data) => {
     try {
       const login = dispatch(loginAdminUser(data));
-      if (login)
+      if (login) {
         navigate('/admin/user/foundItems')
+      }
     }
     catch (error) {
       console.log("submitData errors", error)
@@ -33,9 +34,9 @@ function SignInView() {
   };
 
   return (
-    <div className=" pt-28  px-28">
+    <div className="pt-28 px-28">
       <div>
-        <img src={logo} alt="" className="h-14 w-32" />
+        <img src={logo} alt="logo" className="h-14 w-32" />
       </div>
       <div className="pt-20 ">
         <h1 className="font-bold text-4xl">Sign In</h1>
@@ -76,7 +77,6 @@ function SignInView() {
           </div>
         </form>
       </FormProvider>
-
     </div>
   );
 }
