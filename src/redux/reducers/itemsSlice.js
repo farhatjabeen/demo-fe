@@ -7,7 +7,8 @@ let initialState = {
     itemDetails: [],
     foundItemDetails: [],
     searchKey: [],
-    searchId: []
+    searchId: [],
+    viewDetailsById: []
 }
 
 export const itemsSlice = createSlice({
@@ -31,6 +32,9 @@ export const itemsSlice = createSlice({
         },
         saveItemDataById: (state, action) => {
             state.searchId = { ...action.payload }
+        },
+        viewItemDetailsById: (state, action) => {
+            state.viewDetailsById = { ...action.payload }
         },
 
         clearItemState: () => initialState
@@ -154,15 +158,14 @@ export const { saveItemData } = itemsSlice.actions;
 export const searchKey = (state) => state.items?.searchKey;
 
 // get items by id
-export const searchItemById = (itemId) => async (dispatch) =>{
-    return new Promise((resolve,reject)=>{
+export const searchItemById = (itemId) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
             method: endpoints.ApiMethods.GET
-        }).then( (res) =>{
-            console.log("states",res.data)
-            const {itemName,location,foundDate,foundTime} = res.data
-            dispatch(saveItemDataById({itemName,location,foundDate,foundTime}))
+        }).then((res) => {
+            const { itemName, location, foundDate, foundTime } = res.data
+            dispatch(saveItemDataById({ itemName, location, foundDate, foundTime }))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -173,6 +176,25 @@ export const searchItemById = (itemId) => async (dispatch) =>{
 
 export const searchDetailsById = (state) => state.items?.searchId;
 
+// get item details of business user by id
+export const viewItemById = (itemsId) => async (dispatch) =>{
+    return new Promise((resolve,reject) =>{
+        apiRequest({
+            url: `${endpoints.apiPath.items.viewById}/${itemsId}`,
+            method: endpoints.ApiMethods.GET,
+        }).then((res) => {
+            const { itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            dispatch(viewItemDetailsById({ itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+export const viewDetails = (state) => state.items?.viewDetailsById;
+
 export const clearItemData = (data) => async (dispatch) => {
     try {
         dispatch(clearItemState());
@@ -182,7 +204,7 @@ export const clearItemData = (data) => async (dispatch) => {
 }
 
 
-export const { saveFoundItemDetails, clearItemState, saveItemDataById } = itemsSlice.actions;
+export const { saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById } = itemsSlice.actions;
 
 
 export default itemsSlice.reducer;
