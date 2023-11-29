@@ -9,6 +9,7 @@ const apiPath = {
         fetchFoundItems: '/admin/getAllItem',
         searchByKeyword: '/user/getItemByKeyword',
         searchById: '/user/item',
+        viewById: '/business/item'
     }
 }
 

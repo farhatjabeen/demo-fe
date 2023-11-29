@@ -2,20 +2,31 @@ import React from 'react'
 import keys from '../../assets/images/keys.png';
 import BusinessTab from '../../components/businessTab';
 import Slider from 'react-slick';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { viewDetails, viewItemById } from '../../redux/reducers/itemsSlice';
 
 export default function BusinessItemDetails() {
+
+const dispatch = useDispatch();
+const itemId = useParams();
+const itemDetails = useSelector(viewDetails);
+console.log(itemDetails,'id');
+  useEffect(()=>{
+    dispatch(viewItemById(itemId.id))
+  },[])
+
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const itemTitles = [{ query: "Item name", answer: "ASUS Vantage briefcase 15.6" }, { query: "Item Category", answer: "Briefcase" },
-    { query: "Item description", answer: "Lorem ipsum" },
-    { query: "Keywords", answer: "Automatically extract keywords from description, give freedom to add more" },
-    { query: "Location identifiers", answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry." }];
+    const itemTitles = [{ query: "Item name", answer: itemDetails.itemName }, { query: "Item Category", answer: itemDetails.itemCategory },
+    { query: "Item description", answer: itemDetails.itemDescription },
+    { query: "Keywords", answer: itemDetails.keywords },
+    { query: "Location identifiers", answer: itemDetails.locationIdentifiers }];
 
-    const personTitles = [{ query: "Name", answer: "Harish" },
-    { query: "Phone number", answer: "78945623" },
-    { query: "Mail id", answer: "harishresto@gail.com" }];
+    const personTitles = [{ query: "Name", answer: itemDetails.userName },
+    { query: "Phone number", answer: itemDetails.mobileNumber },
+    { query: "Mail id", answer: itemDetails.emailMailId }];
 
     const itemImages = [keys,keys,keys];
 
@@ -37,6 +48,7 @@ export default function BusinessItemDetails() {
         autoplay: true,
         autoplaySpeed: 4000
     };
+
 
     return (
         <div className='flex flex-col justify-center items-center'>
