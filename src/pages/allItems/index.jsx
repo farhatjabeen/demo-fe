@@ -10,13 +10,14 @@ import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/i
 
 export default function AllItems() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [PageLimit, setPageLimit] = useState(5);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const tableDatas = useSelector(itemDetails);
 
     useEffect(() => {
-        dispatch(fetchItems())
-    }, []);
+        dispatch(fetchItems(currentPage, PageLimit))
+    }, [currentPage, PageLimit]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -121,8 +122,8 @@ export default function AllItems() {
                         <tbody>
                             {tableDatas?.list?.length && tableDatas.list.map((items, i) => {
                                 return (
-                                    
-                                    <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={()=>navigate(`/businessitemdetails/${items._id}`)}>
+
+                                    <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#7</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemDescription}</td>
@@ -130,7 +131,7 @@ export default function AllItems() {
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.locationIdentifiers}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundDate}</td>
                                     </tr>
-                                    
+
                                 );
                             })}
                         </tbody>
