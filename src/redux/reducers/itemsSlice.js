@@ -8,7 +8,9 @@ let initialState = {
     foundItemDetails: [],
     searchKey: [],
     searchId: [],
-    viewDetailsById: []
+    viewDetailsById: [],
+    viewDetailsByLocation: [],
+    dropdownLocationValues: []
 }
 
 export const itemsSlice = createSlice({
@@ -36,6 +38,12 @@ export const itemsSlice = createSlice({
         viewItemDetailsById: (state, action) => {
             state.viewDetailsById = { ...action.payload }
         },
+        viewItemDetailsByLocation: (state, action) => {
+            state.viewDetailsByLocation = { ...action.payload }
+        },
+        dropdownLocation: (state, action) => {
+            state.dropdownLocationValues = { ...action.payload }
+        },
 
         clearItemState: () => initialState
     }
@@ -56,8 +64,9 @@ export const fetchItems = () => async (dispatch) => {
             return resolve(true);
         }).catch(err => {
             console.log(err)
+            Toast({ type: "error", message: err.message })
             return err
-        })
+        })  
     })
 }
 export const { saveItemDetails, clearData } = itemsSlice.actions;
@@ -141,9 +150,7 @@ export const searchItem = (itemName) => async (dispatch) => {
             method: endpoints.ApiMethods.GET,
             params: { keyword: itemName }
         }).then(async (res) => {
-            console.log(res.data, "rd")
             const { list, pageMeta } = res.data
-
             dispatch(saveItemData({ list, pageMeta }))
             return resolve(true)
         }).catch(err => {
@@ -153,9 +160,35 @@ export const searchItem = (itemName) => async (dispatch) => {
     })
 }
 
-export const { saveItemData } = itemsSlice.actions;
+// export const searchKey = (state) => state.items?.searchKey;
 
-export const searchKey = (state) => state.items?.searchKey;
+// get items by item name and location
+export const searchByLocation = (itemName , location) => async (dispatch) =>{
+    return new Promise((resolve,reject) =>{
+        apiRequest({
+            url: `${endpoints.apiPath.items.searchByLocation}?page=1&limit=10&itemName=${itemName}&location=${location}`,
+            method: endpoints.ApiMethods.GET,
+        }).then((res) => {
+            const { list, pageMeta } = res.data
+            dispatch(viewItemDetailsByLocation({ list, pageMeta }))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+export const searchKey = (state) => {
+
+    if(state.items?.searchKey.list){
+       return state.items?.searchKey
+      
+    } else {
+       return state.items?.viewDetailsByLocation
+    }
+};
+console.log(searchKey,"sskk")
 
 // get items by id
 export const searchItemById = (itemId) => async (dispatch) => {
@@ -164,8 +197,8 @@ export const searchItemById = (itemId) => async (dispatch) => {
             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
             method: endpoints.ApiMethods.GET
         }).then((res) => {
-            const { itemName, location, foundDate, foundTime } = res.data
-            dispatch(saveItemDataById({ itemName, location, foundDate, foundTime }))
+            const { _id, itemName, location, foundDate, foundTime } = res.data
+            dispatch(saveItemDataById({ _id, itemName, location, foundDate, foundTime }))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -183,8 +216,11 @@ export const viewItemById = (itemsId) => async (dispatch) =>{
             url: `${endpoints.apiPath.items.viewById}/${itemsId}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
-            const { itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
-            dispatch(viewItemDetailsById({ itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            console.log(res.data,"rrdd")
+            const { itemImage,itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            if (Array.isArray(itemImage) && itemImage.length > 0) {
+            dispatch(viewItemDetailsById({ itemImage,itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            }
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -195,6 +231,43 @@ export const viewItemById = (itemsId) => async (dispatch) =>{
 
 export const viewDetails = (state) => state.items?.viewDetailsById;
 
+// claim item
+export const claimItemNow = (itemsId) => async (dispatch) =>{
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.items.claimItem}/655703970c9b44af5a5aef52`,
+            method: endpoints.ApiMethods.POST,
+            
+        }).then(() => {
+            return resolve(true);
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
+
+export const locationDropdownValues = () => async (dispatch) =>{
+    return new Promise((resolve,reject) =>{
+        apiRequest({
+            url: endpoints.apiPath.items.locationDropdown,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'businessUserToken',
+        }).then((res) => {
+            console.log(res.data,"rrddd");
+            // const locations = 
+            dispatch(dropdownLocation(res.data))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+export const locationDetails = (state) => state.items?.dropdownLocationValues;
+
 export const clearItemData = (data) => async (dispatch) => {
     try {
         dispatch(clearItemState());
@@ -204,7 +277,7 @@ export const clearItemData = (data) => async (dispatch) => {
 }
 
 
-export const { saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById } = itemsSlice.actions;
+export const { saveItemData, dropdownLocation, saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById, viewItemDetailsByLocation } = itemsSlice.actions;
 
 
 export default itemsSlice.reducer;

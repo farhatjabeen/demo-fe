@@ -11,7 +11,10 @@ const apiPath = {
         fetchBusinessUserItems: '/admin/getAllBusinessUser',
         searchByKeyword: '/user/getItemByKeyword',
         searchById: '/user/item',
-        viewById: '/business/item'
+        viewById: '/business/item',
+        searchByLocation: '/user/getItemByLocation',
+        claimItem: '/user/contactToClaim',
+        locationDropdown: '/user/dropDownSearchLocation'
     }
 }
 

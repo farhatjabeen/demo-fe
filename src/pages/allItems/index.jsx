@@ -6,6 +6,7 @@ import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/itemsSlice';
+import { NotificationContainer } from 'react-notifications';
 
 
 export default function AllItems() {
@@ -121,8 +122,8 @@ export default function AllItems() {
                         <tbody>
                             {tableDatas?.list?.length && tableDatas.list.map((items, i) => {
                                 return (
-                                    
-                                    <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={()=>navigate(`/businessitemdetails/${items._id}`)}>
+ 
+                                    <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#7</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemDescription}</td>
@@ -130,7 +131,7 @@ export default function AllItems() {
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.locationIdentifiers}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundDate}</td>
                                     </tr>
-                                    
+
                                 );
                             })}
                         </tbody>

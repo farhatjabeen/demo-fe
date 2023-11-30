@@ -9,11 +9,15 @@ const routers = [
       },
       {
         component: "findMissingItem",
-        childPath: "/findmissingitem/:itemname/:location",
+        childPath: "/findmissingitem/:itemName/:location",
+      },
+      {
+        component: "findMissingItem",
+        childPath: "/findmissingitem/:itemNameAgain",
       },
       {
         component: "AddMoreDetails",
-        childPath: "/addMoredetails/:itemname/:location",
+        childPath: "/addMoredetails/:newItem/:location",
       },
       {
         component: "AddMoreDetails",
