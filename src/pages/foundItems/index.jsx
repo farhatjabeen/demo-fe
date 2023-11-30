@@ -31,13 +31,13 @@ function FoundItems() {
   };
   const handleSearch = () => { };
   const tableHeaders = [
-    { key: "id", label: "User ID" },
+    { key: "_id", label: "User ID" },
     { key: "itemName", label: "Item Name" },
     { key: "location", label: "Location" },
     { key: "timefound", label: "Time Found" },
     { key: "found by", label: "Found By" },
     { key: "mobileNumber", label: "Phone Number" },
-    { key: "actions", label: "Actions" },
+    // { key: "action", label: "Actions" },
   ];
 
 
