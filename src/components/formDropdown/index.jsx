@@ -28,7 +28,7 @@ export default function FormDropdown({ editButton, selection, dropdownValues }) 
             return (
               <button
                 key={i}
-                className="px-4 py-2 flex w-full text-sm hover:bg-green"
+                className="px-4 py-2 flex w-fit text-sm hover:bg-green"
                 onClick={() => handleValues(i)}
               >
                 {items}

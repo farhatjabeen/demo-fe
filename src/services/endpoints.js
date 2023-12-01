@@ -1,5 +1,8 @@
 const apiPath = {
     login: '/user/login',
+    loginGeneralUser: '/user/login',
+    checkEmail: '/user/emailExist',
+    registerGeneralUser: '/user/signup',
     loginAdmin: '/admin/login',
     businessProfile: '/business/userDetails',
     editBusinessProfile: '/business/editProfile',
@@ -15,7 +18,8 @@ const apiPath = {
         viewById: '/business/item',
         searchByLocation: '/user/getItemByLocation',
         claimItem: '/user/contactToClaim',
-        locationDropdown: '/user/dropDownSearchLocation'
+        locationDropdown: '/user/dropDownSearchLocation',
+        categoryDropdown:'/user/dropDownSearchCategories'
     }
 }
 
