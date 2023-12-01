@@ -23,6 +23,9 @@ export const itemsSlice = createSlice({
         saveFoundItemDetails: (state, action) => {
             state.foundItemDetails = { ...action.payload }
         },
+        saveUpdateFoundItems: (state, action) => {
+            state.updateFoundItems = { ...action.payload }
+        },
         saveUserDetails: (state, action) => {
             state.userDetails = { ...action.payload }
         },
@@ -50,7 +53,7 @@ export const itemsSlice = createSlice({
 });
 
 //get items
-export const fetchItems = (currentPage , PageLimit ) => async (dispatch) => {
+export const fetchItems = (currentPage, PageLimit) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchItems}?page=${currentPage}&limit=${PageLimit}`,
@@ -66,11 +69,10 @@ export const fetchItems = (currentPage , PageLimit ) => async (dispatch) => {
             console.log(err)
             Toast({ type: "error", message: err.message })
             return err
-        })  
+        })
     })
 }
-export const { saveItemDetails, clearData } = itemsSlice.actions;
-export const itemDetails = (state) => state.items?.itemDetails;
+
 
 //get items in admin
 export const adminFetchItems = (currentPage = 1, PageLimit = 5) => async (dispatch) => {
@@ -86,14 +88,11 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 5) => async (dispat
             dispatch(saveFoundItemDetails({ list, pageMeta }))
             return resolve(true);
         }).catch(err => {
-            console.log(err)        
+            console.log(err)
             return err
         })
     })
 };
-export const foundItemDetails = (state) => state.items?.foundItemDetails;
-
-
 
 //get user in admin
 export const adminFetchUser = (currentPage = 1, PageLimit = 5) => async (dispatch) => {
@@ -109,13 +108,12 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 5) => async (dispatc
             dispatch(saveUserDetails({ list, pageMeta }))
             return resolve(true);
         }).catch(err => {
-            console.log(err)        
+            console.log(err)
             return err
         })
     })
 };
-export const { saveUserDetails } = itemsSlice.actions;
-export const userDetails = (state) => state.items?.userDetails;
+
 
 //get businessUser in admin
 export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => async (dispatch) => {
@@ -131,24 +129,19 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => async 
             dispatch(saveBusinessUserDetails({ list, pageMeta }))
             return resolve(true);
         }).catch(err => {
-            console.log(err)        
+            console.log(err)
             return err
         })
     })
 };
-export const { saveBusinessUserDetails } = itemsSlice.actions;
-export const businessUserDetails = (state) => state.items?.businessUserDetails;
-
 
 // get items by keyword 
-export const searchItem = (itemName) => async (dispatch) => {
-    console.log("itemName", itemName)
+export const searchItem = (itemName, currentPage = 1, PageLimit = 8) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
-            url: endpoints.apiPath.items.searchByKeyword,
+            url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}&page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
-            params: { keyword: itemName }
         }).then(async (res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemData({ list, pageMeta }))
@@ -163,8 +156,8 @@ export const searchItem = (itemName) => async (dispatch) => {
 // export const searchKey = (state) => state.items?.searchKey;
 
 // get items by item name and location
-export const searchByLocation = (itemName , location) => async (dispatch) =>{
-    return new Promise((resolve,reject) =>{
+export const searchByLocation = (itemName, location) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.searchByLocation}?page=1&limit=10&itemName=${itemName}&location=${location}`,
             method: endpoints.ApiMethods.GET,
@@ -180,15 +173,12 @@ export const searchByLocation = (itemName , location) => async (dispatch) =>{
 }
 
 export const searchKey = (state) => {
-
-    if(state.items?.searchKey.list){
-       return state.items?.searchKey
-      
+    if (state.items?.searchKey.list) {
+        return state.items?.searchKey
     } else {
-       return state.items?.viewDetailsByLocation
+        return state.items?.viewDetailsByLocation
     }
 };
-console.log(searchKey,"sskk")
 
 // get items by id
 export const searchItemById = (itemId) => async (dispatch) => {
@@ -207,19 +197,17 @@ export const searchItemById = (itemId) => async (dispatch) => {
     })
 };
 
-export const searchDetailsById = (state) => state.items?.searchId;
-
 // get item details of business user by id
-export const viewItemById = (itemsId) => async (dispatch) =>{
-    return new Promise((resolve,reject) =>{
+export const viewItemById = (itemsId) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.viewById}/${itemsId}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
-            console.log(res.data,"rrdd")
-            const { itemImage,itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            console.log(res.data, "rrdd")
+            const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
             if (Array.isArray(itemImage) && itemImage.length > 0) {
-            dispatch(viewItemDetailsById({ itemImage,itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+                dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
             }
             return resolve(true)
         }).catch(err => {
@@ -229,15 +217,13 @@ export const viewItemById = (itemsId) => async (dispatch) =>{
     })
 }
 
-export const viewDetails = (state) => state.items?.viewDetailsById;
-
 // claim item
-export const claimItemNow = (itemsId) => async (dispatch) =>{
+export const claimItemNow = (itemsId) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.claimItem}/655703970c9b44af5a5aef52`,
             method: endpoints.ApiMethods.POST,
-            
+
         }).then(() => {
             return resolve(true);
         }).catch((err) => {
@@ -246,16 +232,15 @@ export const claimItemNow = (itemsId) => async (dispatch) =>{
     })
 }
 
-
-export const locationDropdownValues = () => async (dispatch) =>{
-    return new Promise((resolve,reject) =>{
+export const locationDropdownValues = () => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.items.locationDropdown,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'businessUserToken',
         }).then((res) => {
-            console.log(res.data,"rrddd");
+            console.log(res.data, "rrddd");
             // const locations = 
             dispatch(dropdownLocation(res.data))
             return resolve(true)
@@ -266,8 +251,6 @@ export const locationDropdownValues = () => async (dispatch) =>{
     })
 }
 
-export const locationDetails = (state) => state.items?.dropdownLocationValues;
-
 export const clearItemData = (data) => async (dispatch) => {
     try {
         dispatch(clearItemState());
@@ -275,9 +258,35 @@ export const clearItemData = (data) => async (dispatch) => {
         return error
     }
 }
+export const adminUpdateFoundItems = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.updateFoundItems,
+            method: endpoints.ApiMethods.PUT,
+            isAuth: true,
+            tokenType: 'adminToken',
+            data: 'data'
+        }).then(async (res) => {
+            console.log(res)
+            const { list } = res.data
+            dispatch(saveUpdateFoundItems({ list }))
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            return err
+        })
+    })
+};
 
+export const updateFoundItems = (state) => state.items?.updateFoundItems;
+export const itemDetails = (state) => state.items?.itemDetails;
+export const userDetails = (state) => state.items?.userDetails;
+export const foundItemDetails = (state) => state.items?.foundItemDetails;
+export const searchDetailsById = (state) => state.items?.searchId;
+export const viewDetails = (state) => state.items?.viewDetailsById;
+export const locationDetails = (state) => state.items?.dropdownLocationValues;
+export const businessUserDetails = (state) => state.items?.businessUserDetails;
 
-export const { saveItemData, dropdownLocation, saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById, viewItemDetailsByLocation } = itemsSlice.actions;
-
+export const { saveItemData, dropdownLocation, saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById, viewItemDetailsByLocation, saveUpdateFoundItems, saveBusinessUserDetails, saveItemDetails, clearData, saveUserDetails } = itemsSlice.actions;
 
 export default itemsSlice.reducer;

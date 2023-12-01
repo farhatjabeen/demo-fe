@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import SearchCards from '../../components/searchCards';
 import { useParams } from 'react-router';
@@ -7,20 +6,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-import { clearItemData, searchByLocation, searchItem, searchKey, viewDetailsByLocation } from '../../redux/reducers/itemsSlice';
+import { clearItemData, searchByLocation, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
 import TextInput from '../../components/common/textInput';
 import { useNavigate } from 'react-router-dom';
 
 export default function FindMissingItem() {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [PageLimit, setPageLimit] = useState(5);
+  const [data, setData] = useState([]);
   const newKey = useParams();
   const newKeyAgain = newKey.itemNameAgain || null;
-  console.log(newKey.itemNameAgain,'nk')
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);
   // const searchValueByLocation = useSelector(viewDetailsByLocation)
-  console.log(searchValue, "sv")
 
   const methods = useForm({
     defaultValues: {
@@ -29,37 +29,41 @@ export default function FindMissingItem() {
     resolver
   });
 
-useEffect(()=>{
-  dispatch(searchByLocation(newKey.itemName, newKey.location));  
-},[])
+  useEffect(() => {
+    dispatch(searchByLocation(newKey.itemName, newKey.location));
+  }, [])
 
-useEffect(()=>{
-  if (newKey && newKey.itemNameAgain !== undefined) {
-    dispatch(searchItem(newKey.itemNameAgain));
-  }
-},[newKey])
+  useEffect(() => {
+    if (newKey?.itemNameAgain) {
+      dispatch(searchItem(newKey.itemNameAgain));
+    }
+  }, [newKey])
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const submitData = (e) => {
     try {
       e.preventDefault()
       const productName = methods.getValues();
-      navigate(`/findmissingitem/${productName.itemName}`) 
-        dispatch(searchItem(productName.itemName));
-          
+      navigate(`/findmissingitem/${productName.itemName}`)
+      dispatch(searchItem(productName.itemName));
+
     } catch (error) {
       console.log("submitData errors", error)
     }
   };
 
   useEffect(() => {
-    return (() => {
-      dispatch(clearItemData())
-    })
-  }, [])
+    return () => {
+      dispatch(clearItemData(currentPage, PageLimit))
+    }
+  }, [currentPage, PageLimit])
 
   // useEffect(() => {
   //   if (newKey.itemName && newKey.location) {
-      
+
   //   }
   // }, [newKey]);
 
@@ -74,7 +78,6 @@ useEffect(()=>{
   //       .catch(er => console.log(er));
   //   }
   // });
-
 
   return (
     <div className="flex flex-col items-center mt-5">
@@ -105,9 +108,7 @@ useEffect(()=>{
         </FormProvider>
       </div>
 
-
-
-      <div className='flex flex-wrap justify-center items-center xl:w-11/12 md:w-9/12 sm:w-11/12 mt-12'>
+      <div className='flex flex-wrap justify-center items-center xl:w-10/12 md:w-9/12 sm:w-11/12 mt-12'>
         {searchValue?.list?.length && searchValue.list.map((items, i) => {
           return (
             <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
@@ -118,15 +119,17 @@ useEffect(()=>{
       </div>
 
       <div className='mt-10'>
-        {/* <Pagination
-          isBlueBackground={false} /> */}
+        <Pagination
+          isBlueBackground={false}
+          currentPage={searchValue?.pageMeta?.page}
+          totalPages={searchValue?.pageMeta?.totalPages}
+          onPageChange={handlePageChange} />
       </div>
       <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
         <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
         <div className='font-medium flex justify-center xl:text-base md:text-base sm:text-xs'>Subscribe and send an alert and Ilost will ping you if your item is found</div>
         <div className='flex justify-center'><button className='xl:h-11 xl:w-44 md:h-11 md:w-44 sm:h-9 sm:w-36 rounded-lg bg-primary-color mt-4'>Send an Alert</button></div>
       </div>
-
     </div>
   );
 }
