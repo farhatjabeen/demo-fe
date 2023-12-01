@@ -21,6 +21,9 @@ export const itemsSlice = createSlice({
         saveFoundItemDetails: (state, action) => {
             state.foundItemDetails = { ...action.payload }
         },
+        saveUpdateFoundItems: (state, action) => {
+            state.updateFoundItems = { ...action.payload }
+        },
         saveUserDetails: (state, action) => {
             state.userDetails = { ...action.payload }
         },
@@ -42,7 +45,7 @@ export const itemsSlice = createSlice({
 });
 
 //get items
-export const fetchItems = (currentPage , PageLimit ) => async (dispatch) => {
+export const fetchItems = (currentPage, PageLimit) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchItems}?page=${currentPage}&limit=${PageLimit}`,
@@ -77,7 +80,7 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 5) => async (dispat
             dispatch(saveFoundItemDetails({ list, pageMeta }))
             return resolve(true);
         }).catch(err => {
-            console.log(err)        
+            console.log(err)
             return err
         })
     })
@@ -100,7 +103,7 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 5) => async (dispatc
             dispatch(saveUserDetails({ list, pageMeta }))
             return resolve(true);
         }).catch(err => {
-            console.log(err)        
+            console.log(err)
             return err
         })
     })
@@ -122,7 +125,7 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => async 
             dispatch(saveBusinessUserDetails({ list, pageMeta }))
             return resolve(true);
         }).catch(err => {
-            console.log(err)        
+            console.log(err)
             return err
         })
     })
@@ -132,14 +135,13 @@ export const businessUserDetails = (state) => state.items?.businessUserDetails;
 
 
 // get items by keyword 
-export const searchItem = (itemName) => async (dispatch) => {
+export const searchItem = (itemName,currentPage=1,PageLimit=8) => async (dispatch) => {
     console.log("itemName", itemName)
     return new Promise((resolve, reject) => {
         apiRequest({
             // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
-            url: endpoints.apiPath.items.searchByKeyword,
+            url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}&page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
-            params: { keyword: itemName }
         }).then(async (res) => {
             console.log(res.data, "rd")
             const { list, pageMeta } = res.data
@@ -177,8 +179,8 @@ export const searchItemById = (itemId) => async (dispatch) => {
 export const searchDetailsById = (state) => state.items?.searchId;
 
 // get item details of business user by id
-export const viewItemById = (itemsId) => async (dispatch) =>{
-    return new Promise((resolve,reject) =>{
+export const viewItemById = (itemsId) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.viewById}/${itemsId}`,
             method: endpoints.ApiMethods.GET,
@@ -202,9 +204,29 @@ export const clearItemData = (data) => async (dispatch) => {
         return error
     }
 }
+export const adminUpdateFoundItems = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.updateFoundItems,
+            method: endpoints.ApiMethods.PUT,
+            isAuth: true,
+            tokenType: 'adminToken',
+            data: 'data'
+        }).then(async (res) => {
+            console.log(res)
+            const { list } = res.data
+            dispatch(saveUpdateFoundItems({ list }))
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            return err
+        })
+    })
+};
+export const updateFoundItems = (state) => state.items?.updateFoundItems;
 
 
-export const { saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById } = itemsSlice.actions;
+export const { saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById, saveUpdateFoundItems } = itemsSlice.actions;
 
 
 export default itemsSlice.reducer;
