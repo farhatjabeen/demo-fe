@@ -86,6 +86,21 @@ export const changePassword = (data) => async (dispatch) => {
     })
 }
 
+export const adminResetPassword = (data) => async (dispatch) => {
+
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.resetPasswordAdmin,
+            method: endpoints.ApiMethods.POST,
+            data: data
+        }).then(res => {
+            return resolve(res?.data);
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+
 
 export const clearUserData = (data) => async (dispatch) => {
     try {

@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import DeleteModal from "../modal";
-import { Link,useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { deleteItem } from "../../redux/reducers/itemsSlice";
+import { useDispatch } from "react-redux";
 const Table = ({ headers, data, showEdit = false }) => {
   // const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // const requestSort = (key) => {
   //   let direction = "asc";
   //   if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -46,6 +48,7 @@ const Table = ({ headers, data, showEdit = false }) => {
 
   const handleConfirmDelete = () => {
     console.log(`Deleting item with ID ${selectedItemId}`);
+    dispatch(deleteItem(selectedItemId));
     setDeleteModalOpen(false);
     setSelectedItemId(null);
   };
@@ -94,8 +97,16 @@ const Table = ({ headers, data, showEdit = false }) => {
       </table>
       <DeleteModal
         isOpen={deleteModalOpen}
-        onCancel={handleCancelDelete}
-        onDelete={handleConfirmDelete}
+        onCancel={() => {
+          setDeleteModalOpen(false);
+          setSelectedItemId(null);
+        }}
+        onDelete={() => {
+          console.log(`Deleting item with ID ${selectedItemId}`);
+          setDeleteModalOpen(false);
+          setSelectedItemId(null);
+        }}
+        selectedItemId={selectedItemId}
       />
     </div>
   );

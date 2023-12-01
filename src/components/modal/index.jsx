@@ -1,10 +1,16 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
+import { deleteItem } from "../../redux/reducers/itemsSlice";
 
-const DeleteModal = ({ isOpen, onCancel, onDelete }) => {
+const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId}) => {
+  const dispatch = useDispatch();
   if (!isOpen) {
     return null;
   }
-
+  const handleConfirmDelete = () => {
+    dispatch(deleteItem(selectedItemId));
+    onDelete();
+};
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -21,7 +27,7 @@ const DeleteModal = ({ isOpen, onCancel, onDelete }) => {
           </button>
           <button
             className="bg-red  text-white font-bold  px-4 py-2 w-32 rounded"
-            onClick={onDelete}
+            onClick={handleConfirmDelete}
           >
             Delete
           </button>

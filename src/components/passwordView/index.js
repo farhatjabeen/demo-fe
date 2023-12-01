@@ -6,27 +6,34 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
+import { adminResetPassword } from "../../redux/reducers/userSlice";
+
 
 const PasswordView = () => {
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const resolver = useValidationResolver(AdminChangePasswordSchema);
   const methods = useForm({
     defaultValues: {
       currentPassword: "",
       newPassword: "",
-      confirmPassword:""
+      confirmPassword: ""
     },
     resolver
   });
   const submitData = async (data) => {
-    navigate('/admin/signin');
-    // try {
-    //   dispatch(loginUser(data))
-    // } catch (error) {
-    //   console.log("submitData errors", error)
-    // }
+    try {
+      const reset = dispatch(adminResetPassword(data))
+      if (reset) {
+        navigate('/admin/signin');
+      }
+      else{
+        console.log("Password reset failed");
+      }
+    } catch (error) {
+      console.log("submitData errors", error)
+    }
   };
 
   return (
@@ -51,10 +58,12 @@ const PasswordView = () => {
               placeholder="currentPassword"
               className="w-full py-4 px-3 border border-gray rounded-md"
               required
+              showPassword={showPassword}
+              setShowPassword={() => setShowPassword(!showPassword)}
             />
           </div>
           <div className="mt-2">
-          <label>New Password</label>
+            <label>New Password</label>
             <TextInput
               type="password"
               name="newPassword"
@@ -65,7 +74,7 @@ const PasswordView = () => {
             />
           </div>
           <div className="mt-2">
-          <label>Confirm Password</label>
+            <label>Confirm Password</label>
             <TextInput
               type="password"
               name="confirmPassword"

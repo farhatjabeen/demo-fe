@@ -86,9 +86,11 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 5) => async (dispat
             console.log(res)
             const { list, pageMeta } = res.data
             dispatch(saveFoundItemDetails({ list, pageMeta }))
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
+            Toast({ type: "error", message: err.message })
             return err
         })
     })
@@ -106,9 +108,11 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 5) => async (dispatc
             console.log(res)
             const { list, pageMeta } = res.data
             dispatch(saveUserDetails({ list, pageMeta }))
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
+            Toast({ type: "error", message: err.message })
             return err
         })
     })
@@ -127,9 +131,11 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => async 
             console.log(res)
             const { list, pageMeta } = res.data
             dispatch(saveBusinessUserDetails({ list, pageMeta }))
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
+            Toast({ type: "error", message: err.message })
             return err
         })
     })
@@ -287,6 +293,28 @@ export const viewDetails = (state) => state.items?.viewDetailsById;
 export const locationDetails = (state) => state.items?.dropdownLocationValues;
 export const businessUserDetails = (state) => state.items?.businessUserDetails;
 
+export const deleteItem = (itemId) => async (dispatch) => {
+    try {
+        await apiRequest({
+            url: `${endpoints.apiPath.items.deleteItem}?itemId=${itemId}`,
+            method: endpoints.ApiMethods.DELETE,
+            isAuth: true,
+            tokenType: 'adminToken',
+        });
+
+        dispatch(adminFetchItems());
+
+        Toast({ type: "success", message: "Item deleted successfully." });
+    } catch (error) {
+        console.error(error);
+
+        if (error?.status === 400 && error?.data === "Item not found") {
+            Toast({ type: "error", message: "Item not found. Please refresh the page." });
+        } else {
+            Toast({ type: "error", message: "Error deleting item." });
+        }
+    }
+};
 export const { saveItemData, dropdownLocation, saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById, viewItemDetailsByLocation, saveUpdateFoundItems, saveBusinessUserDetails, saveItemDetails, clearData, saveUserDetails } = itemsSlice.actions;
 
 export default itemsSlice.reducer;
