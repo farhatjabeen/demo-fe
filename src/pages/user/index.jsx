@@ -48,24 +48,24 @@ function User() {
     setCurrentPage(pageNumber);
   };
   const userHeaders = [
-    { key: "id", label: "User ID" },
+    { key: "_id", label: "User ID" },
     { key: "userName", label: "User Name" },
     { key: "createdAt", label: "Listing Count" },
     { key: "emailMailId", label: "Mail ID" },
     { key: "mobileNumber", label: "Mobile Number" },
-    { key: "actions", label: "Actions" },
+    // { key: "actions", label: "Actions" },
 
   ];
 
   const businessHeaders = [
-    { key: "id", label: "Business ID" },
+    { key: "_id", label: "Business ID" },
     { key: "companyName", label: "Company Name" },
     { key: "companyCategory", label: "Category" },
     { key: "contactName", label: "Contact Name" },
     { key: "emailMailId", label: "Mail ID" },
     { key: "mobileNumber", label: "Contact Phone" },
     { key: "listingCount", label: "Listing Count" },
-    { key: "actions", label: "Actions" },
+    // { key: "actions", label: "Actions" },
   ];
 
 

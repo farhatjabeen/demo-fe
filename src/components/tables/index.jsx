@@ -70,105 +70,25 @@ const Table = ({ headers, data, showEdit = false }) => {
             ))}
           </tr>
         </thead>
-        {/* <tbody>
-          {sortedData().map((rowData, index) => (
-            <tr
-              key={index}
-              className={index % 2 === 0 ? "bg-gray" : "bg-white"}
-            >
-              {headers.map((header) => (
-                <td key={header.key} className="py-6 px-6">
-                  {header.key === "id" ? (
-                    <Link to="/admin/user/foundItems/itemDetails">{rowData[header.key]}</Link>
-                  ) : header.key === "actions" ? (
-                    <div className="flex cursor-pointer ">
-                    <AiOutlineDelete size={26}
-                      onClick={() => handleDeleteClick(rowData.id)} />
-                    {showEdit && (
-                      <Link to='/admin/user/foundItems/editfoundItems'>
-                        <FiEdit size={24} className="ml-2 "
-                        />
-                      </Link>
-                    )}
-                  </div>
-                  ):(
-                    rowData[header.key]
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody> */}
         <tbody className="cursor-pointer">
-          {data?.map((items, i) => (
-            <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"} onClick={()=>navigate('/admin/user/foundItems/itemDetails')}>
-              <td className="py-6 px-6">{items._id}</td>
-              <td className="py-6 px-6">{items.itemName}</td>
-              <td className="py-6 px-6">{items.location}</td>
-              <td className="py-6 px-6">{items.timefound}</td>
-              <td className="py-6 px-6">{items.foundby}</td>
-              <td className="py-6 px-6">{items.mobileNumber}</td>
-              <td className="py-6 px-6 flex cursor-pointer ">
-                {showEdit && (
-                  <Link to='/admin/user/foundItems/editfoundItems'>
-                    <FiEdit size={24} className="mr-2" />
-                  </Link>
-                )}
+          {data?.map((item) => (
+            <tr key={item._id} className="bg-inherit">
+              {headers.map((header) => (
+                <td key={header.key} className="py-6 px-6" onClick={() => navigate('/admin/user/foundItems/itemDetails')}>{item[header.key]}</td>
+              ))}
+              <td className="py-6 px-6 flex cursor-pointer">
                 <AiOutlineDelete
                   size={26}
-                  onClick={() => handleDeleteClick(items._id)}
+                  onClick={() => handleDeleteClick(item._id)}
                 />
+                {showEdit && (
+                  <Link to='/admin/user/foundItems/editfoundItems'>
+                    <FiEdit size={24} />
+                  </Link>
+                )}
               </td>
-
             </tr>
           ))}
-          {/* {data?.map((items, i) => (
-            <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
-              <td className="py-6 px-6">
-                <Link to="/admin/user/foundItems/itemDetails">{items._id}</Link>
-              </td>
-              <td className="py-6 px-6">{items.itemName}</td>
-              <td className="py-6 px-6">{items.location}</td>
-              <td className="py-6 px-6">{items.emailMailId}</td>
-              <td className="py-6 px-6">{items.mobileNumber}</td  >
-              <td className="py-6 px-6">{items.foundby}</td>
-              <td className="py-6 px-6 flex cursor-pointer ">
-                {showEdit && (
-                  <Link to='/admin/user/foundItems/editfoundItems'>
-                    <FiEdit size={24} className="mr-2" />
-                  </Link>
-                )}
-                <AiOutlineDelete
-                  size={26}
-                  onClick={() => handleDeleteClick(items._id)}
-                />
-              </td>
-            </tr>
-          ))} */}
-          {/* {data?.map((items, i) => (
-            <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
-              <td className="py-6 px-6">
-                <Link to="/admin/user/foundItems/itemDetails">{items._id}</Link>
-              </td>
-              <td className="py-6 px-6">{items.companyName}</td>
-              <td className="py-6 px-6">{items.companyCategory}</td>
-              <td className="py-6 px-6">{items.contact}</td>
-              <td className="py-6 px-6">{items.mobileNumber}</td  >
-              <td className="py-6 px-6">{items.emailMailId}</td>
-              <td className="py-6 px-6">{items.foundby}</td>
-              <td className="py-6 px-6 flex cursor-pointer ">
-                {showEdit && (
-                  <Link to='/admin/user/foundItems/editfoundItems'>
-                    <FiEdit size={24} className="mr-2" />
-                  </Link>
-                )}
-                <AiOutlineDelete
-                  size={26}
-                  onClick={() => handleDeleteClick(items._id)}
-                />
-              </td>
-            </tr>
-          ))} */}
         </tbody>
 
       </table>

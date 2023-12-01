@@ -50,10 +50,10 @@ export const itemsSlice = createSlice({
 });
 
 //get items
-export const fetchItems = () => async (dispatch) => {
+export const fetchItems = (currentPage , PageLimit ) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchItems}?page=1&limit=5`,
+            url: `${endpoints.apiPath.items.fetchItems}?page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'businessUserToken'
