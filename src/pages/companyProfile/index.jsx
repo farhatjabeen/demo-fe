@@ -7,17 +7,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
 import { companyProfileData, editCompanyProfileData, userProfile } from '../../redux/reducers/userSlice';
+import { locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
 
 export default function CompanyProfile() {
 
     const profileData = useSelector(userProfile);
-    // console.log(profileData.companyName,"pd");
+    console.log(profileData,"pd");
 
     const [editButton, setEditButton] = useState(false);
     const [name, setName] = useState('');
     const [mobileNumber, setMobileNumber] = useState('');
     const [email, setEmail] = useState('');
-    const [businessCompanyName, setBusinessCompanyName] = useState(profileData.companyName);
+    // const [businessCompanyName, setBusinessCompanyName] = useState(profileData.companyName);
     // console.log(businessCompanyName,"cn")
     // const [mobileNumber, setMobileNumber] = useState('');
     // const [email, setEmail] = useState('');
@@ -28,8 +29,11 @@ export default function CompanyProfile() {
     const [allowSubmit, setAllowSubmit] = useState(false);
     const [select, setSelect] = useState(false);
     const companyCategories = ["General Partnership", "Sole Proprietorship", "Nonprofit Organization", "Corporation", "Limited Partnership", "Limited Liability Company", "Cooperative"];
-    const citiesInSerbia = ["Belgrade", "Novi Sad", "Niš", "Kragujevac", "Subotica", "Čačak", "Kraljevo", "Užice", "Zrenjanin", "Pančevo"];
+    // const citiesInSerbia = ["Belgrade", "Novi Sad", "Niš", "Kragujevac", "Subotica", "Čačak", "Kraljevo", "Užice", "Zrenjanin", "Pančevo"];
 
+    const cities = useSelector(locationDetails);
+    const citiesInSerbia = Object.values(cities);
+    // console.log(citiesInSerbias,'cis')
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -38,19 +42,36 @@ export default function CompanyProfile() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(companyProfile);
+    // const locationDetails = useSelector()
 
     useEffect(() => {
         dispatch(companyProfileData())
+        dispatch(locationDropdownValues())
     }, [])
+
+    // const methods = useForm({
+    //     defaultValues: {
+    //         companyName: `${profileData.companyName}`,
+    //         companyCategory: `${profileData.companyCategory}`,
+    //         companyLocation: `${profileData.location}`,
+    //         name: `${profileData.name}`,
+    //         mobileNumber: `${profileData.mobileNumber}`,
+    //         emailMailId: `${profileData.emailMailId}`,
+    //         password: "",
+    //         newPassword: "",
+    //         confirmPassword: ""
+    //     },
+    //     resolver
+    // });
 
     const methods = useForm({
         defaultValues: {
-            companyName: `${profileData.companyName}`,
-            companyCategory: `${profileData.companyCategory}`,
-            companyLocation: `${profileData.location}`,
-            name: `${profileData.name}`,
-            mobileNumber: `${profileData.mobileNumber}`,
-            emailMailId: `${profileData.emailMailId}`,
+            companyName: "",
+            companyCategory: "",
+            companyLocation: "",
+            name: "",
+            mobileNumber: "",
+            emailMailId: "",
             password: "",
             newPassword: "",
             confirmPassword: ""
@@ -103,8 +124,6 @@ export default function CompanyProfile() {
                                     className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     autoComplete="off"
                                     disable={!editButton}
-                                    fieldValue={businessCompanyName}
-                                    onChange={(e) => setBusinessCompanyName(e.target.value)}
                                 />
                                 {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' /> */}
 

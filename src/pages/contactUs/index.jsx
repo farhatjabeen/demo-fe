@@ -30,7 +30,7 @@ export default function ContactUs() {
         }
     };
     return (
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col justify-center items-center'>
             <div className='font-bold text-4xl mb-5'>Contact Us</div>
             <div className='sm:h-96 md:h-60 xl:h-64 sm:w-2/3 md:w-5/6 xl:w-3/5 rounded-3xl bg-white flex flex-col items-center justify-center '>
                 <div className='sm:mb-10 md:mb-0 md:mt-5 xl:mt-0 font-medium text-2xl'>Feel free to get in touch with us</div>
@@ -53,44 +53,46 @@ export default function ContactUs() {
             </div>
 
             <div className='xl:w-11/12 sm:w-full sm:flex-col sm:justify-center sm:items-center md:flex-row flex justify-between mt-16'>
-                <div><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
-                <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-6/12'>
-                        <div className='w-full '>
-                            <div className='sm:flex sm:justify-center md:justify-start font-semibold text-3xl'>Get in Touch</div>
-                            <div className='sm:w-[500px] xl:w-full mt-7 flex flex-col sm:items-center xl:items-start'>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Enter your email"
-                                    name="mail"
-                                    className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
-                                    autoComplete="off"
-                                    required
-                                />
-                                {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="email" placeholder='Enter your email' /> */}
-                                <TextInput
-                                    type="text"
-                                    placeholder="Subject"
-                                    name="subject"
-                                    className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
-                                    autoComplete="off"
-                                    required
-                                />
-                                {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="text" placeholder='Subject' /> */}
-                                <TextAreaInput
-                                    rows="4"
-                                    placeholder="Message"
-                                    name="message"
-                                    className='border border-[#B6B6B6] rounded-lg bg-inherit p-5 w-96 border-opacity-50'
-                                    autoComplete="off"
-                                    required
-                                />
-                                {/* <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' type="text" placeholder='Message' /> */}
-                                <div className='flex justify-end w-96'><button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button></div>
+                <div className='mr-20'><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
+                <div>
+                    <FormProvider {...methods}>
+                        <form onSubmit={methods.handleSubmit(submitData)} className='flex w-6/12'>
+                            <div className='w-full '>
+                                <div className='sm:flex sm:justify-center md:justify-start font-semibold text-3xl'>Get in Touch</div>
+                                <div className='sm:w-[500px] xl:w-full mt-7 flex flex-col sm:items-center xl:items-start'>
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Enter your email"
+                                        name="mail"
+                                        className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="email" placeholder='Enter your email' /> */}
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Subject"
+                                        name="subject"
+                                        className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="text" placeholder='Subject' /> */}
+                                    <TextAreaInput
+                                        rows="4"
+                                        placeholder="Message"
+                                        name="message"
+                                        className='border border-[#B6B6B6] rounded-lg bg-inherit p-5 w-96 border-opacity-50'
+                                        autoComplete="off"
+                                        required
+                                    />
+                                    {/* <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' type="text" placeholder='Message' /> */}
+                                    <div className='flex justify-end w-96'><button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button></div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </FormProvider>
+                        </form>
+                    </FormProvider>
+                </div>
             </div>
         </div >
     )

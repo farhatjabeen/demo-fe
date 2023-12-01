@@ -7,16 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-import { clearItemData, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
+import { clearItemData, searchByLocation, searchItem, searchKey, viewDetailsByLocation } from '../../redux/reducers/itemsSlice';
 import TextInput from '../../components/common/textInput';
-import { list } from 'postcss';
+import { useNavigate } from 'react-router-dom';
 
 export default function FindMissingItem() {
-  const [data, setData] = useState([]);
+  const navigate = useNavigate();
   const newKey = useParams();
+  const newKeyAgain = newKey.itemNameAgain || null;
+  console.log(newKey.itemNameAgain,'nk')
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);
+  // const searchValueByLocation = useSelector(viewDetailsByLocation)
   console.log(searchValue, "sv")
 
   const methods = useForm({
@@ -26,14 +29,23 @@ export default function FindMissingItem() {
     resolver
   });
 
-  
+useEffect(()=>{
+  dispatch(searchByLocation(newKey.itemName, newKey.location));  
+},[])
+
+useEffect(()=>{
+  if (newKey && newKey.itemNameAgain !== undefined) {
+    dispatch(searchItem(newKey.itemNameAgain));
+  }
+},[newKey])
 
   const submitData = (e) => {
     try {
-      const productName  = methods.getValues();
       e.preventDefault()
-      console.log("1", productName.itemName)
-      dispatch(searchItem(productName.itemName));
+      const productName = methods.getValues();
+      navigate(`/findmissingitem/${productName.itemName}`) 
+        dispatch(searchItem(productName.itemName));
+          
     } catch (error) {
       console.log("submitData errors", error)
     }
@@ -41,20 +53,13 @@ export default function FindMissingItem() {
 
   useEffect(() => {
     return (() => {
-      console.log("unmount")
       dispatch(clearItemData())
     })
   }, [])
 
   // useEffect(() => {
   //   if (newKey.itemName && newKey.location) {
-  //     axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
-  //       .then(response => {
-  //         const filteredData = response.data.filter(f => f.itemname.toLowerCase().includes(newKey.itemName.toLowerCase()) && f.location.toLowerCase().includes(newKey.location.toLowerCase()));
-  //         console.log(filteredData, 'filteredData')
-  //         setData(filteredData);
-  //       })
-  //       .catch(er => console.log(er));
+      
   //   }
   // }, [newKey]);
 
@@ -91,9 +96,9 @@ export default function FindMissingItem() {
               />
             </div>
             <div className='w-96'>
-              <button 
-              type='submit' 
-              className='xl:w-fit px-16 sm:w-1/4 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color ml-3.5' >Search</button>
+              <button
+                type='submit'
+                className='xl:w-fit px-16 sm:w-1/4 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color ml-3.5' >Search</button>
             </div>
 
           </form>
@@ -101,16 +106,16 @@ export default function FindMissingItem() {
       </div>
 
 
-      
-        <div className='flex flex-wrap justify-center items-center xl:w-10/12 md:w-9/12 sm:w-11/12 mt-12'>
-          {searchValue?.list?.length && searchValue.list.map((items, i) => {
-            return (
-              <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
-                <SearchCards key={i} idx={i} itemId={items._id} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
-              </div>
-            );
-          })}
-        </div>
+
+      <div className='flex flex-wrap justify-center items-center xl:w-11/12 md:w-9/12 sm:w-11/12 mt-12'>
+        {searchValue?.list?.length && searchValue.list.map((items, i) => {
+          return (
+            <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
+              <SearchCards key={i} idx={i} itemId={items._id} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
+            </div>
+          );
+        })}
+      </div>
 
       <div className='mt-10'>
         {/* <Pagination

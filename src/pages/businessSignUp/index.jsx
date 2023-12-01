@@ -6,6 +6,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { businessSignUp, businessSignUpSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
+import { useNavigate } from 'react-router-dom';
 
 export default function BusinessSignUp() {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -14,7 +15,7 @@ export default function BusinessSignUp() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(businessSignUpSchema);
-
+    const navigate = useNavigate();
     const methods = useForm({
         defaultValues: {
             name: "",
@@ -156,8 +157,9 @@ export default function BusinessSignUp() {
                             <div className="flex ">
                                 <div className="flex items-center h-5">
                                     <input id="remember" type="checkbox" className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
+                                    <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-[#FF9900]" onClick={navigate('/termsOfUse')}> terms and conditions</button>  of ilost Serbia</p>
                                 </div>
-                                <label htmlFor="remember" className="ms-2 text-sm">I agree to the <span class="underline decoration-1 text-[#FF9900]"> terms and conditions</span>  of ilost Serbia</label>
+                                <label htmlFor="remember" className="ms-2 text-sm"></label>
                             </div>
                             <button className="bg-[#FF9900] w-full py-3  mt-2 rounded-lg">Continue</button>
                         </div>
