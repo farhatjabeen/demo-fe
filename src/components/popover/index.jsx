@@ -52,7 +52,8 @@ const PopoverComponent = () => {
 
     const methods = useForm({
         defaultValues: {
-            emailMailId: ""
+            emailMailId: "",
+            password:""
         },
         resolver
     });
@@ -68,8 +69,8 @@ const PopoverComponent = () => {
     const handleContinue = async (e) => {
         try {
             e.preventDefault();
-            const emailId = methods.getValues();
-            dispatch(checkGeneralUserEmail(emailId));
+            const emailMailId = methods.getValues().emailMailId;
+            dispatch(checkGeneralUserEmail({emailMailId}));
             if (mailIdFromApi) {
                 setPasswordBox(true);
             }
@@ -90,7 +91,21 @@ const PopoverComponent = () => {
         }
     }
 
-    
+    const handleLogin = async (e) => {
+        try {
+            e.preventDefault();
+            const password = methods.getValues().password;
+            const emailMailId = mailIdFromApi.emailMailId;
+            const islogin = dispatch(generalUserLogin({ emailMailId, password }));
+            if(islogin){
+                navigate()
+            }
+        } catch (error) {
+            console.log("submitData errors", error)
+        }
+    }
+
+
 
 
     return (
@@ -132,18 +147,24 @@ const PopoverComponent = () => {
                                                             </div>
                                                         </div>
 
-                                                        <div >
-                                                            <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
-                                                            <input
-                                                                type='password'
-                                                                value={passwordHere}
-                                                                className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
-                                                                onChange={(e) => setPasswordHere(e.target.value)} />
-                                                        </div>
+                                                        <FormProvider {...methods}>
+                                                            <form onSubmit={(e) => handleLogin(e)}>
+                                                                <div >
+                                                                    <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
+                                                                    <TextInput
+                                                                        type='password'
+                                                                        name='password'   
+                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
+                                                                        autoComplete="off"
+                                                                        required
+                                                                    />
+                                                                </div>
 
-                                                        <div className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
-                                                            <button onClick={loginButton} >LOGIN</button>
-                                                        </div>
+                                                                <div className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                <Popover.Button type='submit'>LOGIN</Popover.Button>
+                                                                </div>
+                                                            </form>
+                                                        </FormProvider>
                                                     </div>
 
                                                     :

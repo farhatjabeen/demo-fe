@@ -25,7 +25,10 @@ export const generalUserMailSchema = yup.object({
     emailMailId: yup
         .string()
         .matches(emailRexExp, 'Invalid email address')
-        .required('email required')
+        .required('email required'),
+    password: yup
+        .string()
+        .required("password required")
 });
 
 export const generalUserRegisterSchema = yup.object({

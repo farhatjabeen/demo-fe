@@ -71,7 +71,6 @@ export const checkGeneralUserEmail = (data) => async(dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            console.log(res.data,'resdata')
             const { emailMailId, isAlreadyRegistered } = res.data
             dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered }))
             return resolve(true);
@@ -91,7 +90,6 @@ export const generalUserRegister = (data) => async(dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            console.log(res.data,'resdata')
             const { emailMailId, password } = res.data
             dispatch(registerGeneralUserMail({ emailMailId, password }))
             return resolve(true);
@@ -114,6 +112,23 @@ export const generalUserLogin = (data) => (dispatch) => {
             const { role, emailMailId, _id, token } = res.data
             dispatch(saveUserData({ role, emailMailId, _id, token }))
             setEncryptedLocalStorageData("userToken", token);
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            resolve(false)
+            return err
+        })
+    })
+}
+
+// general user logout
+export const generalUserLogout = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.logoutGeneralUser,
+            method: endpoints.ApiMethods.POST
+        }).then((res) => {
+            console.log(res.data,'resdata')
             return resolve(true);
         }).catch(err => {
             console.log(err)
