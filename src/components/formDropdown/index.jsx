@@ -10,7 +10,7 @@ export default function FormDropdown({ editButton, selection, dropdownValues }) 
     setSelect(false);
   }
   return (
-    <div className="xl:w-96 sm:w-6/12 relative inline-block text-left">
+    <div className="xl:w-96 md:w-72 sm:w-60 relative inline-block text-left">
 
       <div>
         <button
@@ -28,7 +28,7 @@ export default function FormDropdown({ editButton, selection, dropdownValues }) 
             return (
               <button
                 key={i}
-                className="px-4 py-2 flex w-full text-sm hover:bg-green"
+                className="px-4 py-2 flex w-fit text-sm hover:bg-green"
                 onClick={() => handleValues(i)}
               >
                 {items}

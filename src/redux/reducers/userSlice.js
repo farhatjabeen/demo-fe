@@ -7,7 +7,9 @@ import { setEncryptedLocalStorageData } from "../../utils/helper";
 const initialState = {
     userData: null,
     userProfile: null,
-    queryData: null
+    queryData: null,
+    userMail: null,
+    registerUser: null
 };
 
 export const userSlice = createSlice({
@@ -16,6 +18,16 @@ export const userSlice = createSlice({
     reducers: {
         saveUserData: (state, action) => {
             state.userData = {
+                ...action.payload
+            };
+        },
+        saveGeneralUserMail: (state, action) => {
+            state.userMail = {
+                ...action.payload
+            };
+        },
+        registerGeneralUserMail: (state, action) => {
+            state.registerUser = {
                 ...action.payload
             };
         },
@@ -51,6 +63,81 @@ export const loginUser = (data) => (dispatch) => {
         })
     })
 }
+
+export const checkGeneralUserEmail = (data) => async(dispatch) => {
+    return new Promise((resolve,reject) => {
+        apiRequest({
+            url: endpoints.apiPath.checkEmail,
+            method: endpoints.ApiMethods.POST,
+            data: data
+        }).then((res) => {
+            const { emailMailId, isAlreadyRegistered } = res.data
+            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered }))
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            return err
+        })
+    })
+}
+
+export const mailId = (state) => state.user?.userMail;
+
+export const generalUserRegister = (data) => async(dispatch) => {
+    return new Promise((resolve,reject) => {
+        apiRequest({
+            url: endpoints.apiPath.registerGeneralUser,
+            method: endpoints.ApiMethods.POST,
+            data: data
+        }).then((res) => {
+            const { emailMailId, password } = res.data
+            dispatch(registerGeneralUserMail({ emailMailId, password }))
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            return err
+        })
+    })
+}
+
+export const registerUser = (state) => console.log(state,'state')
+
+export const generalUserLogin = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.loginGeneralUser,
+            method: endpoints.ApiMethods.POST,
+            data: data
+        }).then((res) => {
+            const { role, emailMailId, _id, token } = res.data
+            dispatch(saveUserData({ role, emailMailId, _id, token }))
+            setEncryptedLocalStorageData("userToken", token);
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            resolve(false)
+            return err
+        })
+    })
+}
+
+// general user logout
+export const generalUserLogout = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.logoutGeneralUser,
+            method: endpoints.ApiMethods.POST
+        }).then((res) => {
+            console.log(res.data,'resdata')
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            resolve(false)
+            return err
+        })
+    })
+}
+
 export const loginAdminUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -110,7 +197,7 @@ export const clearUserData = (data) => async (dispatch) => {
     }
 }
 
-export const userData = (state) => state.user.userData;
+export const userData = (state) => state.user?.userData;
 
 export const companyProfileData = () => async (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -167,6 +254,6 @@ export const contactAdmin = (data) => async (dispatch) => {
     })
 }
 
-export const { saveUserData, saveCompanyProfile, saveQueryData, clearData } = userSlice.actions;
+export const { saveUserData, saveCompanyProfile, registerGeneralUserMail, saveGeneralUserMail, saveQueryData, clearData } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -31,7 +31,7 @@ export default function AddMoreDetails() {
         time: '',
         reporterid: ''
     })
-console.log(files,'files');
+    console.log(files, 'files');
     const fileInputRef = useRef();
 
     // const navigate = useNavigate();
@@ -51,7 +51,7 @@ console.log(files,'files');
             itemCategory: "",
             itemName: "",
             keywords: "",
-            imageUpload:""
+            imageUpload: ""
         },
         resolver
     });
@@ -124,14 +124,14 @@ console.log(files,'files');
                         <div>
                             <div className='flex justify-between mb-9'>
                                 <div>
-                                    <label className='font-bold text-lg'>Item Name</label>
-                                    <p className='font-medium text-sm'>Item Name</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Name</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Name</p>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Type Name"
                                     name="itemName"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 w-96'
+                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -139,14 +139,14 @@ console.log(files,'files');
 
                             <div className='flex justify-between mb-9'>
                                 <div>
-                                    <label className='font-bold text-lg'>Item Category</label>
-                                    <p className='font-medium text-sm'>Item Category</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Category</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Category</p>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Select Category"
                                     name="itemCategory"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 w-96'
+                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -154,14 +154,14 @@ console.log(files,'files');
 
                             <div className='flex justify-between mb-9'>
                                 <div>
-                                    <label className='font-bold text-lg'>Item Description</label>
-                                    <p className='font-medium text-sm'>Item Description</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Description</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Description</p>
                                 </div>
                                 <TextAreaInput
                                     rows="4"
                                     placeholder="Type desc"
                                     name="itemDescription"
-                                    className='border border-[#B6B6B6] rounded-lg p-5 w-96'
+                                    className='border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -169,17 +169,17 @@ console.log(files,'files');
 
                             <div className='flex justify-between h-12 mb-16'>
                                 <div>
-                                    <label className='font-bold text-lg'>Keywords</label>
-                                    <p className='font-medium text-sm'>Keywords</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Keywords</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Keywords</p>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Keywords"
                                     name="keywords"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 w-96'
+                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
-                                    
+
                                 />
                                 {/* <input className='h-20 sm:h-16 border border-[#B6B6B6] rounded-lg p-5  w-24' 
                                 type='text' name='keywords' value={newreport.keywords} onChange={handleInputChange} placeholder='Keywords' /> */}
@@ -188,8 +188,8 @@ console.log(files,'files');
 
                             <div className='flex justify-between h-fit mb-9 relative'>
                                 <div>
-                                    <label className='font-bold text-lg'>Upload Images</label>
-                                    <p className='font-medium text-sm'>Upload Images</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Upload Images</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Upload Images</p>
                                 </div>
                                 <div>
                                     {isUploaded ?
@@ -210,7 +210,15 @@ console.log(files,'files');
                                     <div className="flex items-center">
                                         <label
                                             htmlFor="fileInput"
-                                            className={`${isUploaded ? "w-80 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer" : "w-96 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}`}
+                                            className=
+                                            {
+                                                `${isUploaded
+                                                    ?
+                                                    "xl:w-80 md:w-80 sm:64 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
+                                                    :
+                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                                }`
+                                            }
                                         >
                                             Upload Image
                                         </label>
@@ -222,7 +230,7 @@ console.log(files,'files');
                                             multiple
                                             onChange={handleFileUpload}
                                             ref={fileInputRef}
-                                            // name="imageUpload"
+                                        // name="imageUpload"
                                         />
                                         {isUploaded ?
                                             <div>
@@ -239,14 +247,14 @@ console.log(files,'files');
                             <div className='border-b border-b-[#949494] mb-10'>
                                 <div className='flex justify-between h-12 mb-9 relative location'>
                                     <div>
-                                        <label className='font-bold text-lg'>Location</label>
-                                        <p className='font-medium text-sm'>Location</p>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location</p>
                                     </div>
                                     <TextInput
                                         type="text"
                                         placeholder="Type Address"
                                         name="location"
-                                        className='w-96 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                         autoComplete="off"
                                         required
                                     />
@@ -255,14 +263,14 @@ console.log(files,'files');
 
                                 <div className='flex justify-between h-12 mb-9 relative'>
                                     <div>
-                                        <label className='font-bold text-lg'>Location Identifiers</label>
-                                        <p className='font-medium text-sm'>Location Identifiers</p>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location Identifiers</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location Identifiers</p>
                                     </div>
                                     <TextInput
                                         type="text"
                                         placeholder="Landmarks of the location"
                                         name="landmark"
-                                        className='w-96 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                         autoComplete="off"
                                         required
                                     />
@@ -271,28 +279,28 @@ console.log(files,'files');
 
                             <div className='flex justify-between h-12 mb-9 relative location'>
                                 <div>
-                                    <label className='font-bold text-lg'>Your Name</label>
-                                    <p className='font-medium text-xs'>Your Name</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Name</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Name</p>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your Name"
                                     name="name"
-                                    className='w-96 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                     autoComplete="off"
                                 />
                             </div>
 
                             <div className='flex justify-between h-12 mb-9 relative'>
                                 <div>
-                                    <label className='font-bold text-lg'>Your Phone Number</label>
-                                    <p className='font-medium text-xs'>Your Phone Number</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Phone Number</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Phone Number</p>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your Number"
                                     name="mobileNumber"
-                                    className='w-96 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                     autoComplete="off"
                                     required
                                 />
@@ -300,14 +308,14 @@ console.log(files,'files');
 
                             <div className='flex justify-between h-12 mb-9 relative'>
                                 <div>
-                                    <label className='font-bold text-lg'>Your Mail address</label>
-                                    <p className='font-medium text-xs'>Your Mail address</p>
+                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Mail address</label>
+                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Mail address</p>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your Email address"
                                     name="emailMail"
-                                    className='w-96 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                     autoComplete="off"
                                     required
                                 />

@@ -89,7 +89,7 @@ export default function MyProfile() {
                             {/* <div className='flex justify-between mb-9'> */}
                             <div className='flex justify-between mb-9'>
                                 <div>
-                                    <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Name</label>
+                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Name</label>
                                     <div className='font-medium text-xs'>Your Name</div>
                                 </div>
 
@@ -97,7 +97,7 @@ export default function MyProfile() {
                                     type="text"
                                     placeholder="Enter your Name"
                                     name="name"
-                                    className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     autoComplete="off"
                                     disable={!editButton}
 
@@ -109,14 +109,14 @@ export default function MyProfile() {
                             <div className='flex justify-between mb-9'>
 
                                 <div>
-                                    <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Mobile Number</label>
+                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Mobile Number</label>
                                     <div className='font-medium text-xs'>Your Mobile Number</div>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your Number"
                                     name="mobileNumber"
-                                    className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     autoComplete="off"
                                     required
                                     disable={!editButton}
@@ -127,14 +127,14 @@ export default function MyProfile() {
 
                             <div className='flex justify-between mb-9'>
                                 <div>
-                                    <label className='xl:text-lg sm:text-base font-bold mt-[13px]'>Mail ID</label>
+                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-[13px]'>Mail ID</label>
                                     <div className='font-medium text-xs'>Your Mail ID</div>
                                 </div>
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your Email address"
                                     name="emailMail"
-                                    className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     autoComplete="off"
                                     required
                                     disable={!editButton}
@@ -150,17 +150,17 @@ export default function MyProfile() {
                                 </div>
                                 <div className='flex justify-between mb-9'>
 
-                                    <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Enter Current password</label>
-                                    <input className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' />
+                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter Current password</label>
+                                    <input className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' />
                                 </div>
 
                                 <div className='flex justify-between mb-9'>
-                                    <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Enter New password</label>
+                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter New password</label>
                                     <TextInput
                                         type="text"
                                         placeholder="New password"
                                         name="newPassword"
-                                        className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         required
                                         disable={!editButton}
@@ -169,12 +169,12 @@ export default function MyProfile() {
                                 </div>
 
                                 <div className='flex justify-between'>
-                                    <label className='xl:text-lg sm:text-base font-bold mt-3.5'>Re - Enter New password</label>
+                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Re - Enter New password</label>
                                     <TextInput
                                         type="text"
                                         placeholder="New password"
                                         name="confirmPassword"
-                                        className={`xl:w-96 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         required
                                         disable={!editButton}
@@ -186,9 +186,9 @@ export default function MyProfile() {
                         </div>
 
                         {editButton ?
-                            <div className='flex flex-col items-center justify-between'>
+                            <div className='xl:w-4/12 md:w-7/12 sm:w-10/12 flex xl:ml-80 md:ml-32 sm:ml-12 mb-10 justify-between'>
 
-                                <div className='xl:w-4/12 md:w-5/12 sm:w-7/12 flex justify-between mb-10'>
+                                {/* <div className='xl:w-4/12 md:w-7/12 sm:w-10/12 flex justify-between mb-10'> */}
                                     <div>
                                         <button onClick={handleEditButton} className='w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
                                             Cancel
@@ -199,7 +199,7 @@ export default function MyProfile() {
                                             Save Changes
                                         </button>
                                     </div>
-                                </div>
+                                {/* </div> */}
                             </div>
                             :
                             null}
