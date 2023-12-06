@@ -10,7 +10,7 @@ export default function FormDropdown({ editButton, selection, dropdownValues }) 
     setSelect(false);
   }
   return (
-    <div className="xl:w-96 sm:w-6/12 relative inline-block text-left">
+    <div className="xl:w-96 md:w-72 sm:w-60 relative inline-block text-left">
 
       <div>
         <button

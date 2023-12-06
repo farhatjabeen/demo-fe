@@ -69,12 +69,12 @@ const Header = (props) => {
                                     </button>
                                 </div>
 
-                                <div className={`py-1 absolute top-14 left-4 z-10 mt-2 xl:w-56 rounded-md bg-white shadow-lg border border-solid border-[#B6B6B6] ${select ? '' : 'hidden'} `}>
+                                <div className={` absolute top-14 left-4 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-md bg-white shadow-lg border border-solid border-[#B6B6B6] ${select ? '' : 'hidden'} `}>
 
-                                    <Link to='/mylistings' className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center h-12 no-underline text-black font-medium '>My listing</Link>
-                                    <div><Link to='/myprofile' className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center h-12 no-underline text-black font-medium '>My Profile</Link></div>
-                                    <div><Link className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center h-12 no-underline text-black font-medium'>Need Help?</Link></div>
-                                    <div><Link onClick={()=>handleLogout()} className='w-full hover:bg-gray-200/30 flex justify-center items-center h-12 text-black font-medium'>Sign Out</Link></div>
+                                    <Link to='/mylistings' className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '>My listing</Link>
+                                    <div><Link to='/myprofile' className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '>My Profile</Link></div>
+                                    <div><Link className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium'>Need Help?</Link></div>
+                                    <div><Link onClick={()=>handleLogout()} className='w-full hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 text-black font-medium'>Sign Out</Link></div>
 
                                 </div>
                             </div>
