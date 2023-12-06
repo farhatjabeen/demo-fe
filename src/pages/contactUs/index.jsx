@@ -53,13 +53,13 @@ export default function ContactUs() {
             </div>
 
             <div className='xl:w-11/12 sm:w-full sm:flex-col sm:justify-center sm:items-center md:flex-row flex justify-between mt-16'>
-                <div className='mr-20'><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
+                <div className='mr-40'><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
                 <div>
                     <FormProvider {...methods}>
                         <form onSubmit={methods.handleSubmit(submitData)} className='flex w-6/12'>
-                            <div className='w-full '>
+                            <div className='w-full bg-inherit'>
                                 <div className='sm:flex sm:justify-center md:justify-start font-semibold text-3xl'>Get in Touch</div>
-                                <div className='sm:w-[500px] xl:w-full mt-7 flex flex-col sm:items-center xl:items-start'>
+                                <div className='sm:w-[500px] bg-inherit mt-7 flex flex-col sm:items-center xl:items-start'>
                                     <TextInput
                                         type="text"
                                         placeholder="Enter your email"

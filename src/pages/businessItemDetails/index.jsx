@@ -5,17 +5,23 @@ import Slider from 'react-slick';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { viewDetails, viewItemById } from '../../redux/reducers/itemsSlice';
+import { viewDetails, viewItemById, viewUserItemById } from '../../redux/reducers/itemsSlice';
+import { userData } from '../../redux/reducers/userSlice';
 
 export default function BusinessItemDetails() {
 
     const dispatch = useDispatch();
     const itemId = useParams();
     const itemDetails = useSelector(viewDetails);
-    console.log(itemDetails, 'id');
+    const userDetails = useSelector(userData);
+    console.log(itemId, 'id');
     useEffect(() => {
-        dispatch(viewItemById(itemId.id))
-    }, [])
+        if(userDetails?.role==='BUSINESS'){
+            dispatch(viewItemById(itemId.id))
+        } else{
+            dispatch(viewUserItemById(itemId.id))
+        }
+    }, [itemId])
 
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -23,6 +29,8 @@ export default function BusinessItemDetails() {
     { query: "Item description", answer: itemDetails.itemDescription },
     { query: "Keywords", answer: itemDetails.keywords },
     { query: "Location identifiers", answer: itemDetails.locationIdentifiers }];
+
+    console.log(itemTitles,'itemTitles');
 
     const personTitles = [{ query: "Name", answer: itemDetails.userName },
     { query: "Phone number", answer: itemDetails.mobileNumber },
@@ -33,7 +41,7 @@ export default function BusinessItemDetails() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setActiveIndex((prevIndex) => (prevIndex + 1) % itemDetails.itemImage.length);
+            setActiveIndex((prevIndex) => (prevIndex + 1) % itemDetails?.itemImage?.length);
         }, 2000);
 
         return () => clearInterval(interval);
@@ -56,9 +64,9 @@ export default function BusinessItemDetails() {
             <div className='font-semibold text-3xl '>Item details</div>
             <div className='w-3/12 mt-20 '>
                 <Slider {...settings}>
-                    {itemDetails.itemImage.map((items, i) => {
+                    {itemDetails?.itemImage?.map((items, i) => {
                         return (
-                            <div key={i} className='w-1/2 flex justify-end'><img className='h-96 w-96' src={items} alt='keys' /></div>
+                            <div key={i} className='w-1/2 flex justify-end'><img className='h-96 w-fit' src={items} alt='keys' /></div>
                         );
                     })}
                 </Slider>

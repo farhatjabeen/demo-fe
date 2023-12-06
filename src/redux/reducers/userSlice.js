@@ -159,7 +159,6 @@ export const loginAdminUser = (data) => (dispatch) => {
 
 
 export const changePassword = (data) => async (dispatch) => {
-
     return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.login,
@@ -174,7 +173,7 @@ export const changePassword = (data) => async (dispatch) => {
 }
 
 
-export const clearUserData = (data) => async (dispatch) => {
+export const clearUserData = () => async (dispatch) => {
     try {
         dispatch(clearData());
     } catch (error) {

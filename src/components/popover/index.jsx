@@ -10,7 +10,7 @@ import linkSymbol from '../../assets/images/linksymbol.png';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { checkGeneralUserEmail, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
+import { checkGeneralUserEmail, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
 import { generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
 import TextInput from '../common/textInput';
 
@@ -98,14 +98,18 @@ const PopoverComponent = () => {
             const emailMailId = mailIdFromApi.emailMailId;
             const islogin = dispatch(generalUserLogin({ emailMailId, password }));
             if(islogin){
-                navigate()
+                navigate('/')
             }
         } catch (error) {
             console.log("submitData errors", error)
         }
     }
 
-
+    useEffect(() => {
+        return () => {
+          
+        }
+      }, [])
 
 
     return (
@@ -115,10 +119,10 @@ const PopoverComponent = () => {
                     <div>
                         <Popover.Button>
                             <div className="flex justify-center items-center xl:w-64 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold bg-primary-color text-white rounded-full xl:mx-1">
-                                Login/Register
+                                Login / Register
                             </div>
                         </Popover.Button>
-                        <Popover.Overlay className="fixed inset-0 bg-green opacity-50" />
+                        <Popover.Overlay className="fixed inset-0 bg-black opacity-30" />
 
                         <Transition
                             as={Fragment}
@@ -128,10 +132,10 @@ const PopoverComponent = () => {
                             leave="transition ease-in duration-150"
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-1">
-                            <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10  pb-6 w-max h-max xl:mt-44 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36 '>
+                            <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36 '>
 
 
-                                <div className='xl:pt-8 md:pt-4 sm:pt-7 w-96'>
+                                <div className='pt-7 w-96'>
 
                                     {
                                         passwordBox ?
@@ -265,7 +269,7 @@ const PopoverComponent = () => {
                                 </div>
                                 <div className="w-full flex justify-end pr-3 xl:ml-9 md:ml-8 sm:ml-5">
                                     <Popover.Button onClick={() => setPasswordBox(false)} className='absolute top-4 border-none bg-white space-x-end'>
-                                        <AiFillCloseCircle className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
+                                        <AiFillCloseCircle onClick={() => dispatch(clearUserData())} className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
                                     </Popover.Button>
                                 </div>
 
