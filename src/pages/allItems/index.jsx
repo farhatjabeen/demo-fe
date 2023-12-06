@@ -1,25 +1,35 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
-import { AiOutlineArrowUp } from "react-icons/ai";
+// import { AiOutlineArrowUp } from "react-icons/ai";
 import Pagination from '../../components/common/pagination';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/itemsSlice';
+import { NotificationContainer } from 'react-notifications';
+
 
 export default function AllItems() {
-    const [tableData, setTableData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [PageLimit, setPageLimit] = useState(5);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const tableDatas = useSelector(itemDetails);
+
     useEffect(() => {
-        axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
-            .then(res => setTableData(res.data))
-            .catch(e => console.log(e));
-    }, [])
+        dispatch(fetchItems(currentPage, PageLimit))
+    }, [currentPage, PageLimit]);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <>
             <div className='px-28'>
                 <div className='flex justify-end mb-5'>
-                    <div className=' flex justify-between w-72'>
-                        <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button>
+                    <div className=' flex justify-end w-full'>
+                        {/* <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button> */}
                         <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={() => navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
                     </div>
                 </div>
@@ -33,8 +43,8 @@ export default function AllItems() {
 
                 {/* <div className='mb-10 md:flex md:justify-center '>
                 <table className="xl:w-full md:w-full"> */}
-                <div className='mb-20 md:flex md:justify-center '>
-                    <table className="w-full">
+                <div className='w-full flex flex-col justify-center items-center mb-20 '>
+                    <table className="w-full ">
                         <thead>
                             <tr >
                                 <th className="px-6 py-6 text-left cursor-pointer">
@@ -111,16 +121,19 @@ export default function AllItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.map((items, i) => (
-                                <tr key={i} className={i % 2 === 0 ? "bg-gray" : "bg-inherit"}>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">#{items.id}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemname}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.description}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.landmark}</td>
-                                    <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.date}</td>
-                                </tr>
-                            ))}
+                            {tableDatas?.list?.length && tableDatas.list.map((items, i) => {
+                                return (
+                                    <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">{items._id}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemDescription}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.locationIdentifiers}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundDate}</td>
+                                    </tr>
+
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
@@ -128,6 +141,9 @@ export default function AllItems() {
             </div>
             <div className=' flex justify-center mb-20'>
                 <Pagination
+                    currentPage={tableDatas?.pageMeta?.page}
+                    totalPages={tableDatas?.pageMeta?.totalPages}
+                    onPageChange={handlePageChange}
                     isBlueBackground={false} />
             </div>
         </>

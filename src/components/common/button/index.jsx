@@ -1,30 +1,24 @@
-import React from 'react';
+import React from 'react'
 
-const CustomCombinedButton = ({ text, icon, onClick, isReset, buttonColor, additionalClasses }) => {
-  const blueButton = (
-    <button
-      className={` border py-2 px-4 rounded-lg flex items-center ml-4 ${isReset ? '' : 'mr-0'} ${additionalClasses}`}
-      onClick={onClick}
-    >
-      {icon && <span className="mr-2">{icon}</span>}
-      {text}
-    </button>
-  );
-
-  const otherButton = (
-    <button
-      className={` border bg-blue text-white  py-2 px-4 rounded-lg flex items-center ml-2 ${additionalClasses}`}
-      onClick={onClick}
-    >
-      {icon && <span className="mr-2">{icon}</span>}
-      {text ? text : 'Default Text'}
-    </button>
-  );
-
-  const combinedButton = buttonColor === 'blue' ? blueButton : otherButton;
-
-  return combinedButton;
-};
-
-export default CustomCombinedButton;
-
+export default function Button({
+    width,
+    height,
+    bgColor,
+    textColor = 'black',
+    textSize = 'sm',
+    isBorder,
+    borderColor = 'black',
+    roundedValue,
+    fontWeight,
+    mxValue,
+    buttonTitle = 'save'
+}) {
+    return (
+        <div>
+            <button className={`w-${width} h-${height} bg-${bgColor} text-${textColor} text-${textSize} 
+            ${isBorder ? 'border' : ''} border-${borderColor} rounded-${roundedValue} font-${fontWeight} mx-${mxValue}`}>
+                {buttonTitle}
+            </button>
+        </div>
+    )
+}

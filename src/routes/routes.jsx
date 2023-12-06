@@ -9,27 +9,35 @@ const routers = [
       },
       {
         component: "findMissingItem",
-        childPath: "/findMissingItem/:itemName/:location",
+        childPath: "/findmissingitem/:itemName/:location",
+      },
+      {
+        component: "findMissingItem",
+        childPath: "/findmissingitem/:itemNameAgain",
       },
       {
         component: "AddMoreDetails",
-        childPath: "/addMoreDetails/:itemName/:location",
+        childPath: "/addMoredetails/:newItem/:location",
       },
       {
         component: "AddMoreDetails",
-        childPath: "/addMoreDetails",
+        childPath: "/addmoredetails",
+      },
+      {
+        component: "BusinessItemDetails",
+        childPath:"/businessitemdetails/:id"
       },
       {
         component: "QueryPublished",
-        childPath: "/queryPublished",
+        childPath: "/querypublished",
       },
       {
         component: "ViewItem",
-        childPath: "/viewItem/:id",
+        childPath: "/viewitem/:id",
       },
       {
         component: "ContactUs",
-        childPath: "/contactUs",
+        childPath: "/contactus",
       },
       {
         component: "Login",
@@ -37,11 +45,11 @@ const routers = [
       },
       {
         component: "itemDetails",
-        childPath: "/itemDetails",
+        childPath: "/itemdetails",
       },
       {
         component: "BusinessSignIn",
-        childPath: "/businessSignIn",
+        childPath: "/businessSignin",
       },
       {
         component: "BusinessSignUp",
@@ -49,16 +57,32 @@ const routers = [
       },
       {
         component: "CompanyProfile",
-        childPath: "/companyProfile",
+        childPath: "/companyprofile",
       },
       {
         component: "AllItems",
-        childPath: "/allItems",
+        childPath: "/allitems",
+      },
+      {
+        component: "AboutUs",
+        childPath: "/aboutus",
+      },
+      {
+        component: "termsOfUse",
+        childPath: "/termsOfUse",
+      },
+      {
+        component: "privacyPolicy",
+        childPath: "/privacyPolicy",
       },
       {
         component: "BusinessHome",
-        childPath: "/businessHome",
-      }
+        childPath: "/businesshome",
+      },
+      {
+        component: "changePassword",
+        childPath: "/changePassword",
+      },
     ]
   },
   {
@@ -90,6 +114,10 @@ const routers = [
         childPath: "/foundItems",
       },
       {
+        component: "editFoundItems",
+        childPath: "/foundItems/editfoundItems",
+      },
+      {
         component: "user",
         childPath: "/users",
       },
@@ -98,8 +126,13 @@ const routers = [
         childPath: "/businessUser",
       },
       {
+        component: "settings",
+        childPath: "/settings",
+      },
+      
+      {
         component: "itemDetails",
-        childPath: "/itemDetails",
+        childPath: "/foundItems/itemDetails",
       },
     ]
   },

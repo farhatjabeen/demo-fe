@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import 'react-notifications/lib/notifications.css';
 
 import routes from "./routes";
 import Page404 from "../pages/page404";
@@ -50,7 +51,8 @@ const AppRoutes = () => {
             }
           })}
         </Routes>
-        <NotificationContainer />
+        
+        <NotificationContainer  />
       </Router>
     </div>
   );
