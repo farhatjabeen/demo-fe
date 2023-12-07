@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import keys from '../../assets/images/keys.png';
-import BusinessTab from '../../components/businessTab';
+// import BusinessTab from '../../components/businessTab';
 import Slider from 'react-slick';
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { viewDetails, viewItemById, viewUserItemById } from '../../redux/reducers/itemsSlice';
@@ -14,7 +13,6 @@ export default function BusinessItemDetails() {
     const itemId = useParams();
     const itemDetails = useSelector(viewDetails);
     const userDetails = useSelector(userData);
-    console.log(itemId, 'id');
     useEffect(() => {
         if (userDetails?.role === 'BUSINESS') {
             dispatch(viewItemById(itemId.id))
@@ -30,12 +28,11 @@ export default function BusinessItemDetails() {
     { query: "Keywords", answer: itemDetails.keywords },
     { query: "Location identifiers", answer: itemDetails.locationIdentifiers }];
 
-    console.log(itemTitles,'itemTitles');
 
     const personTitles = [{ query: "Name", answer: itemDetails.userName },
     { query: "Phone number", answer: itemDetails.mobileNumber },
     { query: "Mail id", answer: itemDetails.emailMailId },
-{query: "Location", answer:itemDetails.location}];
+    { query: "Location", answer: itemDetails.location }];
 
     const itemImages = [keys, keys, keys];
 

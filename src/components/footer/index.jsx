@@ -1,7 +1,7 @@
 import React from 'react'
 import Logo from "../../assets/images/footer_logo.png"
 
-import './index.scss'
+import './index.css'
 import { useNavigate } from 'react-router'
 
 const Footer = () => {

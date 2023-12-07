@@ -9,7 +9,7 @@ export const injectStore = _store => {
     store = _store
 };
 
-const apiRequest = ({
+const apiRequest = async ({
     url,
     method,
     apiVersion = 'v1',
@@ -20,7 +20,7 @@ const apiRequest = ({
     isAuth = false,
     tokenType = 'userToken' // possible values -> userToken, businessUserToken, adminToken
 }) => {
-    if (isAuth) axiosInstance.defaults.headers.common.Authorization = `${getAuthToken(tokenType)}`;
+    if (isAuth) axiosInstance.defaults.headers.common.Authorization = `${await getAuthToken(tokenType)}`;
     // If token not found redirect user to the login screen
     return new Promise((resolve, reject) => {
         let config = {

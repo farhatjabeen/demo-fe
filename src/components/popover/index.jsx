@@ -17,64 +17,63 @@ import TextInput from '../common/textInput';
 
 const PopoverComponent = () => {
 
-    const [passwordHere, setPasswordHere] = useState('');
+    // const [passwordHere, setPasswordHere] = useState('');
     const [loginButton, setLoginButton] = useState(false);
     const [emailAddress, setEmailAddress] = useState('');
     const [passwordBox, setPasswordBox] = useState(false);
-    const [passwordContainer, setPasswordContainer] = useState(null);
-    const [reEnterPasswordContainer, setReEnterPasswordContainer] = useState(null);
+    // const [passwordContainer, setPasswordContainer] = useState(null);
+    // const [reEnterPasswordContainer, setReEnterPasswordContainer] = useState(null);
 
     const navigate = useNavigate();
     const mailIdFromApi = useSelector(mailId);
     // const { emailMailId, isAlreadyRegistered } = mailIdFromApi;
 
-    const handleLoginButton = () => {
-        setLoginButton(true);
-    }
-    const handleLogoutButton = () => {
-        setLoginButton(false);
-    }
+    // const handleLoginButton = () => {
+    //     setLoginButton(true);
+    // }
+    // const handleLogoutButton = () => {
+    //     setLoginButton(false);
+    // }
 
     const validateEmail = (email) => {
         const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return emailPattern.test(email);
     };
 
-    const handleLoginPassword = () => {
-        if (validateEmail(emailAddress)) {
-            setPasswordBox(true);
-        }
-    }
+    // const handleLoginPassword = () => {
+    //     if (validateEmail(emailAddress)) {
+    //         setPasswordBox(true);
+    //     }
+    // }
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
-    const resolverforRegister = useValidationResolver(generalUserRegisterSchema);
+    const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
 
     const methods = useForm({
         defaultValues: {
             emailMailId: "",
-            password:""
+            password: ""
         },
         resolver
     });
 
-    const methodsforRegister = useForm({
+    const methodsForRegister = useForm({
         defaultValues: {
             newPassword: "",
             password: ""
         },
-        resolverforRegister
+        resolverForRegister
     });
 
     const handleContinue = async (e) => {
         try {
             e.preventDefault();
             const emailMailId = methods.getValues().emailMailId;
-            dispatch(checkGeneralUserEmail({emailMailId}));
+            dispatch(checkGeneralUserEmail({ emailMailId }));
             if (mailIdFromApi) {
                 setPasswordBox(true);
             }
-
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -83,7 +82,7 @@ const PopoverComponent = () => {
     const registerButton = async (e) => {
         try {
             e.preventDefault();
-            const password = methodsforRegister.getValues().password;
+            const password = methodsForRegister.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             dispatch(generalUserRegister({ emailMailId, password }));
         } catch (error) {
@@ -96,8 +95,8 @@ const PopoverComponent = () => {
             e.preventDefault();
             const password = methods.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
-            const islogin = dispatch(generalUserLogin({ emailMailId, password }));
-            if(islogin){
+            const isLogin = dispatch(generalUserLogin({ emailMailId, password }));
+            if (isLogin) {
                 navigate('/')
             }
         } catch (error) {
@@ -107,10 +106,9 @@ const PopoverComponent = () => {
 
     useEffect(() => {
         return () => {
-          
-        }
-      }, [])
 
+        }
+    }, [])
 
     return (
         <div>
@@ -123,7 +121,6 @@ const PopoverComponent = () => {
                             </div>
                         </Popover.Button>
                         <Popover.Overlay className="fixed inset-0 bg-black opacity-30" />
-
                         <Transition
                             as={Fragment}
                             enter="transition ease-out duration-200"
@@ -132,11 +129,8 @@ const PopoverComponent = () => {
                             leave="transition ease-in duration-150"
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-1">
-                            <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36 '>
-
-
+                            <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36'>
                                 <div className='pt-7 w-96'>
-
                                     {
                                         passwordBox ?
                                             <div>
@@ -150,27 +144,24 @@ const PopoverComponent = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <FormProvider {...methods}>
                                                             <form onSubmit={(e) => handleLogin(e)}>
                                                                 <div >
                                                                     <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
                                                                     <TextInput
                                                                         type='password'
-                                                                        name='password'   
+                                                                        name='password'
                                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                         autoComplete="off"
                                                                         required
                                                                     />
                                                                 </div>
-
                                                                 <div className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
-                                                                <Popover.Button type='submit'>LOGIN</Popover.Button>
+                                                                    <Popover.Button type='submit'>LOGIN</Popover.Button>
                                                                 </div>
                                                             </form>
                                                         </FormProvider>
                                                     </div>
-
                                                     :
                                                     <div className='mb-10'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
@@ -181,7 +172,7 @@ const PopoverComponent = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <FormProvider {...methodsforRegister}>
+                                                        <FormProvider {...methodsForRegister}>
                                                             <form onSubmit={(e) => registerButton(e)}>
                                                                 <div>
                                                                     <div className=' text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
@@ -192,7 +183,6 @@ const PopoverComponent = () => {
                                                                         autoComplete="off"
                                                                         required
                                                                     />
-
                                                                     <div className='text-sm font-medium text-[#757780] mt-2.5'>Re-enter Password</div>
                                                                     <TextInput
                                                                         type='password'
@@ -202,7 +192,6 @@ const PopoverComponent = () => {
                                                                         required
                                                                     />
                                                                 </div>
-
                                                                 <button type='submit' className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
                                                                     REGISTER
                                                                 </button>
@@ -259,11 +248,8 @@ const PopoverComponent = () => {
                                                     </form>
                                                 </FormProvider>
                                             </div>
-
                                     }
-
                                 </div>
-
                                 <div className="w-full flex justify-end xl:pr-20 md:pr-14 sm:pr-16">
                                     <IoTriangleSharp className='absolute xl:-top-6 md:-top-5 sm:-top-4 xl:h-7 xl:w-7 md:h-6 md:w-6 sm:h-5 sm:w-5 text-white' />
                                 </div>
@@ -272,10 +258,8 @@ const PopoverComponent = () => {
                                         <AiFillCloseCircle onClick={() => dispatch(clearUserData())} className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
                                     </Popover.Button>
                                 </div>
-
                             </Popover.Panel>
                         </Transition>
-
                     </div>
                 )
                 }

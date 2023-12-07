@@ -1,15 +1,15 @@
+import { Fragment } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  Navigate
 } from "react-router-dom";
 import 'react-notifications/lib/notifications.css';
 
 import routes from "./routes";
 import Page404 from "../pages/page404";
 import * as Layout from "../layout";
-// import './styles.scss'
 import { NotificationContainer } from "react-notifications";
 import Loader from "../components/loader";
 
@@ -32,12 +32,12 @@ const AppRoutes = () => {
                     path={`${path}${childPath}`}
                     exact={exact}
                     element={
-                      <div>
+                      <Fragment>
                         <LayoutComponent>
                           <Component />
                         </LayoutComponent>
                         <Loader />
-                      </div>
+                      </Fragment>
                     }
                   />
                 );
@@ -51,8 +51,7 @@ const AppRoutes = () => {
             }
           })}
         </Routes>
-        
-        <NotificationContainer  />
+        <NotificationContainer />
       </Router>
     </div>
   );

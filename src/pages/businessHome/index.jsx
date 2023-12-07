@@ -12,7 +12,6 @@ import bifive from '../../assets/images/businessicon5.png';
 import bisix from '../../assets/images/businessicon6.png';
 import { useEffect } from 'react';
 import Slider from 'react-slick';
-import './index.scss';
 import { useNavigate } from 'react-router-dom';
 
 export default function BusinessHome() {
