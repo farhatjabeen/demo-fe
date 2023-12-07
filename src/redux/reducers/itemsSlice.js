@@ -341,14 +341,10 @@ export const adminUpdateFoundItems = (data) => (dispatch) => {
             method: endpoints.ApiMethods.PUT,
             isAuth: true,
             tokenType: 'adminToken',
-<<<<<<< HEAD
             data: data
         }).then(async (res) => {
             console.log(res)
-=======
-            data: 'data'
         }).then((res) => {
->>>>>>> 0402d3fdfc16591c54f0e16aa2bed09c74c7bd3e
             const { list } = res.data
             dispatch(saveUpdateFoundItems({ list }))
             return resolve(true);
