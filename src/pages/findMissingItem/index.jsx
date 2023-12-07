@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 export default function FindMissingItem() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [PageLimit, setPageLimit] = useState(5);
+  const [PageLimit, setPageLimit] = useState(10);
   const [data, setData] = useState([]);
   const newKey = useParams();
   const newKeyAgain = newKey.itemNameAgain || null;

@@ -343,7 +343,7 @@ export const adminUpdateFoundItems = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.PUT,
             isAuth: true,
             tokenType: 'adminToken',
-            data: 'data'
+            data: data
         }).then(async (res) => {
             console.log(res)
             const { list } = res.data

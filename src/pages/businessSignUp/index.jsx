@@ -3,7 +3,7 @@ import OurBrands from '../../components/ourBrands';
 import DropdownMenu from '../../components/common/dropdown';
 import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { businessSignUp, businessSignUpSchema } from '../../validations';
+import { businessSignUpSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { useNavigate } from 'react-router-dom';
@@ -39,13 +39,13 @@ export default function BusinessSignUp() {
                     <h1 className='text-4xl font-bold'>Transform your lost and found
                         <br></br> process with BTZ app</h1>
                     <div className='mt-20'>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg  shadow-lg shadow-blue">
+                        <div className=" p-10 w-3/4 m-2 rounded-lg  shadow-lg shadow-light-blue">
                             <p>Spend 50-80% less time handling items and enquiries</p>
                         </div>
-                        <div className=" p-10 w-3/4 my-10 ml-24 rounded-lg shadow-lg shadow-cyan-100">
+                        <div className=" p-10 w-3/4 my-10 ml-24 rounded-lg shadow-lg shadow-light-blue">
                             <p>Recoup the costs of handling lost property</p>
                         </div>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg shadow-lg shadow-cyan-100">
+                        <div className=" p-10 w-3/4 m-2 rounded-lg shadow-lg shadow-light-blue">
                             <p>Generate positive feedback and reviews</p>
                         </div>
                     </div>
@@ -64,12 +64,6 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    id="fullName"
-                                    placeholder="Full Name"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
 
                             <div className="mb-2">
@@ -83,11 +77,6 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="1234567890"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
 
                             <div className="mb-2">
@@ -101,11 +90,6 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="abc@xyz.com"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
 
                             <div className="mb-2">
@@ -119,11 +103,6 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="Galaxies"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
 
                             <div className="mb-2">
@@ -137,11 +116,6 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="Glorious"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
                             <div className="mb-2">
                                 <label htmlFor="companyLogo" className="block text-sm font-bold mb-2">Company Logo</label>

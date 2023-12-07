@@ -12,7 +12,7 @@ import { adminFetchItems, foundItemDetails } from '../../redux/reducers/itemsSli
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [PageLimit,setPageLimit ] = useState(5);
+  const [PageLimit,setPageLimit ] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
@@ -31,7 +31,7 @@ function FoundItems() {
   };
   const handleSearch = () => { };
   const tableHeaders = [
-    { key: "_id", label: "User ID" },
+    { key: "_id", label: "Item ID" },
     { key: "itemName", label: "Item Name" },
     { key: "location", label: "Location" },
     { key: "timefound", label: "Time Found" },
@@ -44,7 +44,6 @@ function FoundItems() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log("tableData", tableData)
   return (
     <div className="m-4">
       <div className="flex justify-between mt-10">

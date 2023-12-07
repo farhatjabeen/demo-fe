@@ -11,7 +11,7 @@ import { NotificationContainer } from 'react-notifications';
 
 export default function AllItems() {
     const [currentPage, setCurrentPage] = useState(1);
-    const [PageLimit, setPageLimit] = useState(5);
+    const [PageLimit, setPageLimit] = useState(10);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const tableDatas = useSelector(itemDetails);
