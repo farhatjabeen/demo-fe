@@ -17,7 +17,7 @@ export default function Faq({ questions }) {
             <div className='xl:font-normal flex justify-center xl:text-2xl sm:text-xl pt-4 text-[#667085]'>Everything you need to know about the product and billing.</div>
             <div className='flex xl:flex-row md:flex-col md:items-center sm:flex-col sm:items-center justify-center mt-10'>
 
-                <div className='mt-10 xl:w-4/6 md:w-[800px] sm:w-[600px] md:flex md:flex-col sm:w-full sm:flex sm:flex-col'>
+                <div className='absolute mr-80 mt-2 xl:w-4/6 md:w-[800px] sm:w-[600px] md:flex md:flex-col sm:w-full sm:flex sm:flex-col'>
                     {questions.map((items, idx) => {
                         return (
                             <div className={`${plusMinus === idx ? "xl:h-20" : "xl:h-14"} xl:w-4/5 mb-6 border-solid border-b border-[#EAECF0]`} key={idx}>
@@ -42,7 +42,7 @@ export default function Faq({ questions }) {
 
                     })}
                 </div>
-                <div className='xl:h-96 md:h-11/12 mt-10'>
+                <div className='ml-96 pl-96 xl:h-96 md:h-11/12 '>
                     <img className='bg-[#00B7D0] xl:h-96 xl:w-96 md:h-11/12 md:w-11/12 mix-blend-darken' src={faqImage} alt='faqImage' />
                 </div>
             </div>

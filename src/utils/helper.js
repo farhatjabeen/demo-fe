@@ -44,22 +44,30 @@ export const getAuthToken = (type) => {
 
 export const getLocalStorageData = (key) => {
     if (!key || !storageKeyMapper[key]) return null;
-    localStorage.getItem(storageKeyMapper[key])
+    return Promise.resolve().then(function () {
+        return localStorage.getItem(storageKeyMapper[key])
+    });
 };
 
 export const setLocalStorageData = (key, value) => {
     if (!key && !value) return null;
-    localStorage.setItem(storageKeyMapper[key], value)
+    return Promise.resolve().then(() => {
+        localStorage.setItem(storageKeyMapper[key], value)
+    });
 };
 
 export const getDecryptedLocalStorageData = (key) => {
     if (!key || !storageKeyMapper[key]) return null;
-    const data = localStorage.getItem(storageKeyMapper[key])
-    return Encryption.decrypt(data.toString());
+    return Promise.resolve().then(function () {
+        const data = localStorage.getItem(storageKeyMapper[key])
+        return Encryption.decrypt(data.toString());
+    });
 };
 
 export const setEncryptedLocalStorageData = (key, value) => {
     if (!key && !value) return null;
     const data = Encryption.encrypt(value);
-    return localStorage.setItem(storageKeyMapper[key], data);
+    return Promise.resolve().then(function () {
+        localStorage.setItem(storageKeyMapper[key], data);
+    });
 };

@@ -17,9 +17,9 @@ const Header = (props) => {
     console.log(userDetails, 'ud')
 
     useEffect(() => {
-        if (userDetails.role === 'USER') {
-            setLogin(true);
-        }
+        // if (userDetails?.role === 'USER') {
+        //     setLogin(true);
+        // }
     }, [login])
 
     const handleLogout = () => {
@@ -29,7 +29,7 @@ const Header = (props) => {
         } catch (error) {
             console.log("Logout errors", error)
         }
-        
+
     }
 
     return (
@@ -40,14 +40,14 @@ const Header = (props) => {
                 </div>
                 <div className='flex justify-end grow items-center px-3 pr-6'>
                     {login
-                    ?
-                    null:
-                    <button
-                        className="xl:w-64 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
-                        onClick={() => navigate('/businessHome')}
-                    >
-                        Ilost for Business
-                    </button>}
+                        ?
+                        null :
+                        <button
+                            className="xl:w-64 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
+                            onClick={() => navigate('/businessHome')}
+                        >
+                            Ilost for Business
+                        </button>}
                     {
                         login
                             ?
@@ -71,10 +71,30 @@ const Header = (props) => {
 
                                 <div className={` absolute top-14 left-4 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-md bg-white shadow-lg border border-solid border-[#B6B6B6] ${select ? '' : 'hidden'} `}>
 
-                                    <Link to='/mylistings' className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '>My listing</Link>
-                                    <div><Link to='/myprofile' className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '>My Profile</Link></div>
-                                    <div><Link className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium'>Need Help?</Link></div>
-                                    <div><Link onClick={()=>handleLogout()} className='w-full hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 text-black font-medium'>Sign Out</Link></div>
+                                    <Link
+                                        to='/mylistings'
+                                        onClick={() => handleLogout()}
+                                        className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '
+                                    >
+                                        My listing
+                                    </Link>
+                                    <Link
+                                        to='/myprofile'
+                                        className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '
+                                    >
+                                        My Profile
+                                    </Link>
+                                    <Link
+                                        className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium'
+                                    >
+                                        Need Help?
+                                    </Link>
+                                    <Link
+                                        onClick={() => handleLogout()}
+                                        className='w-full hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 text-black font-medium'
+                                    >
+                                        Sign Out
+                                    </Link>
 
                                 </div>
                             </div>

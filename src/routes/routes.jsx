@@ -32,8 +32,12 @@ const routers = [
         childPath: "/querypublished",
       },
       {
-        component: "ViewItem",
-        childPath: "/viewitem/:id",
+        component: "ClaimItem",
+        childPath: "/claimItem/:id",
+      },
+      {
+        component: "MyListings",
+        childPath: "/mylistings",
       },
       {
         component: "ContactUs",
