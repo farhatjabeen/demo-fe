@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router'
-
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-
 import TextInput from "../../components/common/textInput";
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { loginSchema } from '../../validations';

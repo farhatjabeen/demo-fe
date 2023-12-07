@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
-// import { AiOutlineArrowUp } from "react-icons/ai";
 import Pagination from '../../components/common/pagination';
-import { Link, useNavigate } from 'react-router-dom';
-import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/itemsSlice';
+import { useNavigate } from 'react-router-dom';
+import { fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
 
 
 export default function AllItems() {
     const [currentPage, setCurrentPage] = useState(1);
-    const [PageLimit, setPageLimit] = useState(5);
+    const PageLimit = 5;
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const tableDatas = useSelector(itemDetails);
-    
+
     useEffect(() => {
         dispatch(fetchItems(currentPage, PageLimit))
     }, [currentPage, PageLimit]);
@@ -28,7 +27,6 @@ export default function AllItems() {
             <div className='px-28'>
                 <div className='flex justify-end mb-5'>
                     <div className=' flex justify-end w-full'>
-                        {/* <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button> */}
                         <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={() => navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
                     </div>
                 </div>
@@ -40,8 +38,6 @@ export default function AllItems() {
 
                 <div className='mt-10 mb-4 font-semibold text-2xl'>All Items</div>
 
-                {/* <div className='mb-10 md:flex md:justify-center '>
-                <table className="xl:w-full md:w-full"> */}
                 <div className='w-full flex flex-col justify-center items-center mb-20 '>
                     <table className="w-full ">
                         <thead>

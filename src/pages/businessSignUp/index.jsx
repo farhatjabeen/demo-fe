@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
 import OurBrands from '../../components/ourBrands';
 import DropdownMenu from '../../components/common/dropdown';
-import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { businessSignUp, businessSignUpSchema } from '../../validations';
+import { businessSignUpSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { useNavigate } from 'react-router-dom';
 
 export default function BusinessSignUp() {
     const [selectedCategory, setSelectedCategory] = useState(null);
-
     const categories = ['Private', 'Public', 'One person'];
-
-    const dispatch = useDispatch();
     const resolver = useValidationResolver(businessSignUpSchema);
     const navigate = useNavigate();
     const methods = useForm({
@@ -64,12 +60,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    id="fullName"
-                                    placeholder="Full Name"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
+
                             </div>
 
                             <div className="mb-2">
@@ -83,11 +74,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="1234567890"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
+
                             </div>
 
                             <div className="mb-2">
@@ -101,11 +88,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="abc@xyz.com"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
+
                             </div>
 
                             <div className="mb-2">
@@ -119,11 +102,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="Galaxies"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
+
                             </div>
 
                             <div className="mb-2">
@@ -137,11 +116,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="Glorious"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
+
                             </div>
                             <div className="mb-2">
                                 <label htmlFor="companyLogo" className="block text-sm font-bold mb-2">Company Logo</label>

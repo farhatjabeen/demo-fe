@@ -3,9 +3,10 @@ import Logo from "../../assets/images/logo.svg"
 import { Link, useNavigate } from "react-router-dom";
 import PopoverComponent from "../popover";
 import { useDispatch, useSelector } from "react-redux";
-import { generalUserLogout, userData } from "../../redux/reducers/userSlice";
+import { clearUserData, generalUserLogout, userData } from "../../redux/reducers/userSlice";
 import { FaRegUser } from "react-icons/fa6";
 import { RxChevronDown, RxChevronUp } from "react-icons/rx";
+import { clearItemData } from "../../redux/reducers/itemsSlice";
 
 
 const Header = (props) => {
@@ -20,12 +21,15 @@ const Header = (props) => {
         if (userDetails?.role ==='USER') {
             setLogin(true);
         }
-    }, [login])
+    }, [])
 
     const handleLogout = () => {
         try {
             dispatch(generalUserLogout())
-            setLogin(false)
+            dispatch(clearItemData())
+            dispatch(clearUserData())
+            setLogin(false);
+            
         } catch (error) {
             console.log("Logout errors", error)
         }
@@ -73,7 +77,6 @@ const Header = (props) => {
 
                                     <Link
                                         to='/mylistings'
-                                        onClick={() => handleLogout()}
                                         className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '
                                     >
                                         My listing

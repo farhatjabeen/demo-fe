@@ -6,34 +6,16 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
-import { companyProfileData, editCompanyProfileData, userProfile } from '../../redux/reducers/userSlice';
+import { companyProfileData, editCompanyProfileData } from '../../redux/reducers/userSlice';
 import { categoryDetails, categoryDropdownValues, locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
 
 export default function CompanyProfile() {
 
-    const profileData = useSelector(userProfile);
-    console.log(profileData,"pd");
-
     const [editButton, setEditButton] = useState(false);
-    const [name, setName] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
-    const [email, setEmail] = useState('');
-    // const [businessCompanyName, setBusinessCompanyName] = useState(profileData.companyName);
-    // console.log(businessCompanyName,"cn")
-    // const [mobileNumber, setMobileNumber] = useState('');
-    // const [email, setEmail] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
-    const [dbPassword, setDbPassword] = useState('');
-    const [reEnterPassword, setReEnterPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [allowSubmit, setAllowSubmit] = useState(false);
     const [select, setSelect] = useState(false);
-    // const companyCategories = ["General Partnership", "Sole Proprietorship", "Nonprofit Organization", "Corporation", "Limited Partnership", "Limited Liability Company", "Cooperative"];
-    // const citiesInSerbia = ["Belgrade", "Novi Sad", "Niš", "Kragujevac", "Subotica", "Čačak", "Kraljevo", "Užice", "Zrenjanin", "Pančevo"];
-
     const cities = useSelector(locationDetails);
     const citiesInSerbia = Object.values(cities);
-
     const categories = useSelector(categoryDetails);
     const companyCategories = Object.values(categories);
 
@@ -44,28 +26,12 @@ export default function CompanyProfile() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(companyProfile);
-    // const locationDetails = useSelector()
 
     useEffect(() => {
         dispatch(companyProfileData())
         dispatch(locationDropdownValues())
         dispatch(categoryDropdownValues())
     }, [])
-
-    // const methods = useForm({
-    //     defaultValues: {
-    //         companyName: `${profileData.companyName}`,
-    //         companyCategory: `${profileData.companyCategory}`,
-    //         companyLocation: `${profileData.location}`,
-    //         name: `${profileData.name}`,
-    //         mobileNumber: `${profileData.mobileNumber}`,
-    //         emailMailId: `${profileData.emailMailId}`,
-    //         password: "",
-    //         newPassword: "",
-    //         confirmPassword: ""
-    //     },
-    //     resolver
-    // });
 
     const methods = useForm({
         defaultValues: {
@@ -84,17 +50,12 @@ export default function CompanyProfile() {
 
     const submitData = (data) => {
         try {
-            console.log("submit Data", data)
             dispatch(editCompanyProfileData(methods.getValues()))
         } catch (error) {
             console.log("submitData errors", error)
         }
     };
 
-    
-    const handleSubmit = () => {
-        setEditButton(false);
-    }
 
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
@@ -119,7 +80,6 @@ export default function CompanyProfile() {
                                     autoComplete="off"
                                     disable={!editButton}
                                 />
-                                {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' /> */}
 
                             </div>
 
@@ -128,11 +88,10 @@ export default function CompanyProfile() {
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Company Category</label>
                                     <div className='font-medium text-xs'>Company Category</div>
                                 </div>
-                                <FormDropdown 
-                                editButton={editButton} 
-                                selection={select} 
-                                dropdownValues={companyCategories} />
-                                {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="tel" name='mobilenumber' value={mobileNumber} disabled={!editButton} onChange={(e) => setMobileNumber(e.target.value)} placeholder='Enter your Number' /> */}
+                                <FormDropdown
+                                    editButton={editButton}
+                                    selection={select}
+                                    dropdownValues={companyCategories} />
                             </div>
 
                             <div className='flex justify-between mb-9'>
@@ -140,11 +99,10 @@ export default function CompanyProfile() {
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-[13px]'>Company Location</label>
                                     <div className='font-medium text-xs'>Company Location</div>
                                 </div>
-                                {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='email' name='email' value={email} disabled={!editButton} onChange={(e) => setEmail(e.target.value)} placeholder='abc@xyz.com' /> */}
-                                <FormDropdown 
-                                editButton={editButton} 
-                                selection={select} 
-                                dropdownValues={citiesInSerbia} />
+                                <FormDropdown
+                                    editButton={editButton}
+                                    selection={select}
+                                    dropdownValues={citiesInSerbia} />
                             </div>
 
                             <div className='border-b border-b-solid border-b-[#949494] mt-12'>
@@ -161,7 +119,6 @@ export default function CompanyProfile() {
                                         autoComplete="off"
                                         disable={!editButton}
                                     />
-                                    {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='username' value={name} disabled={!editButton} onChange={(e) => setName(e.target.value)} placeholder='Enter your Name' /> */}
                                 </div>
 
                                 <div className='flex justify-between mb-9'>
@@ -178,7 +135,6 @@ export default function CompanyProfile() {
                                         required
                                         disable={!editButton}
                                     />
-                                    {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="tel" name='mobilenumber' value={mobileNumber} disabled={!editButton} onChange={(e) => setMobileNumber(e.target.value)} placeholder='Enter your Number' /> */}
                                 </div>
 
                                 <div className='flex justify-between mb-9'>
@@ -195,7 +151,6 @@ export default function CompanyProfile() {
                                         required
                                         disable={!editButton}
                                     />
-                                    {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='email' name='email' value={email} disabled={!editButton} onChange={(e) => setEmail(e.target.value)} placeholder='abc@xyz.com' /> */}
                                 </div>
                             </div>
 
@@ -218,7 +173,6 @@ export default function CompanyProfile() {
                                         required
                                         disable={!editButton}
                                     />
-                                    {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type='text' name='newPassword' value={newPassword} disabled={!editButton} onChange={(e) => setNewPassword(e.target.value)} placeholder='New password' /> */}
                                 </div>
                                 <div className='flex justify-between'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Re - Enter New password</label>
@@ -231,25 +185,22 @@ export default function CompanyProfile() {
                                         required
                                         disable={!editButton}
                                     />
-                                    {/* <input className={`xl:w-5/12 sm:w-6/12 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='reenterpassword' value={reEnterPassword} disabled={!editButton} onChange={handlePassword} placeholder='New password' /> */}
                                 </div>
                             </div>
                         </div>
 
                         {editButton ?
                             <div className='xl:w-4/12 md:w-7/12 sm:w-8/12 flex xl:ml-80 md:ml-32 sm:ml-12 mb-10 items-center justify-between'>
-                                {/* <div className='xl:w-4/12 md:w-5/12 sm:w-6/12 flex justify-between mb-10'> */}
-                                    <div>
-                                        <button onClick={handleEditButton} className='xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-[#B6B6B6] bg-white rounded-xl xl:text-lg md:text-lg sm:text-base cursor-grab'>
-                                            Cancel
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button type='submit' disabled={allowSubmit} className='xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base cursor-grab'>
-                                            Save Changes
-                                        </button>
-                                    </div>
-                                {/* </div> */}
+                                <div>
+                                    <button onClick={handleEditButton} className='xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-[#B6B6B6] bg-white rounded-xl xl:text-lg md:text-lg sm:text-base cursor-grab'>
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type='submit' className='xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base cursor-grab'>
+                                        Save Changes
+                                    </button>
+                                </div>
                             </div>
                             :
                             null}

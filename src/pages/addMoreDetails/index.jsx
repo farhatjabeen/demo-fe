@@ -1,11 +1,8 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { addMoreDetailsSchema, loginSchema } from '../../validations';
-import { FormProvider, set, useForm } from 'react-hook-form';
-import { loginUser } from '../../redux/reducers/userSlice';
+import { addMoreDetailsSchema } from '../../validations';
+import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
@@ -33,11 +30,7 @@ export default function AddMoreDetails() {
     })
     console.log(files, 'files');
     const fileInputRef = useRef();
-
-    // const navigate = useNavigate();
     const reportDetails = useParams();
-
-    // const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
 
     const methods = useForm({
@@ -57,11 +50,7 @@ export default function AddMoreDetails() {
     });
 
     const submitData = async (data) => {
-        // try {
-        //     dispatch(loginUser(data))
-        // } catch (error) {
-        //     console.log("submitData errors", error)
-        // }
+
     };
 
     const handleReset = (e) => {
@@ -95,23 +84,7 @@ export default function AddMoreDetails() {
         }
     }, []);
 
-    const handleName = () => {
 
-    }
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewreport({ ...newreport, [name]: value });
-    };
-    const dayjs = require('dayjs');
-    const handleSubmit = (e) => {
-
-        const date = new Date();
-        const formattedDate = dayjs(date).format('DD[th] MMMM YYYY');
-        const formattedTime = dayjs(date).format('hh : mm A');
-        e.preventDefault();
-        console.log(newreport, 'newreport');
-
-    };
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
@@ -181,8 +154,6 @@ export default function AddMoreDetails() {
                                     required
 
                                 />
-                                {/* <input className='h-20 sm:h-16 border border-[#B6B6B6] rounded-lg p-5  w-24' 
-                                type='text' name='keywords' value={newreport.keywords} onChange={handleInputChange} placeholder='Keywords' /> */}
 
                             </div>
 
@@ -230,7 +201,6 @@ export default function AddMoreDetails() {
                                             multiple
                                             onChange={handleFileUpload}
                                             ref={fileInputRef}
-                                        // name="imageUpload"
                                         />
                                         {isUploaded ?
                                             <div>
@@ -242,7 +212,6 @@ export default function AddMoreDetails() {
                                             ""}
                                     </div>
                                 </div>
-                                {/* <input type='file' placeholder='Upload Image' className='w-96 h-14 sm:h-12 rounded-lg bg-primary-color' /> */}
                             </div>
                             <div className='border-b border-b-[#949494] mb-10'>
                                 <div className='flex justify-between h-12 mb-9 relative location'>

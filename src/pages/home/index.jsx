@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import ImageWorkFlow from '../../components/imageWorkFlow';
 import OurBrands from '../../components/ourBrands';
 import Faq from '../../components/faqs';
@@ -15,7 +14,6 @@ const Home = () => {
 
   return (
     <div className='flex flex-col items-center'>
-      {/* <Link to={"./findMissingItem"}>Find missing</Link> */}
       <div>
         <SearchReport />
       </div>

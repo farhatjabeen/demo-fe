@@ -1,16 +1,10 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router';
 import { FaMap, FaCalendar, FaClock } from 'react-icons/fa';
 import keys from '../../assets/images/keys.png';
 
 export default function QueryPublished() {
-    const newId = useParams();
     const [newProduct, setNewproduct] = useState([]);
-    console.log(newProduct, 'newProduct');
-    // useEffect(()=>{
-    //     axios.get(`https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu/${newid.id}`)
-    //     .then(res=>setNewproduct(res.data))
-    // },[])
+
     return (
         <div>
             <div>

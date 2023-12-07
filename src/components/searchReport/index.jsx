@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import addressMan from '../../assets/images/location.png';
-// import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../common/textInput';
-import { useDispatch } from 'react-redux';
-import { fetchItems, searchByLocation, searchItem } from '../../redux/reducers/itemsSlice';
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
-    const [searchValue, setSearchValue] = useState(true);
-    const [reportValue, setReportValue] = useState(true);
-    const [location, setLocation] = useState(true);
     const [searchKey, setSearchKey] = useState('');
     const [reportKey, setReportKey] = useState('');
     const [locationKey, setLocationKey] = useState('');
     const navigate = useNavigate();
-
-    const dispatch = useDispatch();
     const resolver = useValidationResolver(searchSchema);
 
     const methods = useForm({
@@ -29,15 +21,12 @@ export default function SearchReport() {
         },
         resolver
     })
-    console.log(searchKey, "sk")
-    const submitData = async (searchKey) => {
+    const submitData = async () => {
         try {
             const keys = methods.getValues();
-            
+
             if (keys.itemName) {
                 navigate(`/findMissingItem/${keys.itemName}/${keys.location}`);
-            }else{
-                navigate(`/addMoreDetails/${reportKey}/${locationKey}`);
             }
         } catch (error) {
             console.log("submitData errors", error)
@@ -52,18 +41,11 @@ export default function SearchReport() {
         setButtonActive(!buttonActive);
     }
 
-
-    const handleSearchKey = () => {
-        // if (searchKey && locationKey) {
-        //     navigate(`/findMissingItem/${searchKey}/${locationKey}`);
-        // }
+    const handleReportKey = () => {
+        if (reportKey && locationKey) {
+            navigate(`/addMoreDetails/${reportKey}/${locationKey}`);
+        }
     }
-
-    // const handleReportKey = () => {
-    //     if (reportKey && locationKey) {
-    //         navigate(`/addMoreDetails/${reportKey}/${locationKey}`);
-    //     }
-    // }
 
     return (
         <div className='flex  xl:pl-3 xl:justify-center xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
@@ -102,7 +84,12 @@ export default function SearchReport() {
                                             onChange={(e) => setLocationKey(e.target.value)}
                                         />
                                         {/* <input className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid ${location ? 'border-[#B6B6B6]' : 'border-[#FF0000]'}`} type='text' placeholder='Location' value={locationKey} onChange={(e) => setLocationKey(e.target.value)} /> */}
-                                        <button type='submit' className='xl:w-52 xl:h-16 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white bg-primary-color border border-solid border-[#B6B6B6] mx-2.5'>Search</button>
+                                        <button
+                                            type='submit'
+                                            className='xl:w-52 xl:h-16 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white bg-primary-color border border-solid border-[#B6B6B6] mx-2.5'
+                                        >
+                                            Search
+                                        </button>
                                     </div>
                                 </form>
                             </FormProvider>
@@ -114,10 +101,12 @@ export default function SearchReport() {
                                     <TextInput
                                         type="text"
                                         placeholder="Describe Item"
-                                        name="itemName"
+                                        // name="itemName"
                                         className={`placeholder:text-black placeholder:text-ba se xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                         autoComplete="off"
                                         required
+                                        value={reportKey}
+                                        onChange={(e)=>setReportKey(e.target.value)}
                                     />
                                     {/* <input className={`placeholder:text-black placeholder:text-base p-4 xl:w-60 xl:h-16 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6] ${reportValue ? 'border-[#B6B6B6]' : 'border-[#FF0000]'}`} type='text' placeholder='Describe Item' value={reportKey} onChange={(e) => setReportKey(e.target.value)} /> */}
                                     <TextInput
@@ -127,9 +116,17 @@ export default function SearchReport() {
                                         className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                         autoComplete="off"
                                         required
+                                        value={locationKey}
+                                        onChange={(e)=>setLocationKey(e.target.value)}
                                     />
                                     {/* <input className={`placeholder:text-black placeholder:text-base p-4 xl:w-60 xl:h-16 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6] ${location ? 'border-[#B6B6B6]' : 'border-[#FF0000]'}`} type='text' placeholder='Location' value={locationKey} onChange={(e) => setLocationKey(e.target.value)} /> */}
-                                    <button type='submit' className='xl:w-52 xl:h-16 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl border border-solid border-[#B6B6B6] mx-2.5 font-semibold text-white bg-primary-color'>Continue</button>
+                                    <button
+                                        type='submit'
+                                        onClick={handleReportKey}
+                                        className='xl:w-52 xl:h-16 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl border border-solid border-[#B6B6B6] mx-2.5 font-semibold text-white bg-primary-color'
+                                    >
+                                        Continue
+                                    </button>
                                 </div>
                             </form>
                         </FormProvider>

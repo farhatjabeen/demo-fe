@@ -13,14 +13,11 @@ import { useNavigate } from 'react-router-dom';
 export default function FindMissingItem() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [PageLimit, setPageLimit] = useState(5);
-  const [data, setData] = useState([]);
-  const newKey = useParams();
-  const newKeyAgain = newKey.itemNameAgain || null;
+  const PageLimit = 5;
+  const searchParameters = useParams();
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);
-  // const searchValueByLocation = useSelector(viewDetailsByLocation)
 
   const methods = useForm({
     defaultValues: {
@@ -30,14 +27,14 @@ export default function FindMissingItem() {
   });
 
   useEffect(() => {
-    dispatch(searchByLocation(newKey.itemName, newKey.location));
+    dispatch(searchByLocation(searchParameters.itemName, searchParameters.location));
   }, [])
 
   useEffect(() => {
-    if (newKey?.itemNameAgain) {
-      dispatch(searchItem(newKey.itemNameAgain));
+    if (searchParameters?.itemNameAgain) {
+      dispatch(searchItem(searchParameters.itemNameAgain));
     }
-  }, [newKey])
+  }, [searchParameters])
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -60,24 +57,6 @@ export default function FindMissingItem() {
       dispatch(clearItemData(currentPage, PageLimit))
     }
   }, [currentPage, PageLimit])
-
-  // useEffect(() => {
-  //   if (newKey.itemName && newKey.location) {
-
-  //   }
-  // }, [newKey]);
-
-  // const handleSearch = (() => {
-  //   if (searchKey) {
-  //     axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
-  //       .then(response => {
-  //         const filteredData = response.data.filter(f => f.itemname.toLowerCase().includes(searchKey));
-  //         console.log(filteredData, 'filteredData')
-  //         setData(filteredData);
-  //       })
-  //       .catch(er => console.log(er));
-  //   }
-  // });
 
   return (
     <div className="flex flex-col items-center mt-5">
