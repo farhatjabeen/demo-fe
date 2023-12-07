@@ -11,7 +11,7 @@ let initialState = {
     viewDetailsById: [],
     viewDetailsByLocation: [],
     dropdownLocationValues: [],
-    dropdownCategoryValues: []
+    dropdownCategoryValues: [],
 }
 
 export const itemsSlice = createSlice({
@@ -51,7 +51,6 @@ export const itemsSlice = createSlice({
         dropdownCategory: (state, action) => {
             state.dropdownCategoryValues = { ...action.payload }
         },
-
         clearItemState: () => initialState
     }
 });
@@ -76,7 +75,6 @@ export const fetchItems = (currentPage, PageLimit) => async (dispatch) => {
         })
     })
 }
-
 
 //get items in admin
 export const adminFetchItems = (currentPage = 1, PageLimit = 5) => async (dispatch) => {
@@ -146,7 +144,7 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => async 
 };
 
 // get items by keyword 
-export const searchItem = (itemName, currentPage = 1, PageLimit = 8) => async (dispatch) => {
+export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
@@ -163,7 +161,40 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 8) => async (d
     })
 }
 
-// export const searchKey = (state) => state.items?.searchKey;
+// my listings general user
+export const myListingItems = () => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
+            url: endpoints.apiPath.items.myListing,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'userToken'
+        }).then(async (res) => {
+            const { list, pageMeta } = res.data
+            dispatch(saveItemDetails({ list, pageMeta }))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+export const deleteMyListingItems = () => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            method: endpoints.ApiMethods.DELETE,
+            isAuth: true,
+            tokenType: 'userToken'
+        }).then(async () => {
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
 
 // get items by item name and location
 export const searchByLocation = (itemName, location) => async (dispatch) => {
@@ -208,13 +239,34 @@ export const searchItemById = (itemId) => async (dispatch) => {
 };
 
 // get item details of business user by id
-export const viewItemById = (itemsId) => async (dispatch) => {
+export const viewItemById = (itemId) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.viewById}/${itemsId}`,
+            url: `${endpoints.apiPath.items.viewById}/${itemId}`,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'businessUserToken',
+        }).then((res) => {
+            const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            if (Array.isArray(itemImage) && itemImage.length > 0) {
+                dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            }
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+// get item details of general user by id
+export const viewUserItemById = (itemId) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.items.generalUserItemsById}/${itemId}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
-            console.log(res.data, "rrdd")
+            console.log(res.data, "rdd")
             const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
             if (Array.isArray(itemImage) && itemImage.length > 0) {
                 dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
@@ -232,8 +284,7 @@ export const claimItemNow = (itemsId) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.claimItem}/655703970c9b44af5a5aef52`,
-            method: endpoints.ApiMethods.POST,
-
+            method: endpoints.ApiMethods.POST
         }).then(() => {
             return resolve(true);
         }).catch((err) => {
@@ -278,7 +329,7 @@ export const categoryDropdownValues = () => async (dispatch) => {
     })
 }
 
-export const clearItemData = (data) => async (dispatch) => {
+export const clearItemData = () => async (dispatch) => {
     try {
         dispatch(clearItemState());
     } catch (error) {
@@ -305,16 +356,6 @@ export const adminUpdateFoundItems = (data) => async (dispatch) => {
     })
 };
 
-export const updateFoundItems = (state) => state.items?.updateFoundItems;
-export const itemDetails = (state) => state.items?.itemDetails;
-export const userDetails = (state) => state.items?.userDetails;
-export const foundItemDetails = (state) => state.items?.foundItemDetails;
-export const searchDetailsById = (state) => state.items?.searchId;
-export const viewDetails = (state) => state.items?.viewDetailsById;
-export const locationDetails = (state) => state.items?.dropdownLocationValues;
-export const categoryDetails = (state) => state.items?.dropdownCategoryValues;
-export const businessUserDetails = (state) => state.items?.businessUserDetails;
-
 export const deleteItem = (itemId) => async (dispatch) => {
     try {
         await apiRequest({
@@ -337,6 +378,32 @@ export const deleteItem = (itemId) => async (dispatch) => {
         }
     }
 };
-export const { saveItemData, dropdownLocation, dropdownCategory, saveFoundItemDetails, clearItemState, saveItemDataById, viewItemDetailsById, viewItemDetailsByLocation, saveUpdateFoundItems, saveBusinessUserDetails, saveItemDetails, clearData, saveUserDetails } = itemsSlice.actions;
+
+export const updateFoundItems = (state) => state.items?.updateFoundItems;
+export const itemDetails = (state) => state.items?.itemDetails;
+export const userDetails = (state) => state.items?.userDetails;
+export const foundItemDetails = (state) => state.items?.foundItemDetails;
+export const searchDetailsById = (state) => state.items?.searchId;
+export const viewDetails = (state) => state.items?.viewDetailsById;
+export const locationDetails = (state) => state.items?.dropdownLocationValues;
+export const categoryDetails = (state) => state.items?.dropdownCategoryValues;
+export const businessUserDetails = (state) => state.items?.businessUserDetails;
+
+export const {
+    saveItemData,
+    saveMyListingItems,
+    dropdownLocation,
+    dropdownCategory,
+    saveFoundItemDetails,
+    clearItemState,
+    saveItemDataById,
+    viewItemDetailsById,
+    viewItemDetailsByLocation,
+    saveUpdateFoundItems,
+    saveBusinessUserDetails,
+    saveItemDetails,
+    clearData,
+    saveUserDetails
+} = itemsSlice.actions;
 
 export default itemsSlice.reducer;

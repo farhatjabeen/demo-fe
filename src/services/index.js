@@ -1,7 +1,7 @@
 import Loader from "../components/loader";
 import { clearUserData } from '../redux/reducers/userSlice'
 import { Toast } from '../components/toast';
-import { axiosInstance, getAuthToken } from "../utils/helper"
+import { axiosInstance, getAuthToken, logout } from "../utils/helper"
 
 let store;
 
@@ -71,7 +71,7 @@ export const statusHandler = (response, exposeHeaders = true) => {
 
     if (response.status === 401 || response.status === 403) {
         Toast({ type: 'error', message: response.statusText });
-        // setTimeout(() => logOutAct(), 1000);
+        setTimeout(() => logout(), 1000);
     }
 
     if (exposeHeaders) {

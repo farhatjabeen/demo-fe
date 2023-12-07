@@ -131,13 +131,11 @@ export default function AllItems() {
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.locationIdentifiers}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundDate}</td>
                                     </tr>
-
                                 );
                             })}
                         </tbody>
                     </table>
                 </div>
-
             </div>
             <div className=' flex justify-center mb-20'>
                 <Pagination
