@@ -6,7 +6,6 @@ import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/itemsSlice';
-import { NotificationContainer } from 'react-notifications';
 
 
 export default function AllItems() {
@@ -15,7 +14,7 @@ export default function AllItems() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const tableDatas = useSelector(itemDetails);
-
+    
     useEffect(() => {
         dispatch(fetchItems(currentPage, PageLimit))
     }, [currentPage, PageLimit]);

@@ -17,9 +17,9 @@ const Header = (props) => {
     console.log(userDetails, 'ud')
 
     useEffect(() => {
-        // if (userDetails?.role === 'USER') {
-        //     setLogin(true);
-        // }
+        if (userDetails?.role ==='USER') {
+            setLogin(true);
+        }
     }, [login])
 
     const handleLogout = () => {

@@ -181,9 +181,10 @@ export const myListingItems = () => async (dispatch) => {
     })
 }
 
-export const deleteMyListingItems = () => async (dispatch) => {
+export const deleteMyListingItems = ({itemId}) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
+            url: `${endpoints.apiPath.items.deleteUserItemId}?itemId=${itemId}`,
             method: endpoints.ApiMethods.DELETE,
             isAuth: true,
             tokenType: 'userToken'
@@ -268,9 +269,12 @@ export const viewUserItemById = (itemId) => async (dispatch) => {
         }).then((res) => {
             console.log(res.data, "rdd")
             const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            
             if (Array.isArray(itemImage) && itemImage.length > 0) {
-                dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+                dispatch(viewItemDetailsById(itemImage))
             }
+            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -279,7 +283,7 @@ export const viewUserItemById = (itemId) => async (dispatch) => {
     })
 }
 
-// claim item
+// claim item **
 export const claimItemNow = (itemsId) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({

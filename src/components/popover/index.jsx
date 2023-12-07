@@ -13,27 +13,17 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { checkGeneralUserEmail, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
 import { generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
 import TextInput from '../common/textInput';
+import { clearData } from '../../redux/reducers/itemsSlice';
 
 
 const PopoverComponent = () => {
 
-    // const [passwordHere, setPasswordHere] = useState('');
     const [loginButton, setLoginButton] = useState(false);
     const [emailAddress, setEmailAddress] = useState('');
     const [passwordBox, setPasswordBox] = useState(false);
-    // const [passwordContainer, setPasswordContainer] = useState(null);
-    // const [reEnterPasswordContainer, setReEnterPasswordContainer] = useState(null);
 
     const navigate = useNavigate();
     const mailIdFromApi = useSelector(mailId);
-    // const { emailMailId, isAlreadyRegistered } = mailIdFromApi;
-
-    // const handleLoginButton = () => {
-    //     setLoginButton(true);
-    // }
-    // const handleLogoutButton = () => {
-    //     setLoginButton(false);
-    // }
 
     const validateEmail = (email) => {
         const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -71,9 +61,11 @@ const PopoverComponent = () => {
             e.preventDefault();
             const emailMailId = methods.getValues().emailMailId;
             dispatch(checkGeneralUserEmail({ emailMailId }));
-            if (mailIdFromApi) {
+            if (mailIdFromApi?.isAlreadyRegistered) {
                 setPasswordBox(true);
-            }
+              } else {
+                setPasswordBox(false);
+              } 
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -95,20 +87,35 @@ const PopoverComponent = () => {
             e.preventDefault();
             const password = methods.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
-            const isLogin = dispatch(generalUserLogin({ emailMailId, password }));
-            if (isLogin) {
-                navigate('/')
-            }
+             dispatch(generalUserLogin({ emailMailId, password }));
+            
+              
         } catch (error) {
             console.log("submitData errors", error)
         }
     }
 
-    useEffect(() => {
-        return () => {
 
-        }
-    }, [])
+    
+
+    // const handlePopoverClose = () => {
+    //     try {
+    //         dispatch(clearUserData());
+    //     }catch (error) {
+    //         console.log("submitData errors", error)
+    //     }
+        
+    // };
+
+    // useEffect(() => {
+    //     return () => {
+    //         if (mailIdFromApi?.isAlreadyRegistered === true) {
+    //             setPasswordBox(true);
+    //           } else {
+    //             setPasswordBox(false);
+    //           }
+    //     }
+    // }, [mailIdFromApi?.isAlreadyRegistered])
 
     return (
         <div>
@@ -134,7 +141,7 @@ const PopoverComponent = () => {
                                     {
                                         passwordBox ?
                                             <div>
-                                                {mailIdFromApi.isAlreadyRegistered ?
+                                                {mailIdFromApi?.isAlreadyRegistered ?
                                                     <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
@@ -254,8 +261,8 @@ const PopoverComponent = () => {
                                     <IoTriangleSharp className='absolute xl:-top-6 md:-top-5 sm:-top-4 xl:h-7 xl:w-7 md:h-6 md:w-6 sm:h-5 sm:w-5 text-white' />
                                 </div>
                                 <div className="w-full flex justify-end pr-3 xl:ml-9 md:ml-8 sm:ml-5">
-                                    <Popover.Button onClick={() => setPasswordBox(false)} className='absolute top-4 border-none bg-white space-x-end'>
-                                        <AiFillCloseCircle onClick={() => dispatch(clearUserData())} className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
+                                    <Popover.Button onClick={()=>setPasswordBox(false)} className='absolute top-4 border-none bg-white space-x-end'>
+                                        <AiFillCloseCircle className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
                                     </Popover.Button>
                                 </div>
                             </Popover.Panel>

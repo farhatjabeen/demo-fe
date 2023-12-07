@@ -15,11 +15,11 @@ export default function ClaimItem() {
     const itemId = useParams();
 
     useEffect(() => {
-        dispatch(searchItemById(itemId._id));
+        dispatch(searchItemById(itemId.id));
     }, []);
 
     const handleMail = () => {
-        dispatch(claimItemNow(productDetails._id));
+        dispatch(claimItemNow(productDetails.id));
     }
 
     console.log(productDetails, "pd")

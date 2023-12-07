@@ -44,7 +44,7 @@ export const userSlice = createSlice({
     }
 });
 
-
+// business user sign in
 export const loginUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -71,6 +71,7 @@ export const checkGeneralUserEmail = (data) => async(dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
+            console.log(res.data,'res.data')
             const { emailMailId, isAlreadyRegistered } = res.data
             dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered }))
             return resolve(true);
@@ -121,7 +122,7 @@ export const generalUserLogin = (data) => (dispatch) => {
     })
 }
 
-// general user logout
+// general user logout **
 export const generalUserLogout = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({

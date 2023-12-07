@@ -56,7 +56,7 @@ console.log(myReports,'myReports')
                         </div>
                         <div className='flex mt-5'>
                             <div ><button className='bg-primary-color xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm'>Edit Content</button></div>
-                            <div ><button onClick={() => dispatch(deleteMyListingItems())} className='border border-red text-[#BC0000] xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'>Remove Listing</button></div>
+                            <div ><button onClick={() => dispatch(deleteMyListingItems(details._id))} className='border border-red text-[#BC0000] xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'>Remove Listing</button></div>
                         </div>
                         {/* </div> */}
                     </div>
