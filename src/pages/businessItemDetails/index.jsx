@@ -16,9 +16,9 @@ export default function BusinessItemDetails() {
     const userDetails = useSelector(userData);
     console.log(itemId, 'id');
     useEffect(() => {
-        if(userDetails?.role==='BUSINESS'){
+        if (userDetails?.role === 'BUSINESS') {
             dispatch(viewItemById(itemId.id))
-        } else{
+        } else {
             dispatch(viewUserItemById(itemId.id))
         }
     }, [itemId])
@@ -60,7 +60,7 @@ export default function BusinessItemDetails() {
 
 
     return (
-        <div className='flex flex-col items-center justify-center items-center'>
+        <div className='flex flex-col justify-center items-center'>
             <div className='font-semibold text-3xl '>Item details</div>
             <div className='w-3/12 mt-20 '>
                 <Slider {...settings}>
