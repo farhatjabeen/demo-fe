@@ -52,7 +52,7 @@ const EditFoundItems = () => {
         <form onSubmit={methods.handleSubmit(submitData)}>
           <div className="bg-blueback  mt-10 rounded-lg p-4 ">
             <div className=" pb-4 mx-4 ">
-              <h1 className="text-black font-bold text-xl mt-2">
+              <h1 className="text-navy-blue font-bold text-xl mt-2">
                 Founder Details
               </h1>
             </div>
@@ -127,7 +127,7 @@ const EditFoundItems = () => {
           </div>
           <div className="bg-blueback mt-10 p-4 rounded-lg ">
             <div className="mx-4 pb-4 ">
-              <h1 className="text-black font-bold text-xl">Items Details</h1>
+              <h1 className="text-navy-blue font-bold text-xl">Items Details</h1>
             </div>
             <div className="flex p-4 ">
               <div className="w-1/2 mb-2">
@@ -161,7 +161,7 @@ const EditFoundItems = () => {
           </div>
           <div className="bg-blueback mt-10 p-4 rounded-lg  ">
             <div className="mx-4 pb-4  ">
-              <h1 className="text-black font-bold text-xl">Upload</h1>
+              <h1 className="text-navy-blue font-bold text-xl">Upload</h1>
             </div>
             <div className='mx-4'>
               <label >Item image</label>

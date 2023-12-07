@@ -20,7 +20,7 @@ const Table = ({ headers, data, showEdit = false }) => {
     <div className="my-5">
       <table className="w-full">
         <thead>
-          <tr className="border border-x-0 border-y-grey">
+          <tr className="border border-x-0 border-y-grey text-navy-blue">
             {headers?.map((header) => (
               <th
                 key={header.key}

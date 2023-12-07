@@ -34,9 +34,7 @@ function User() {
   };
   const handleSearch = (tab) => {
     if (tab === 1) {
-      // Search logic for tab 1
     } else if (tab === 2) {
-      // Search logic for tab 2
     }
   };
 
