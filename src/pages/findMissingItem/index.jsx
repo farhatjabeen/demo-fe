@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import SearchCards from '../../components/searchCards';
-import { useParams } from 'react-router';
-import Pagination from '../../components/common/pagination'
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router';
+
+import Pagination from '../../components/common/pagination'
+import TextInput from '../../components/common/textInput';
+import SearchCards from '../../components/searchCards';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
-import { FormProvider, useForm } from 'react-hook-form';
 import { clearItemData, searchByLocation, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
-import TextInput from '../../components/common/textInput';
-import { useNavigate } from 'react-router-dom';
 
 export default function FindMissingItem() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const PageLimit = 5;
   const searchParameters = useParams();
+  const [PageLimit, setPageLimit] = useState(10);
+
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);

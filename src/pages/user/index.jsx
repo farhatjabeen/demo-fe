@@ -14,7 +14,7 @@ function User() {
   const [searchTerm1, setSearchTerm1] = useState("");
   const [searchTerm2, setSearchTerm2] = useState("");
   const dispatch = useDispatch();
-  const [PageLimit, setPageLimit] = useState(5);
+  const [PageLimit, setPageLimit] = useState(10);
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
 
@@ -34,9 +34,7 @@ function User() {
   };
   const handleSearch = (tab) => {
     if (tab === 1) {
-      // Search logic for tab 1
     } else if (tab === 2) {
-      // Search logic for tab 2
     }
   };
 

@@ -17,7 +17,7 @@ const itemDetails = () => {
       <div className="bg-white mt-10 rounded-lg p-4 shadow-md">
         <div className=" flex border-b pb-4 mx-4 justify-between">
           <div>
-            <h1 className="text-black font-bold text-xl mt-2">
+            <h1 className="text-navy-blue font-bold text-xl mt-2">
               Founder Details
             </h1>
           </div>
@@ -68,7 +68,7 @@ const itemDetails = () => {
       </div>
       <div className="bg-white mt-10 p-4 rounded-lg shadow-md">
         <div className="mx-4  border-b pb-4 ">
-          <h1 className="text-black font-bold text-xl">Items Details</h1>
+          <h1 className="text-navy-blue font-bold text-xl">Items Details</h1>
         </div>
         <div className="flex p-4 ">
           <div className="w-1/2 mb-2">

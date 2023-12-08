@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
-import { useNavigate } from 'react-router-dom';
 import { fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
-
 
 export default function AllItems() {
     const [currentPage, setCurrentPage] = useState(1);
-    const PageLimit = 5;
+    const [PageLimit, setPageLimit] = useState(10);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const tableDatas = useSelector(itemDetails);
+    const tableData = useSelector(itemDetails);
 
     useEffect(() => {
         dispatch(fetchItems(currentPage, PageLimit))
@@ -116,7 +116,7 @@ export default function AllItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableDatas?.list?.length && tableDatas.list.map((items, i) => {
+                            {tableData?.list?.length && tableData.list.map((items, i) => {
                                 return (
                                     <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">{items._id}</td>
@@ -134,8 +134,8 @@ export default function AllItems() {
             </div>
             <div className=' flex justify-center mb-20'>
                 <Pagination
-                    currentPage={tableDatas?.pageMeta?.page}
-                    totalPages={tableDatas?.pageMeta?.totalPages}
+                    currentPage={tableData?.pageMeta?.page}
+                    totalPages={tableData?.pageMeta?.totalPages}
                     onPageChange={handlePageChange}
                     isBlueBackground={false} />
             </div>

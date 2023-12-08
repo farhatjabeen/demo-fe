@@ -8,7 +8,7 @@ const Footer = () => {
     const navigate = useNavigate();
     return (
         <div>
-            <div className='bg-primary flex flex-col justify-center items-center p-10 pb-5'>
+            <div className='bg-primary-color flex flex-col justify-center items-center p-10 pb-5'>
                 <div className='p-6 flex flex-col justify-space items-center h-full'>
                     <div className='flex justify-center p-5'>
                         <img className="w-4/5 h-auto" src={Logo} alt="logo" />
