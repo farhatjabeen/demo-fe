@@ -1,7 +1,7 @@
 import React from "react";
 
 const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange }) => {
-  const backgroundColor = isBlueBackground ? "bg-blue text-white" : "bg-primary-color";
+  const backgroundColor = isBlueBackground ? "bg-blue text-white" : "bg-primary-color text-white";
 
   const renderPageNumbers = () => {
     const pageNumbers = [];

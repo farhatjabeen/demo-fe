@@ -26,6 +26,7 @@ module.exports = {
       'black': '#000000',
       'blueback': '#F8FCFF',
       'primary-colorback': '#F9DE8C',
+      'light-gray':'#DDE2E4',
     },
     extend: {}
   },
