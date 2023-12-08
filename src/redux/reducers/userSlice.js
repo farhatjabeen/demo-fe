@@ -8,7 +8,8 @@ const initialState = {
     userProfile: null,
     queryData: null,
     userMail: null,
-    registerUser: null
+    registerUser: null,
+    generalUserProfile: null
 };
 
 export const userSlice = createSlice({
@@ -32,6 +33,9 @@ export const userSlice = createSlice({
         },
         saveCompanyProfile: (state, action) => {
             state.userProfile = { ...action.payload };
+        },
+        saveUserProfile: (state, action) => {
+            state.generalUserProfile = { ...action.payload };
         },
         saveQueryData: (state, action) => {
             state.queryData = {
@@ -215,6 +219,26 @@ export const companyProfileData = () => async (dispatch) => {
     })
 }
 
+//user profile edit
+export const userProfileData = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.userProfile,
+            method: endpoints.ApiMethods.PUT,
+            isAuth: true,
+            data: data
+        }).then(async (res) => {
+            // const { currentPassword, newPassword, confirmPassword, name, mobileNumber, emailMailId } = res.data
+            // dispatch(saveUserProfile({ currentPassword, newPassword, confirmPassword, name, mobileNumber, emailMailId }))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+// company profile
 export const editCompanyProfileData = (data) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -250,6 +274,6 @@ export const contactAdmin = (data) => async (dispatch) => {
     })
 }
 
-export const { saveUserData, saveCompanyProfile, registerGeneralUserMail, saveGeneralUserMail, saveQueryData, clearData } = userSlice.actions;
+export const { saveUserData, saveUserProfile, saveCompanyProfile, registerGeneralUserMail, saveGeneralUserMail, saveQueryData, clearData } = userSlice.actions;
 
 export default userSlice.reducer;

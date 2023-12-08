@@ -9,6 +9,9 @@ import { IoMdRefresh } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useRef } from 'react';
 import { MdClose } from "react-icons/md";
+import FormDropdown from '../../components/formDropdown';
+import { itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function AddMoreDetails() {
     const [itemname, setItemname] = useState('');
@@ -16,19 +19,14 @@ export default function AddMoreDetails() {
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [isReset, setIsReset] = useState(false);
-    const [newreport, setNewreport] = useState({
-        category: '',
-        description: '',
-        keywords: '',
-        locationidentifier: '',
-        name: '',
-        mobilenumber: '',
-        mail: '',
-        date: '',
-        time: '',
-        reporterid: ''
-    })
-    console.log(files, 'files');
+    const dispatch = useDispatch();
+    const items = useSelector(itemDropdown);
+    const itemCategories = Object.values(items);
+
+    useEffect(() => {
+        dispatch(itemDropdownValues())
+    }, [])
+
     const fileInputRef = useRef();
     const reportDetails = useParams();
     const resolver = useValidationResolver(addMoreDetailsSchema);
@@ -115,14 +113,11 @@ export default function AddMoreDetails() {
                                     <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Category</label>
                                     <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Category</p>
                                 </div>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Select Category"
-                                    name="itemCategory"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
-                                    autoComplete="off"
-                                    required
-                                />
+
+                                <FormDropdown
+                                    editButton={true}
+                                    selection={true}
+                                    dropdownValues={itemCategories} />
                             </div>
 
                             <div className='flex justify-between mb-9'>

@@ -71,8 +71,7 @@ export default function SearchReport() {
                                             value={searchKey}
                                             onChange={(e) => setSearchKey(e.target.value)}
                                         />
-                                        {/* <input className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid ${searchValue ? 'border-[#B6B6B6]' : 'border-[#FF0000]'}`} type='text' placeholder='Search...' value={searchKey} onChange={(e) => setSearchKey(e.target.value)} /> */}
-
+                                        
                                         <TextInput
                                             type="text"
                                             placeholder="Location"
@@ -83,7 +82,6 @@ export default function SearchReport() {
                                             value={locationKey}
                                             onChange={(e) => setLocationKey(e.target.value)}
                                         />
-                                        {/* <input className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid ${location ? 'border-[#B6B6B6]' : 'border-[#FF0000]'}`} type='text' placeholder='Location' value={locationKey} onChange={(e) => setLocationKey(e.target.value)} /> */}
                                         <button
                                             type='submit'
                                             className='xl:w-52 xl:h-16 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white bg-primary-color border border-solid border-[#B6B6B6] mx-2.5'
@@ -101,25 +99,23 @@ export default function SearchReport() {
                                     <TextInput
                                         type="text"
                                         placeholder="Describe Item"
-                                        // name="itemName"
+                                        name="itemName"
                                         className={`placeholder:text-black placeholder:text-ba se xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                         autoComplete="off"
                                         required
-                                        value={reportKey}
-                                        onChange={(e)=>setReportKey(e.target.value)}
+                                        // value={reportKey}
+                                        // onChange={(e)=>setReportKey(e.target.value)}
                                     />
-                                    {/* <input className={`placeholder:text-black placeholder:text-base p-4 xl:w-60 xl:h-16 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6] ${reportValue ? 'border-[#B6B6B6]' : 'border-[#FF0000]'}`} type='text' placeholder='Describe Item' value={reportKey} onChange={(e) => setReportKey(e.target.value)} /> */}
-                                    <TextInput
+                                   <TextInput
                                         type="text"
                                         placeholder="Location"
                                         name="location"
                                         className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                         autoComplete="off"
                                         required
-                                        value={locationKey}
-                                        onChange={(e)=>setLocationKey(e.target.value)}
+                                        // value={locationKey}
+                                        // onChange={(e)=>setLocationKey(e.target.value)}
                                     />
-                                    {/* <input className={`placeholder:text-black placeholder:text-base p-4 xl:w-60 xl:h-16 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6] ${location ? 'border-[#B6B6B6]' : 'border-[#FF0000]'}`} type='text' placeholder='Location' value={locationKey} onChange={(e) => setLocationKey(e.target.value)} /> */}
                                     <button
                                         type='submit'
                                         onClick={handleReportKey}

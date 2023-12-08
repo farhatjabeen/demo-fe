@@ -33,7 +33,7 @@ const routers = [
       },
       {
         component: "ClaimItem",
-        childPath: "/claimItem/:id",
+        childPath: "/claimitem/:id",
       },
       {
         component: "MyListings",
@@ -73,11 +73,11 @@ const routers = [
       },
       {
         component: "termsOfUse",
-        childPath: "/termsOfUse",
+        childPath: "/termsofuse",
       },
       {
         component: "privacyPolicy",
-        childPath: "/privacyPolicy",
+        childPath: "/privacypolicy",
       },
       {
         component: "BusinessHome",
@@ -85,7 +85,7 @@ const routers = [
       },
       {
         component: "changePassword",
-        childPath: "/changePassword",
+        childPath: "/changepassword",
       },
     ]
   },
@@ -95,7 +95,7 @@ const routers = [
     childrens: [
       {
         component: "MyProfile",
-        childPath: "/myProfile",
+        childPath: "/myprofile",
       },
     ]
   },

@@ -12,6 +12,7 @@ let initialState = {
     viewDetailsByLocation: [],
     dropdownLocationValues: [],
     dropdownCategoryValues: [],
+    dropdownItemValues:[],
 }
 
 export const itemsSlice = createSlice({
@@ -50,6 +51,9 @@ export const itemsSlice = createSlice({
         },
         dropdownCategory: (state, action) => {
             state.dropdownCategoryValues = { ...action.payload }
+        },
+        dropdownItem: (state, action) => {
+            state.dropdownItemValues = { ...action.payload }
         },
         clearItemState: () => initialState
     }
@@ -327,6 +331,24 @@ export const categoryDropdownValues = () => (dispatch) => {
     })
 }
 
+//item drop down data
+export const itemDropdownValues = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.itemDropdown,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true
+        }).then((res) => {
+            console.log(res.data,'res.data')
+            dispatch(dropdownItem(res.data))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
 export const clearItemData = () => (dispatch) => {
     try {
         dispatch(clearItemState());
@@ -382,6 +404,7 @@ export const searchDetailsById = (state) => state.items?.searchId;
 export const viewDetails = (state) => state.items?.viewDetailsById;
 export const locationDetails = (state) => state.items?.dropdownLocationValues;
 export const categoryDetails = (state) => state.items?.dropdownCategoryValues;
+export const itemDropdown = (state) => state.items?.dropdownItemValues;
 export const businessUserDetails = (state) => state.items?.businessUserDetails;
 
 export const {
@@ -398,7 +421,8 @@ export const {
     saveBusinessUserDetails,
     saveItemDetails,
     clearData,
-    saveUserDetails
+    saveUserDetails,
+    dropdownItem
 } = itemsSlice.actions;
 
 export default itemsSlice.reducer;
