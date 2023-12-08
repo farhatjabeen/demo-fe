@@ -5,7 +5,7 @@ import DeleteModal from "../modal";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 import { useDispatch } from "react-redux";
-const Table = ({ headers, data, showEdit = false }) => {
+const Table = ({ headers, data, showEdit = false,context  }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const navigate = useNavigate();
@@ -68,6 +68,7 @@ const Table = ({ headers, data, showEdit = false }) => {
           setSelectedItemId(null);
         }}
         selectedItemId={selectedItemId}
+        context={context} 
       />
     </div>
   );

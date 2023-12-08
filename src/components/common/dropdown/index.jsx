@@ -34,7 +34,7 @@ export default function DropdownMenu({ categories , selectedCategory, onSelectCa
               <button
                 key={index}
                 onClick={() => handleCategorySelect(category)}
-                className="block px-4 py-2 text-sm  w-full text-left hover:bg-grey"
+                className="block px-4 py-2 text-sm  w-full text-left hover:bg-gray"
                 role="menuitem"
               >
                 {category}

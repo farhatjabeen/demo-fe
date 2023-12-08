@@ -2,13 +2,13 @@ import React from "react";
 import { useDispatch } from 'react-redux';
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 
-const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId }) => {
+const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId,context }) => {
   const dispatch = useDispatch();
   if (!isOpen) {
     return null;
   }
   const handleConfirmDelete = () => {
-    dispatch(deleteItem(selectedItemId));
+    dispatch(deleteItem(selectedItemId,context));
     onDelete();
   };
   return (

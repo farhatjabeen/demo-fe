@@ -11,8 +11,8 @@ import { adminFetchUser, userDetails, adminFetchBusinessUser, businessUserDetail
 
 function User() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm1, setSearchTerm1] = useState("");
-  const [searchTerm2, setSearchTerm2] = useState("");
+  const [searchUserTerm, setsearchUserTerm] = useState("");
+  const [searchBusinessTerm, setsearchBusinessTerm] = useState("");
   const dispatch = useDispatch();
   const [PageLimit, setPageLimit] = useState(10);
   const tableData = useSelector(userDetails);
@@ -27,14 +27,16 @@ function User() {
 
   const handleReset = (tab) => {
     if (tab === 1) {
-      setSearchTerm1("");
+      setsearchUserTerm("");
     } else if (tab === 2) {
-      setSearchTerm2("");
+      setsearchBusinessTerm("");
     }
   };
   const handleSearch = (tab) => {
     if (tab === 1) {
+      dispatch(adminFetchUser(currentPage, PageLimit,  searchUserTerm));
     } else if (tab === 2) {
+      dispatch(adminFetchBusinessUser(currentPage, PageLimit,  searchBusinessTerm));
     }
   };
 
@@ -79,8 +81,8 @@ function User() {
                 type="text"
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
-                value={searchTerm1}
-                onChange={(event) => setSearchTerm1(event.target.value)}
+                value={searchUserTerm}
+                onChange={(event) => setsearchUserTerm(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
@@ -101,7 +103,7 @@ function User() {
                 />
               </div>
             </div>
-            <Table headers={userHeaders} data={tableData?.list} />
+            <Table headers={userHeaders} data={tableData?.list} context="user"  />
             <Pagination
               isBlueBackground={true}
               currentPage={tableData?.pageMeta?.page}
@@ -115,8 +117,8 @@ function User() {
                 type="text"
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
-                value={searchTerm2}
-                onChange={(event) => setSearchTerm2(event.target.value)}
+                value={searchBusinessTerm}
+                onChange={(event) => setsearchBusinessTerm(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
@@ -137,7 +139,7 @@ function User() {
                 />
               </div>
             </div>
-            <Table headers={businessHeaders} data={tableBusinessData?.list} />
+            <Table headers={businessHeaders} data={tableBusinessData?.list} context="businessUser" />
             <Pagination
               isBlueBackground={true}
               currentPage={tableBusinessData?.pageMeta?.page}

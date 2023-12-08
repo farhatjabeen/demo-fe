@@ -56,7 +56,7 @@ export const itemsSlice = createSlice({
 });
 
 //get items
-export const fetchItems = (currentPage, PageLimit) => (dispatch) => {
+export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchItems}?page=${currentPage}&limit=${PageLimit}`,
@@ -77,10 +77,10 @@ export const fetchItems = (currentPage, PageLimit) => (dispatch) => {
 }
 
 //get items in admin
-export const adminFetchItems = (currentPage = 1, PageLimit = 5) => (dispatch) => {
+export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, searchTerm, itemcode) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}&category=${selectedCategory || ''}&itemName=${searchTerm || ''}&itemcode=${itemcode}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -98,10 +98,10 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 5) => (dispatch) =>
 };
 
 //get user in admin
-export const adminFetchUser = (currentPage = 1, PageLimit = 5) => (dispatch) => {
+export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchUserTerm || ''}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -120,10 +120,10 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 5) => (dispatch) => 
 
 
 //get businessUser in admin
-export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => (dispatch) => {
+export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchBusinessTerm || ''}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -175,7 +175,7 @@ export const myListingItems = () => (dispatch) => {
     })
 }
 
-export const deleteMyListingItems = ({itemId}) => async (dispatch) => {
+export const deleteMyListingItems = ({ itemId }) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.deleteUserItemId}?itemId=${itemId}`,
@@ -261,7 +261,7 @@ export const viewUserItemById = (itemId) => (dispatch) => {
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
             const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
-            
+
             if (Array.isArray(itemImage) && itemImage.length > 0) {
                 dispatch(viewItemDetailsById(itemImage))
             }
@@ -355,14 +355,21 @@ export const adminUpdateFoundItems = (data) => (dispatch) => {
     })
 };
 
-export const deleteItem = (itemId) => async (dispatch) => {
+export const deleteItem = (itemId, context) => (dispatch) => {
     try {
-        await apiRequest({
-            url: `${endpoints.apiPath.items.deleteItem}?itemId=${itemId}`,
-            method: endpoints.ApiMethods.DELETE,
-            isAuth: true,
-            tokenType: 'adminToken',
-        });
+        if (context === "foundItems") {
+            apiRequest({
+                url: `${endpoints.apiPath.items.deleteItem}?itemId=${itemId}`,
+                method: endpoints.ApiMethods.DELETE,
+                isAuth: true,
+                tokenType: 'adminToken',
+            });
+        } else if (context === "user") {
+
+        }
+        else if (context === "businessUser") {
+
+        }
 
         dispatch(adminFetchItems());
         Toast({ type: "success", message: "Item deleted successfully." });

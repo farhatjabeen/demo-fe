@@ -17,7 +17,7 @@ function FoundItems() {
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
 
-  const categories = ['Category 1', 'Category 2', 'Category 3'];
+  const categories = ['Electronics', 'Furniture', 'Category 3'];
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
@@ -29,7 +29,9 @@ function FoundItems() {
     setSearchTerm("");
     setSelectedCategory(null);
   };
-  const handleSearch = () => { };
+  const handleSearch = () => {
+    dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, searchTerm));
+  };
   const tableHeaders = [
     { key: "_id", label: "Item ID" },
     { key: "itemName", label: "Item Name" },
@@ -95,7 +97,7 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      <Table headers={tableHeaders} data={tableData?.list} showEdit={true} />
+      <Table headers={tableHeaders} data={tableData?.list} showEdit={true} context="foundItems"  />
 
       <Pagination
         isBlueBackground={true}
