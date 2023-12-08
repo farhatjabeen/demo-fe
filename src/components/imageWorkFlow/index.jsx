@@ -1,6 +1,4 @@
 import React from 'react'
-import doodleBackground from '../../assets/images/doodle.png';
-import homepageGif from '../../assets/videos/homepageGif.gif';
 import workFlow from '../../assets/images/workFlow.png';
 
 export default function ImageWorkFlow() {

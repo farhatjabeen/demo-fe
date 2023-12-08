@@ -16,8 +16,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function BusinessHome() {
     const [readMore, setReadMore] = useState(false);
-    // const [more, setMore] = useState(false);
-    const [activeIndex, setActiveIndex] = useState(0);
 
     const navigate = useNavigate();
 
@@ -37,9 +35,7 @@ export default function BusinessHome() {
     const cardValues = [containers, containers, containers]
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex((prevIndex) => (prevIndex + 1) % contentData.length);
-        }, 2000);
+        const interval = setInterval((prevIndex) => (prevIndex + 1) % contentData.length);
 
         return () => clearInterval(interval);
     }, []);
@@ -68,7 +64,6 @@ export default function BusinessHome() {
 
             <div className='relative'>
                 <img className='w-full bg-[#00B8B8] opacity-80' src={businessDoodle} alt='businessDoodle' />
-                {/* <div className='bg-green flex items-center'> */}
                 <div className='absolute top-0 xl:pt-36 md:pt-16 sm:pt-14 xl:pl-32 md:pl-16 sm:pl-5 z-50'>
                     <div className='xl:text-4xl md:text-2xl sm:text-xl font-bold text-white'>BTZapp win contract to<br></br> replace Europe’s largest lost<br></br> property system</div>
                     <div className='xl:mt-4 md:mt-4 sm:mt-2'>
@@ -85,7 +80,6 @@ export default function BusinessHome() {
                     <div><img src={transportLondon} className='xl:h-72 xl:w-96 md:h-56 md:w-80 sm:h-40 sm:w-60' alt='transportLondon' /></div>
                     <div className='flex justify-center xl:w-96 md:w-80 sm:w-56 xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-72 md:w-52 sm:w-44 xl:h-10 md:h-9 sm:h-7 xl:text-lg md:text-sm sm:text-xs'>Click here to find out more</button></div>
                 </div>
-                {/* </div> */}
             </div>
 
             <div> <OurBrands /> </div>
@@ -146,8 +140,7 @@ export default function BusinessHome() {
                                         <div className='text-[#666666] xl:text-sm md:text-xs sm:text-xs py-5'>May 23, 2023 | Blog, SaaS, Transport</div>
                                         <div className={`text-[#666666] xl:w-64 md:w-52 sm:w-40 xl:text-base md:text-sm sm:text-xs overflow-hidden`}>
                                             Today we'll be discussing the big question in software development....To buy or to build, This puzzle has been a quandary for heads of businesses...
-                                            {/* <span>Today we'll be discussing the big question in software development....</span> */}
-                                        </div>
+                                           </div>
                                         <button className='text-[#FF9900] xl:text-base md:text-base sm:text-xs'>read more</button>
                                     </div>
                                 </div>

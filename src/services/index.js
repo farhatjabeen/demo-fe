@@ -13,9 +13,9 @@ const apiRequest = async ({
     url,
     method,
     apiVersion = 'v1',
-    data = null,
+    data = undefined,
     headers = null,
-    params = null,
+    params = undefined,
     isLoader = true,
     isAuth = false,
     tokenType = 'userToken' // possible values -> userToken, businessUserToken, adminToken

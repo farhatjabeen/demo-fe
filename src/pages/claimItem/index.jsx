@@ -1,28 +1,27 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaMap, FaCalendar, FaClock, FaPhoneAlt } from 'react-icons/fa';
 import { HiMail } from "react-icons/hi";
 import { useParams } from 'react-router';
 import keys from '../../assets/images/keys.png';
-import { claimItemNow, searchDetailsById, searchItemById, searchKey } from '../../redux/reducers/itemsSlice';
+import { claimItemNow, searchDetailsById, searchItemById } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import dayjs from 'dayjs';
 
 export default function ClaimItem() {
-    const [currentItem, setCurrentItem] = useState([]);
     const dispatch = useDispatch();
     const productDetails = useSelector(searchDetailsById);
     const itemId = useParams();
 
     useEffect(() => {
-        dispatch(searchItemById(itemId._id));
+        dispatch(searchItemById(itemId.id));
     }, []);
 
     const handleMail = () => {
-        dispatch(claimItemNow(productDetails._id));
+        try {
+            dispatch(claimItemNow(productDetails._id));
+        } catch (error) {
+            console.log("submitData errors", error)
+        }
     }
-
-    console.log(productDetails, "pd")
 
     return (
         <div>
@@ -43,7 +42,7 @@ export default function ClaimItem() {
                                     {productDetails?.location}
                                 </div>
                             </div>
-                            
+
                             <div className='w-64 mt-2 flex'><div className='flex items-center'><FaCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{productDetails?.foundDate}</div></div>
                             <div className='w-64 mt-2 flex'><div className='flex items-center'> <FaClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div> <div className='font-semibold xl:text-lg md:text-lg sm:text-base ml-2'>{productDetails?.foundTime}</div> </div>
                         </div>

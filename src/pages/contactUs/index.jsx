@@ -68,7 +68,6 @@ export default function ContactUs() {
                                         autoComplete="off"
                                         required
                                     />
-                                    {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="email" placeholder='Enter your email' /> */}
                                     <TextInput
                                         type="text"
                                         placeholder="Subject"
@@ -77,7 +76,6 @@ export default function ContactUs() {
                                         autoComplete="off"
                                         required
                                     />
-                                    {/* <input className='w-full mb-4 h-14 rounded-lg border bg-inherit p-4' type="text" placeholder='Subject' /> */}
                                     <TextAreaInput
                                         rows="4"
                                         placeholder="Message"
@@ -86,7 +84,6 @@ export default function ContactUs() {
                                         autoComplete="off"
                                         required
                                     />
-                                    {/* <input className='w-full mb-4 h-52 rounded-lg border bg-inherit p-4' type="text" placeholder='Message' /> */}
                                     <div className='flex justify-end w-96'><button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button></div>
                                 </div>
                             </div>

@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import apiRequest from '../../services'
 import endpoints from "../../services/endpoints";
 import { setEncryptedLocalStorageData } from "../../utils/helper";
-// import { Toast } from "../../components/toast";
 
 const initialState = {
     userData: null,
@@ -44,7 +43,7 @@ export const userSlice = createSlice({
     }
 });
 
-
+// business user sign in
 export const loginUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -72,7 +71,7 @@ export const checkGeneralUserEmail = (data) => async(dispatch) => {
             data: data
         }).then((res) => {
             const { emailMailId, isAlreadyRegistered } = res.data
-            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered }))
+            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered   }))
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -121,14 +120,14 @@ export const generalUserLogin = (data) => (dispatch) => {
     })
 }
 
-// general user logout
+// general user logout **
 export const generalUserLogout = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.logoutGeneralUser,
-            method: endpoints.ApiMethods.POST
-        }).then((res) => {
-            console.log(res.data,'resdata')
+            method: endpoints.ApiMethods.POST,
+            isAuth: true,
+        }).then(() => {
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -206,7 +205,6 @@ export const companyProfileData = () => async (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then(async (res) => {
-            console.log(res.data, "rd")
             const { companyName, companyCategory, location, name, mobileNumber, emailMailId } = res.data
             dispatch(saveCompanyProfile({ companyName, companyCategory, location, name, mobileNumber, emailMailId }))
             return resolve(true)
@@ -226,7 +224,6 @@ export const editCompanyProfileData = (data) => async (dispatch) => {
             tokenType: 'businessUserToken',
             data: data
         }).then(async (res) => {
-            console.log(res.data, "editdata")
             const { companyName, companyCategory, location, name, mobileNumber, emailMailId } = res.data
             dispatch(saveCompanyProfile({ companyName, companyCategory, location, name, mobileNumber, emailMailId }))
             return resolve(true)
@@ -245,7 +242,7 @@ export const contactAdmin = (data) => async (dispatch) => {
             url: endpoints.apiPath.contactAdmin,
             method: endpoints.ApiMethods.POST,
             data: data
-        }).then((res) => {
+        }).then(() => {
             return resolve(true);
         }).catch((err) => {
             reject(err)

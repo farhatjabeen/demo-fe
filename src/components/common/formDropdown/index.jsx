@@ -7,7 +7,7 @@ import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function DropDown({ placeholder, name, editButton, selection, dropdownValues, disable, optionButtonClass, showPassword, setShowPassword }) {
+function DropDown({ name, editButton, selection, dropdownValues, optionButtonClass }) {
 
     return (
         <ConnectForm>
@@ -17,9 +17,7 @@ function DropDown({ placeholder, name, editButton, selection, dropdownValues, di
                         <Controller
                             name={name}
                             control={control}
-                            render={({
-                                field: { onChange, value: fieldValue, ref, props }
-                            }) => (
+                            render={() => (
                                 <div>
                                     <div>
                                         <button

@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import OurBrands from '../../components/ourBrands';
 import DropdownMenu from '../../components/common/dropdown';
-import { useDispatch } from 'react-redux';
+import TextInput from '../../components/common/textInput';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { businessSignUpSchema } from '../../validations';
-import { FormProvider, useForm } from 'react-hook-form';
-import TextInput from '../../components/common/textInput';
-import { useNavigate } from 'react-router-dom';
 
 export default function BusinessSignUp() {
     const [selectedCategory, setSelectedCategory] = useState(null);
-
     const categories = ['Private', 'Public', 'One person'];
-
-    const dispatch = useDispatch();
     const resolver = useValidationResolver(businessSignUpSchema);
     const navigate = useNavigate();
     const methods = useForm({

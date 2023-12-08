@@ -21,6 +21,7 @@ const apiPath = {
         myListing:'/user/myListings',
         viewById: '/business/item',
         generalUserItemsById: '/user/item',
+        deleteUserItemId: '/user/removeListing',
         searchByLocation: '/user/getItemByLocation',
         claimItem: '/user/contactToClaim',
         locationDropdown: '/user/dropDownSearchLocation',

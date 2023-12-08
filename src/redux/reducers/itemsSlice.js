@@ -85,7 +85,6 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 5) => (dispatch) =>
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            console.log(res)
             const { list, pageMeta } = res.data
             dispatch(saveFoundItemDetails({ list, pageMeta }))
             Toast({ type: "success", message: res.message })
@@ -129,7 +128,6 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => (dispa
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            console.log(res)
             const { list, pageMeta } = res.data
             dispatch(saveBusinessUserDetails({ list, pageMeta }))
             Toast({ type: "success", message: res.message })
@@ -146,7 +144,6 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => (dispa
 export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
             url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}&page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
@@ -164,11 +161,9 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
 export const myListingItems = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
             url: endpoints.apiPath.items.myListing,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
-            tokenType: 'userToken'
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
@@ -180,12 +175,12 @@ export const myListingItems = () => (dispatch) => {
     })
 }
 
-export const deleteMyListingItems = () => (dispatch) => {
+export const deleteMyListingItems = ({itemId}) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
+            url: `${endpoints.apiPath.items.deleteUserItemId}?itemId=${itemId}`,
             method: endpoints.ApiMethods.DELETE,
-            isAuth: true,
-            tokenType: 'userToken'
+            isAuth: true
         }).then(() => {
             return resolve(true)
         }).catch(err => {
@@ -266,9 +261,12 @@ export const viewUserItemById = (itemId) => (dispatch) => {
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
             const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            
             if (Array.isArray(itemImage) && itemImage.length > 0) {
-                dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+                dispatch(viewItemDetailsById(itemImage))
             }
+            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -278,15 +276,17 @@ export const viewUserItemById = (itemId) => (dispatch) => {
 }
 
 // claim item
-export const claimItemNow = (itemsId) => (dispatch) => {
+export const claimItemNow = (itemId) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.claimItem}/655703970c9b44af5a5aef52`,
-            method: endpoints.ApiMethods.POST
+            url: `${endpoints.apiPath.items.claimItem}/${itemId}`,
+            method: endpoints.ApiMethods.POST,
+            isAuth: true,
         }).then(() => {
             return resolve(true);
         }).catch((err) => {
-            reject(err)
+            console.log(err)
+            return err;
         })
     })
 }
