@@ -49,7 +49,7 @@ export const generalUserRegisterSchema = yup.object({
 });
 
 export const addMoreDetailsSchema = yup.object({
-    emailMail: yup
+    emailMailId: yup
         .string()
         .matches(emailRexExp, 'Invalid email address')
         .required('email required'),
@@ -62,16 +62,21 @@ export const addMoreDetailsSchema = yup.object({
         .string()
         .min(3)
         .max(10),
-    newPassword: yup
+    password: yup
         .string()
         .matches(
             passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character')
-        .required('password required'),
+            'Password must be 8-20 characters with at least one letter, one number, and one special character'),
+    newPassword: yup
+        .string(),
+        // .matches(
+        //     passwordRegExp,
+        //     'Password must be 8-20 characters with at least one letter, one number, and one special character'),
+        // .required('password required'),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref("newPassword")], "Passwords does not match")
-        .required("Please re-type your password"),
+        .oneOf([yup.ref("newPassword")], "Passwords does not match"),
+        // .required("Please re-type your password"),
     location: yup
         .string()
         .required('location required'),

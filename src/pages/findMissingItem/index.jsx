@@ -89,11 +89,11 @@ export default function FindMissingItem() {
         </FormProvider>
       </div>
 
-      <div className='flex flex-wrap justify-center items-center xl:w-10/12 md:w-9/12 sm:w-11/12 mt-12'>
+      <div className='flex flex-wrap justify-center items-center xl:w-11/12 md:w-9/12 sm:w-11/12 mt-12'>
         {searchValue?.list?.length && searchValue.list.map((items, i) => {
           return (
             <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
-              <SearchCards key={i} idx={i} itemId={items._id} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
+              <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
             </div>
           );
         })}

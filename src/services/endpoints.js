@@ -7,6 +7,7 @@ const apiPath = {
     loginAdmin: '/admin/login',
     resetPasswordAdmin:'/admin/resetPassword',
     businessProfile: '/business/userDetails',
+    userProfile: '/user/editProfile',
     editBusinessProfile: '/business/editProfile',
     contactAdmin: '/user/sendQueryToAdmin',
     items: {
@@ -25,7 +26,8 @@ const apiPath = {
         searchByLocation: '/user/getItemByLocation',
         claimItem: '/user/contactToClaim',
         locationDropdown: '/user/dropDownSearchLocation',
-        categoryDropdown:'/user/dropDownSearchCategories'
+        categoryDropdown:'/user/dropDownSearchCategories',
+        itemDropdown: '/user/searchItemCategories'
     }
 }
 
