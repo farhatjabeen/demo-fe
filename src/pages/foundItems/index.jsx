@@ -36,10 +36,10 @@ function FoundItems() {
     { key: "_id", label: "Item ID" },
     { key: "itemName", label: "Item Name" },
     { key: "location", label: "Location" },
-    { key: "timefound", label: "Time Found" },
+    { key: "foundTime", label: "Time Found" },
     { key: "found by", label: "Found By" },
     { key: "mobileNumber", label: "Phone Number" },
-    // { key: "action", label: "Actions" },
+    { key: "action", label: "Actions" },
   ];
 
 

@@ -17,6 +17,8 @@ const apiPath = {
         fetchBusinessUserItems: '/admin/getAllBusinessUser',
         updateFoundItems:'/admin/updateItem',
         deleteItem:'/admin/deleteItem',
+        deleteUser:'/admin/deleteUser',
+        deleteBusinessUser:'/admin/deleteUser',
         searchByKeyword: '/user/getItemByKeyword',
         searchById: '/user/item',
         myListing:'/user/myListings',

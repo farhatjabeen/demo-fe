@@ -183,9 +183,11 @@ export const adminResetPassword = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then(res => {
+            console.log('data',res?.data)
             return resolve(res?.data);
         }).catch(err => {
-            reject(err)
+            reject(err);
+            console.log('rejected',err)
         })
     })
 }
