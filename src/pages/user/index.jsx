@@ -49,11 +49,11 @@ function User() {
   };
   const userHeaders = [
     { key: "_id", label: "User ID" },
-    { key: "userName", label: "User Name" },
+    { key: "name", label: "User Name" },
     { key: "createdAt", label: "Listing Count" },
     { key: "emailMailId", label: "Mail ID" },
     { key: "mobileNumber", label: "Mobile Number" },
-    // { key: "actions", label: "Actions" },
+    { key: "action", label: "Actions" },
 
   ];
 
@@ -65,7 +65,7 @@ function User() {
     { key: "emailMailId", label: "Mail ID" },
     { key: "mobileNumber", label: "Contact Phone" },
     { key: "listingCount", label: "Listing Count" },
-    // { key: "actions", label: "Actions" },
+    { key: "action", label: "Actions" },
   ];
 
 

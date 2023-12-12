@@ -356,15 +356,16 @@ export const clearItemData = () => (dispatch) => {
         return error
     }
 }
-export const adminUpdateFoundItems = (data) => (dispatch) => {
+//update found item in admin
+export const adminUpdateFoundItems = (values,itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.items.updateFoundItems,
+            url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}}`,
             method: endpoints.ApiMethods.PUT,
             isAuth: true,
             tokenType: 'adminToken',
-            data: data
-        }).then(async (res) => {
+            data: values
+        }).then( (res) => {
             console.log(res)
         }).then((res) => {
             const { list } = res.data
@@ -376,7 +377,7 @@ export const adminUpdateFoundItems = (data) => (dispatch) => {
         })
     })
 };
-
+//delete in admin
 export const deleteItem = (itemId, context) => (dispatch) => {
     try {
         if (context === "foundItems") {
@@ -387,10 +388,20 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 tokenType: 'adminToken',
             });
         } else if (context === "user") {
-
+            apiRequest({
+                url: `${endpoints.apiPath.items.deleteUser}?userId=${itemId}`,
+                method: endpoints.ApiMethods.DELETE,
+                isAuth: true,
+                tokenType: 'adminToken',
+            });
         }
         else if (context === "businessUser") {
-
+            apiRequest({
+                url:`${endpoints.apiPath.items.deleteBusinessUser}?userId=${itemId}`,
+                method: endpoints.ApiMethods.DELETE,
+                isAuth: true,
+                tokenType: 'adminToken',
+            });
         }
 
         dispatch(adminFetchItems());

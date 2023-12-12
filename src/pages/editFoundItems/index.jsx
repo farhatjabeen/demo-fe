@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomCombinedButton from "../../components/common/adminButton";
-import { MdAttachment,MdOutlineCalendarToday } from "react-icons/md";
+import { MdAttachment, MdOutlineCalendarToday } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa";
 import DropdownMenu from '../../components/common/dropdown';
 import Breadcrumbs from '../../components/common/breadcrumbs';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { editFoundItemsSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../../components/common/textInput";
 import TextAreaInput from '../../components/common/textAreaInput';
+import { adminUpdateFoundItems } from '../../redux/reducers/itemsSlice';
 
 
-
-const EditFoundItems = () => {
+const EditFoundItems = (values) => {
   const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
   const methods = useForm({
     defaultValues: {
@@ -32,11 +32,14 @@ const EditFoundItems = () => {
     },
     resolver
   });
+  useEffect((values) => {
+    dispatch(adminUpdateFoundItems(values))
+  },[values])
 
   const submitData = async (data) => {
     navigate('/admin/user/foundItems');
   };
-  const categories = ['Private', 'Public', 'One person'];
+  const categories = ['Electronics', 'Furniture', 'others'];
   return (
     <div className="m-4">
       <div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState }from 'react';
 import { GoLock } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { AdminChangePasswordSchema } from '../../validations';
@@ -7,10 +7,11 @@ import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
 import adminPasswordimage from '../../assets/images/adminPasswordimage.png'
+import { adminResetPassword } from "../../redux/reducers/userSlice";
 
 const Settings = () => {
     const navigate = useNavigate();
-
+    const [showPassword, setShowPassword] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(AdminChangePasswordSchema);
     const methods = useForm({
@@ -22,12 +23,17 @@ const Settings = () => {
         resolver
     });
     const submitData = async (data) => {
-        navigate('/admin/signin');
-        // try {
-        //   dispatch(loginUser(data))
-        // } catch (error) {
-        //   console.log("submitData errors", error)
-        // }
+        try {
+            const reset = dispatch(adminResetPassword(data))
+            if (reset) {
+              navigate('/admin/signin');
+            }
+            else{
+              console.log("Password reset failed");
+            }
+          } catch (error) {
+            console.log("submitData errors", error)
+          }
     };
     return (
         <div className="ml-10">
@@ -77,8 +83,10 @@ const Settings = () => {
                                 name="currentPassword"
                                 autoComplete="off"
                                 placeholder="currentPassword"
-                                className="w-full py-4 px-3 border border-gray rounded-md"
+                                className="w-full py-4 px-3 border border-gray-300 rounded-md"
                                 required
+                                showPassword={showPassword}
+                                setShowPassword={() => setShowPassword(!showPassword)}
                             />
                         </div>
                         <div className="mt-2">

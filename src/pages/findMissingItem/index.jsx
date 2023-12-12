@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
-
 import Pagination from '../../components/common/pagination'
 import TextInput from '../../components/common/textInput';
 import SearchCards from '../../components/searchCards';
@@ -15,12 +14,11 @@ export default function FindMissingItem() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const searchParameters = useParams();
-  const [PageLimit, setPageLimit] = useState(10);
 
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);
-
+  const isLastPage = searchValue?.pageMeta?.page === searchValue?.pageMeta?.totalPages;
   const methods = useForm({
     defaultValues: {
       itemName: ""
@@ -34,9 +32,9 @@ export default function FindMissingItem() {
 
   useEffect(() => {
     if (searchParameters?.itemNameAgain) {
-      dispatch(searchItem(searchParameters.itemNameAgain));
+      dispatch(searchItem(searchParameters.itemNameAgain,currentPage));
     }
-  }, [searchParameters])
+  }, [searchParameters,currentPage])
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -56,9 +54,9 @@ export default function FindMissingItem() {
 
   useEffect(() => {
     return () => {
-      dispatch(clearItemData(currentPage, PageLimit))
+      dispatch(clearItemData())
     }
-  }, [currentPage, PageLimit])
+  }, [])
 
   return (
     <div className="flex flex-col items-center mt-5">
@@ -99,18 +97,20 @@ export default function FindMissingItem() {
         })}
       </div>
 
-      <div className='mt-10'>
+      <div className='my-10'>
         <Pagination
           isBlueBackground={false}
           currentPage={searchValue?.pageMeta?.page}
           totalPages={searchValue?.pageMeta?.totalPages}
           onPageChange={handlePageChange} />
       </div>
+      {isLastPage && (
       <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
         <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
         <div className='font-medium flex justify-center xl:text-base md:text-base sm:text-xs'>Subscribe and send an alert and Ilost will ping you if your item is found</div>
         <div className='flex justify-center'><button className='xl:h-11 xl:w-44 md:h-11 md:w-44 sm:h-9 sm:w-36 rounded-lg bg-primary-color mt-4'>Send an Alert</button></div>
       </div>
+      )}
     </div>
   );
 }

@@ -119,7 +119,7 @@ const routers = [
       },
       {
         component: "editFoundItems",
-        childPath: "/foundItems/editfoundItems",
+        childPath: "/foundItems/editfoundItems/:id",
       },
       {
         component: "user",

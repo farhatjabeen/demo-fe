@@ -34,24 +34,26 @@ const Table = ({ headers, data, showEdit = false,context  }) => {
           </tr>
         </thead>
         <tbody className="cursor-pointer ">
-          {data?.map((item,index) => (
+          {data?.map((item, index) => (
             <tr key={item._id} className={index % 2 === 0 ? "bg-gray" : "bg-white"}>
-              {headers.map((header) => (
-                <td key={header.key} className="py-4 px-6" onClick={() => navigate('/admin/user/foundItems/itemDetails')}>{item[header.key]}</td>
-              ))}
-              <td className="py-6 px-6 flex cursor-pointer text-grey">
-                <AiOutlineDelete
-                  size={26}
-                  onClick={() => handleDeleteClick(item._id)}
-                />
-                {showEdit && (
-                  <Link to='/admin/user/foundItems/editfoundItems'>
-                    <FiEdit size={24} />
-                  </Link>
-                )}
-              </td>
-            </tr>
-          ))}
+            {
+              headers.map((header) => (
+                header.key === 'action' ? (
+                    <td className="py-6 px-6 flex cursor-pointer text-grey">
+                      <AiOutlineDelete
+                        size={26}
+                        onClick={() => handleDeleteClick(item._id)}
+                      />
+                      {showEdit && (
+                          <FiEdit size={24} onClick={() => navigate(`/admin/user/foundItems/editfoundItems/${item._id}`)}/>
+                      )}
+                    </td>
+                    ) : (
+                    <td key={header.key} className="py-4 px-6" onClick={() => navigate('/admin/user/foundItems/itemDetails')}>{item[header.key]}</td>
+                    )
+                ))}
+                  </tr>
+                ))}
         </tbody>
 
       </table>
