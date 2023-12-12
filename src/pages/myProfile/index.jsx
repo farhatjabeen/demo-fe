@@ -20,8 +20,9 @@ export default function MyProfile() {
             emailMailId: "",
             mobileNumber: "",
             name: "",
-            password: "",
-            newPassword: ""
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword:""
         },
         resolver
     });
@@ -29,8 +30,18 @@ export default function MyProfile() {
     const submitData = async (e) => {
         try {
             e.preventDefault();
+            const name = methods.getValues().name;
+            const emailMailId = methods.getValues().emailMailId;
+            const mobileNumber = methods.getValues().mobileNumber;
+            const currentPassword = methods.getValues().currentPassword;
             const itemDetails = methods.getValues();
-            dispatch(userProfileData(itemDetails));
+            if(currentPassword){
+                dispatch(userProfileData(itemDetails));
+            } else{
+                dispatch(userProfileData({name,emailMailId,mobileNumber}))
+            }
+            
+            
       
           } catch (error) {
             console.log("submitData errors", error)
@@ -117,11 +128,10 @@ export default function MyProfile() {
                                     <TextInput
                                         type="password"
                                         placeholder="Current password"
-                                        name={isPassword ? "password" : ''}
+                                        name="currentPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         disable={!editButton}
-                                        onChange = {() => setIsPassword(true)}
                                     />
                                     {/* <input
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
@@ -133,7 +143,7 @@ export default function MyProfile() {
                                     <TextInput
                                         type="text"
                                         placeholder="New password"
-                                        name={isPassword ? "newPassword" : null}
+                                        name="newPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         disable={!editButton}
@@ -145,7 +155,7 @@ export default function MyProfile() {
                                     <TextInput
                                         type="text"
                                         placeholder="New password"
-                                        name={isPassword ?"confirmPassword": null}
+                                        name="confirmPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         disable={!editButton}
@@ -162,7 +172,7 @@ export default function MyProfile() {
                                     <button onClick={handleEditButton} className='w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
                                         Cancel
                                     </button>
-                                </div>
+                                </div> 
                                 <div>
                                     <button type='submit' className='w-44 h-14 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg cursor-grab'>
                                         Save Changes

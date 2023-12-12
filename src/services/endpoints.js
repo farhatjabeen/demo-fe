@@ -2,6 +2,7 @@ const apiPath = {
     login: '/user/login',
     loginGeneralUser: '/user/login',
     logoutGeneralUser: '/user/logout',
+    logoutBusinessUser: '/business/signup',
     checkEmail: '/user/emailExist',
     registerGeneralUser: '/user/signup',
     loginAdmin: '/admin/login',

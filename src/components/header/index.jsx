@@ -3,7 +3,7 @@ import Logo from "../../assets/images/logo.svg"
 import { useNavigate } from "react-router-dom";
 import PopoverComponent from "../popover";
 import { useDispatch, useSelector } from "react-redux";
-import { userData, clearUserData, generalUserLogout } from '../../redux/reducers/userSlice';
+import { userData, clearUserData, generalUserLogout, businessUserLogout } from '../../redux/reducers/userSlice';
 import { clearItemData } from "../../redux/reducers/itemsSlice";
 import HeaderDropdown from "../common/headerDropdown";
 
@@ -12,16 +12,16 @@ const Header = (props) => {
     const [login, setLogin] = useState(false);
     const [isBusiness, setIsBusiness] = useState(false);
     const dispatch = useDispatch();
-    
+
 
     const userDetails = useSelector(userData);
-
+console.log(userDetails,'ud')
     useEffect(() => {
         if (userDetails?.role === 'USER') {
             setLogin(true);
             setIsBusiness(false);
-        } 
-        if(userDetails?.role === 'BUSINESS') {
+        }
+        if (userDetails?.role === 'BUSINESS') {
             setLogin(true);
             setIsBusiness(true);
         }
@@ -29,10 +29,21 @@ const Header = (props) => {
 
     const handleLogout = () => {
         try {
-            dispatch(generalUserLogout())
+            
+            
+            if (userDetails?.role === 'USER') {
+                dispatch(generalUserLogout())
+                navigate('/')
+                setLogin(false);
+            }
+            if (userDetails?.role === 'BUSINESS') {
+                dispatch(businessUserLogout())
+                navigate('/businesshome')
+                setIsBusiness(false);
+            }
+
             dispatch(clearItemData())
             dispatch(clearUserData())
-            setLogin(false);
 
         } catch (error) {
             console.log("Logout errors", error)
@@ -49,31 +60,27 @@ const Header = (props) => {
                 <div className='flex justify-end grow items-center px-3 pr-6'>
                     {login
                         ?
-                        null :
-                        <button
-                            className="xl:w-64 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
-                            onClick={() => navigate('/businessHome')}
-                        >
-                            Ilost for Business
-                        </button>
-                    }
-                    {
-                        login
-                            ?
-                            <div>
-                                {
-                                    isBusiness
-                                        ?
-                                        <HeaderDropdown isBusiness={isBusiness} titleOne='Dashboard' titleTwo='Add Item' handleLogout={handleLogout} />
-                                        :
-                                        <HeaderDropdown isBusiness={isBusiness} titleOne='My listing' titleTwo='My Profile' handleLogout={handleLogout} />
-                                }
-                            </div>
+                        <div>
+                            {
+                                isBusiness
+                                    ?
+                                    <HeaderDropdown isBusiness={isBusiness} titleOne='Dashboard' titleTwo='Add Item' handleLogout={()=>handleLogout()} />
+                                    :
+                                    <HeaderDropdown isBusiness={isBusiness} titleOne='My listing' titleTwo='My Profile' handleLogout={handleLogout} />
+                            }
+                        </div>
+                        :
+                        <div className="flex">
+                            <button
+                                className="xl:w-64 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
+                                onClick={() => navigate('/businessHome')}
+                            >
+                                Ilost for Business
+                            </button>
 
-                            :
                             <PopoverComponent />
+                        </div>
                     }
-
                 </div>
 
             </div>

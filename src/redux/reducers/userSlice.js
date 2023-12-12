@@ -141,6 +141,23 @@ export const generalUserLogout = () => (dispatch) => {
     })
 }
 
+// business user logout **
+export const businessUserLogout = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.logoutBusinessUser,
+            method: endpoints.ApiMethods.POST,
+            isAuth: true,
+        }).then(() => {
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            resolve(false)
+            return err
+        })
+    })
+}
+
 export const loginAdminUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({

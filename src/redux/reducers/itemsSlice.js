@@ -279,21 +279,21 @@ export const viewUserItemById = (itemId) => (dispatch) => {
     })
 }
 
-// claim item
-export const claimItemNow = (itemId) => async (dispatch) => {
-    return new Promise((resolve, reject) => {
-        apiRequest({
-            url: `${endpoints.apiPath.items.claimItem}/${itemId}`,
-            method: endpoints.ApiMethods.POST,
-            isAuth: true,
-        }).then(() => {
-            return resolve(true);
-        }).catch((err) => {
-            console.log(err)
-            return err;
-        })
-    })
-}
+// claim item - Temporarily not using 
+// export const claimItemNow = (itemId) => async (dispatch) => {
+//     return new Promise((resolve, reject) => {
+//         apiRequest({
+//             url: `${endpoints.apiPath.items.claimItem}/${itemId}`,
+//             method: endpoints.ApiMethods.POST,
+//             isAuth: true,
+//         }).then(() => {
+//             return resolve(true);
+//         }).catch((err) => {
+//             console.log(err)
+//             return err;
+//         })
+//     })
+// }
 
 //location drop down data
 export const locationDropdownValues = () => (dispatch) => {

@@ -9,9 +9,9 @@ import { IoMdRefresh } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useRef } from 'react';
 import { MdClose } from "react-icons/md";
-import FormDropdown from '../../components/formDropdown';
 import { itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import FormDropdown from '../../components/common/formDropdown';
 
 export default function AddMoreDetails() {
     const [itemname, setItemname] = useState('');
@@ -115,6 +115,8 @@ export default function AddMoreDetails() {
                                 </div>
 
                                 <FormDropdown
+                                    name='itemCategory'
+                                    optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                     editButton={true}
                                     selection={true}
                                     dropdownValues={itemCategories} />
