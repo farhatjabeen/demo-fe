@@ -16,6 +16,7 @@ const apiPath = {
         fetchFoundItems: '/admin/getAllItem',
         fetchUserItems: '/admin/getAllUser',
         fetchBusinessUserItems: '/admin/getAllBusinessUser',
+        getItembyid:'/admin/item',
         updateFoundItems:'/admin/updateItem',
         deleteItem:'/admin/deleteItem',
         deleteUser:'/admin/deleteUser',
