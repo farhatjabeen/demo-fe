@@ -55,6 +55,9 @@ export const itemsSlice = createSlice({
         dropdownItem: (state, action) => {
             state.dropdownItemValues = { ...action.payload }
         },
+        foundItemId: (state, action) => {
+            state.foundItemId = { ...action.payload }
+        },
         clearItemState: () => initialState
     }
 });
@@ -363,6 +366,28 @@ export const clearItemData = () => (dispatch) => {
         return error
     }
 }
+//getbyid in admin
+export const foundItemById = (itemId) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.items.getItembyid}/${itemId}`,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'adminToken'
+        }).then((res) => {
+            const { data } = res
+
+            dispatch(foundItemId( data ))
+            Toast({ type: "success", message: res.message })
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
+            Toast({ type: "error", message: err.message })
+            return err
+        })
+    })
+};
+
 //update found item in admin
 export const adminUpdateFoundItems = (values, itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -433,6 +458,7 @@ export const locationDetails = (state) => state.items?.dropdownLocationValues;
 export const categoryDetails = (state) => state.items?.dropdownCategoryValues;
 export const itemDropdown = (state) => state.items?.dropdownItemValues;
 export const businessUserDetails = (state) => state.items?.businessUserDetails;
+export const getItemId = (state) => state.items?.foundItemId;
 
 export const {
     saveItemData,
@@ -449,7 +475,8 @@ export const {
     saveItemDetails,
     clearData,
     saveUserDetails,
-    dropdownItem
+    dropdownItem,
+    foundItemId
 } = itemsSlice.actions;
 
 export default itemsSlice.reducer;

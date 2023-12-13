@@ -1,9 +1,21 @@
-import React from "react";
+import React ,{useEffect}from "react";
 import CustomCombinedButton from "../../components/common/adminButton";
 import keys from "../../assets/images/keys.png";
 import Breadcrumbs from '../../components/common/breadcrumbs';
+import { useParams } from "react-router-dom";
+import { foundItemById ,getItemId} from "../../redux/reducers/itemsSlice";
+import { useDispatch ,useSelector} from "react-redux";
 
-const itemDetails = () => {
+
+function ItemDetails () {
+  const {id} = useParams();
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(foundItemById(id))
+  }, []);
+  const foundItemDetails = useSelector(getItemId);
+ 
   return (
     <div className="m-4">
      <div>
@@ -39,29 +51,27 @@ const itemDetails = () => {
           <div className="w-1/2">
             <div className="mb-2">
               <p className="font-bold mb-2">Founder Name</p>
-              <p>GRB Steels</p>
+              <p>{foundItemDetails.userName}</p>
             </div>
             <div className="mb-2">
               <p className="font-bold mb-2">Found Date</p>
-              <p> 25-06-23</p>
+              <p>{foundItemDetails.foundDate}</p>
             </div>
             <div className="mb-2">
               <p className="font-bold mb-2">Found Location </p>
               <p>
-                Jhon Smith <br></br>
-                ground Floor <br></br>
-                Ottawa Canada
+              {foundItemDetails.location}
               </p>
             </div>
           </div>
           <div className="w-1/2">
             <div className="mb-2">
               <p className="font-bold mb-2">Founder Mobile Number</p>
-              <p>2736598760</p>
+              <p>{foundItemDetails.mobileNumber}</p>
             </div>
             <div className="mb-2">
               <p className="font-bold mb-2">Found Time</p>
-              <p>16.00</p>
+              <p>{foundItemDetails.foundTime}</p>
             </div>
           </div>
         </div>
@@ -73,24 +83,24 @@ const itemDetails = () => {
         <div className="flex p-4 ">
           <div className="w-1/2 mb-2">
             <p className="font-bold mb-2">Item Name</p>
-            <p>Three keys with a keychain</p>
+            <p>{foundItemDetails.itemName}</p>
           </div>
           <div className="w-1/2 mb-2">
             <p className="font-bold mb-2">Item Category </p>
-            <p>Keys</p>
+            <p>{foundItemDetails.itemCategory}</p>
           </div>
         </div>
         <div className="p-4">
           <p className="font-bold mb-2">Item Description</p>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure,
-            repudiandae. Voluptas qui quibusdam quos enim, modi quisquam
-            veritatis sapiente fugiat labore maiores voluptatibus sequi impedit
+          {foundItemDetails.itemDescription}
           </p>
         </div>
         <div className="p-4">
           <p className="font-bold mb-2">Images</p>
           <div className="flex">
+            {/* <img src={foundItemDetails.itemImage} alt="key" />
+            <img src={foundItemDetails.itemImage} alt="key" className="ml-2" /> */}
             <img src={keys} alt="key" />
             <img src={keys} alt="key" className="ml-2" />
           </div>
@@ -100,4 +110,4 @@ const itemDetails = () => {
   );
 };
 
-export default itemDetails;
+export default ItemDetails;

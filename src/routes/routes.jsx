@@ -136,7 +136,7 @@ const routers = [
       
       {
         component: "itemDetails",
-        childPath: "/foundItems/itemDetails",
+        childPath: "/foundItems/itemDetails/:id",
       },
     ]
   },

@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import DeleteModal from "../modal";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 import { useDispatch } from "react-redux";
-const Table = ({ headers, data, showEdit = false,context  }) => {
+const Table = ({ headers, data, showEdit = false, context }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const handleDeleteClick = (id) => {
     setSelectedItemId(id);
     setDeleteModalOpen(true);
@@ -36,24 +35,24 @@ const Table = ({ headers, data, showEdit = false,context  }) => {
         <tbody className="cursor-pointer ">
           {data?.map((item, index) => (
             <tr key={item._id} className={index % 2 === 0 ? "bg-gray" : "bg-white"}>
-            {
-              headers.map((header) => (
-                header.key === 'action' ? (
+              {
+                headers.map((header) => (
+                  header.key === 'action' ? (
                     <td className="py-6 px-6 flex cursor-pointer text-grey">
                       <AiOutlineDelete
                         size={26}
                         onClick={() => handleDeleteClick(item._id)}
                       />
                       {showEdit && (
-                          <FiEdit size={24} onClick={() => navigate(`/admin/user/foundItems/editfoundItems/${item._id}`)}/>
+                        <FiEdit size={24} onClick={() => navigate(`/admin/user/foundItems/editfoundItems/${item._id}`)} />
                       )}
                     </td>
-                    ) : (
-                    <td key={header.key} className="py-4 px-6" onClick={() => navigate('/admin/user/foundItems/itemDetails')}>{item[header.key]}</td>
-                    )
+                  ) : (
+                    <td key={header.key} className="py-4 px-6" onClick={() => navigate(`/admin/user/foundItems/itemDetails/${item._id}`)}>{item[header.key]}</td>
+                  )
                 ))}
-                  </tr>
-                ))}
+            </tr>
+          ))}
         </tbody>
 
       </table>
