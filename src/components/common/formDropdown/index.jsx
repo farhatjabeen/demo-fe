@@ -32,19 +32,19 @@ function FormDropdown({ name, editButton, selection, dropdownValues, optionButto
                                             onChange={(e) => setOptions(e.target.value)}
                                         >
 
-                                                 {dropdownValues?.map((items, i) => {
-                                                        return (
-                                                            <option
-                                                                key={i}
-                                                                value={`${items}`}
-                                                                className="px-4 py-2 flex w-full text-sm hover:bg-green"
-                                                                onClick={() => handleValues(i)}
-                                                            >
-                                                                {items}
-                                                            </option>
-                                                        );
-                                                    })}
-                                                 </select>
+                                            {dropdownValues?.map((items, i) => {
+                                                return (
+                                                    <option
+                                                        key={i}
+                                                        value={`${items}`}
+                                                        className="px-4 py-2 flex w-full text-sm hover:bg-green"
+                                                        onClick={() => handleValues(i)}
+                                                    >
+                                                        {items}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
                                     </div>
 
                                 </div>
