@@ -24,6 +24,7 @@ export default function AddMoreDetails() {
     const dispatch = useDispatch();
     const items = useSelector(itemDropdown);
     const itemCategories = Object.values(items);
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     useEffect(() => {
         dispatch(itemDropdownValues())
@@ -74,6 +75,10 @@ export default function AddMoreDetails() {
         });
     }
 
+    const handleChildData = (dataFromChild) => {
+        setSelectedCategory(dataFromChild);
+        
+      };
 
     useEffect(() => {
         if (!itemname) {
@@ -120,6 +125,7 @@ export default function AddMoreDetails() {
                                     name='itemCategory'
                                     optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                     editButton={true}
+                                    handleData={handleChildData}
                                     selection={true}
                                     dropdownValues={itemCategories} />
                             </div>

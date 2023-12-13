@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClose } from "react-icons/md";
 import OurBrands from '../../components/ourBrands';
@@ -14,19 +14,19 @@ import ImageUpload from '../../components/common/imageUpload';
 import { businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
-    const [files, setFiles] = useState();    
+    const [files, setFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
-    console.log(categoryValue,"valuess")
     const categories = Object.values(categoryValue);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState("");
 
-    const handleCategoryChange = (value) => {
-        setSelectedCategory(value);
-    };
+    // const handleCategoryChange = (value) => {
+    //     setSelectedCategory(value);
+    // };
+    console.log(selectedCategory, 'sct')
 
     const methods = useForm({
         defaultValues: {
@@ -35,17 +35,20 @@ export default function BusinessSignUp() {
             emailMailId: "",
             password: "",
             companyName: "",
-            companyCategory: `${selectedCategory}`,
-            company:`${files}`
+            companyCategory: "",
+            company: `${files}`
         },
         resolver
     });
-    
-    console.log(methods.getValues(),"files")
+
+    useEffect(() => {
+        methods.setValue("companyCategory", selectedCategory);
+    }, [selectedCategory, methods]);
+
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
-        
-        setFiles(()=>{
+
+        setFiles(() => {
             if (selectedFiles) {
                 setIsUploaded(true);
             }
@@ -58,19 +61,27 @@ export default function BusinessSignUp() {
         dispatch(categoryDropdownValues())
     }, [])
 
-    const handleinput = ({ target: { value, name } }) => {
-console.log(value,"fas")
-        // if (name == "selectedCategory") {
-            selectedCategory = value;
-            setSelectedCategory(value)
-        //   }
-      }
+    //     const handleinput = ({ target: { value, name } }) => {
+    // console.log(value,"fas")
+    //         // if (name == "selectedCategory") {
+    //             selectedCategory = value;
+    //             setSelectedCategory(value)
+    //         //   }
+    //       }
 
+
+    // console.log(formData,'fd')
     const submitData = async (e) => {
         e.preventDefault()
-        console.log(selectedCategory,'sc')
+        // console.log(selectedCategory,'sc')
         const values = methods.getValues();
+
         dispatch(businessUserRegister(values))
+    };
+
+    const handleChildData = (dataFromChild) => {
+        setSelectedCategory(dataFromChild);
+
     };
 
     return (
@@ -92,7 +103,7 @@ console.log(value,"fas")
                     </div>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={(e)=>submitData(e)}>
+                    <form onSubmit={(e) => submitData(e)}>
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
@@ -164,36 +175,22 @@ console.log(value,"fas")
                                     Company Logo
                                 </div>
                                 {isUploaded ?
-                                        <div className='flex flex-wrap w-96'>
-                                            {/* {files.map((items, i) => {
-                                                return ( */}
-                                                    <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color m-2'>
-                                                        <div>{files[0].name}</div>
-                                                        <div className='flex items-center ml-2'><MdClose /></div>
-                                                    </div>
-                                                {/* );
-                                            })} */}
+                                    <div className='flex flex-wrap w-96'>
+                                        <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
+                                            <div>{files[0].name}</div>
+                                            <div className='flex items-center ml-2'><MdClose /></div>
                                         </div>
-                                        :
-                                        null
-                                    }
-                                <ImageUpload 
-                                name="company"
-                                designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl' 
-                                multiple={false}
-                                handleFileUpload={handleFileUpload}
+                                    </div>
+                                    :
+                                    null
+                                }
+                                <ImageUpload
+                                    name="company"
+                                    designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl'
+                                    multiple={false}
+                                    handleFileUpload={handleFileUpload}
                                 />
-                                {/* <div className="w-full">
-                                    <label htmlFor='fileInput' className='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl ' >Upload Image</label>
-                                </div>
-                                <input
-                                    type='file'
-                                    id="fileInput"
-                                    accept=".jpg, .jpeg, .png"
-                                    className="hidden "
-                                >
-
-                                </input> */}
+                                
                             </div>
                             <div className="mb-2 mt-4">
                                 <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
@@ -202,17 +199,15 @@ console.log(value,"fas")
                                     optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
                                     dropdownValues={categories}
                                     editButton={true}
-                                    value={selectedCategory}
-                                    // onChange={handleinput}
+                                    handleData={handleChildData}
                                     selection={true}
-                                    onCategoryChange={handleinput}
-                                     />
-                                     
+                                />
+
                             </div>
                             <div className="flex ">
                                 <div className="flex items-center h-5">
                                     <input id="remember" type="checkbox" className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                    <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-[#FF9900]" onClick={() => navigate('/termsOfUse')}> terms and conditions</button>  of ilost Serbia</p>
+                                    <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                 </div>
                                 <label htmlFor="remember" className="ms-2 text-sm"></label>
                             </div>
