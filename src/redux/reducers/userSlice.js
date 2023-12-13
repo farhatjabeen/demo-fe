@@ -92,9 +92,7 @@ export const generalUserRegister = (data) => async(dispatch) => {
             url: endpoints.apiPath.registerGeneralUser,
             method: endpoints.ApiMethods.POST,
             data: data
-        }).then((res) => {
-            const { emailMailId, password } = res.data
-            dispatch(registerGeneralUserMail({ emailMailId, password }))
+        }).then(() => {
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -136,6 +134,21 @@ export const generalUserLogout = () => (dispatch) => {
         }).catch(err => {
             console.log(err)
             resolve(false)
+            return err
+        })
+    })
+}
+
+export const businessUserRegister = (data) => async(dispatch) => {
+    return new Promise((resolve,reject) => {
+        apiRequest({
+            url: endpoints.apiPath.registerBusinessUser,
+            method: endpoints.ApiMethods.POST,
+            data: data
+        }).then(() => {
+            return resolve(true);
+        }).catch(err => {
+            console.log(err)
             return err
         })
     })

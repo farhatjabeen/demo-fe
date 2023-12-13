@@ -1,18 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
-
+import { MdClose } from "react-icons/md";
 import OurBrands from '../../components/ourBrands';
 import DropdownMenu from '../../components/common/dropdown';
 import TextInput from '../../components/common/textInput';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { businessSignUpSchema } from '../../validations';
+import FormDropdown from '../../components/common/formDropdown';
+import { categoryDetails, categoryDropdownValues } from '../../redux/reducers/itemsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import ImageUpload from '../../components/common/imageUpload';
+import { businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const categories = ['Private', 'Public', 'One person'];
+    const [files, setFiles] = useState();    
+    const [isUploaded, setIsUploaded] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
+    const categoryValue = useSelector(categoryDetails);
+    console.log(categoryValue,"valuess")
+    const categories = Object.values(categoryValue);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [selectedCategory, setSelectedCategory] = useState("");
+
+    const handleCategoryChange = (value) => {
+        setSelectedCategory(value);
+    };
+
     const methods = useForm({
         defaultValues: {
             name: "",
@@ -20,13 +35,42 @@ export default function BusinessSignUp() {
             emailMailId: "",
             password: "",
             companyName: "",
-            companyCategory: ""
+            companyCategory: `${selectedCategory}`,
+            company:`${files}`
         },
         resolver
     });
+    
+    console.log(methods.getValues(),"files")
+    const handleFileUpload = (e) => {
+        const selectedFiles = e.target.files;
+        
+        setFiles(()=>{
+            if (selectedFiles) {
+                setIsUploaded(true);
+            }
+            return selectedFiles
+        }
+        );
+    }
 
-    const submitData = async (data) => {
-        return true
+    useEffect(() => {
+        dispatch(categoryDropdownValues())
+    }, [])
+
+    const handleinput = ({ target: { value, name } }) => {
+console.log(value,"fas")
+        // if (name == "selectedCategory") {
+            selectedCategory = value;
+            setSelectedCategory(value)
+        //   }
+      }
+
+    const submitData = async (e) => {
+        e.preventDefault()
+        console.log(selectedCategory,'sc')
+        const values = methods.getValues();
+        dispatch(businessUserRegister(values))
     };
 
     return (
@@ -48,13 +92,13 @@ export default function BusinessSignUp() {
                     </div>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(submitData)}>
+                    <form onSubmit={(e)=>submitData(e)}>
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
                                 <TextInput
                                     type="text"
-                                    placeholder="Full Name"
+                                    placeholder="Full name"
                                     name="name"
                                     id="fullName"
                                     className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
@@ -114,25 +158,65 @@ export default function BusinessSignUp() {
                                     required
                                 />
                             </div>
-                            <div className="mb-2">
-                                <label htmlFor="companyLogo" className="block text-sm font-bold mb-2">Company Logo</label>
-                                <button className="bg-primary-color w-full py-2 rounded-xl">Upload Image</button>
+                            <div className="mb-2 w-full ">
+
+                                <div className="block text-sm font-bold mb-4 w-full">
+                                    Company Logo
+                                </div>
+                                {isUploaded ?
+                                        <div className='flex flex-wrap w-96'>
+                                            {/* {files.map((items, i) => {
+                                                return ( */}
+                                                    <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color m-2'>
+                                                        <div>{files[0].name}</div>
+                                                        <div className='flex items-center ml-2'><MdClose /></div>
+                                                    </div>
+                                                {/* );
+                                            })} */}
+                                        </div>
+                                        :
+                                        null
+                                    }
+                                <ImageUpload 
+                                name="company"
+                                designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl' 
+                                multiple={false}
+                                handleFileUpload={handleFileUpload}
+                                />
+                                {/* <div className="w-full">
+                                    <label htmlFor='fileInput' className='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl ' >Upload Image</label>
+                                </div>
+                                <input
+                                    type='file'
+                                    id="fileInput"
+                                    accept=".jpg, .jpeg, .png"
+                                    className="hidden "
+                                >
+
+                                </input> */}
                             </div>
-                            <div className="mb-2">
+                            <div className="mb-2 mt-4">
                                 <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
-                                <DropdownMenu
-                                    categories={categories}
-                                    selectedCategory={selectedCategory}
-                                    onSelectCategory={(category) => setSelectedCategory(category)} />
+                                <FormDropdown
+                                    name='companyCategory'
+                                    optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
+                                    dropdownValues={categories}
+                                    editButton={true}
+                                    value={selectedCategory}
+                                    // onChange={handleinput}
+                                    selection={true}
+                                    onCategoryChange={handleinput}
+                                     />
+                                     
                             </div>
                             <div className="flex ">
                                 <div className="flex items-center h-5">
                                     <input id="remember" type="checkbox" className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                    <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-[#FF9900]" onClick={navigate('/termsOfUse')}> terms and conditions</button>  of ilost Serbia</p>
+                                    <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-[#FF9900]" onClick={() => navigate('/termsOfUse')}> terms and conditions</button>  of ilost Serbia</p>
                                 </div>
                                 <label htmlFor="remember" className="ms-2 text-sm"></label>
                             </div>
-                            <button className="bg-[#FF9900] w-full py-3  mt-2 rounded-lg">Continue</button>
+                            <button type='submit' className="bg-[#FF9900] w-full py-3 mt-2 rounded-lg">Continue</button>
                         </div>
                     </form>
                 </FormProvider>

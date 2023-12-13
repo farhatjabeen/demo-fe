@@ -195,9 +195,15 @@ export const businessSignUpSchema = yup.object({
     companyName: yup
         .string()
         .required('company name required'),
+    company: yup
+        .mixed()
+        .required('images required'),
     companyCategory: yup
         .string()
         .required("company category required"),
+    checkboxField: yup
+        .boolean()
+        .oneOf([true], 'Checkbox must be checked'),
     keywords: yup
         .string()
         .test('wordCount', 'Keywords must have at least 2 keys', (value) => {
