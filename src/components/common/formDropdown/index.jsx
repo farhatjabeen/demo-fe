@@ -1,22 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Controller } from 'react-hook-form';
-import { RxChevronDown, RxChevronUp } from "react-icons/rx";
+// import { RxChevronDown, RxChevronUp } from "react-icons/rx";
 import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function FormDropdown({ name, editButton, dropdownValues, optionButtonClass,value, onCategoryChange,options }) {
+function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, value, handleData }) {
 
-    // const testOptions = [
-    //     { label: "test", value: 1 }
-    // ]
-    // const [options, setOptions] = useState('');
-    // console.log(options, 'options')
-    // const handleValues = (index) => {
-    //     setOptions(dropdownValues[index]);
-    // }
+    const [options, setOptions] = useState('');
+    console.log(options, 'options')
+
+    useEffect(() => {
+        handleData(options);
+    }, [options, handleData]);
 
     return (
         <ConnectForm>
@@ -26,26 +24,15 @@ function FormDropdown({ name, editButton, dropdownValues, optionButtonClass,valu
                         <Controller
                             name={name}
                             control={control}
-                            render={({ field: { onChange, value: fieldValue, ref, props } }) => (
+                            render={() => (
                                 <div>
                                     <div>
                                         <select
-                                            {...props}
-                                            ref={ref}
-                                            value={value}
                                             id={name}
-                                            // value={fieldValue || ''}
+                                            defaultValue=""
                                             disabled={!editButton}
                                             className={optionButtonClass}
-                                            onChange={(e) => {
-                                                let body = {
-                                                  target: {
-                                                    name: e.target.name,
-                                                    value: e.target.value, 
-                                                  },
-                                                };
-                                                onCategoryChange(body);
-                                              }}
+                                            onChange={(e)=>{setOptions(e.target.value)}}
                                         >
 
                                             {dropdownValues?.map((items, i) => {

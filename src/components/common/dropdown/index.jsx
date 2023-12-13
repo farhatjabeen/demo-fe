@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 
-export default function DropdownMenu({ categories, selectedCategory, onSelectCategory, isFilterMode ,dropdownValues}) {
+export default function DropdownMenu({ categories, selectedCategory, onSelectCategory, isFilterMode, dropdownValues }) {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -27,7 +27,7 @@ export default function DropdownMenu({ categories, selectedCategory, onSelectCat
       {isDropdownOpen && (
         <div className="origin-top-right absolute  right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-            {dropdownValues && dropdownValues.map((category, index) => (
+            {dropdownValues?.map((category, index) => (
               <button
                 key={index}
                 onClick={() => handleCategorySelect(category)}
