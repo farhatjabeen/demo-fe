@@ -7,19 +7,21 @@ import Breadcrumbs from '../../components/common/breadcrumbs';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { editFoundItemsSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../../components/common/textInput";
 import TextAreaInput from '../../components/common/textAreaInput';
-import { adminUpdateFoundItems } from '../../redux/reducers/itemsSlice';
+import { foundItemById, getItemId } from '../../redux/reducers/itemsSlice';
+import { useParams } from "react-router-dom";
 
 
-const EditFoundItems = (values) => {
+const EditFoundItems = () => {
   const navigate = useNavigate();
-
+  const { id } = useParams();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
+  
   const methods = useForm({
     defaultValues: {
       founderName: "",
@@ -32,10 +34,24 @@ const EditFoundItems = (values) => {
     },
     resolver
   });
-  useEffect((values) => {
-    dispatch(adminUpdateFoundItems(values))
-  },[values])
-
+  useEffect(() => {
+    dispatch(foundItemById(id))
+  }, [id])
+  const foundItemDetails = useSelector(getItemId);
+  useEffect(() => {
+    if (foundItemDetails) {
+      methods.reset({
+        founderName: foundItemDetails.userName || '',
+        mobileNumber: foundItemDetails.mobileNumber || '',
+        foundDate: foundItemDetails.foundDate || '',
+        foundTime: foundItemDetails.foundTime || '',
+        foundLocation: foundItemDetails.location || '',
+        itemName: foundItemDetails.itemName || '',
+        itemDescription: foundItemDetails.itemDescription || '',
+      });
+    }
+  }, [foundItemDetails]);
+  
   const submitData = async (data) => {
     navigate('/admin/user/foundItems');
   };
@@ -73,18 +89,18 @@ const EditFoundItems = (values) => {
                 </div>
                 <div className="mb-2 mb-4  ">
                   <label>Found Date</label>
-                  <div >
+                  <div className='relative '>
                     <TextInput
-                      type='date'
+                      // type='date'
                       name="foundDate"
                       placeholder="Value"
                       autoComplete="off"
                       className="w-11/12 py-2 px-3 border border-gray rounded-md"
                       required
                     />
-                    {/* <div className="absolute inset-y-0 right-10 flex items-center pr-6">
+                    <div className="absolute inset-y-0 right-10 flex items-center pr-6">
                       <MdOutlineCalendarToday size={24} />
-                    </div> */}
+                    </div>
                   </div>
                 </div>
 
