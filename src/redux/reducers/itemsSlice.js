@@ -326,8 +326,6 @@ export const categoryDropdownValues = () => (dispatch) => {
         apiRequest({
             url: endpoints.apiPath.items.categoryDropdown,
             method: endpoints.ApiMethods.GET,
-            isAuth: true,
-            tokenType: 'businessUserToken',
         }).then((res) => {
             dispatch(dropdownCategory(res.data))
             return resolve(true)
