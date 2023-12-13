@@ -12,7 +12,7 @@ let initialState = {
     viewDetailsByLocation: [],
     dropdownLocationValues: [],
     dropdownCategoryValues: [],
-    dropdownItemValues:[],
+    dropdownItemValues: [],
 }
 
 export const itemsSlice = createSlice({
@@ -229,8 +229,11 @@ export const searchItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
             method: endpoints.ApiMethods.GET
         }).then((res) => {
-            const { _id, itemName, location, foundDate, foundTime } = res.data
-            dispatch(saveItemDataById({ _id, itemName, location, foundDate, foundTime }))
+            const { _id, itemImage, itemName, location, foundDate, foundTime } = res.data
+            // if (Array.isArray(itemImage) && itemImage.length > 0) {
+            //     dispatch(saveItemDataById(itemImage))
+            // }
+            dispatch(saveItemDataById({ _id, itemImage, itemName, location, foundDate, foundTime }))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -248,10 +251,14 @@ export const viewItemById = (itemId) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
         }).then((res) => {
-            const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
-            if (Array.isArray(itemImage) && itemImage.length > 0) {
-                dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
-            }
+            const { itemImage, itemName, itemCategory, itemDescription,
+                keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            // if (Array.isArray(itemImage) && itemImage.length > 0) {
+            //     dispatch(viewItemDetailsById(itemImage))
+            // }
+
+            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -342,7 +349,7 @@ export const itemDropdownValues = () => (dispatch) => {
             method: endpoints.ApiMethods.GET,
             isAuth: true
         }).then((res) => {
-            console.log(res.data,'res.data')
+            console.log(res.data, 'res.data')
             dispatch(dropdownItem(res.data))
             return resolve(true)
         }).catch(err => {
@@ -382,7 +389,7 @@ export const foundItemById = (itemId) => (dispatch) => {
 };
 
 //update found item in admin
-export const adminUpdateFoundItems = (values,itemId) => (dispatch) => {
+export const adminUpdateFoundItems = (values, itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}}`,
@@ -390,7 +397,7 @@ export const adminUpdateFoundItems = (values,itemId) => (dispatch) => {
             isAuth: true,
             tokenType: 'adminToken',
             data: values
-        }).then( (res) => {
+        }).then((res) => {
             console.log(res)
         }).then((res) => {
             const { list } = res.data
@@ -422,7 +429,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
         }
         else if (context === "businessUser") {
             apiRequest({
-                url:`${endpoints.apiPath.items.deleteBusinessUser}?userId=${itemId}`,
+                url: `${endpoints.apiPath.items.deleteBusinessUser}?userId=${itemId}`,
                 method: endpoints.ApiMethods.DELETE,
                 isAuth: true,
                 tokenType: 'adminToken',

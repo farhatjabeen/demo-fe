@@ -5,6 +5,7 @@ const apiPath = {
     logoutBusinessUser: '/business/signup',
     checkEmail: '/user/emailExist',
     registerGeneralUser: '/user/signup',
+    registerBusinessUser: '/business/signup',
     loginAdmin: '/admin/login',
     resetPasswordAdmin:'/admin/resetPassword',
     businessProfile: '/business/userDetails',

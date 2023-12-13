@@ -12,11 +12,13 @@ import { MdClose } from "react-icons/md";
 import { itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import FormDropdown from '../../components/common/formDropdown';
+import ImageUpload from '../../components/common/imageUpload';
 
 export default function AddMoreDetails() {
     const [itemname, setItemname] = useState('');
     const [location, setLocation] = useState('');
     const [files, setFiles] = useState([]);
+    console.log(files,"files")
     const [isUploaded, setIsUploaded] = useState(false);
     const [isReset, setIsReset] = useState(false);
     const dispatch = useDispatch();
@@ -175,8 +177,23 @@ export default function AddMoreDetails() {
                                         null
                                     }
 
-                                    <div className="flex items-center">
-                                        <label
+                                    <div className="flex justify-center items-center">
+                                        <ImageUpload 
+                                        name="imageUpload"
+                                        designClass={
+                                            
+                                            `${isUploaded
+                                                ?
+                                                "xl:w-80 md:w-80 sm:64 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
+                                                :
+                                                "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                            }`
+                                        }
+                                            multiple={true}
+                                            handleFileUpload={handleFileUpload}
+                                            fileInputRef={fileInputRef}
+                                        />
+                                        {/* <label
                                             htmlFor="fileInput"
                                             className=
                                             {
@@ -198,7 +215,7 @@ export default function AddMoreDetails() {
                                             multiple
                                             onChange={handleFileUpload}
                                             ref={fileInputRef}
-                                        />
+                                        /> */}
                                         {isUploaded ?
                                             <div>
                                                 <button className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function ClaimItem() {
     const dispatch = useDispatch();
     const productDetails = useSelector(searchDetailsById);
+    console.log(productDetails,'pd')
     const itemId = useParams();
 
     useEffect(() => {
@@ -31,7 +32,7 @@ export default function ClaimItem() {
                     <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl'>Prove your authenticity to claim the item</div>
                 </div>
                 <div className='mt-10 xl:w-10/12 md:w-11/12 sm:w-11/12 flex justify-center items-center'>
-                    <div><img src={keys} alt='keys' className='rounded-3xl xl:h-72 xl:w-96 md:h-60 md:w-64 sm:h-48 sm:w-48'></img></div>
+                    <div><img src={productDetails?.itemImage } alt='keys' className='rounded-3xl xl:h-72 xl:w-96 md:h-60 md:w-64 sm:h-48 sm:w-48'></img></div>
                     <div className='bg-white xl:w-8/12 xl:h-72 md:w-9/12 md:h-60 sm:w-11/12 sm:h-48 rounded-3xl xl:p-8 md:p-8 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
                         <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl' >{productDetails?.itemName} (Item #9382)</div>
                         <div className='xl:mt-6 md:mt-6 sm:mt-3'>

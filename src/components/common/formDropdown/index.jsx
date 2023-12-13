@@ -7,11 +7,16 @@ import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function FormDropdown({ name, editButton, selection, dropdownValues, optionButtonClass }) {
-    const [options, setOptions] = useState('');
-    const handleValues = (index) => {
-        setOptions(dropdownValues[index]);
-    }
+function FormDropdown({ name, editButton, dropdownValues, optionButtonClass,value, onCategoryChange,options }) {
+
+    // const testOptions = [
+    //     { label: "test", value: 1 }
+    // ]
+    // const [options, setOptions] = useState('');
+    // console.log(options, 'options')
+    // const handleValues = (index) => {
+    //     setOptions(dropdownValues[index]);
+    // }
 
     return (
         <ConnectForm>
@@ -21,15 +26,26 @@ function FormDropdown({ name, editButton, selection, dropdownValues, optionButto
                         <Controller
                             name={name}
                             control={control}
-                            render={() => (
+                            render={({ field: { onChange, value: fieldValue, ref, props } }) => (
                                 <div>
                                     <div>
                                         <select
-                                            value={options}
+                                            {...props}
+                                            ref={ref}
+                                            value={value}
                                             id={name}
+                                            // value={fieldValue || ''}
                                             disabled={!editButton}
                                             className={optionButtonClass}
-                                            onChange={(e) => setOptions(e.target.value)}
+                                            onChange={(e) => {
+                                                let body = {
+                                                  target: {
+                                                    name: e.target.name,
+                                                    value: e.target.value, 
+                                                  },
+                                                };
+                                                onCategoryChange(body);
+                                              }}
                                         >
 
                                             {dropdownValues?.map((items, i) => {
