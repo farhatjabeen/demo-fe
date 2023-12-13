@@ -375,7 +375,7 @@ export const foundItemById = (itemId) => (dispatch) => {
         }).then((res) => {
             const { data } = res
 
-            dispatch(foundItemId( data ))
+            dispatch(foundItemId(data))
             Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
@@ -417,6 +417,8 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 isAuth: true,
                 tokenType: 'adminToken',
             });
+            dispatch(adminFetchItems());
+
         } else if (context === "user") {
             apiRequest({
                 url: `${endpoints.apiPath.items.deleteUser}?userId=${itemId}`,
@@ -424,6 +426,8 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 isAuth: true,
                 tokenType: 'adminToken',
             });
+            dispatch(adminFetchUser());
+
         }
         else if (context === "businessUser") {
             apiRequest({
@@ -432,9 +436,9 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 isAuth: true,
                 tokenType: 'adminToken',
             });
+            dispatch(adminFetchBusinessUser());
         }
 
-        dispatch(adminFetchItems());
         Toast({ type: "success", message: "Item deleted successfully." });
     } catch (error) {
         console.error(error);
@@ -444,6 +448,31 @@ export const deleteItem = (itemId, context) => (dispatch) => {
             Toast({ type: "error", message: "Error deleting item." });
         }
     }
+};
+
+export const adminExportItems = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.itemReport,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'adminToken'
+        }).then((res) => {
+            const blob = new Blob([res.data], { type: 'application/octet-stream' });
+
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "foundItems.pdf";
+            a.click();
+
+            window.URL.revokeObjectURL(url);
+            resolve(true);
+        }).catch(err => {
+            console.error(err);
+            reject(err);
+        });
+    });
 };
 
 export const updateFoundItems = (state) => state.items?.updateFoundItems;
