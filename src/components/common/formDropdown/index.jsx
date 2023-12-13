@@ -2,16 +2,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { Controller } from 'react-hook-form';
-import { RxChevronDown, RxChevronUp } from "react-icons/rx";
+// import { RxChevronDown, RxChevronUp } from "react-icons/rx";
 import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
 function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, value, handleData }) {
 
-    // const testOptions = [
-    //     { label: "test", value: 1 }
-    // ]
     const [options, setOptions] = useState('');
     console.log(options, 'options')
 
@@ -40,10 +37,11 @@ function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, val
 
                                             {dropdownValues?.map((items, i) => {
                                                 return (
-
                                                     <option
+                                                        key={i}
                                                         value={`${items}`}
                                                         className="px-4 py-2 flex w-full text-sm hover:bg-green"
+                                                        onClick={() => handleValues(i)}
                                                     >
                                                         {items}
                                                     </option>
