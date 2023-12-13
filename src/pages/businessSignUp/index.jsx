@@ -15,6 +15,7 @@ import { businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
     const [files, setFiles] = useState();
+    console.log(files, 'files')
     const [isUploaded, setIsUploaded] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
@@ -36,47 +37,64 @@ export default function BusinessSignUp() {
             password: "",
             companyName: "",
             companyCategory: "",
-            company: `${files}`
+            company: ""
         },
         resolver
     });
 
-    useEffect(() => {
-        methods.setValue("companyCategory", selectedCategory);
-    }, [selectedCategory, methods]);
+    // useEffect(() => {
+    //     methods.setValue("companyCategory", selectedCategory);
+    // }, [selectedCategory, methods]);
+
+    
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
-
+        // if(selectedFiles){
+        // }
         setFiles(() => {
             if (selectedFiles) {
                 setIsUploaded(true);
+                
             }
             return selectedFiles
         }
         );
     }
 
+    // useEffect(() => {
+    //     console.log(formData.getAll("imageFile"), 'formdata'); // Log FormData when files are uploaded
+    // }, [formData]);
+
+    // useEffect(() => {
+    //     if (files) {
+    //         // console.log(formData.getAll('imageFile'),'formdata')
+    //         methods.setValue("company", formData);
+    //     }
+    // }, [files, formData, methods]);
+
     useEffect(() => {
         dispatch(categoryDropdownValues())
     }, [])
 
-    //     const handleinput = ({ target: { value, name } }) => {
-    // console.log(value,"fas")
-    //         // if (name == "selectedCategory") {
-    //             selectedCategory = value;
-    //             setSelectedCategory(value)
-    //         //   }
-    //       }
-
-
-    // console.log(formData,'fd')
     const submitData = async (e) => {
-        e.preventDefault()
-        // console.log(selectedCategory,'sc')
-        const values = methods.getValues();
+        e.preventDefault();
+        let formData = new FormData();
+        console.log(files[0],"files ")
+        formData.append("company", files[0]);
+        formData.append('companyName','Starbucks');
+        formData.append('companyCategory','Warehousing');
+        formData.append('name','Dinesh');
+        formData.append('mobileNumber','7265431234');
+        formData.append('emailMailId','dineshkumar180370@gmail.com');
+        formData.append('password','Dinesh@345');
 
-        dispatch(businessUserRegister(values))
+        console.log(formData,'formdata')
+        // methods.setValue("company", formData);
+        // const values = methods.getValues();
+        // console.log(values, 'values')
+        // const company = {formData}
+        dispatch(businessUserRegister(formData))
     };
 
     const handleChildData = (dataFromChild) => {
@@ -190,7 +208,7 @@ export default function BusinessSignUp() {
                                     multiple={false}
                                     handleFileUpload={handleFileUpload}
                                 />
-                                
+
                             </div>
                             <div className="mb-2 mt-4">
                                 <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>

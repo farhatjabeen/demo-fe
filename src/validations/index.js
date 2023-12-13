@@ -77,7 +77,7 @@ export const addMoreDetailsSchema = yup.object({
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .required("Please re-type your password"),
-    location: yup
+    companyLocation: yup
         .string()
         .required('location required'),
     landmark: yup
@@ -136,6 +136,21 @@ export const companyProfile = yup.object({
         .number()
         .min(10)
         .required('mobile number required'),
+    currentPassword: yup
+        .string()
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character'),
+    newPassword: yup
+        .string()
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .required('password required'),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("newPassword")], "Passwords does not match")
+        .required("Please re-type your password")
 });
 
 export const AdminSignInSchema = yup.object({
@@ -197,7 +212,7 @@ export const businessSignUpSchema = yup.object({
         .required('company name required'),
     company: yup
         .mixed()
-        .required('images required'),
+        .required('image required'),
     companyCategory: yup
         .string()
         .required("company category required"),

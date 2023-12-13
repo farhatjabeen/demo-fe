@@ -41,7 +41,6 @@ function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, val
                                                         key={i}
                                                         value={`${items}`}
                                                         className="px-4 py-2 flex w-full text-sm hover:bg-green"
-                                                        onClick={() => handleValues(i)}
                                                     >
                                                         {items}
                                                     </option>
