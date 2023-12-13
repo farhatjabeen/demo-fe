@@ -7,12 +7,12 @@ import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import { useDispatch, useSelector } from 'react-redux';
-import { adminFetchItems, foundItemDetails } from '../../redux/reducers/itemsSlice';
+import { adminFetchItems, foundItemDetails, itemDropdownValues } from '../../redux/reducers/itemsSlice';
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [PageLimit,setPageLimit ] = useState(10);
+  const [PageLimit, setPageLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
@@ -21,8 +21,12 @@ function FoundItems() {
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
-  }, [dispatch, currentPage, PageLimit ]);
+  }, [dispatch, currentPage, PageLimit]);
 
+  useEffect(() => {
+    dispatch(itemDropdownValues());
+  }, [dispatch]);
+  
   const handleExport = () => { };
 
   const handleReset = () => {
@@ -97,7 +101,7 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      <Table headers={tableHeaders} data={tableData?.list} showEdit={true} context="foundItems"  />
+      <Table headers={tableHeaders} data={tableData?.list} showEdit={true} context="foundItems" />
 
       <Pagination
         isBlueBackground={true}

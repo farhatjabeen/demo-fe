@@ -21,6 +21,7 @@ const apiPath = {
         updateFoundItems:'/admin/updateItem',
         deleteItem:'/admin/deleteItem',
         deleteUser:'/admin/deleteUser',
+        itemReport:'/admin/generateItemReport',
         deleteBusinessUser:'/admin/deleteUser',
         searchByKeyword: '/user/getItemByKeyword',
         searchById: '/user/item',
