@@ -7,17 +7,17 @@ import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import { useDispatch, useSelector } from 'react-redux';
-import { adminFetchItems, foundItemDetails, itemDropdownValues } from '../../redux/reducers/itemsSlice';
+import { adminExportItems, adminFetchItems, foundItemDetails, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
 
 function FoundItems() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [PageLimit, setPageLimit] = useState(10);
+  const PageLimit = 10;
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
-
-  const categories = ['Electronics', 'Furniture', 'Category 3'];
+  const items = useSelector(itemDropdown)
+  const dropdownValues = Object.values(items);
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
@@ -25,17 +25,25 @@ function FoundItems() {
 
   useEffect(() => {
     dispatch(itemDropdownValues());
-  }, [dispatch]);
+  }, []);
+  useEffect(() => {
+    dispatch(itemDropdownValues());
+  }, []);
   
-  const handleExport = () => { };
+
+  const handleExport = () => { 
+    dispatch(adminExportItems())
+  };
 
   const handleReset = () => {
     setSearchTerm("");
-    setSelectedCategory(null);
+    setSelectedCategory("");
   };
   const handleSearch = () => {
     dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, searchTerm));
   };
+
+
   const tableHeaders = [
     { key: "_id", label: "Item ID" },
     { key: "itemName", label: "Item Name" },
@@ -63,6 +71,7 @@ function FoundItems() {
             onClick={handleExport}
             isReset={false}
             buttonColor="blue"
+            
           />
         </div>
       </div>
@@ -76,10 +85,12 @@ function FoundItems() {
             onChange={(event) => setSearchTerm(event.target.value)}
           />
           <div className="basis-5/12">
-            <DropdownMenu categories={categories}
-              selectedCategory={selectedCategory}
-              onSelectCategory={(category) => setSelectedCategory(category)}
-              isFilterMode={true} />
+            <DropdownMenu
+              dropdownValues={dropdownValues}
+              value={selectedCategory}
+              onChange={setSelectedCategory} 
+              placeholder="Filter by Category"
+            />
           </div>
           <div className="basis-1/12">
             <CustomCombinedButton

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../../components/common/textInput";
 import TextAreaInput from '../../components/common/textAreaInput';
-import { foundItemById, getItemId } from '../../redux/reducers/itemsSlice';
+import { foundItemById, getItemId , itemDropdown, itemDropdownValues} from '../../redux/reducers/itemsSlice';
 import { useParams } from "react-router-dom";
 
 
@@ -21,6 +21,8 @@ const EditFoundItems = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
+  const items = useSelector(itemDropdown)
+  const dropdownValues = Object.values(items);
   
   const methods = useForm({
     defaultValues: {
@@ -51,7 +53,9 @@ const EditFoundItems = () => {
       });
     }
   }, [foundItemDetails]);
-  
+  useEffect(() => {
+    dispatch(itemDropdownValues());
+  }, []);
   const submitData = async (data) => {
     navigate('/admin/user/foundItems');
   };
@@ -161,9 +165,10 @@ const EditFoundItems = () => {
               <div className="mb-2 w-5/12">
                 <label>Item Category</label>
                 <DropdownMenu
-                  categories={categories}
-                  selectedCategory={selectedCategory}
-                  onSelectCategory={(category) => setSelectedCategory(category)} />
+                  dropdownValues={dropdownValues}
+                  value={selectedCategory}
+                  onChange={setSelectedCategory}
+                  placeholder="Value"  />
               </div>
             </div>
             <div className="p-4">
