@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
-import FormDropdown from '../../components/formDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -8,6 +7,7 @@ import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
 import { companyProfileData, editCompanyProfileData } from '../../redux/reducers/userSlice';
 import { categoryDetails, categoryDropdownValues, locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
+import FormDropdown from '../../components/common/formDropdown';
 
 export default function CompanyProfile() {
 
@@ -18,6 +18,8 @@ export default function CompanyProfile() {
     const citiesInSerbia = Object.values(cities);
     const categories = useSelector(categoryDetails);
     const companyCategories = Object.values(categories);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedLocation, setSelectedLocation] = useState("");
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -41,19 +43,44 @@ export default function CompanyProfile() {
             name: "",
             mobileNumber: "",
             emailMailId: "",
-            password: "",
+            currentPassword: "",
             newPassword: "",
             confirmPassword: ""
         },
         resolver
     });
 
+    useEffect(() => {
+        methods.setValue("companyCategory", selectedCategory);
+        methods.setValue("companyLocation", selectedLocation);
+    }, [selectedCategory, selectedLocation, methods]);
+
     const submitData = (data) => {
         try {
-            dispatch(editCompanyProfileData(methods.getValues()))
+            const name = methods.getValues().name;
+            const emailMailId = methods.getValues().emailMailId;
+            const mobileNumber = methods.getValues().mobileNumber;
+            const companyName = methods.getValues().companyName;
+            const companyCategory = methods.getValues().companyCategory;
+            const companyLocation = methods.getValues().companyLocation;
+
+            const currentPassword = methods.getValues().currentPassword;
+            if(currentPassword){
+                dispatch(editCompanyProfileData(methods.getValues()))
+            } else{
+                dispatch(editCompanyProfileData({name,emailMailId,mobileNumber,companyName,companyCategory,companyLocation}))
+            }
+            
         } catch (error) {
             console.log("submitData errors", error)
         }
+    };
+    
+    const handleChildData = (dataFromChild) => {
+        setSelectedCategory(dataFromChild);
+    };
+    const handleChildDataLocation = (dataFromChild) => {
+        setSelectedLocation(dataFromChild);
     };
 
 
@@ -89,9 +116,13 @@ export default function CompanyProfile() {
                                     <div className='font-medium text-xs'>Company Category</div>
                                 </div>
                                 <FormDropdown
+                                    name='companyCategory'
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     editButton={editButton}
                                     selection={select}
-                                    dropdownValues={companyCategories} />
+                                    dropdownValues={companyCategories}
+                                    handleData={handleChildData}
+                                />
                             </div>
 
                             <div className='flex justify-between mb-9'>
@@ -100,9 +131,13 @@ export default function CompanyProfile() {
                                     <div className='font-medium text-xs'>Company Location</div>
                                 </div>
                                 <FormDropdown
+                                    name='companyLocation'
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     editButton={editButton}
                                     selection={select}
-                                    dropdownValues={citiesInSerbia} />
+                                    dropdownValues={citiesInSerbia}
+                                    handleData={handleChildDataLocation} 
+                                     />
                             </div>
 
                             <div className='border-b border-b-solid border-b-[#949494] mt-12'>
@@ -160,7 +195,15 @@ export default function CompanyProfile() {
                                 </div>
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter Current password</label>
-                                    <input className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' />
+                                    <TextInput
+                                        type="password"
+                                        placeholder="Current password"
+                                        name="currentPassword"
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                        autoComplete="off"
+                                        disable={!editButton}
+                                    />
+                                    {/* <input className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter New password</label>
