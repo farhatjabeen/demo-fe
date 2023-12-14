@@ -222,7 +222,7 @@ const PopoverComponent = () => {
                                                         </div>
                                                         <button
                                                             type='submit'
-                                                            {...field}
+                                                            
                                                             onChange={()=>handleEmailChange}
                                                             className={`w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-[#00B8B8]' : 'bg-[#A7A9AC]'}  text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
                                                             CONTINUE
