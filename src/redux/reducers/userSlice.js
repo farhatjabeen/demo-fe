@@ -9,7 +9,8 @@ const initialState = {
     queryData: null,
     userMail: null,
     registerUser: null,
-    generalUserProfile: null
+    generalUserProfile: null,
+    getLogoImage: null
 };
 
 export const userSlice = createSlice({
@@ -17,19 +18,13 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         saveUserData: (state, action) => {
-            state.userData = {
-                ...action.payload
-            };
+            state.userData = { ...action.payload };
         },
         saveGeneralUserMail: (state, action) => {
-            state.userMail = {
-                ...action.payload
-            };
+            state.userMail = { ...action.payload };
         },
         registerGeneralUserMail: (state, action) => {
-            state.registerUser = {
-                ...action.payload
-            };
+            state.registerUser = { ...action.payload };
         },
         saveCompanyProfile: (state, action) => {
             state.userProfile = { ...action.payload };
@@ -38,9 +33,10 @@ export const userSlice = createSlice({
             state.generalUserProfile = { ...action.payload };
         },
         saveQueryData: (state, action) => {
-            state.queryData = {
-                ...action.payload
-            };
+            state.queryData = { ...action.payload };
+        },
+        getLogo: (state, action) => {
+            state.getLogoImage = { ...action.payload };
         },
 
         clearData: () => initialState
@@ -67,15 +63,17 @@ export const loginUser = (data) => (dispatch) => {
     })
 }
 
-export const checkGeneralUserEmail = (data) => async(dispatch) => {
-    return new Promise((resolve,reject) => {
+export const userDetails = (state) => console.log(state, 'state');
+
+export const checkGeneralUserEmail = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.checkEmail,
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
             const { emailMailId, isAlreadyRegistered } = res.data
-            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered   }))
+            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered }))
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -86,8 +84,8 @@ export const checkGeneralUserEmail = (data) => async(dispatch) => {
 
 export const mailId = (state) => state.user?.userMail;
 
-export const generalUserRegister = (data) => async(dispatch) => {
-    return new Promise((resolve,reject) => {
+export const generalUserRegister = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.registerGeneralUser,
             method: endpoints.ApiMethods.POST,
@@ -101,7 +99,7 @@ export const generalUserRegister = (data) => async(dispatch) => {
     })
 }
 
-export const registerUser = (state) => console.log(state,'state')
+export const registerUser = (state) => console.log(state, 'state')
 
 export const generalUserLogin = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -139,8 +137,9 @@ export const generalUserLogout = () => (dispatch) => {
     })
 }
 
-export const businessUserRegister = (data) => async(dispatch) => {
-    return new Promise((resolve,reject) => {
+// business user sign-up
+export const businessUserRegister = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.registerBusinessUser,
             method: endpoints.ApiMethods.POST,
@@ -154,7 +153,7 @@ export const businessUserRegister = (data) => async(dispatch) => {
     })
 }
 
-// business user logout **
+// business user logout 
 export const businessUserLogout = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -190,7 +189,6 @@ export const loginAdminUser = (data) => (dispatch) => {
     })
 }
 
-
 export const changePassword = (data) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -212,13 +210,13 @@ export const adminResetPassword = (data) => async () => {
             url: endpoints.apiPath.resetPasswordAdmin,
             method: endpoints.ApiMethods.PUT,
             data: data,
-            isAuth:true,
+            isAuth: true,
             tokenType: 'adminToken',
         }).then(res => {
             return resolve(true);
         }).catch(err => {
             reject(err);
-            console.log('rejected',err)
+            console.log('rejected', err)
         })
     })
 }
@@ -306,6 +304,6 @@ export const contactAdmin = (data) => async (dispatch) => {
     })
 }
 
-export const { saveUserData, saveUserProfile, saveCompanyProfile, registerGeneralUserMail, saveGeneralUserMail, saveQueryData, clearData } = userSlice.actions;
+export const { saveUserData, getLogo, saveUserProfile, saveCompanyProfile, registerGeneralUserMail, saveGeneralUserMail, saveQueryData, clearData } = userSlice.actions;
 
 export default userSlice.reducer;

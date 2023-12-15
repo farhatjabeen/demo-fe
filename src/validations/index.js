@@ -42,7 +42,7 @@ export const generalUserRegisterSchema = yup.object({
             passwordRegExp,
             'Password must be 8-20 characters with at least one letter, one number, and one special character')
         .required('password required'),
-    password: yup
+    confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .required("Please re-type your password")
@@ -210,7 +210,10 @@ export const businessSignUpSchema = yup.object({
     companyName: yup
         .string()
         .required('company name required'),
-    company: yup
+    companylogo: yup
+        .mixed()
+        .required('image required'),
+    cloudinary_id: yup
         .mixed()
         .required('image required'),
     companyCategory: yup

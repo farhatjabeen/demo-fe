@@ -25,7 +25,7 @@ export const getFormErrorMessage = (errors, name) => {
 export const axiosInstance = axios.create({
     headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/json'
         // 'Content-Type': 'text/plain' // if API's encrypted
     }
 });

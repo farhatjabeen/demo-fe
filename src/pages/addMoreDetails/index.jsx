@@ -15,10 +15,9 @@ import FormDropdown from '../../components/common/formDropdown';
 import ImageUpload from '../../components/common/imageUpload';
 
 export default function AddMoreDetails() {
-    const [itemname, setItemname] = useState('');
+    const [itemName, setItemName] = useState('');
     const [location, setLocation] = useState('');
     const [files, setFiles] = useState([]);
-    console.log(files,"files")
     const [isUploaded, setIsUploaded] = useState(false);
     const [isReset, setIsReset] = useState(false);
     const dispatch = useDispatch();
@@ -77,12 +76,11 @@ export default function AddMoreDetails() {
 
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
-        
-      };
+    };
 
     useEffect(() => {
-        if (!itemname) {
-            setItemname(reportDetails.itemName);
+        if (!itemName) {
+            setItemName(reportDetails.itemName);
         }
         if (!location) {
             setLocation(reportDetails.location);
@@ -157,9 +155,7 @@ export default function AddMoreDetails() {
                                     className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
-
                                 />
-
                             </div>
 
                             <div className='flex justify-between h-fit mb-9 relative'>
@@ -184,17 +180,16 @@ export default function AddMoreDetails() {
                                     }
 
                                     <div className="flex justify-center items-center">
-                                        <ImageUpload 
-                                        name="imageUpload"
-                                        designClass={
-                                            
-                                            `${isUploaded
-                                                ?
-                                                "xl:w-80 md:w-80 sm:64 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
-                                                :
-                                                "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
-                                            }`
-                                        }
+                                        <ImageUpload
+                                            name="imageUpload"
+                                            designClass={
+                                                `${isUploaded
+                                                    ?
+                                                    "xl:w-80 md:w-80 sm:64 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
+                                                    :
+                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                                }`
+                                            }
                                             multiple={true}
                                             handleFileUpload={handleFileUpload}
                                             fileInputRef={fileInputRef}
@@ -247,7 +242,6 @@ export default function AddMoreDetails() {
                                         autoComplete="off"
                                         required
                                     />
-
                                 </div>
 
                                 <div className='flex justify-between h-12 mb-9 relative'>
@@ -321,4 +315,4 @@ export default function AddMoreDetails() {
             </FormProvider>
         </div>
     )
-}
+};
