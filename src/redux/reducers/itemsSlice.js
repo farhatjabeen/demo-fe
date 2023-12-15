@@ -78,7 +78,7 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
             return resolve(true);
         }).catch(err => {
             console.log(err)
-            Toast({ type: "error", message: err.message })
+            Toast({ type: "error", message: err?.message })
             return err
         })
     })

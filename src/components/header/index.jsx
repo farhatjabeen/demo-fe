@@ -12,10 +12,9 @@ const Header = (props) => {
     const [login, setLogin] = useState(false);
     const [isBusiness, setIsBusiness] = useState(false);
     const dispatch = useDispatch();
-
-
     const userDetails = useSelector(userData);
-console.log(userDetails,'ud')
+    console.log(userDetails,'ud');
+    
     useEffect(() => {
         if (userDetails?.role === 'USER') {
             setLogin(true);
@@ -25,21 +24,22 @@ console.log(userDetails,'ud')
             setLogin(true);
             setIsBusiness(true);
         }
-    }, [])
+    }, [userDetails])
 
     const handleLogout = () => {
         try {
-            
-            
+
+
             if (userDetails?.role === 'USER') {
                 dispatch(generalUserLogout())
-                navigate('/')
                 setLogin(false);
+                navigate('/')
             }
             if (userDetails?.role === 'BUSINESS') {
                 dispatch(businessUserLogout())
-                navigate('/businesshome')
+                setLogin(false);
                 setIsBusiness(false);
+                navigate('/')
             }
 
             dispatch(clearItemData())
@@ -64,9 +64,9 @@ console.log(userDetails,'ud')
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown isBusiness={isBusiness} titleOne='Dashboard' titleTwo='Add Item' handleLogout={()=>handleLogout()} />
+                                    <HeaderDropdown isBusiness={isBusiness} titleOne='Dashboard' titleTwo='Add Item' handleLogout={handleLogout} />
                                     :
-                                    <HeaderDropdown isBusiness={isBusiness} titleOne='My listing' titleTwo='My Profile' handleLogout={handleLogout} />
+                                    <HeaderDropdown isBusiness={isBusiness}  titleOne='My listing' titleTwo='My Profile' handleLogout={handleLogout} />
                             }
                         </div>
                         :

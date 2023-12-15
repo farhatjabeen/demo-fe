@@ -27,7 +27,7 @@ const PopoverComponent = () => {
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
     const [isEmailValid, setIsEmailValid] = useState(false);
-
+console.log(mailIdFromApi,'asdf')
     const validateEmail = (inputEmail) => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return emailRegex.test(inputEmail);
@@ -95,12 +95,6 @@ const PopoverComponent = () => {
         }
     }
 
-    useEffect(() => {
-        return () => {
-            dispatch(clearUserData())
-        }
-    }, [passwordBox])
-
     return (
         <div>
             <Popover>
@@ -123,7 +117,7 @@ const PopoverComponent = () => {
                             <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36'>
                                 <div className='pt-7 w-96'>
                                     {
-                                        passwordBox ?
+                                        passwordBox && mailIdFromApi?.status ?
                                             <div>
                                                 {mailIdFromApi?.isAlreadyRegistered ?
                                                     <div className='mb-5'>

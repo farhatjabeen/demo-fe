@@ -72,10 +72,13 @@ export const checkGeneralUserEmail = (data) => async(dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
+            const{status} = res
             const { emailMailId, isAlreadyRegistered } = res.data
-            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered   }))
+            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered, status }))
             return resolve(true);
         }).catch(err => {
+            // const{status} = err
+            // dispatch(saveGeneralUserMail({status}))
             console.log(err)
             return err
         })
@@ -99,7 +102,7 @@ export const generalUserRegister = (data) => async(dispatch) => {
     })
 }
 
-export const registerUser = (state) => console.log(state,'state')
+// export const registerUser = (state) => console.log(state,'state')
 
 export const generalUserLogin = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -108,8 +111,8 @@ export const generalUserLogin = (data) => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            const { role, emailMailId, _id, token } = res.data
-            dispatch(saveUserData({ role, emailMailId, _id, token }))
+            const { role, emailMailId, mobileNumber, name, _id, token } = res.data
+            dispatch(saveUserData({ role, emailMailId, mobileNumber, name, _id, token }))
             setEncryptedLocalStorageData("userToken", token);
             return resolve(true);
         }).catch(err => {

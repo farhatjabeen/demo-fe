@@ -18,9 +18,9 @@ export default function MyProfile() {
     console.log(fetchUserDetails,'fud')
     const methods = useForm({
         defaultValues: {
-            emailMailId: "",
-            mobileNumber: "",
-            name: "",
+            emailMailId: fetchUserDetails?.emailMailId || "",
+            mobileNumber: fetchUserDetails?.mobileNumber || "",
+            name: fetchUserDetails?.name || "",
             currentPassword: "",
             newPassword: "",
             confirmPassword:""
