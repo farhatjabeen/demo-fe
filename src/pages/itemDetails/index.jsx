@@ -15,6 +15,7 @@ function ItemDetails () {
     dispatch(foundItemById(id))
   }, []);
   const foundItemDetails = useSelector(getItemId);
+  const { userName, mobileNumber, foundDate, foundTime, location,itemName,itemCategory,itemDescription } = foundItemDetails;
  
   return (
     <div className="m-4">
@@ -27,51 +28,38 @@ function ItemDetails () {
         />
       </div>
       <div className="bg-white mt-10 rounded-lg p-4 shadow-md">
-        <div className=" flex border-b pb-4 mx-4 justify-between">
+        <div className=" border-b pb-4 mx-4 justify-between">
           <div>
             <h1 className="text-navy-blue font-bold text-xl mt-2">
               Founder Details
             </h1>
-          </div>
-          <div className=" flex  ">
-            <CustomCombinedButton
-              text="Export as PDF"
-              isReset={false}
-              buttonColor="blue"
-            />
-
-            <CustomCombinedButton
-              text="Contact Founder"
-              isReset={true}
-              buttonColor="other"
-            />
           </div>
         </div>
         <div className="flex p-4 ">
           <div className="w-1/2">
             <div className="mb-2">
               <p className="font-bold mb-2">Founder Name</p>
-              <p>{foundItemDetails.userName}</p>
+              <p>{userName}</p>
             </div>
             <div className="mb-2">
               <p className="font-bold mb-2">Found Date</p>
-              <p>{foundItemDetails.foundDate}</p>
+              <p>{foundDate}</p>
             </div>
             <div className="mb-2">
               <p className="font-bold mb-2">Found Location </p>
               <p>
-              {foundItemDetails.location}
+              {location}
               </p>
             </div>
           </div>
           <div className="w-1/2">
             <div className="mb-2">
               <p className="font-bold mb-2">Founder Mobile Number</p>
-              <p>{foundItemDetails.mobileNumber}</p>
+              <p>{mobileNumber}</p>
             </div>
             <div className="mb-2">
               <p className="font-bold mb-2">Found Time</p>
-              <p>{foundItemDetails.foundTime}</p>
+              <p>{foundTime}</p>
             </div>
           </div>
         </div>
@@ -83,17 +71,17 @@ function ItemDetails () {
         <div className="flex p-4 ">
           <div className="w-1/2 mb-2">
             <p className="font-bold mb-2">Item Name</p>
-            <p>{foundItemDetails.itemName}</p>
+            <p>{itemName}</p>
           </div>
           <div className="w-1/2 mb-2">
             <p className="font-bold mb-2">Item Category </p>
-            <p>{foundItemDetails.itemCategory}</p>
+            <p>{itemCategory}</p>
           </div>
         </div>
         <div className="p-4">
           <p className="font-bold mb-2">Item Description</p>
           <p>
-          {foundItemDetails.itemDescription}
+          {itemDescription}
           </p>
         </div>
         <div className="p-4">

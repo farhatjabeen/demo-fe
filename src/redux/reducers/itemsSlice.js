@@ -366,7 +366,6 @@ export const itemDropdownValues = () => (dispatch) => {
             method: endpoints.ApiMethods.GET,
             isAuth: true
         }).then((res) => {
-            console.log(res.data, 'res.data')
             dispatch(dropdownItem(res.data))
             return resolve(true)
         }).catch(err => {
