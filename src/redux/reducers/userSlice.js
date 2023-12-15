@@ -67,15 +67,15 @@ export const loginUser = (data) => (dispatch) => {
     })
 }
 
-export const checkGeneralUserEmail = (data) => async(dispatch) => {
-    return new Promise((resolve,reject) => {
+export const checkGeneralUserEmail = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.checkEmail,
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
             const { emailMailId, isAlreadyRegistered } = res.data
-            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered   }))
+            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered }))
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -86,8 +86,8 @@ export const checkGeneralUserEmail = (data) => async(dispatch) => {
 
 export const mailId = (state) => state.user?.userMail;
 
-export const generalUserRegister = (data) => async(dispatch) => {
-    return new Promise((resolve,reject) => {
+export const generalUserRegister = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.registerGeneralUser,
             method: endpoints.ApiMethods.POST,
@@ -101,7 +101,7 @@ export const generalUserRegister = (data) => async(dispatch) => {
     })
 }
 
-export const registerUser = (state) => console.log(state,'state')
+export const registerUser = (state) => console.log(state, 'state')
 
 export const generalUserLogin = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -139,8 +139,8 @@ export const generalUserLogout = () => (dispatch) => {
     })
 }
 
-export const businessUserRegister = (data) => async(dispatch) => {
-    return new Promise((resolve,reject) => {
+export const businessUserRegister = (data) => async (dispatch) => {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.registerBusinessUser,
             method: endpoints.ApiMethods.POST,
@@ -190,7 +190,6 @@ export const loginAdminUser = (data) => (dispatch) => {
     })
 }
 
-
 export const changePassword = (data) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -212,13 +211,13 @@ export const adminResetPassword = (data) => async () => {
             url: endpoints.apiPath.resetPasswordAdmin,
             method: endpoints.ApiMethods.PUT,
             data: data,
-            isAuth:true,
+            isAuth: true,
             tokenType: 'adminToken',
         }).then(res => {
             return resolve(true);
         }).catch(err => {
             reject(err);
-            console.log('rejected',err)
+            console.log('rejected', err)
         })
     })
 }

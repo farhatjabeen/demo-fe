@@ -337,7 +337,25 @@ export const categoryDropdownValues = () => (dispatch) => {
             return err;
         })
     })
-}
+};
+
+// file upload
+export const fileUploadAPI = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.fileUpload,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isFile: true
+        }).then((res) => {
+            // No need to store in redux can handle from local state
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
 
 //item drop down data
 export const itemDropdownValues = () => (dispatch) => {
@@ -368,7 +386,7 @@ export const clearItemData = () => (dispatch) => {
 export const foundItemById = (itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.getItembyid}/${itemId}`,
+            url: `${endpoints.apiPath.items.getItemById}/${itemId}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
