@@ -375,13 +375,10 @@ export const foundItemById = (itemId) => (dispatch) => {
             tokenType: 'adminToken'
         }).then((res) => {
             const { data } = res
-
             dispatch(foundItemId(data))
-            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
-            Toast({ type: "error", message: err.message })
             return err
         })
     })
@@ -391,7 +388,7 @@ export const foundItemById = (itemId) => (dispatch) => {
 export const adminUpdateFoundItems = (values, itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}}`,
+            url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}`,
             method: endpoints.ApiMethods.PUT,
             isAuth: true,
             tokenType: 'adminToken',
@@ -459,15 +456,13 @@ export const adminExportItems = () => (dispatch) => {
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            const blob = new Blob([res.data], { type: 'application/octet-stream' });
-
+            const blob = new Blob([res.data], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "foundItems.csv";
+            a.download = "data.csv";
             a.click();
-
-            window.URL.revokeObjectURL(url);
+            window.URL.revokeObjectURL(a);
             resolve(true);
         }).catch(err => {
             console.error(err);

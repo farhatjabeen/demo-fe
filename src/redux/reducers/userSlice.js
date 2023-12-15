@@ -223,23 +223,23 @@ export const changePassword = (data) => async (dispatch) => {
     })
 }
 
-export const adminResetPassword = (data) => async (dispatch) => {
+export const adminResetPassword = (data) => async () => {
 
     return new Promise((resolve, reject) => {
         apiRequest({
             url: endpoints.apiPath.resetPasswordAdmin,
-            method: endpoints.ApiMethods.POST,
-            data: data
+            method: endpoints.ApiMethods.PUT,
+            data: data,
+            isAuth:true,
+            tokenType: 'adminToken',
         }).then(res => {
-            console.log('data',res?.data)
-            return resolve(res?.data);
+            return resolve(true);
         }).catch(err => {
             reject(err);
             console.log('rejected',err)
         })
     })
 }
-
 
 export const clearUserData = () => async (dispatch) => {
     try {
