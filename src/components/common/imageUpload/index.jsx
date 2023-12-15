@@ -4,7 +4,7 @@ import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-export default function ImageUpload({name,designClass,multiple,handleFileUpload,fileInputRef}) {
+export default function ImageUpload({ name, designClass, multiple, handleFileUpload, fileInputRef }) {
     return (
         <ConnectForm>
             {({ errors, control }) => (

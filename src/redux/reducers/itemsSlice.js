@@ -71,7 +71,7 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
-            console.log(res.data,'ress')
+            console.log(res.data, 'ress')
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
             Toast({ type: "success", message: res.message })
@@ -338,7 +338,25 @@ export const categoryDropdownValues = () => (dispatch) => {
             return err;
         })
     })
-}
+};
+
+// file upload
+export const fileUploadAPI = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.fileUpload,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isFile: true
+        }).then((res) => {
+            // No need to store in redux can handle from local state
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
 
 //item drop down data
 export const itemDropdownValues = () => (dispatch) => {
@@ -369,7 +387,7 @@ export const clearItemData = () => (dispatch) => {
 export const foundItemById = (itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.getItembyid}/${itemId}`,
+            url: `${endpoints.apiPath.items.getItemById}/${itemId}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'

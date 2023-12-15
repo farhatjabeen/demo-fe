@@ -18,6 +18,7 @@ const apiRequest = async ({
     params = undefined,
     isLoader = true,
     isAuth = false,
+    isFile = false,
     tokenType = 'userToken' // possible values -> userToken, businessUserToken, adminToken
 }) => {
     if (isAuth) axiosInstance.defaults.headers.common.Authorization = `${await getAuthToken(tokenType)}`;
@@ -27,12 +28,12 @@ const apiRequest = async ({
             url: `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`,
             method: method,
             data: data,
-            params: params,
-            // headers: {
-            //     ...headers,
-            //     // 'Authorization': await localStorage.getItem('TOKEN'),
-            //     'Content-Type': 'application/json'
-            // },
+            params: params
+        }
+        if (!isFile) {
+            axiosInstance.defaults.headers.common["Content-Type"] = "application/json"
+        } else {
+            axiosInstance.defaults.headers.common["Content-Type"] = "multipart/form-data"
         }
         if (isLoader) {
             showLoader(true)

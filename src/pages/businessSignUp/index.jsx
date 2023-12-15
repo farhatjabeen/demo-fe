@@ -3,23 +3,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClose } from "react-icons/md";
 import OurBrands from '../../components/ourBrands';
-import DropdownMenu from '../../components/common/dropdown';
 import TextInput from '../../components/common/textInput';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { businessSignUpSchema } from '../../validations';
 import FormDropdown from '../../components/common/formDropdown';
-import { categoryDetails, categoryDropdownValues } from '../../redux/reducers/itemsSlice';
+import { categoryDetails, categoryDropdownValues, fileUploadAPI } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
-import { businessUserLogo, businessUserRegister } from '../../redux/reducers/userSlice';
+import { businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
-    const categories = Object.values(categoryValue);
-    const navigate = useNavigate();
+    const categories = categoryValue ? Object.values(categoryValue) : [];
+    // const navigate = useNavigate();
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -31,41 +30,37 @@ export default function BusinessSignUp() {
             password: "",
             companyName: "",
             companyCategory: "",
-            company: ""
+            companylogo: "",
+            cloudinary_id: ""
         },
         resolver
     });
 
-    const handleUploadImage = (e) => {
-        const companies = e.target.files;
-        console.log(companies, 'comp')
+    const handleFileUpload = (e) => {
+        const selectedFiles = e.target.files;
         setImageFiles(() => {
-            if (companies) {
+            if (selectedFiles) {
                 setIsUploaded(true);
             }
-            return companies
-        }
-        );
-
-        if (companies) {
-            let formDatas = new FormData();
-            formDatas.append('company', companies[0]);
-            console.log(formDatas, 'formDatas')
-            dispatch(businessUserLogo(formDatas));
-        }
+            return selectedFiles
+        });
     }
 
     useEffect(() => {
         dispatch(categoryDropdownValues())
-    }, [])
+    }, []);
 
-    const submitData = async (e) => {
-        e.preventDefault();
-        methods.setValue("companyCategory", selectedCategory);
-        const values = methods.getValues();
-        // console.log(values, 'values')
-        // const company = {formData}
-        dispatch(businessUserRegister(values))
+    useEffect(() => {
+        if (imageFiles && imageFiles[0]) {
+            let formData = new FormData();
+            formData.append("company", imageFiles[0]);
+            dispatch(fileUploadAPI(formData))
+        }
+    }, [imageFiles]);
+
+    const submitData = (data) => {
+        console.log("submitted", data)
+        // dispatch(businessUserRegister(data))
     };
 
     const handleChildData = (dataFromChild) => {
@@ -91,7 +86,7 @@ export default function BusinessSignUp() {
                     </div>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={(e) => submitData(e)}>
+                    <form onSubmit={methods.handleSubmit(submitData)}>
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
@@ -105,7 +100,6 @@ export default function BusinessSignUp() {
                                     required
                                 />
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="mobileNumber" className="block text-sm font-bold mb-2">Mobile Number</label>
                                 <TextInput
@@ -118,7 +112,6 @@ export default function BusinessSignUp() {
                                     required
                                 />
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="email" className="block text-sm font-bold mb-2">Email Address</label>
                                 <TextInput
@@ -131,7 +124,6 @@ export default function BusinessSignUp() {
                                     required
                                 />
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="password" className="block text-sm font-bold mb-2">Password</label>
                                 <TextInput
@@ -144,7 +136,6 @@ export default function BusinessSignUp() {
                                     required
                                 />
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="companyName" className="block  text-sm font-bold mb-2">Company Name</label>
                                 <TextInput
@@ -157,8 +148,7 @@ export default function BusinessSignUp() {
                                     required
                                 />
                             </div>
-                            <div className="mb-2 w-full ">
-
+                            <div className="mb-2 w-full">
                                 <div className="block text-sm font-bold mb-4 w-full">
                                     Company Logo
                                 </div>
@@ -176,10 +166,8 @@ export default function BusinessSignUp() {
                                     name="company"
                                     designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl'
                                     multiple={false}
-                                    // handleClick={handleUploadImage}
-                                    handleFileUpload={handleUploadImage}
+                                    handleFileUpload={handleFileUpload}
                                 />
-
                             </div>
                             <div className="mb-2 mt-4">
                                 <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
@@ -191,7 +179,6 @@ export default function BusinessSignUp() {
                                     handleData={handleChildData}
                                     selection={true}
                                 />
-
                             </div>
                             <div className="flex ">
                                 <div className="flex items-center h-5">
@@ -205,7 +192,6 @@ export default function BusinessSignUp() {
                     </form>
                 </FormProvider>
             </div>
-
             <div className='mb-20'>
                 <OurBrands
                     asTrustedBy
@@ -213,4 +199,4 @@ export default function BusinessSignUp() {
             </div>
         </>
     )
-}
+};

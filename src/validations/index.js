@@ -210,7 +210,10 @@ export const businessSignUpSchema = yup.object({
     companyName: yup
         .string()
         .required('company name required'),
-    company: yup
+    companylogo: yup
+        .mixed()
+        .required('image required'),
+    cloudinary_id: yup
         .mixed()
         .required('image required'),
     companyCategory: yup
