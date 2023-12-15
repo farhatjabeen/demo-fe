@@ -26,6 +26,23 @@ const PopoverComponent = () => {
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+
+    const validateEmail = (inputEmail) => {
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        return emailRegex.test(inputEmail);
+    };
+
+    const handleEmailChange = (e) => {
+        const mailId = e.target.value;
+        console.log(mailId, 'mmm');
+        const isValid = validateEmail(mailId);
+        if (isValid) {
+            setIsEmailValid(true)
+        } else {
+            setIsEmailValid(false)
+        }
+    };
 
     const methods = useForm({
         defaultValues: {
@@ -34,6 +51,7 @@ const PopoverComponent = () => {
         },
         resolver
     });
+    console.log(methods.getValues().emailMailId, "emailMailId")
 
     const methodsForRegister = useForm({
         defaultValues: {
@@ -50,7 +68,7 @@ const PopoverComponent = () => {
             const login = dispatch(checkGeneralUserEmail({ emailMailId }));
             if (login) {
                 setPasswordBox(true);
-            } 
+            }
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -73,13 +91,17 @@ const PopoverComponent = () => {
             const password = methods.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             dispatch(generalUserLogin({ emailMailId, password }));
-                navigate('/')
+            navigate('/')
         } catch (error) {
             console.log("submitData errors", error)
         }
     }
 
-    
+    useEffect(() => {
+        return () => {
+            dispatch(clearUserData())
+        }
+    }, [passwordBox])
 
     return (
         <div>
@@ -127,9 +149,11 @@ const PopoverComponent = () => {
                                                                         required
                                                                     />
                                                                 </div>
-                                                                <div className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
-                                                                    <Popover.Button type='submit'>LOGIN</Popover.Button>
-                                                                </div>
+                                                                <Popover.Button
+                                                                    type='submit'
+                                                                    className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                    LOGIN
+                                                                </Popover.Button>
                                                             </form>
                                                         </FormProvider>
                                                     </div>
@@ -163,12 +187,12 @@ const PopoverComponent = () => {
                                                                         required
                                                                     />
                                                                 </div>
-                                                                <button
+                                                                <Popover.Button
                                                                     type='submit'
                                                                     className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'
                                                                 >
                                                                     REGISTER
-                                                                </button>
+                                                                </Popover.Button>
                                                             </form>
                                                         </FormProvider>
                                                     </div>
@@ -198,7 +222,9 @@ const PopoverComponent = () => {
                                                         </div>
                                                         <button
                                                             type='submit'
-                                                            className='w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 bg-[#A7A9AC] text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none'>
+                                                            
+                                                            onChange={()=>handleEmailChange}
+                                                            className={`w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-[#00B8B8]' : 'bg-[#A7A9AC]'}  text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
                                                             CONTINUE
                                                         </button>
                                                         <div className="flex items-center mt-8">

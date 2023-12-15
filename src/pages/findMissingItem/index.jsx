@@ -46,7 +46,6 @@ export default function FindMissingItem() {
       const productName = methods.getValues();
       navigate(`/findmissingitem/${productName.itemName}`)
       dispatch(searchItem(productName.itemName));
-
     } catch (error) {
       console.log("submitData errors", error)
     }
