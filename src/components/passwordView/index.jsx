@@ -26,7 +26,7 @@ const PasswordView = () => {
     try {
       const reset = dispatch(adminResetPassword(data))
       if (reset) {
-        navigate('/admin/signin');
+        navigate('/businessSignin');
       }
       else{
         console.log("Password reset failed");
@@ -56,7 +56,7 @@ const PasswordView = () => {
               name="currentPassword"
               autoComplete="off"
               placeholder="currentPassword"
-              className="w-full py-4 px-3 border border-gray rounded-md"
+              className="w-full py-4 px-3 border border-gray-300 rounded-md"
               required
               showPassword={showPassword}
               setShowPassword={() => setShowPassword(!showPassword)}
@@ -87,7 +87,7 @@ const PasswordView = () => {
           <div className="mt-14">
             <button
               type="submit"
-              className="w-full bg-primary-color text-white font-bold py-4 rounded-md focus:outline-none focus:ring focus:light-green"
+              className="w-full bg-primary-color text-white font-bold py-4 rounded-md "
             >
               Save
             </button>

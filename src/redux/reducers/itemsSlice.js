@@ -12,6 +12,7 @@ let initialState = {
     viewDetailsByLocation: [],
     dropdownLocationValues: [],
     dropdownCategoryValues: [],
+    dropdownItemValues: [],
 }
 
 export const itemsSlice = createSlice({
@@ -51,12 +52,18 @@ export const itemsSlice = createSlice({
         dropdownCategory: (state, action) => {
             state.dropdownCategoryValues = { ...action.payload }
         },
+        dropdownItem: (state, action) => {
+            state.dropdownItemValues = { ...action.payload }
+        },
+        foundItemId: (state, action) => {
+            state.foundItemId = { ...action.payload }
+        },
         clearItemState: () => initialState
     }
 });
 
 //get items
-export const fetchItems = (currentPage, PageLimit) => (dispatch) => {
+export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchItems}?page=${currentPage}&limit=${PageLimit}`,
@@ -64,28 +71,28 @@ export const fetchItems = (currentPage, PageLimit) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
+            console.log(res.data, 'ress')
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
             Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
-            Toast({ type: "error", message: err.message })
+            Toast({ type: "error", message: err?.message })
             return err
         })
     })
 }
 
 //get items in admin
-export const adminFetchItems = (currentPage = 1, PageLimit = 5) => (dispatch) => {
+export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, searchTerm, itemcode) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}&category=${selectedCategory || ''}&itemName=${searchTerm || ''}&itemcode=${itemcode}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            console.log(res)
             const { list, pageMeta } = res.data
             dispatch(saveFoundItemDetails({ list, pageMeta }))
             Toast({ type: "success", message: res.message })
@@ -99,10 +106,10 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 5) => (dispatch) =>
 };
 
 //get user in admin
-export const adminFetchUser = (currentPage = 1, PageLimit = 5) => (dispatch) => {
+export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchUserTerm || ''}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -121,15 +128,14 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 5) => (dispatch) => 
 
 
 //get businessUser in admin
-export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => (dispatch) => {
+export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchBusinessTerm || ''}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            console.log(res)
             const { list, pageMeta } = res.data
             dispatch(saveBusinessUserDetails({ list, pageMeta }))
             Toast({ type: "success", message: res.message })
@@ -146,7 +152,6 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 5) => (dispa
 export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
             url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}&page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
@@ -164,11 +169,9 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
 export const myListingItems = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            // url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
             url: endpoints.apiPath.items.myListing,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
-            tokenType: 'userToken'
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
@@ -180,12 +183,12 @@ export const myListingItems = () => (dispatch) => {
     })
 }
 
-export const deleteMyListingItems = () => (dispatch) => {
+export const deleteMyListingItems = ({ itemId }) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
+            url: `${endpoints.apiPath.items.deleteUserItemId}?itemId=${itemId}`,
             method: endpoints.ApiMethods.DELETE,
-            isAuth: true,
-            tokenType: 'userToken'
+            isAuth: true
         }).then(() => {
             return resolve(true)
         }).catch(err => {
@@ -227,8 +230,11 @@ export const searchItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
             method: endpoints.ApiMethods.GET
         }).then((res) => {
-            const { _id, itemName, location, foundDate, foundTime } = res.data
-            dispatch(saveItemDataById({ _id, itemName, location, foundDate, foundTime }))
+            const { _id, itemImage, itemName, location, foundDate, foundTime } = res.data
+            // if (Array.isArray(itemImage) && itemImage.length > 0) {
+            //     dispatch(saveItemDataById(itemImage))
+            // }
+            dispatch(saveItemDataById({ _id, itemImage, itemName, location, foundDate, foundTime }))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -246,10 +252,14 @@ export const viewItemById = (itemId) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
         }).then((res) => {
-            const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
-            if (Array.isArray(itemImage) && itemImage.length > 0) {
-                dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
-            }
+            const { itemImage, itemName, itemCategory, itemDescription,
+                keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            // if (Array.isArray(itemImage) && itemImage.length > 0) {
+            //     dispatch(viewItemDetailsById(itemImage))
+            // }
+
+            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -266,9 +276,12 @@ export const viewUserItemById = (itemId) => (dispatch) => {
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
             const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+
             if (Array.isArray(itemImage) && itemImage.length > 0) {
-                dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+                dispatch(viewItemDetailsById(itemImage))
             }
+            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -277,19 +290,21 @@ export const viewUserItemById = (itemId) => (dispatch) => {
     })
 }
 
-// claim item
-export const claimItemNow = (itemsId) => (dispatch) => {
-    return new Promise((resolve, reject) => {
-        apiRequest({
-            url: `${endpoints.apiPath.items.claimItem}/655703970c9b44af5a5aef52`,
-            method: endpoints.ApiMethods.POST
-        }).then(() => {
-            return resolve(true);
-        }).catch((err) => {
-            reject(err)
-        })
-    })
-}
+// claim item - Temporarily not using 
+// export const claimItemNow = (itemId) => async (dispatch) => {
+//     return new Promise((resolve, reject) => {
+//         apiRequest({
+//             url: `${endpoints.apiPath.items.claimItem}/${itemId}`,
+//             method: endpoints.ApiMethods.POST,
+//             isAuth: true,
+//         }).then(() => {
+//             return resolve(true);
+//         }).catch((err) => {
+//             console.log(err)
+//             return err;
+//         })
+//     })
+// }
 
 //location drop down data
 export const locationDropdownValues = () => (dispatch) => {
@@ -315,10 +330,43 @@ export const categoryDropdownValues = () => (dispatch) => {
         apiRequest({
             url: endpoints.apiPath.items.categoryDropdown,
             method: endpoints.ApiMethods.GET,
-            isAuth: true,
-            tokenType: 'businessUserToken',
         }).then((res) => {
             dispatch(dropdownCategory(res.data))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+// file upload
+export const fileUploadAPI = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.fileUpload,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isFile: true
+        }).then((res) => {
+            // No need to store in redux can handle from local state
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+//item drop down data
+export const itemDropdownValues = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.itemDropdown,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true
+        }).then((res) => {
+            dispatch(dropdownItem(res.data))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -334,17 +382,17 @@ export const clearItemData = () => (dispatch) => {
         return error
     }
 }
-export const adminUpdateFoundItems = (data) => (dispatch) => {
+//getbyid in admin
+export const foundItemById = (itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.items.updateFoundItems,
-            method: endpoints.ApiMethods.PUT,
+            url: `${endpoints.apiPath.items.getItemById}/${itemId}`,
+            method: endpoints.ApiMethods.GET,
             isAuth: true,
-            tokenType: 'adminToken',
-            data: 'data'
+            tokenType: 'adminToken'
         }).then((res) => {
-            const { list } = res.data
-            dispatch(saveUpdateFoundItems({ list }))
+            const { data } = res
+            dispatch(foundItemId(data))
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -353,16 +401,57 @@ export const adminUpdateFoundItems = (data) => (dispatch) => {
     })
 };
 
-export const deleteItem = (itemId) => async (dispatch) => {
+//update found item in admin
+export const adminUpdateFoundItems = (itemId, updatedData) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+      apiRequest({
+        url: `${endpoints.apiPath.items.updateFoundItems}?itemid=${itemId}`,
+        method: endpoints.ApiMethods.PUT,
+        data: updatedData,
+        isAuth: true,
+        tokenType: 'adminToken'
+      }).then((res) => {
+        const { data } = res;
+        dispatch(saveUpdateFoundItems(data));
+        return resolve(true);
+      }).catch(err => {
+        console.log(err);
+        return reject(err);
+      });
+    });
+  };
+//delete in admin
+export const deleteItem = (itemId, context) => (dispatch) => {
     try {
-        await apiRequest({
-            url: `${endpoints.apiPath.items.deleteItem}?itemId=${itemId}`,
-            method: endpoints.ApiMethods.DELETE,
-            isAuth: true,
-            tokenType: 'adminToken',
-        });
+        if (context === "foundItems") {
+            apiRequest({
+                url: `${endpoints.apiPath.items.deleteItem}?itemId=${itemId}`,
+                method: endpoints.ApiMethods.DELETE,
+                isAuth: true,
+                tokenType: 'adminToken',
+            });
+            dispatch(adminFetchItems());
 
-        dispatch(adminFetchItems());
+        } else if (context === "user") {
+            apiRequest({
+                url: `${endpoints.apiPath.items.deleteUser}?userId=${itemId}`,
+                method: endpoints.ApiMethods.DELETE,
+                isAuth: true,
+                tokenType: 'adminToken',
+            });
+            dispatch(adminFetchUser());
+
+        }
+        else if (context === "businessUser") {
+            apiRequest({
+                url: `${endpoints.apiPath.items.deleteBusinessUser}?userId=${itemId}`,
+                method: endpoints.ApiMethods.DELETE,
+                isAuth: true,
+                tokenType: 'adminToken',
+            });
+            dispatch(adminFetchBusinessUser());
+        }
+
         Toast({ type: "success", message: "Item deleted successfully." });
     } catch (error) {
         console.error(error);
@@ -373,6 +462,29 @@ export const deleteItem = (itemId) => async (dispatch) => {
         }
     }
 };
+//admin export file 
+export const adminExportItems = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.items.itemReport,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+            tokenType: 'adminToken'
+        }).then((res) => {
+            const blob = new Blob([res.data], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "data.csv";
+            a.click();
+            window.URL.revokeObjectURL(a);
+            resolve(true);
+        }).catch(err => {
+            console.error(err);
+            reject(err);
+        });
+    });
+};
 
 export const updateFoundItems = (state) => state.items?.updateFoundItems;
 export const itemDetails = (state) => state.items?.itemDetails;
@@ -382,7 +494,9 @@ export const searchDetailsById = (state) => state.items?.searchId;
 export const viewDetails = (state) => state.items?.viewDetailsById;
 export const locationDetails = (state) => state.items?.dropdownLocationValues;
 export const categoryDetails = (state) => state.items?.dropdownCategoryValues;
+export const itemDropdown = (state) => state.items?.dropdownItemValues;
 export const businessUserDetails = (state) => state.items?.businessUserDetails;
+export const getItemId = (state) => state.items?.foundItemId;
 
 export const {
     saveItemData,
@@ -398,7 +512,9 @@ export const {
     saveBusinessUserDetails,
     saveItemDetails,
     clearData,
-    saveUserDetails
+    saveUserDetails,
+    dropdownItem,
+    foundItemId
 } = itemsSlice.actions;
 
 export default itemsSlice.reducer;

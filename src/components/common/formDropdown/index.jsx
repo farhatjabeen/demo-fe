@@ -1,13 +1,20 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Controller } from 'react-hook-form';
-
+// import { RxChevronDown, RxChevronUp } from "react-icons/rx";
 import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function DropDown({ placeholder, name, editButton, selection, dropdownValues, disable, optionButtonClass, showPassword, setShowPassword }) {
+function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, value, handleData }) {
+
+    const [options, setOptions] = useState('');
+    console.log(options, 'options')
+
+    useEffect(() => {
+        handleData(options);
+    }, [options, handleData]);
 
     return (
         <ConnectForm>
@@ -17,35 +24,31 @@ function DropDown({ placeholder, name, editButton, selection, dropdownValues, di
                         <Controller
                             name={name}
                             control={control}
-                            render={({
-                                field: { onChange, value: fieldValue, ref, props }
-                            }) => (
+                            render={() => (
                                 <div>
                                     <div>
-                                        <button
-                                            onClick={() => setSelect(!select)}
+                                        <select
+                                            id={name}
+                                            defaultValue=""
                                             disabled={!editButton}
-                                            className={optionButtonClass}>
-                                            {options || "Options"}
-                                            {select ? <RxChevronUp className='h-6 w-6' /> : <RxChevronDown className='h-6 w-6' />}
-                                        </button>
-                                    </div>
+                                            className={optionButtonClass}
+                                            onChange={(e)=>{setOptions(e.target.value)}}
+                                        >
 
-                                    <div className={`absolute right-0 z-10 mt-2 w-full h-28 overflow-y-scroll rounded-md bg-white shadow-lg border border-solid border-[#B6B6B6] ${selection && select ? '' : 'hidden'} `}>
-                                        <div className="py-1">
                                             {dropdownValues?.map((items, i) => {
                                                 return (
-                                                    <button
+                                                    <option
                                                         key={i}
+                                                        value={`${items}`}
                                                         className="px-4 py-2 flex w-full text-sm hover:bg-green"
-                                                        onClick={() => handleValues(i)}
                                                     >
                                                         {items}
-                                                    </button>
+                                                    </option>
                                                 );
                                             })}
-                                        </div>
+                                        </select>
                                     </div>
+
                                 </div>
                             )}
                         />
@@ -59,4 +62,4 @@ function DropDown({ placeholder, name, editButton, selection, dropdownValues, di
     );
 }
 
-export default DropDown;
+export default FormDropdown;

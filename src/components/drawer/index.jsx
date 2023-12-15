@@ -18,7 +18,6 @@ const SideMenu = () => {
   };
 
   return (
-    // <div className={`sidebar   fixed left-0 top-0 h-screen bg-[#F6F8F9] shadow-slate-50 text-black p-4 ${isCollapsed ? 'collapsed w-28' : 'w-64'}`}>
     <div className="sidebar relative bg-[#F6F8F9] shadow-slate-50 m-4">
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
         {isCollapsed ? (

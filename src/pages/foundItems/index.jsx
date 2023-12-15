@@ -7,44 +7,57 @@ import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import { useDispatch, useSelector } from 'react-redux';
-import { adminFetchItems, foundItemDetails } from '../../redux/reducers/itemsSlice';
+import { adminExportItems, adminFetchItems, foundItemDetails, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
 
 function FoundItems() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [PageLimit,setPageLimit ] = useState(5);
+  const PageLimit = 10;
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
-
-  const categories = ['Category 1', 'Category 2', 'Category 3'];
+  const items = useSelector(itemDropdown)
+  const dropdownValues = Object.values(items);
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
-  }, [dispatch, currentPage, PageLimit ]);
+  }, [dispatch, currentPage, PageLimit]);
 
-  const handleExport = () => { };
+  useEffect(() => {
+    dispatch(itemDropdownValues());
+  }, []);
+  useEffect(() => {
+    dispatch(itemDropdownValues());
+  }, []);
+  
+
+  const handleExport = () => { 
+    dispatch(adminExportItems())
+  };
 
   const handleReset = () => {
     setSearchTerm("");
-    setSelectedCategory(null);
+    setSelectedCategory("");
   };
-  const handleSearch = () => { };
+  const handleSearch = () => {
+    dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, searchTerm));
+  };
+
+
   const tableHeaders = [
-    { key: "_id", label: "User ID" },
+    { key: "_id", label: "Item ID" },
     { key: "itemName", label: "Item Name" },
     { key: "location", label: "Location" },
-    { key: "timefound", label: "Time Found" },
+    { key: "foundTime", label: "Time Found" },
     { key: "found by", label: "Found By" },
     { key: "mobileNumber", label: "Phone Number" },
-    // { key: "action", label: "Actions" },
+    { key: "action", label: "Actions" },
   ];
 
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log("tableData", tableData)
   return (
     <div className="m-4">
       <div className="flex justify-between mt-10">
@@ -58,6 +71,7 @@ function FoundItems() {
             onClick={handleExport}
             isReset={false}
             buttonColor="blue"
+            
           />
         </div>
       </div>
@@ -71,10 +85,12 @@ function FoundItems() {
             onChange={(event) => setSearchTerm(event.target.value)}
           />
           <div className="basis-5/12">
-            <DropdownMenu categories={categories}
-              selectedCategory={selectedCategory}
-              onSelectCategory={(category) => setSelectedCategory(category)}
-              isFilterMode={true} />
+            <DropdownMenu
+              dropdownValues={dropdownValues}
+              value={selectedCategory}
+              onChange={setSelectedCategory} 
+              placeholder="Filter by Category"
+            />
           </div>
           <div className="basis-1/12">
             <CustomCombinedButton
@@ -96,7 +112,7 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      <Table headers={tableHeaders} data={tableData?.list} showEdit={true} />
+      <Table headers={tableHeaders} data={tableData?.list} showEdit={true} context="foundItems" />
 
       <Pagination
         isBlueBackground={true}

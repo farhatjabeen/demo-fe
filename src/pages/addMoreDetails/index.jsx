@@ -1,43 +1,36 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { addMoreDetailsSchema, loginSchema } from '../../validations';
-import { FormProvider, set, useForm } from 'react-hook-form';
-import { loginUser } from '../../redux/reducers/userSlice';
+import { addMoreDetailsSchema } from '../../validations';
+import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useRef } from 'react';
 import { MdClose } from "react-icons/md";
+import { itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import FormDropdown from '../../components/common/formDropdown';
+import ImageUpload from '../../components/common/imageUpload';
 
 export default function AddMoreDetails() {
-    const [itemname, setItemname] = useState('');
+    const [itemName, setItemName] = useState('');
     const [location, setLocation] = useState('');
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [isReset, setIsReset] = useState(false);
-    const [newreport, setNewreport] = useState({
-        category: '',
-        description: '',
-        keywords: '',
-        locationidentifier: '',
-        name: '',
-        mobilenumber: '',
-        mail: '',
-        date: '',
-        time: '',
-        reporterid: ''
-    })
-    console.log(files, 'files');
+    const dispatch = useDispatch();
+    const items = useSelector(itemDropdown);
+    const itemCategories = Object.values(items);
+    const [selectedCategory, setSelectedCategory] = useState("");
+
+    useEffect(() => {
+        dispatch(itemDropdownValues())
+    }, [])
+
     const fileInputRef = useRef();
-
-    // const navigate = useNavigate();
     const reportDetails = useParams();
-
-    // const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
 
     const methods = useForm({
@@ -57,11 +50,7 @@ export default function AddMoreDetails() {
     });
 
     const submitData = async (data) => {
-        // try {
-        //     dispatch(loginUser(data))
-        // } catch (error) {
-        //     console.log("submitData errors", error)
-        // }
+
     };
 
     const handleReset = (e) => {
@@ -85,33 +74,20 @@ export default function AddMoreDetails() {
         });
     }
 
+    const handleChildData = (dataFromChild) => {
+        setSelectedCategory(dataFromChild);
+    };
 
     useEffect(() => {
-        if (!itemname) {
-            setItemname(reportDetails.itemName);
+        if (!itemName) {
+            setItemName(reportDetails.itemName);
         }
         if (!location) {
             setLocation(reportDetails.location);
         }
     }, []);
 
-    const handleName = () => {
 
-    }
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewreport({ ...newreport, [name]: value });
-    };
-    const dayjs = require('dayjs');
-    const handleSubmit = (e) => {
-
-        const date = new Date();
-        const formattedDate = dayjs(date).format('DD[th] MMMM YYYY');
-        const formattedTime = dayjs(date).format('hh : mm A');
-        e.preventDefault();
-        console.log(newreport, 'newreport');
-
-    };
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
@@ -142,14 +118,14 @@ export default function AddMoreDetails() {
                                     <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Category</label>
                                     <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Category</p>
                                 </div>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Select Category"
-                                    name="itemCategory"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
-                                    autoComplete="off"
-                                    required
-                                />
+
+                                <FormDropdown
+                                    name='itemCategory'
+                                    optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
+                                    editButton={true}
+                                    handleData={handleChildData}
+                                    selection={true}
+                                    dropdownValues={itemCategories} />
                             </div>
 
                             <div className='flex justify-between mb-9'>
@@ -179,11 +155,7 @@ export default function AddMoreDetails() {
                                     className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
-
                                 />
-                                {/* <input className='h-20 sm:h-16 border border-[#B6B6B6] rounded-lg p-5  w-24' 
-                                type='text' name='keywords' value={newreport.keywords} onChange={handleInputChange} placeholder='Keywords' /> */}
-
                             </div>
 
                             <div className='flex justify-between h-fit mb-9 relative'>
@@ -207,8 +179,22 @@ export default function AddMoreDetails() {
                                         null
                                     }
 
-                                    <div className="flex items-center">
-                                        <label
+                                    <div className="flex justify-center items-center">
+                                        <ImageUpload
+                                            name="imageUpload"
+                                            designClass={
+                                                `${isUploaded
+                                                    ?
+                                                    "xl:w-80 md:w-80 sm:64 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
+                                                    :
+                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                                }`
+                                            }
+                                            multiple={true}
+                                            handleFileUpload={handleFileUpload}
+                                            fileInputRef={fileInputRef}
+                                        />
+                                        {/* <label
                                             htmlFor="fileInput"
                                             className=
                                             {
@@ -230,8 +216,7 @@ export default function AddMoreDetails() {
                                             multiple
                                             onChange={handleFileUpload}
                                             ref={fileInputRef}
-                                        // name="imageUpload"
-                                        />
+                                        /> */}
                                         {isUploaded ?
                                             <div>
                                                 <button className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
@@ -242,7 +227,6 @@ export default function AddMoreDetails() {
                                             ""}
                                     </div>
                                 </div>
-                                {/* <input type='file' placeholder='Upload Image' className='w-96 h-14 sm:h-12 rounded-lg bg-primary-color' /> */}
                             </div>
                             <div className='border-b border-b-[#949494] mb-10'>
                                 <div className='flex justify-between h-12 mb-9 relative location'>
@@ -258,7 +242,6 @@ export default function AddMoreDetails() {
                                         autoComplete="off"
                                         required
                                     />
-
                                 </div>
 
                                 <div className='flex justify-between h-12 mb-9 relative'>
@@ -332,4 +315,4 @@ export default function AddMoreDetails() {
             </FormProvider>
         </div>
     )
-}
+};

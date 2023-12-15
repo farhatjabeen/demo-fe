@@ -1,21 +1,27 @@
-import React, { useState } from 'react'
-import OurBrands from '../../components/ourBrands';
-import DropdownMenu from '../../components/common/dropdown';
-import { useDispatch } from 'react-redux';
-import useValidationResolver from '../../hooks/useValidationResolver';
-import { businessSignUp, businessSignUpSchema } from '../../validations';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
+import { MdClose } from "react-icons/md";
+import OurBrands from '../../components/ourBrands';
 import TextInput from '../../components/common/textInput';
-import { useNavigate } from 'react-router-dom';
+import useValidationResolver from '../../hooks/useValidationResolver';
+import { businessSignUpSchema } from '../../validations';
+import FormDropdown from '../../components/common/formDropdown';
+import { categoryDetails, categoryDropdownValues, fileUploadAPI } from '../../redux/reducers/itemsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import ImageUpload from '../../components/common/imageUpload';
+import { businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
-    const [selectedCategory, setSelectedCategory] = useState(null);
-
-    const categories = ['Private', 'Public', 'One person'];
-
-    const dispatch = useDispatch();
+    const [imageFiles, setImageFiles] = useState();
+    const [isUploaded, setIsUploaded] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
-    const navigate = useNavigate();
+    const categoryValue = useSelector(categoryDetails);
+    const categories = categoryValue ? Object.values(categoryValue) : [];
+    // const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [selectedCategory, setSelectedCategory] = useState("");
+
     const methods = useForm({
         defaultValues: {
             name: "",
@@ -23,13 +29,42 @@ export default function BusinessSignUp() {
             emailMailId: "",
             password: "",
             companyName: "",
-            companyCategory: ""
+            companyCategory: "",
+            companylogo: "",
+            cloudinary_id: ""
         },
         resolver
     });
 
-    const submitData = async (data) => {
-        return true
+    const handleFileUpload = (e) => {
+        const selectedFiles = e.target.files;
+        setImageFiles(() => {
+            if (selectedFiles) {
+                setIsUploaded(true);
+            }
+            return selectedFiles
+        });
+    }
+
+    useEffect(() => {
+        dispatch(categoryDropdownValues())
+    }, []);
+
+    useEffect(() => {
+        if (imageFiles && imageFiles[0]) {
+            let formData = new FormData();
+            formData.append("company", imageFiles[0]);
+            dispatch(fileUploadAPI(formData))
+        }
+    }, [imageFiles]);
+
+    const submitData = (data) => {
+        console.log("submitted", data)
+        // dispatch(businessUserRegister(data))
+    };
+
+    const handleChildData = (dataFromChild) => {
+        setSelectedCategory(dataFromChild);
     };
 
     return (
@@ -39,13 +74,13 @@ export default function BusinessSignUp() {
                     <h1 className='text-4xl font-bold'>Transform your lost and found
                         <br></br> process with BTZ app</h1>
                     <div className='mt-20'>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg  shadow-lg shadow-blue">
+                        <div className=" p-10 w-3/4 m-2 rounded-lg  shadow-lg shadow-light-blue">
                             <p>Spend 50-80% less time handling items and enquiries</p>
                         </div>
-                        <div className=" p-10 w-3/4 my-10 ml-24 rounded-lg shadow-lg shadow-cyan-100">
+                        <div className=" p-10 w-3/4 my-10 ml-24 rounded-lg shadow-lg shadow-light-blue">
                             <p>Recoup the costs of handling lost property</p>
                         </div>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg shadow-lg shadow-cyan-100">
+                        <div className=" p-10 w-3/4 m-2 rounded-lg shadow-lg shadow-light-blue">
                             <p>Generate positive feedback and reviews</p>
                         </div>
                     </div>
@@ -57,21 +92,14 @@ export default function BusinessSignUp() {
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
                                 <TextInput
                                     type="text"
-                                    placeholder="Full Name"
+                                    placeholder="Full name"
                                     name="name"
                                     id="fullName"
                                     className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    id="fullName"
-                                    placeholder="Full Name"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="mobileNumber" className="block text-sm font-bold mb-2">Mobile Number</label>
                                 <TextInput
@@ -83,13 +111,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="1234567890"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="email" className="block text-sm font-bold mb-2">Email Address</label>
                                 <TextInput
@@ -101,13 +123,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="abc@xyz.com"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="password" className="block text-sm font-bold mb-2">Password</label>
                                 <TextInput
@@ -119,13 +135,7 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="Galaxies"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
-
                             <div className="mb-2">
                                 <label htmlFor="companyName" className="block  text-sm font-bold mb-2">Company Name</label>
                                 <TextInput
@@ -137,36 +147,51 @@ export default function BusinessSignUp() {
                                     autoComplete="off"
                                     required
                                 />
-                                {/* <input
-                                    type="text"
-                                    placeholder="Glorious"
-                                    className="border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2"
-                                /> */}
                             </div>
-                            <div className="mb-2">
-                                <label htmlFor="companyLogo" className="block text-sm font-bold mb-2">Company Logo</label>
-                                <button className="bg-primary-color w-full py-2 rounded-xl">Upload Image</button>
+                            <div className="mb-2 w-full">
+                                <div className="block text-sm font-bold mb-4 w-full">
+                                    Company Logo
+                                </div>
+                                {isUploaded ?
+                                    <div className='flex flex-wrap w-96'>
+                                        <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
+                                            <div>{imageFiles[0]?.name}</div>
+                                            <div className='flex items-center ml-2'><MdClose /></div>
+                                        </div>
+                                    </div>
+                                    :
+                                    null
+                                }
+                                <ImageUpload
+                                    name="company"
+                                    designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl'
+                                    multiple={false}
+                                    handleFileUpload={handleFileUpload}
+                                />
                             </div>
-                            <div className="mb-2">
+                            <div className="mb-2 mt-4">
                                 <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
-                                <DropdownMenu
-                                    categories={categories}
-                                    selectedCategory={selectedCategory}
-                                    onSelectCategory={(category) => setSelectedCategory(category)} />
+                                <FormDropdown
+                                    name='companyCategory'
+                                    optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
+                                    dropdownValues={categories}
+                                    editButton={true}
+                                    handleData={handleChildData}
+                                    selection={true}
+                                />
                             </div>
                             <div className="flex ">
                                 <div className="flex items-center h-5">
                                     <input id="remember" type="checkbox" className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                    <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-[#FF9900]" onClick={navigate('/termsOfUse')}> terms and conditions</button>  of ilost Serbia</p>
+                                    <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                 </div>
                                 <label htmlFor="remember" className="ms-2 text-sm"></label>
                             </div>
-                            <button className="bg-[#FF9900] w-full py-3  mt-2 rounded-lg">Continue</button>
+                            <button type='submit' className="bg-[#FF9900] w-full py-3 mt-2 rounded-lg">Continue</button>
                         </div>
                     </form>
                 </FormProvider>
             </div>
-
             <div className='mb-20'>
                 <OurBrands
                     asTrustedBy
@@ -174,4 +199,4 @@ export default function BusinessSignUp() {
             </div>
         </>
     )
-}
+};

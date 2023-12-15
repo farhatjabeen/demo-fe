@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import SearchCards from '../../components/searchCards';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import Pagination from '../../components/common/pagination'
-import { useDispatch, useSelector } from 'react-redux';
+import TextInput from '../../components/common/textInput';
+import SearchCards from '../../components/searchCards';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
-import { FormProvider, useForm } from 'react-hook-form';
 import { clearItemData, searchByLocation, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
-import TextInput from '../../components/common/textInput';
-import { useNavigate } from 'react-router-dom';
 
 export default function FindMissingItem() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [PageLimit, setPageLimit] = useState(5);
-  const [data, setData] = useState([]);
-  const newKey = useParams();
-  const newKeyAgain = newKey.itemNameAgain || null;
+  const searchParameters = useParams();
+
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchSchema);
   const searchValue = useSelector(searchKey);
-  // const searchValueByLocation = useSelector(viewDetailsByLocation)
-
+  const isLastPage = searchValue?.pageMeta?.page === searchValue?.pageMeta?.totalPages;
   const methods = useForm({
     defaultValues: {
       itemName: ""
@@ -30,14 +27,14 @@ export default function FindMissingItem() {
   });
 
   useEffect(() => {
-    dispatch(searchByLocation(newKey.itemName, newKey.location));
+    dispatch(searchByLocation(searchParameters.itemName, searchParameters.location));
   }, [])
 
   useEffect(() => {
-    if (newKey?.itemNameAgain) {
-      dispatch(searchItem(newKey.itemNameAgain));
+    if (searchParameters?.itemNameAgain) {
+      dispatch(searchItem(searchParameters.itemNameAgain,currentPage));
     }
-  }, [newKey])
+  }, [searchParameters,currentPage])
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -49,7 +46,6 @@ export default function FindMissingItem() {
       const productName = methods.getValues();
       navigate(`/findmissingitem/${productName.itemName}`)
       dispatch(searchItem(productName.itemName));
-
     } catch (error) {
       console.log("submitData errors", error)
     }
@@ -57,27 +53,9 @@ export default function FindMissingItem() {
 
   useEffect(() => {
     return () => {
-      dispatch(clearItemData(currentPage, PageLimit))
+      dispatch(clearItemData())
     }
-  }, [currentPage, PageLimit])
-
-  // useEffect(() => {
-  //   if (newKey.itemName && newKey.location) {
-
-  //   }
-  // }, [newKey]);
-
-  // const handleSearch = (() => {
-  //   if (searchKey) {
-  //     axios.get('https://64dc7b7ce64a8525a0f68ee2.mockapi.io/Venu')
-  //       .then(response => {
-  //         const filteredData = response.data.filter(f => f.itemname.toLowerCase().includes(searchKey));
-  //         console.log(filteredData, 'filteredData')
-  //         setData(filteredData);
-  //       })
-  //       .catch(er => console.log(er));
-  //   }
-  // });
+  }, [])
 
   return (
     <div className="flex flex-col items-center mt-5">
@@ -108,28 +86,30 @@ export default function FindMissingItem() {
         </FormProvider>
       </div>
 
-      <div className='flex flex-wrap justify-center items-center xl:w-10/12 md:w-9/12 sm:w-11/12 mt-12'>
+      <div className='flex flex-wrap justify-center items-center xl:w-11/12 md:w-9/12 sm:w-11/12 mt-12'>
         {searchValue?.list?.length && searchValue.list.map((items, i) => {
           return (
             <div className='h-5/6 sm:w-60 md:w-64 xl:w-80 sm:flex sm:items-center'>
-              <SearchCards key={i} idx={i} itemId={items._id} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
+              <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
             </div>
           );
         })}
       </div>
 
-      <div className='mt-10'>
+      <div className='my-10'>
         <Pagination
           isBlueBackground={false}
           currentPage={searchValue?.pageMeta?.page}
           totalPages={searchValue?.pageMeta?.totalPages}
           onPageChange={handlePageChange} />
       </div>
+      {isLastPage && (
       <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
         <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
         <div className='font-medium flex justify-center xl:text-base md:text-base sm:text-xs'>Subscribe and send an alert and Ilost will ping you if your item is found</div>
         <div className='flex justify-center'><button className='xl:h-11 xl:w-44 md:h-11 md:w-44 sm:h-9 sm:w-36 rounded-lg bg-primary-color mt-4'>Send an Alert</button></div>
       </div>
+      )}
     </div>
   );
 }

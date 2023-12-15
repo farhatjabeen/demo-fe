@@ -13,42 +13,34 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { checkGeneralUserEmail, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
 import { generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
 import TextInput from '../common/textInput';
+import { clearData } from '../../redux/reducers/itemsSlice';
 
 
 const PopoverComponent = () => {
 
-    // const [passwordHere, setPasswordHere] = useState('');
-    const [loginButton, setLoginButton] = useState(false);
-    const [emailAddress, setEmailAddress] = useState('');
     const [passwordBox, setPasswordBox] = useState(false);
-    // const [passwordContainer, setPasswordContainer] = useState(null);
-    // const [reEnterPasswordContainer, setReEnterPasswordContainer] = useState(null);
 
     const navigate = useNavigate();
     const mailIdFromApi = useSelector(mailId);
-    // const { emailMailId, isAlreadyRegistered } = mailIdFromApi;
-
-    // const handleLoginButton = () => {
-    //     setLoginButton(true);
-    // }
-    // const handleLogoutButton = () => {
-    //     setLoginButton(false);
-    // }
-
-    const validateEmail = (email) => {
-        const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-        return emailPattern.test(email);
-    };
-
-    // const handleLoginPassword = () => {
-    //     if (validateEmail(emailAddress)) {
-    //         setPasswordBox(true);
-    //     }
-    // }
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+console.log(mailIdFromApi,'asdf')
+    const validateEmail = (inputEmail) => {
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        return emailRegex.test(inputEmail);
+    };
+
+    const handleEmailChange = (mailId) => {
+        const isValid = validateEmail(mailId);
+        if (isValid) {
+            setIsEmailValid(true)
+        } else {
+            setIsEmailValid(false)
+        }
+    };
 
     const methods = useForm({
         defaultValues: {
@@ -57,11 +49,12 @@ const PopoverComponent = () => {
         },
         resolver
     });
+    console.log(methods.getValues().emailMailId, "emailMailId")
 
     const methodsForRegister = useForm({
         defaultValues: {
             newPassword: "",
-            password: ""
+            confirmPassword: ""
         },
         resolverForRegister
     });
@@ -70,8 +63,8 @@ const PopoverComponent = () => {
         try {
             e.preventDefault();
             const emailMailId = methods.getValues().emailMailId;
-            dispatch(checkGeneralUserEmail({ emailMailId }));
-            if (mailIdFromApi) {
+            const login = dispatch(checkGeneralUserEmail({ emailMailId }));
+            if (login) {
                 setPasswordBox(true);
             }
         } catch (error) {
@@ -95,20 +88,12 @@ const PopoverComponent = () => {
             e.preventDefault();
             const password = methods.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
-            const isLogin = dispatch(generalUserLogin({ emailMailId, password }));
-            if (isLogin) {
-                navigate('/')
-            }
+            dispatch(generalUserLogin({ emailMailId, password }));
+            navigate('/')
         } catch (error) {
             console.log("submitData errors", error)
         }
     }
-
-    useEffect(() => {
-        return () => {
-
-        }
-    }, [])
 
     return (
         <div>
@@ -132,9 +117,9 @@ const PopoverComponent = () => {
                             <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36'>
                                 <div className='pt-7 w-96'>
                                     {
-                                        passwordBox ?
+                                        passwordBox && mailIdFromApi?.status ?
                                             <div>
-                                                {mailIdFromApi.isAlreadyRegistered ?
+                                                {mailIdFromApi?.isAlreadyRegistered ?
                                                     <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
@@ -156,9 +141,11 @@ const PopoverComponent = () => {
                                                                         required
                                                                     />
                                                                 </div>
-                                                                <div className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
-                                                                    <Popover.Button type='submit'>LOGIN</Popover.Button>
-                                                                </div>
+                                                                <Popover.Button
+                                                                    type='submit'
+                                                                    className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                    LOGIN
+                                                                </Popover.Button>
                                                             </form>
                                                         </FormProvider>
                                                     </div>
@@ -186,15 +173,18 @@ const PopoverComponent = () => {
                                                                     <div className='text-sm font-medium text-[#757780] mt-2.5'>Re-enter Password</div>
                                                                     <TextInput
                                                                         type='password'
-                                                                        name='password'
+                                                                        name='confirmPassword'
                                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                         autoComplete="off"
                                                                         required
                                                                     />
                                                                 </div>
-                                                                <button type='submit' className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                <Popover.Button
+                                                                    type='submit'
+                                                                    className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'
+                                                                >
                                                                     REGISTER
-                                                                </button>
+                                                                </Popover.Button>
                                                             </form>
                                                         </FormProvider>
                                                     </div>
@@ -220,11 +210,12 @@ const PopoverComponent = () => {
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
+                                                                onChange={(e)=>handleEmailChange(e.target.value)}
                                                             />
                                                         </div>
                                                         <button
                                                             type='submit'
-                                                            className='w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 bg-[#A7A9AC] text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none'>
+                                                            className={`w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-[#00B8B8]' : 'bg-[#A7A9AC]'}  text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
                                                             CONTINUE
                                                         </button>
                                                         <div className="flex items-center mt-8">
@@ -255,7 +246,7 @@ const PopoverComponent = () => {
                                 </div>
                                 <div className="w-full flex justify-end pr-3 xl:ml-9 md:ml-8 sm:ml-5">
                                     <Popover.Button onClick={() => setPasswordBox(false)} className='absolute top-4 border-none bg-white space-x-end'>
-                                        <AiFillCloseCircle onClick={() => dispatch(clearUserData())} className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
+                                        <AiFillCloseCircle className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
                                     </Popover.Button>
                                 </div>
                             </Popover.Panel>

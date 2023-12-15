@@ -1,7 +1,7 @@
 import React from "react";
 
 const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange }) => {
-  const backgroundColor = isBlueBackground ? "bg-blue" : "bg-primary-color";
+  const backgroundColor = isBlueBackground ? "bg-blue text-white" : "bg-primary-color text-white";
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
@@ -37,7 +37,7 @@ const Pagination = ({ isBlueBackground, currentPage, totalPages, onPageChange })
     <a
       key={pageNumber}
       href="#"
-      className={`relative inline-flex items-center px-4 py-2 rounded-md text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue mr-1 ${currentPage === pageNumber ? backgroundColor : "text-black"
+      className={`relative inline-flex items-center px-4 py-2 rounded-md text-black focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue mr-1 ${currentPage === pageNumber ? backgroundColor : "text-black"
         }`}
       onClick={() => onPageChange(pageNumber)}
     >

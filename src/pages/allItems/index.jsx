@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
-// import { AiOutlineArrowUp } from "react-icons/ai";
 import Pagination from '../../components/common/pagination';
-import { Link, useNavigate } from 'react-router-dom';
-import { fetchItems, itemDetails, saveItemDetails } from '../../redux/reducers/itemsSlice';
-import { NotificationContainer } from 'react-notifications';
-
+import { fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
 
 export default function AllItems() {
     const [currentPage, setCurrentPage] = useState(1);
-    const [PageLimit, setPageLimit] = useState(5);
+    const [PageLimit, setPageLimit] = useState(10);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const tableDatas = useSelector(itemDetails);
+    const tableData = useSelector(itemDetails);
 
     useEffect(() => {
         dispatch(fetchItems(currentPage, PageLimit))
@@ -29,7 +27,6 @@ export default function AllItems() {
             <div className='px-28'>
                 <div className='flex justify-end mb-5'>
                     <div className=' flex justify-end w-full'>
-                        {/* <button className='h-10 w-32 bg-white rounded-lg flex justify-center items-center'><AiOutlineArrowUp className='mr-2' /> Export</button> */}
                         <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={() => navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
                     </div>
                 </div>
@@ -41,8 +38,6 @@ export default function AllItems() {
 
                 <div className='mt-10 mb-4 font-semibold text-2xl'>All Items</div>
 
-                {/* <div className='mb-10 md:flex md:justify-center '>
-                <table className="xl:w-full md:w-full"> */}
                 <div className='w-full flex flex-col justify-center items-center mb-20 '>
                     <table className="w-full ">
                         <thead>
@@ -121,7 +116,7 @@ export default function AllItems() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableDatas?.list?.length && tableDatas.list.map((items, i) => {
+                            {tableData?.list?.length && tableData.list.map((items, i) => {
                                 return (
                                     <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">{items._id}</td>
@@ -139,8 +134,8 @@ export default function AllItems() {
             </div>
             <div className=' flex justify-center mb-20'>
                 <Pagination
-                    currentPage={tableDatas?.pageMeta?.page}
-                    totalPages={tableDatas?.pageMeta?.totalPages}
+                    currentPage={tableData?.pageMeta?.page}
+                    totalPages={tableData?.pageMeta?.totalPages}
                     onPageChange={handlePageChange}
                     isBlueBackground={false} />
             </div>

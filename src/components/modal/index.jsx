@@ -2,13 +2,13 @@ import React from "react";
 import { useDispatch } from 'react-redux';
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 
-const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId }) => {
+const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId,context }) => {
   const dispatch = useDispatch();
   if (!isOpen) {
     return null;
   }
   const handleConfirmDelete = () => {
-    dispatch(deleteItem(selectedItemId));
+    dispatch(deleteItem(selectedItemId,context));
     onDelete();
   };
   return (
@@ -20,7 +20,7 @@ const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId }) => {
           <br></br>Process cannot be undone</p>
         <div className="flex justify-center pb-4">
           <button
-            className="bg-grey text-white font-bold px-4 py-2 mr-2 w-32 rounded"
+            className="bg-light-gray text-white font-bold px-4 py-2 mr-2 w-32 rounded"
             onClick={onCancel}
           >
             Cancel

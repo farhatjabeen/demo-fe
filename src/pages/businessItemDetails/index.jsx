@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import keys from '../../assets/images/keys.png';
-// import BusinessTab from '../../components/businessTab';
 import Slider from 'react-slick';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -21,7 +19,6 @@ export default function BusinessItemDetails() {
         }
     }, [itemId])
 
-    const [activeIndex, setActiveIndex] = useState(0);
 
     const itemTitles = [{ query: "Item name", answer: itemDetails.itemName }, { query: "Item Category", answer: itemDetails.itemCategory },
     { query: "Item description", answer: itemDetails.itemDescription },
@@ -34,12 +31,8 @@ export default function BusinessItemDetails() {
     { query: "Mail id", answer: itemDetails.emailMailId },
     { query: "Location", answer: itemDetails.location }];
 
-    const itemImages = [keys, keys, keys];
-
     useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveIndex((prevIndex) => (prevIndex + 1) % itemDetails?.itemImage?.length);
-        }, 2000);
+        const interval = setInterval((prevIndex) => (prevIndex + 1) % itemDetails?.itemImage?.length);
 
         return () => clearInterval(interval);
     }, []);
@@ -71,7 +64,6 @@ export default function BusinessItemDetails() {
 
 
             <div className='my-20 w-full flex justify-center'>
-                {/* <BusinessTab className="flex"> */}
                 <div className='bg-white rounded-lg  xl:w-fit md:w-96 sm:w-72 p-5 mr-10'>
                     <div className='xl:text-3xl md:text-xl sm:text-lg text-primary-color w-full xl:pt-5 md:pt-3 sm:pt-2 xl:pb-10 md:pb-6 sm:pb-5'>Item Description</div>
                     {itemTitles.map((items, i) => {
@@ -95,7 +87,6 @@ export default function BusinessItemDetails() {
                         );
                     })}
                 </div>
-                {/* </BusinessTab> */}
             </div>
 
         </div>
