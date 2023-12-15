@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../../components/common/textInput";
 import TextAreaInput from '../../components/common/textAreaInput';
-import { foundItemById, getItemId , itemDropdown, itemDropdownValues} from '../../redux/reducers/itemsSlice';
+import { adminUpdateFoundItems, foundItemById, getItemId , itemDropdown, itemDropdownValues} from '../../redux/reducers/itemsSlice';
 import { useParams } from "react-router-dom";
 
 
@@ -19,6 +19,7 @@ const EditFoundItems = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [updatedData, setUpdatedData] = useState(null);
   const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
   const items = useSelector(itemDropdown)
@@ -56,10 +57,27 @@ const EditFoundItems = () => {
   useEffect(() => {
     dispatch(itemDropdownValues());
   }, []);
+  useEffect(() => {
+    if (updatedData) {
+      dispatch(adminUpdateFoundItems(id, updatedData))
+        .then(() => {
+          navigate('/admin/user/foundItems');
+        })
+        .catch((error) => {
+          console.error('Update failed:', error);
+        });
+    }
+  }, [updatedData, id, dispatch, navigate]);
+
   const submitData = async (data) => {
-    navigate('/admin/user/foundItems');
+    try {
+      await dispatch(adminUpdateFoundItems(id, data));
+      navigate('/admin/user/foundItems');
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
   };
-  const categories = ['Electronics', 'Furniture', 'others'];
+  
   return (
     <div className="m-4">
       <div>
