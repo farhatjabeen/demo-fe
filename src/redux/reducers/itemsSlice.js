@@ -71,6 +71,7 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
+            console.log(res.data, 'ress')
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
             Toast({ type: "success", message: res.message })
@@ -477,7 +478,7 @@ export const adminExportItems = () => (dispatch) => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "data.csv";
+            a.download = "foundItems.csv";
             a.click();
             window.URL.revokeObjectURL(a);
             resolve(true);

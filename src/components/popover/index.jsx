@@ -33,9 +33,7 @@ const PopoverComponent = () => {
         return emailRegex.test(inputEmail);
     };
 
-    const handleEmailChange = (e) => {
-        const mailId = e.target.value;
-        console.log(mailId, 'mmm');
+    const handleEmailChange = (mailId) => {
         const isValid = validateEmail(mailId);
         if (isValid) {
             setIsEmailValid(true)
@@ -56,7 +54,7 @@ const PopoverComponent = () => {
     const methodsForRegister = useForm({
         defaultValues: {
             newPassword: "",
-            password: ""
+            confirmPassword: ""
         },
         resolverForRegister
     });
@@ -181,7 +179,7 @@ const PopoverComponent = () => {
                                                                     <div className='text-sm font-medium text-[#757780] mt-2.5'>Re-enter Password</div>
                                                                     <TextInput
                                                                         type='password'
-                                                                        name='password'
+                                                                        name='confirmPassword'
                                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                         autoComplete="off"
                                                                         required
@@ -218,12 +216,11 @@ const PopoverComponent = () => {
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
+                                                                onChange={(e)=>handleEmailChange(e.target.value)}
                                                             />
                                                         </div>
                                                         <button
                                                             type='submit'
-                                                            
-                                                            onChange={()=>handleEmailChange}
                                                             className={`w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-[#00B8B8]' : 'bg-[#A7A9AC]'}  text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
                                                             CONTINUE
                                                         </button>

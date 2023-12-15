@@ -13,7 +13,7 @@ import ImageUpload from '../../components/common/imageUpload';
 import { businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
-    const [files, setFiles] = useState();
+    const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
@@ -38,7 +38,7 @@ export default function BusinessSignUp() {
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
-        setFiles(() => {
+        setImageFiles(() => {
             if (selectedFiles) {
                 setIsUploaded(true);
             }
@@ -51,12 +51,12 @@ export default function BusinessSignUp() {
     }, []);
 
     useEffect(() => {
-        if (files && files[0]) {
+        if (imageFiles && imageFiles[0]) {
             let formData = new FormData();
-            formData.append("company", files[0]);
+            formData.append("company", imageFiles[0]);
             dispatch(fileUploadAPI(formData))
         }
-    }, [files]);
+    }, [imageFiles]);
 
     const submitData = (data) => {
         console.log("submitted", data)
@@ -155,7 +155,7 @@ export default function BusinessSignUp() {
                                 {isUploaded ?
                                     <div className='flex flex-wrap w-96'>
                                         <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
-                                            <div>{files[0].name}</div>
+                                            <div>{imageFiles[0]?.name}</div>
                                             <div className='flex items-center ml-2'><MdClose /></div>
                                         </div>
                                     </div>

@@ -9,7 +9,8 @@ const initialState = {
     queryData: null,
     userMail: null,
     registerUser: null,
-    generalUserProfile: null
+    generalUserProfile: null,
+    getLogoImage: null
 };
 
 export const userSlice = createSlice({
@@ -17,19 +18,13 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         saveUserData: (state, action) => {
-            state.userData = {
-                ...action.payload
-            };
+            state.userData = { ...action.payload };
         },
         saveGeneralUserMail: (state, action) => {
-            state.userMail = {
-                ...action.payload
-            };
+            state.userMail = { ...action.payload };
         },
         registerGeneralUserMail: (state, action) => {
-            state.registerUser = {
-                ...action.payload
-            };
+            state.registerUser = { ...action.payload };
         },
         saveCompanyProfile: (state, action) => {
             state.userProfile = { ...action.payload };
@@ -38,9 +33,10 @@ export const userSlice = createSlice({
             state.generalUserProfile = { ...action.payload };
         },
         saveQueryData: (state, action) => {
-            state.queryData = {
-                ...action.payload
-            };
+            state.queryData = { ...action.payload };
+        },
+        getLogo: (state, action) => {
+            state.getLogoImage = { ...action.payload };
         },
 
         clearData: () => initialState
@@ -66,6 +62,8 @@ export const loginUser = (data) => (dispatch) => {
         })
     })
 }
+
+export const userDetails = (state) => console.log(state, 'state');
 
 export const checkGeneralUserEmail = (data) => async (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -139,6 +137,7 @@ export const generalUserLogout = () => (dispatch) => {
     })
 }
 
+// business user sign-up
 export const businessUserRegister = (data) => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -154,7 +153,7 @@ export const businessUserRegister = (data) => async (dispatch) => {
     })
 }
 
-// business user logout **
+// business user logout 
 export const businessUserLogout = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -305,6 +304,6 @@ export const contactAdmin = (data) => async (dispatch) => {
     })
 }
 
-export const { saveUserData, saveUserProfile, saveCompanyProfile, registerGeneralUserMail, saveGeneralUserMail, saveQueryData, clearData } = userSlice.actions;
+export const { saveUserData, getLogo, saveUserProfile, saveCompanyProfile, registerGeneralUserMail, saveGeneralUserMail, saveQueryData, clearData } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { addMoreDetailsSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
-import { userProfileData } from '../../redux/reducers/userSlice';
+import { userData, userDetails, userProfileData } from '../../redux/reducers/userSlice';
 
 export default function MyProfile() {
     const [editButton, setEditButton] = useState(false);
@@ -14,7 +14,8 @@ export default function MyProfile() {
 
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
-
+    const fetchUserDetails = useSelector(userData);
+    console.log(fetchUserDetails,'fud')
     const methods = useForm({
         defaultValues: {
             emailMailId: "",
