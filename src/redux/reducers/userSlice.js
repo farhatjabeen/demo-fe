@@ -152,6 +152,37 @@ export const businessUserRegister = (data) => async (dispatch) => {
         })
     })
 }
+//forgot password in businessuser
+export const businessForgotPassword = (data) => async () => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.forgotPasswordBusiness,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+        }).then(res => {
+            return resolve(true);
+        }).catch(err => {
+            reject(err);
+            console.log('rejected', err)
+        })
+    })
+}
+// reset password in businessuser
+export const businessResetPassword = (data, token) => async () => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.resetPasswordBusiness}?token=${token}`,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            tokenType: 'businessUserToken',
+        }).then(res => {
+            return resolve(true);
+        }).catch(err => {
+            reject(err);
+            console.log('rejected', err)
+        })
+    })
+}
 
 // business user logout 
 export const businessUserLogout = () => (dispatch) => {
