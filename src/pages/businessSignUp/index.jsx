@@ -11,11 +11,10 @@ import FormDropdown from '../../components/common/formDropdown';
 import { categoryDetails, categoryDropdownValues } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
-import { businessUserRegister } from '../../redux/reducers/userSlice';
+import { businessUserLogo, businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
-    const [files, setFiles] = useState();
-    console.log(files, 'files')
+    const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
@@ -23,11 +22,6 @@ export default function BusinessSignUp() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState("");
-
-    // const handleCategoryChange = (value) => {
-    //     setSelectedCategory(value);
-    // };
-    console.log(selectedCategory, 'sct')
 
     const methods = useForm({
         defaultValues: {
@@ -42,36 +36,24 @@ export default function BusinessSignUp() {
         resolver
     });
 
-    // useEffect(() => {
-    //     methods.setValue("companyCategory", selectedCategory);
-    // }, [selectedCategory, methods]);
-
-    
-
-    const handleFileUpload = (e) => {
-        const selectedFiles = e.target.files;
-        // if(selectedFiles){
-        // }
-        setFiles(() => {
-            if (selectedFiles) {
+    const handleUploadImage = (e) => {
+        const companies = e.target.files;
+        console.log(companies, 'comp')
+        setImageFiles(() => {
+            if (companies) {
                 setIsUploaded(true);
-                
             }
-            return selectedFiles
+            return companies
         }
         );
+
+        if (companies) {
+            let formDatas = new FormData();
+            formDatas.append('company', companies[0]);
+            console.log(formDatas, 'formDatas')
+            dispatch(businessUserLogo(formDatas));
+        }
     }
-
-    // useEffect(() => {
-    //     console.log(formData.getAll("imageFile"), 'formdata'); // Log FormData when files are uploaded
-    // }, [formData]);
-
-    // useEffect(() => {
-    //     if (files) {
-    //         // console.log(formData.getAll('imageFile'),'formdata')
-    //         methods.setValue("company", formData);
-    //     }
-    // }, [files, formData, methods]);
 
     useEffect(() => {
         dispatch(categoryDropdownValues())
@@ -79,27 +61,15 @@ export default function BusinessSignUp() {
 
     const submitData = async (e) => {
         e.preventDefault();
-        let formData = new FormData();
-        console.log(files[0],"files ")
-        formData.append("company", files[0]);
-        formData.append('companyName','Starbucks');
-        formData.append('companyCategory','Warehousing');
-        formData.append('name','Dinesh');
-        formData.append('mobileNumber','7265431234');
-        formData.append('emailMailId','dineshkumar180370@gmail.com');
-        formData.append('password','Dinesh@345');
-
-        console.log(formData,'formdata')
-        // methods.setValue("company", formData);
-        // const values = methods.getValues();
+        methods.setValue("companyCategory", selectedCategory);
+        const values = methods.getValues();
         // console.log(values, 'values')
         // const company = {formData}
-        dispatch(businessUserRegister(formData))
+        dispatch(businessUserRegister(values))
     };
 
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
-
     };
 
     return (
@@ -195,7 +165,7 @@ export default function BusinessSignUp() {
                                 {isUploaded ?
                                     <div className='flex flex-wrap w-96'>
                                         <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
-                                            <div>{files[0].name}</div>
+                                            <div>{imageFiles[0]?.name}</div>
                                             <div className='flex items-center ml-2'><MdClose /></div>
                                         </div>
                                     </div>
@@ -206,7 +176,8 @@ export default function BusinessSignUp() {
                                     name="company"
                                     designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl'
                                     multiple={false}
-                                    handleFileUpload={handleFileUpload}
+                                    // handleClick={handleUploadImage}
+                                    handleFileUpload={handleUploadImage}
                                 />
 
                             </div>
