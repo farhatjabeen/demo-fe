@@ -8,6 +8,8 @@ const apiPath = {
     registerBusinessUser: '/business/signup',
     loginAdmin: '/admin/login',
     resetPasswordAdmin: '/admin/resetPassword',
+    forgotPasswordBusiness:'/user/forgotpassword',
+    resetPasswordBusiness:'/business/resetpassword',
     businessProfile: '/business/userDetails',
     userProfile: '/user/editProfile',
     editBusinessProfile: '/business/editProfile',

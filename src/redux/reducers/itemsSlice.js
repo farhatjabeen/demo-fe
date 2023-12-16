@@ -463,26 +463,24 @@ export const foundItemById = (itemId) => (dispatch) => {
 };
 
 //update found item in admin
-export const adminUpdateFoundItems = (values, itemId) => (dispatch) => {
+export const adminUpdateFoundItems = (itemId, updatedData) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        apiRequest({
-            url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}`,
-            method: endpoints.ApiMethods.PUT,
-            isAuth: true,
-            tokenType: 'adminToken',
-            data: values
-        }).then((res) => {
-            console.log(res)
-        }).then((res) => {
-            const { list } = res.data
-            dispatch(saveUpdateFoundItems({ list }))
-            return resolve(true);
-        }).catch(err => {
-            console.log(err)
-            return err
-        })
-    })
-};
+      apiRequest({
+        url: `${endpoints.apiPath.items.updateFoundItems}?itemid=${itemId}`,
+        method: endpoints.ApiMethods.PUT,
+        data: updatedData,
+        isAuth: true,
+        tokenType: 'adminToken'
+      }).then((res) => {
+        const { data } = res;
+        dispatch(saveUpdateFoundItems(data));
+        return resolve(true);
+      }).catch(err => {
+        console.log(err);
+        return reject(err);
+      });
+    });
+  };
 //delete in admin
 export const deleteItem = (itemId, context) => (dispatch) => {
     try {
@@ -525,7 +523,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
         }
     }
 };
-
+//admin export file 
 export const adminExportItems = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({

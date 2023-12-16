@@ -47,6 +47,18 @@ export const generalUserRegisterSchema = yup.object({
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .required("Please re-type your password")
 });
+export const businessUserForgotSchema = yup.object({
+    newPassword: yup
+        .string()
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .required('password required'),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("newPassword")], "Passwords does not match")
+        .required("Please re-type your password")
+});
 
 export const addMoreDetailsSchema = yup.object({
     emailMailId: yup
@@ -262,28 +274,6 @@ export const AdminChangePasswordSchema = yup.object({
         .required('Confirm Password is required'),
 });
 export const editFoundItemsSchema = yup.object({
-    founderName: yup
-        .string()
-        .min(3)
-        .max(10)
-        .required('name required'),
-    mobileNumber: yup
-        .string()
-        .matches(phoneRegExp, 'Invalid')
-        .required('mobile number required'),
-    foundDate: yup
-        .string()
-        .required("date required"),
-    foundTime: yup
-        .string()
-        .matches(
-            /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
-            'Invalid time format (HH:mm)'
-        )
-        .required("time required"),
-    foundLocation: yup
-        .string()
-        .required('location required'),
     itemName: yup
         .string()
         .required('item name required'),
