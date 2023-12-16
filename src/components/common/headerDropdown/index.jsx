@@ -37,13 +37,13 @@ export default function HeaderDropdown(props) {
             <div className={` absolute top-14 left-4 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-md bg-white shadow-lg border border-solid border-[#B6B6B6] ${select ? '' : 'hidden'} `}>
 
                 <Link
-                    to='/mylistings'
+                    to={props.navigateOne}
                     className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '
                 >
                     {props.titleOne}
                 </Link>
                 <Link
-                    to='/user/myprofile'
+                    to={props.navigateTwo}
                     className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '
                 >
                     {props.titleTwo}

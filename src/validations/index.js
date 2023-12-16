@@ -58,7 +58,7 @@ export const addMoreDetailsSchema = yup.object({
         .min(10)
         // .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('mobile number required'),
-    name: yup
+    userName: yup
         .string()
         .min(3)
         .max(10),
@@ -80,7 +80,7 @@ export const addMoreDetailsSchema = yup.object({
     companyLocation: yup
         .string()
         .required('location required'),
-    landmark: yup
+    locationIdentifiers: yup
         .string()
         .required('landmark required'),
     itemDescription: yup

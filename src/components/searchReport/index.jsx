@@ -8,9 +8,6 @@ import TextInput from '../common/textInput';
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
-    const [searchKey, setSearchKey] = useState('');
-    const [reportKey, setReportKey] = useState('');
-    const [locationKey, setLocationKey] = useState('');
     const navigate = useNavigate();
     const resolver = useValidationResolver(searchSchema);
 
@@ -23,11 +20,15 @@ export default function SearchReport() {
     })
     const submitData = async () => {
         try {
-            const keys = methods.getValues();
+            const itemName = methods.getValues().itemName;
+            const location = methods.getValues().location;
 
-            if (keys.itemName) {
-                navigate(`/findMissingItem/${keys.itemName}/${keys.location}`);
+            if (buttonActive) {
+                navigate(`/findMissingItem/${itemName}/${location}`);
+            }else{
+                navigate(`/addmoredetails/${itemName}/${location}`);
             }
+
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -41,11 +42,11 @@ export default function SearchReport() {
         setButtonActive(!buttonActive);
     }
 
-    const handleReportKey = () => {
-        if (reportKey && locationKey) {
-            navigate(`/addMoreDetails/${reportKey}/${locationKey}`);
-        }
-    }
+    // const handleReportKey = () => {
+    //     if (reportKey && locationKey) {
+    //         navigate(`/addMoreDetails/${reportKey}/${locationKey}`);
+    //     }
+    // }
 
     return (
         <div className='flex  xl:pl-3 xl:justify-center xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
@@ -68,8 +69,7 @@ export default function SearchReport() {
                                             className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                             autoComplete="off"
                                             required
-                                            value={searchKey}
-                                            onChange={(e) => setSearchKey(e.target.value)}
+                                            
                                         />
                                         
                                         <TextInput
@@ -79,8 +79,7 @@ export default function SearchReport() {
                                             className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                             autoComplete="off"
                                             required
-                                            value={locationKey}
-                                            onChange={(e) => setLocationKey(e.target.value)}
+                                            
                                         />
                                         <button
                                             type='submit'
@@ -103,8 +102,7 @@ export default function SearchReport() {
                                         className={`placeholder:text-black placeholder:text-ba se xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                         autoComplete="off"
                                         required
-                                        // value={reportKey}
-                                        // onChange={(e)=>setReportKey(e.target.value)}
+                                        
                                     />
                                    <TextInput
                                         type="text"
@@ -113,12 +111,10 @@ export default function SearchReport() {
                                         className={`placeholder:text-black placeholder:text-base xl:w-60 xl:h-16 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                         autoComplete="off"
                                         required
-                                        // value={locationKey}
-                                        // onChange={(e)=>setLocationKey(e.target.value)}
+                                        
                                     />
                                     <button
                                         type='submit'
-                                        onClick={handleReportKey}
                                         className='xl:w-52 xl:h-16 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl border border-solid border-[#B6B6B6] mx-2.5 font-semibold text-white bg-primary-color'
                                     >
                                         Continue

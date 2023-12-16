@@ -13,7 +13,7 @@ const Header = (props) => {
     const [isBusiness, setIsBusiness] = useState(false);
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
-    console.log(userDetails,'ud');
+    
     
     useEffect(() => {
         if (userDetails?.role === 'USER') {
@@ -64,9 +64,11 @@ const Header = (props) => {
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown isBusiness={isBusiness} titleOne='Dashboard' titleTwo='Add Item' handleLogout={handleLogout} />
+                                    <HeaderDropdown isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems' 
+                                    titleTwo='Add Item' navigateTwo='/addmoredetails' handleLogout={handleLogout} />
                                     :
-                                    <HeaderDropdown isBusiness={isBusiness}  titleOne='My listing' titleTwo='My Profile' handleLogout={handleLogout} />
+                                    <HeaderDropdown isBusiness={isBusiness}  titleOne='My listing' navigateOne='/mylistings'  
+                                    titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />
                             }
                         </div>
                         :

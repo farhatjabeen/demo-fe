@@ -13,6 +13,7 @@ let initialState = {
     dropdownLocationValues: [],
     dropdownCategoryValues: [],
     dropdownItemValues: [],
+    itemIdValue: [],
 }
 
 export const itemsSlice = createSlice({
@@ -57,6 +58,9 @@ export const itemsSlice = createSlice({
         },
         foundItemId: (state, action) => {
             state.foundItemId = { ...action.payload }
+        },
+        newItemId: (state, action) => {
+            state.itemIdValue = {...action.payload}
         },
         clearItemState: () => initialState
     }
@@ -275,12 +279,12 @@ export const viewUserItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.generalUserItemsById}/${itemId}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
-            const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            const { itemImage, itemCode, foundDate, foundTime, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
 
             if (Array.isArray(itemImage) && itemImage.length > 0) {
                 dispatch(viewItemDetailsById(itemImage))
             }
-            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            dispatch(viewItemDetailsById({ itemImage, foundDate, foundTime, itemCode, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
 
             return resolve(true)
         }).catch(err => {
@@ -350,6 +354,63 @@ export const fileUploadAPI = (data) => (dispatch) => {
             isFile: true
         }).then((res) => {
             // No need to store in redux can handle from local state
+            return resolve(res)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+// multiple files upload
+export const filesUploadAPI = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.filesUpload,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isFile: true
+        }).then((res) => {
+            // No need to store in redux can handle from local state
+            return resolve(res)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+//general user add item
+export const userAddMoreDetails = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.addItemGeneralUser,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isAuth: true
+
+        }).then((res) => {
+            const {_id} = res.data;
+            dispatch(newItemId({_id}))
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+//business user add item
+export const businessAddMoreDetails = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.addItemBusinessUser,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isAuth: true,
+            tokenType: 'businessUserToken'
+
+        }).then((res) => {
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -366,7 +427,6 @@ export const itemDropdownValues = () => (dispatch) => {
             method: endpoints.ApiMethods.GET,
             isAuth: true
         }).then((res) => {
-            console.log(res.data, 'res.data')
             dispatch(dropdownItem(res.data))
             return resolve(true)
         }).catch(err => {
@@ -500,6 +560,7 @@ export const categoryDetails = (state) => state.items?.dropdownCategoryValues;
 export const itemDropdown = (state) => state.items?.dropdownItemValues;
 export const businessUserDetails = (state) => state.items?.businessUserDetails;
 export const getItemId = (state) => state.items?.foundItemId;
+export const newItemId = (state) => state.items?.itemIdValue;
 
 export const {
     saveItemData,
@@ -514,6 +575,7 @@ export const {
     saveUpdateFoundItems,
     saveBusinessUserDetails,
     saveItemDetails,
+    itemIdValue,
     clearData,
     saveUserDetails,
     dropdownItem,

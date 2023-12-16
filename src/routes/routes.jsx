@@ -29,7 +29,7 @@ const routers = [
       },
       {
         component: "QueryPublished",
-        childPath: "/querypublished",
+        childPath: "/querypublished/:id",
       },
       {
         component: "ClaimItem",
