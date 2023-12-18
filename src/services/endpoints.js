@@ -18,6 +18,7 @@ const apiPath = {
     filesUpload: '/business/multipleImageUpload',
     addItemBusinessUser: '/business/addFoundItem',
     addItemGeneralUser: '/user/addFoundItem',
+    editItemGeneralUser: '/user/updateItem',
     items: {
         fetchItems: '/business/getItems',
         fetchFoundItems: '/admin/getAllItem',
@@ -39,7 +40,7 @@ const apiPath = {
         claimItem: '/user/contactToClaim',
         locationDropdown: '/user/dropDownSearchLocation',
         categoryDropdown: '/user/dropDownSearchCategories',
-        itemDropdown: '/user/searchItemCategories'
+        itemDropdown: '/user/searchItemCategories',
     }
 }
 

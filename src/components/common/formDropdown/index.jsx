@@ -7,7 +7,7 @@ import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, value, handleData }) {
+function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionButtonClass, value, handleData }) {
 
     const [options, setOptions] = useState('');
     console.log(options, 'options')
@@ -16,6 +16,7 @@ function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, val
         handleData(options);
     }, [options, handleData]);
 
+   
     return (
         <ConnectForm>
             {({ errors, control }) => (
@@ -29,17 +30,17 @@ function FormDropdown({ name, editButton, dropdownValues, optionButtonClass, val
                                     <div>
                                         <select
                                             id={name}
-                                            defaultValue=""
                                             disabled={!editButton}
                                             className={optionButtonClass}
-                                            onChange={(e)=>{setOptions(e.target.value)}}
+                                            onChange={(e) => setOptions(e.target.value) }
                                         >
-
-                                            {dropdownValues?.map((items, i) => {
+                                            <option value="">Select an option</option>
+                                            {dropdownValues?.map((items) => {
                                                 return (
                                                     <option
-                                                        key={i}
+                                                        key={items.id}
                                                         value={`${items}`}
+                                                        selected={items === valueFromDb ? true : false}
                                                         className="px-4 py-2 flex w-full text-sm hover:bg-green"
                                                     >
                                                         {items}

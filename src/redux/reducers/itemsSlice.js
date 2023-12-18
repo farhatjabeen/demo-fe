@@ -234,11 +234,11 @@ export const searchItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
             method: endpoints.ApiMethods.GET
         }).then((res) => {
-            const { _id, itemImage, itemName, location, foundDate, foundTime } = res.data
+            const { _id, itemImage, itemCategory, itemCode, locationIdentifiers, userName, cloudinary_id, mobileNumber, emailMailId, itemDescription, keywords, itemName, location, foundDate, foundTime } = res.data
             // if (Array.isArray(itemImage) && itemImage.length > 0) {
             //     dispatch(saveItemDataById(itemImage))
             // }
-            dispatch(saveItemDataById({ _id, itemImage, itemName, location, foundDate, foundTime }))
+            dispatch(saveItemDataById({ _id, itemImage, itemCategory, itemCode, locationIdentifiers, userName, cloudinary_id, mobileNumber, emailMailId, itemDescription, keywords, itemName, location, foundDate, foundTime }))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -294,7 +294,8 @@ export const viewUserItemById = (itemId) => (dispatch) => {
     })
 }
 
-// claim item - Temporarily not using 
+
+// ** claim item - Temporarily not using **
 // export const claimItemNow = (itemId) => async (dispatch) => {
 //     return new Promise((resolve, reject) => {
 //         apiRequest({
@@ -390,9 +391,7 @@ export const userAddMoreDetails = (data) => (dispatch) => {
             isAuth: true
 
         }).then((res) => {
-            const {_id} = res.data;
-            dispatch(newItemId({_id}))
-            return resolve(true)
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
@@ -410,6 +409,22 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
 
+        }).then((res) => {
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+export const userEditItemDetails = (itemId,data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.editItemGeneralUser}?itemId=${itemId}`,
+            method: endpoints.ApiMethods.PUT,
+            data: data,
+            isAuth: true
         }).then((res) => {
             return resolve(true)
         }).catch(err => {

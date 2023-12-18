@@ -24,6 +24,10 @@ const routers = [
         childPath: "/addmoredetails",
       },
       {
+        component: "AddMoreDetails",
+        childPath: "/addmoredetails/:id",
+      },
+      {
         component: "BusinessItemDetails",
         childPath:"/businessitemdetails/:id"
       },

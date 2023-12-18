@@ -7,7 +7,7 @@ import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { MdClose } from "react-icons/md";
-import { businessAddMoreDetails, filesUploadAPI, itemDropdown, itemDropdownValues, locationDetails, locationDropdownValues, newItemId, userAddMoreDetails } from '../../redux/reducers/itemsSlice';
+import { businessAddMoreDetails, filesUploadAPI, itemDropdown, itemDropdownValues, locationDetails, locationDropdownValues, newItemId, searchDetailsById, searchItemById, userAddMoreDetails, userEditItemDetails } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import FormDropdown from '../../components/common/formDropdown';
@@ -17,7 +17,9 @@ import { userData } from '../../redux/reducers/userSlice';
 export default function AddMoreDetails() {
     const [itemName, setItemName] = useState('');
     const [location, setLocation] = useState('');
+    const [newItemId,setNewItemId] = useState('');
     const [files, setFiles] = useState([]);
+    const [filesFromDb, setFilesFromDb] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -28,19 +30,49 @@ export default function AddMoreDetails() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
-    const [itemId, setItemId] = useState('');
     const userDetails = useSelector(userData);
-    const itemIdNew = useSelector(newItemId);
-    console.log(userDetails, 'ud');
-    const routeValues = useParams();
+    // const itemIdNew = useSelector(newItemId);
+    const itemDetailsById = useSelector(searchDetailsById);
+    // console.log(itemIdNew, 'ud');
+    const reportDetails = useParams();
+    console.log("routeValues", reportDetails);
     const [selectedLocation, setSelectedLocation] = useState("");
 
 
     useEffect(() => {
+        if (!itemName) {
+            setItemName(reportDetails.itemName);
+        }
+        if (!location) {
+            setLocation(reportDetails.location);
+        }
+        dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
-    }, [])
+        if (reportDetails.id) {
+            dispatch(searchItemById(reportDetails.id))
+        }
 
-    const reportDetails = useParams();
+    }, []);
+
+    useEffect(() => {
+        if (itemDetailsById) {
+            setFilesFromDb(itemDetailsById?.cloudinary_id)
+            methods.reset({
+                emailMailId: itemDetailsById?.emailMailId || "",
+                mobileNumber: `${itemDetailsById?.mobileNumber}` || "",
+                userName: itemDetailsById?.userName || "",
+                location: reportDetails.location || itemDetailsById?.location || "",
+                locationIdentifiers: itemDetailsById?.locationIdentifiers || "",
+                itemDescription: itemDetailsById?.itemDescription || "",
+                itemCategory: itemDetailsById?.itemCategory || "",
+                itemName: reportDetails.newItem || itemDetailsById?.itemName || "",
+                keywords: itemDetailsById?.keywords || "",
+                itemImage: itemDetailsById?.itemImage || "",
+                cloudinary_id: itemDetailsById?.cloudinary_id || ""
+            });
+        }
+    }, [itemDetailsById])
+
     const resolver = useValidationResolver(addMoreDetailsSchema);
 
     const methods = useForm({
@@ -48,11 +80,11 @@ export default function AddMoreDetails() {
             emailMailId: "",
             mobileNumber: "",
             userName: "",
-            location: `${routeValues.location}` || "",
+            location: "",
             locationIdentifiers: "",
             itemDescription: "",
             itemCategory: "",
-            itemName: `${routeValues.newItem}` || "",
+            itemName: "",
             keywords: "",
             itemImage: "",
             cloudinary_id: ""
@@ -60,50 +92,57 @@ export default function AddMoreDetails() {
         resolver
     });
 
+    useEffect(()=>{
+        if(newItemId){
+            navigate(`/querypublished/${newItemId}`)
+        }
+    },[newItemId])
+
+
+
     const submitData = async (e) => {
         try {
             e.preventDefault();
-            methods.setValue('itemCategory', `${selectedCategory}` || "")
-            methods.setValue("itemImage", itemImage);
-            methods.setValue("cloudinary_id", cloudinaryId);
-            methods.setValue("location", `${selectedLocation}` || "");
+            methods.setValue('itemCategory', `${selectedCategory}` || itemDetailsById?.itemCategory || "")
+
+            methods.setValue("itemImage", itemImage || itemDetailsById?.itemImage);
+            methods.setValue("cloudinary_id", cloudinaryId || itemDetailsById?.cloudinaryId );
+            methods.setValue("location", `${selectedLocation}` || itemDetailsById?.location || "");
             const inputString = methods.getValues().keywords;
             methods.setValue('keywords', inputString.split(' '))
             const data = methods.getValues();
-
-            if (userDetails?.role === 'USER') {
-                const newDetails = dispatch(userAddMoreDetails(data));
-                if (newDetails) {
-                    navigate(`/querypublished/${itemIdNew._id}`)
-                }
+            console.log("from submit form");
+            if (userDetails?.role === 'USER' && !reportDetails.id) {
+                const addItem = dispatch(userAddMoreDetails(data));
+                console.log('itemadded',addItem)
+                addItem?.then((res)=>{
+                    setNewItemId( res.data._id)
+                })
+                
+                console.log(newItemId,'newitemid')
+                
+            } else {
+                dispatch(userEditItemDetails(reportDetails.id, data))
             }
             if (userDetails?.role === 'BUSINESS') {
                 dispatch(businessAddMoreDetails(data));
             }
-
-
         } catch (error) {
             console.log(error, 'submitted errors')
         }
     };
 
-    useEffect(() => {
-        if (itemIdNew) {
-
-        }
-    }, [itemIdNew])
-
     const handleReset = (e) => {
         setFiles([]);
         setIsUploaded(false);
+        setFilesFromDb([]);
     }
 
     const handleFileUpload = (e) => {
-
         const selectedFiles = e.target.files;
         setFiles((prevFiles) => {
             const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
-            if (selectedFiles) {
+            if (newFiles) {
                 setIsUploaded(true);
             }
             return newFiles;
@@ -124,24 +163,19 @@ export default function AddMoreDetails() {
                 .then((res) => {
                     setCloudinaryId(res.data.cloudinary_id)
                     setItemImage(res.data.itemImage)
+                }).then(() => {
+                    if(itemDetailsById?.itemImage){
+                    setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
+                    setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
+                    }
                 })
-
         }
+
     }, [files])
 
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
     };
-
-    useEffect(() => {
-        if (!itemName) {
-            setItemName(reportDetails.itemName);
-        }
-        if (!location) {
-            setLocation(reportDetails.location);
-        }
-        dispatch(locationDropdownValues())
-    }, []);
 
     const handleChildDataLocation = (dataFromChild) => {
         setSelectedLocation(dataFromChild);
@@ -183,6 +217,7 @@ export default function AddMoreDetails() {
                                     optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                     editButton={true}
                                     handleData={handleChildData}
+                                    valueFromDb={itemDetailsById?.itemCategory}
                                     selection={true}
                                     dropdownValues={itemCategories} />
                             </div>
@@ -223,16 +258,41 @@ export default function AddMoreDetails() {
                                     <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Upload Images</p>
                                 </div>
                                 <div>
-                                    {isUploaded ?
+                                    {isUploaded || itemDetailsById?.itemImage ?
                                         <div className='flex flex-wrap w-96'>
-                                            {files.map((items, i) => {
-                                                return (
-                                                    <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                        <div>{items.name}</div>
-                                                        <div className='flex items-center ml-2'><MdClose /></div>
+                                            {
+                                                itemDetailsById?.itemImage ?
+                                                    <div>
+                                                        {filesFromDb.map((items, i) => {
+                                                            return (
+                                                                <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                                                                    <div>{items}</div>
+                                                                    <div className='flex items-center ml-2'><MdClose /></div>
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
-                                                );
-                                            })}
+                                                    :
+                                                    ""
+                                            }
+                                            {files
+                                                ?
+                                                <div>
+                                                    {
+                                                        files?.map((items, i) => {
+                                                            return (
+                                                                <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                                                                    <div>{items.name}</div>
+                                                                    <div className='flex items-center ml-2'><MdClose /></div>
+                                                                </div>
+                                                            );
+                                                        })
+                                                    }
+                                                </div>
+                                                :
+                                                ""
+                                            }
+
                                         </div>
                                         :
                                         null
@@ -242,7 +302,7 @@ export default function AddMoreDetails() {
                                         <ImageUpload
                                             name="item"
                                             designClass={
-                                                `${isUploaded
+                                                `${isUploaded || itemDetailsById?.itemImage
                                                     ?
                                                     "xl:w-80 md:w-80 sm:64 xl:mr-2 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
                                                     :
@@ -253,10 +313,10 @@ export default function AddMoreDetails() {
                                             handleFileUpload={handleFileUpload}
                                         />
 
-                                        {isUploaded ?
+                                        {itemDetailsById?.itemImage || isUploaded ?
                                             <div>
-                                                <button className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
-                                                    <IoMdRefresh className='h-6 w-6' onClick={handleReset} />
+                                                <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
+                                                    <IoMdRefresh className='h-6 w-6' />
                                                 </button>
                                             </div>
                                             :
@@ -275,6 +335,7 @@ export default function AddMoreDetails() {
                                         optionButtonClass='xl:w-96 md:w-96 sm:w-64 border border-[#B6B6B6] rounded-lg p-5'
                                         editButton={true}
                                         selection={true}
+                                        valueFromDb={itemDetailsById?.location || reportDetails?.location}
                                         dropdownValues={citiesInSerbia}
                                         handleData={handleChildDataLocation}
                                     />
@@ -342,8 +403,22 @@ export default function AddMoreDetails() {
                         </div>
                         <div className='flex flex-col items-center justify-between mt-20'>
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
-                                <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab' onClick={() => { window.history.back() }}>Cancel</button></div>
-                                <div><button type='submit' className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab' >Submit form</button></div>
+                                <div>
+                                    <button
+                                        className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
+                                        onClick={() => { window.history.back() }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div>
+                                    <button
+                                        type='submit'
+                                        className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
+                                    >
+                                        Submit form
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
