@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import DeleteModal from "../modal";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 import { useDispatch } from "react-redux";
 const Table = ({ headers, data, showEdit = false, context }) => {
@@ -38,7 +38,7 @@ const Table = ({ headers, data, showEdit = false, context }) => {
               {
                 headers.map((header) => (
                   header.key === 'action' ? (
-                    <td className="py-6 px-6 flex cursor-pointer text-grey">
+                    <td className="py-6 px-6 flex cursor-pointer text-grey hover:text-black">
                       <AiOutlineDelete
                         size={26}
                         onClick={() => handleDeleteClick(item._id)}
@@ -69,7 +69,7 @@ const Table = ({ headers, data, showEdit = false, context }) => {
           setSelectedItemId(null);
         }}
         selectedItemId={selectedItemId}
-        context={context} 
+        context={context}
       />
     </div>
   );

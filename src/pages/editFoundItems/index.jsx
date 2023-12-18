@@ -19,7 +19,7 @@ const EditFoundItems = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [selectedCategory, setSelectedCategory] = useState();
-  const [updatedData, setUpdatedData] = useState(null);
+  const [updatedData, setUpdatedData] = useState([]);
   const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
   const items = useSelector(itemDropdown)
@@ -51,9 +51,10 @@ const EditFoundItems = () => {
     setSelectedCategory(itemCategory)
     dispatch(itemDropdownValues());
   }, [itemCategory]);
+
   useEffect(() => {
     if (updatedData) {
-      dispatch(adminUpdateFoundItems(id, updatedData))
+      dispatch(adminUpdateFoundItems(updatedData))
         .then(() => {
           navigate('/admin/user/foundItems');
         })
@@ -61,15 +62,12 @@ const EditFoundItems = () => {
           console.error('Update failed:', error);
         });
     }
-  }, [updatedData, id, dispatch, navigate]);
-
+  }, [updatedData]);
+ 
   const submitData = (data) => {
-    console.log('first.....', data);
     try {
       dispatch(adminUpdateFoundItems(id, data));
-      console.log('Data dispatched to redux');
       setUpdatedData(data);
-      console.log('Data updated in local state');
       navigate('/admin/user/foundItems');
     } catch (error) {
       console.error('Update failed:', error);

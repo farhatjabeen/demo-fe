@@ -22,6 +22,9 @@ export const itemsSlice = createSlice({
         saveItemDetails: (state, action) => {
             state.itemDetails = { ...action.payload }
         },
+        saveUpdateBusinessItems: (state, action) => {
+            state.editBusinessUserItem = { ...action.payload }
+        },
         saveFoundItemDetails: (state, action) => {
             state.foundItemDetails = { ...action.payload }
         },
@@ -83,7 +86,45 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
         })
     })
 }
-
+//delete in businessuser
+export const deleteBusinessItem = (itemId) => (dispatch) => {
+    try {
+        apiRequest({
+            url: `${endpoints.apiPath.items.deleteBusinessUserItem}?itemId=${itemId}`,
+            method: endpoints.ApiMethods.DELETE,
+            isAuth: true,
+            tokenType: 'businessUserToken',
+        });
+        dispatch(fetchItems());
+        Toast({ type: "success", message: "Item deleted successfully." });
+    } catch (error) {
+        console.error(error);
+        if (error?.status === 400 && error?.data === "Item not found") {
+            Toast({ type: "error", message: "Item not found. Please refresh the page." });
+        } else {
+            Toast({ type: "error", message: "Error deleting item." });
+        }
+    }
+};
+//edit in businessuser
+export const businessUpdateItems = (itemId, updatedData) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.items.editBusinessUserItem}?itemid=${itemId}`,
+            method: endpoints.ApiMethods.PUT,
+            data: updatedData,
+            isAuth: true,
+            tokenType: 'businessUserToken'
+        }).then((res) => {
+            const { data } = res;
+            dispatch(saveUpdateBusinessItems(data));
+            return resolve(true);
+        }).catch(err => {
+            console.log(err);
+            return reject(err);
+        });
+    });
+};
 //get items in admin
 export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, searchTerm, itemcode) => (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -125,7 +166,6 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm) 
         })
     })
 };
-
 
 //get businessUser in admin
 export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm) => (dispatch) => {
@@ -402,24 +442,25 @@ export const foundItemById = (itemId) => (dispatch) => {
 };
 
 //update found item in admin
-export const adminUpdateFoundItems = (itemId, updatedData) => (dispatch) => {
+export const adminUpdateFoundItems = (itemId,updatedData) => (dispatch) => {
     return new Promise((resolve, reject) => {
-      apiRequest({
-        url: `${endpoints.apiPath.items.updateFoundItems}?itemid=${itemId}`,
-        method: endpoints.ApiMethods.PUT,
-        data: updatedData,
-        isAuth: true,
-        tokenType: 'adminToken'
-      }).then((res) => {
-        const { data } = res;
-        dispatch(saveUpdateFoundItems(data));
-        return resolve(true);
-      }).catch(err => {
-        console.log(err);
-        return reject(err);
-      });
+        apiRequest({
+            url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}`,
+            method: endpoints.ApiMethods.PUT,
+            data: updatedData,
+            isAuth: true,
+            tokenType: 'adminToken'
+        }).then((res) => {
+            const [data]  = res;
+            dispatch(saveUpdateFoundItems(data));
+            return resolve(true);
+        }).catch(err => {
+            console.log(err);
+            return reject(err);
+        });
     });
-  };
+};
+
 //delete in admin
 export const deleteItem = (itemId, context) => (dispatch) => {
     try {
@@ -487,6 +528,7 @@ export const adminExportItems = () => (dispatch) => {
 };
 
 export const updateFoundItems = (state) => state.items?.updateFoundItems;
+export const editBusinessUserItem = (state) => state.items?.editBusinessUserItem;
 export const itemDetails = (state) => state.items?.itemDetails;
 export const userDetails = (state) => state.items?.userDetails;
 export const foundItemDetails = (state) => state.items?.foundItemDetails;
@@ -509,6 +551,7 @@ export const {
     viewItemDetailsById,
     viewItemDetailsByLocation,
     saveUpdateFoundItems,
+    saveUpdateBusinessItems,
     saveBusinessUserDetails,
     saveItemDetails,
     clearData,
