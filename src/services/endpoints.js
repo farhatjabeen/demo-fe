@@ -15,6 +15,9 @@ const apiPath = {
     editBusinessProfile: '/business/editProfile',
     contactAdmin: '/user/sendQueryToAdmin',
     fileUpload: '/business/imageUpload',
+    filesUpload: '/business/multipleImageUpload',
+    addItemBusinessUser: '/business/addFoundItem',
+    addItemGeneralUser: '/user/addFoundItem',
     items: {
         fetchItems: '/business/getItems',
         fetchFoundItems: '/admin/getAllItem',

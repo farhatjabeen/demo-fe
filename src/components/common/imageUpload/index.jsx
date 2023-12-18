@@ -28,7 +28,6 @@ export default function ImageUpload({ name, designClass, multiple, handleFileUpl
                                         className="hidden"
                                         multiple={multiple}
                                         onChange={handleFileUpload}
-                                        ref={fileInputRef}
                                     />
                                 </div>
                             )}
