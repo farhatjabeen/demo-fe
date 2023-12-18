@@ -21,6 +21,9 @@ export default function BusinessSignUp() {
     // const navigate = useNavigate();
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [responseFromFile, setResponseFromFile] = useState(null);
+    const [cloudinaryId, setCloudinaryId] = useState('');
+    const [companyLogo, setCompanyLogo] = useState('');
 
     const methods = useForm({
         defaultValues: {
@@ -35,6 +38,7 @@ export default function BusinessSignUp() {
         },
         resolver
     });
+
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
@@ -51,16 +55,36 @@ export default function BusinessSignUp() {
     }, []);
 
     useEffect(() => {
-        if (imageFiles && imageFiles[0]) {
-            let formData = new FormData();
-            formData.append("company", imageFiles[0]);
-            dispatch(fileUploadAPI(formData))
+        try {
+            if (imageFiles && imageFiles[0]) {
+                let formData = new FormData();
+                formData.append("company", imageFiles[0]);
+                const imageResponse = dispatch(fileUploadAPI(formData));
+
+                imageResponse
+                    .then((res) => {
+                        console.log("responseFromFile", res.data.companylogo)
+                        setCompanyLogo(res.data.companylogo);
+                        setCloudinaryId(res.data.cloudinary_id);
+                    })
+            }
+        } catch (error) {
+            console.log("submitData errors", error)
         }
     }, [imageFiles]);
 
-    const submitData = (data) => {
-        console.log("submitted", data)
-        // dispatch(businessUserRegister(data))
+
+    const submitData = (e) => {
+        e.preventDefault();
+        const name = methods.getValues().name;
+        const mobileNumber = methods.getValues().mobileNumber;
+        const emailMailId = methods.getValues().emailMailId;
+        const password = methods.getValues().password;
+        const companyName = methods.getValues().companyName;
+        const companyCategory = `${selectedCategory}` || "";
+        const companylogo = `${companyLogo}` || "";
+        const cloudinary_id = `${cloudinaryId}` || "";
+        dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyCategory, companyName, companylogo, cloudinary_id }))
     };
 
     const handleChildData = (dataFromChild) => {
@@ -86,7 +110,7 @@ export default function BusinessSignUp() {
                     </div>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(submitData)}>
+                    <form onSubmit={(e) => submitData(e)}>
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>

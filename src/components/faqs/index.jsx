@@ -42,8 +42,8 @@ export default function Faq({ questions }) {
 
                     })}
                 </div>
-                <div className='xl:absolute bg-black xl:top-4 xl:right-20 xl:w-1/3 xl:h-full md:w-full md:h-11/12 md:flex md:justify-center'>
-                    <img className=' xl:h-10/12 xl:w-full md:h-11/12 md:w-3/5 ' src={faqImage} alt='faqImage' />
+                <div className='xl:absolute bg-green xl:top-4 xl:right-20 xl:w-1/3 xl:h-96 md:w-full md:h-11/12 md:flex md:justify-center'>
+                    <img className=' xl:h-full xl:w-full md:h-11/12 md:w-3/5 ' src={faqImage} alt='faqImage' />
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ let initialState = {
     dropdownLocationValues: [],
     dropdownCategoryValues: [],
     dropdownItemValues: [],
+    itemIdValue: [],
 }
 
 export const itemsSlice = createSlice({
@@ -21,6 +22,9 @@ export const itemsSlice = createSlice({
     reducers: {
         saveItemDetails: (state, action) => {
             state.itemDetails = { ...action.payload }
+        },
+        saveUpdateBusinessItems: (state, action) => {
+            state.editBusinessUserItem = { ...action.payload }
         },
         saveFoundItemDetails: (state, action) => {
             state.foundItemDetails = { ...action.payload }
@@ -58,6 +62,9 @@ export const itemsSlice = createSlice({
         foundItemId: (state, action) => {
             state.foundItemId = { ...action.payload }
         },
+        newItemId: (state, action) => {
+            state.itemIdValue = {...action.payload}
+        },
         clearItemState: () => initialState
     }
 });
@@ -83,7 +90,45 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
         })
     })
 }
-
+//delete in businessuser
+export const deleteBusinessItem = (itemId) => (dispatch) => {
+    try {
+        apiRequest({
+            url: `${endpoints.apiPath.items.deleteBusinessUserItem}?itemId=${itemId}`,
+            method: endpoints.ApiMethods.DELETE,
+            isAuth: true,
+            tokenType: 'businessUserToken',
+        });
+        dispatch(fetchItems());
+        Toast({ type: "success", message: "Item deleted successfully." });
+    } catch (error) {
+        console.error(error);
+        if (error?.status === 400 && error?.data === "Item not found") {
+            Toast({ type: "error", message: "Item not found. Please refresh the page." });
+        } else {
+            Toast({ type: "error", message: "Error deleting item." });
+        }
+    }
+};
+//edit in businessuser
+export const businessUpdateItems = (itemId, updatedData) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.items.editBusinessUserItem}?itemid=${itemId}`,
+            method: endpoints.ApiMethods.PUT,
+            data: updatedData,
+            isAuth: true,
+            tokenType: 'businessUserToken'
+        }).then((res) => {
+            const { data } = res;
+            dispatch(saveUpdateBusinessItems(data));
+            return resolve(true);
+        }).catch(err => {
+            console.log(err);
+            return reject(err);
+        });
+    });
+};
 //get items in admin
 export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, searchTerm, itemcode) => (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -125,7 +170,6 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm) 
         })
     })
 };
-
 
 //get businessUser in admin
 export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm) => (dispatch) => {
@@ -230,11 +274,11 @@ export const searchItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
             method: endpoints.ApiMethods.GET
         }).then((res) => {
-            const { _id, itemImage, itemName, location, foundDate, foundTime } = res.data
+            const { _id, itemImage, itemCategory, itemCode, locationIdentifiers, userName, cloudinary_id, mobileNumber, emailMailId, itemDescription, keywords, itemName, location, foundDate, foundTime } = res.data
             // if (Array.isArray(itemImage) && itemImage.length > 0) {
             //     dispatch(saveItemDataById(itemImage))
             // }
-            dispatch(saveItemDataById({ _id, itemImage, itemName, location, foundDate, foundTime }))
+            dispatch(saveItemDataById({ _id, itemImage, itemCategory, itemCode, locationIdentifiers, userName, cloudinary_id, mobileNumber, emailMailId, itemDescription, keywords, itemName, location, foundDate, foundTime }))
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -275,12 +319,12 @@ export const viewUserItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.generalUserItemsById}/${itemId}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
-            const { itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
+            const { itemImage, itemCode, foundDate, foundTime, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
 
             if (Array.isArray(itemImage) && itemImage.length > 0) {
                 dispatch(viewItemDetailsById(itemImage))
             }
-            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            dispatch(viewItemDetailsById({ itemImage, foundDate, foundTime, itemCode, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
 
             return resolve(true)
         }).catch(err => {
@@ -290,7 +334,8 @@ export const viewUserItemById = (itemId) => (dispatch) => {
     })
 }
 
-// claim item - Temporarily not using 
+
+// ** claim item - Temporarily not using **
 // export const claimItemNow = (itemId) => async (dispatch) => {
 //     return new Promise((resolve, reject) => {
 //         apiRequest({
@@ -350,6 +395,77 @@ export const fileUploadAPI = (data) => (dispatch) => {
             isFile: true
         }).then((res) => {
             // No need to store in redux can handle from local state
+            return resolve(res)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+// multiple files upload
+export const filesUploadAPI = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.filesUpload,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isFile: true
+        }).then((res) => {
+            // No need to store in redux can handle from local state
+            return resolve(res)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+//general user add item
+export const userAddMoreDetails = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.addItemGeneralUser,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isAuth: true
+
+        }).then((res) => {
+            return resolve(res)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+//business user add item
+export const businessAddMoreDetails = (data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.addItemBusinessUser,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            isAuth: true,
+            tokenType: 'businessUserToken'
+
+        }).then((res) => {
+            return resolve(true)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+};
+
+export const userEditItemDetails = (itemId,data) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.editItemGeneralUser}?itemId=${itemId}`,
+            method: endpoints.ApiMethods.PUT,
+            data: data,
+            isAuth: true
+        }).then((res) => {
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -402,24 +518,25 @@ export const foundItemById = (itemId) => (dispatch) => {
 };
 
 //update found item in admin
-export const adminUpdateFoundItems = (itemId, updatedData) => (dispatch) => {
+export const adminUpdateFoundItems = (itemId,updatedData) => (dispatch) => {
     return new Promise((resolve, reject) => {
-      apiRequest({
-        url: `${endpoints.apiPath.items.updateFoundItems}?itemid=${itemId}`,
-        method: endpoints.ApiMethods.PUT,
-        data: updatedData,
-        isAuth: true,
-        tokenType: 'adminToken'
-      }).then((res) => {
-        const { data } = res;
-        dispatch(saveUpdateFoundItems(data));
-        return resolve(true);
-      }).catch(err => {
-        console.log(err);
-        return reject(err);
-      });
+        apiRequest({
+            url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}`,
+            method: endpoints.ApiMethods.PUT,
+            data: updatedData,
+            isAuth: true,
+            tokenType: 'adminToken'
+        }).then((res) => {
+            const [data]  = res;
+            dispatch(saveUpdateFoundItems(data));
+            return resolve(true);
+        }).catch(err => {
+            console.log(err);
+            return reject(err);
+        });
     });
-  };
+};
+
 //delete in admin
 export const deleteItem = (itemId, context) => (dispatch) => {
     try {
@@ -487,6 +604,7 @@ export const adminExportItems = () => (dispatch) => {
 };
 
 export const updateFoundItems = (state) => state.items?.updateFoundItems;
+export const editBusinessUserItem = (state) => state.items?.editBusinessUserItem;
 export const itemDetails = (state) => state.items?.itemDetails;
 export const userDetails = (state) => state.items?.userDetails;
 export const foundItemDetails = (state) => state.items?.foundItemDetails;
@@ -497,6 +615,7 @@ export const categoryDetails = (state) => state.items?.dropdownCategoryValues;
 export const itemDropdown = (state) => state.items?.dropdownItemValues;
 export const businessUserDetails = (state) => state.items?.businessUserDetails;
 export const getItemId = (state) => state.items?.foundItemId;
+export const newItemId = (state) => state.items?.itemIdValue;
 
 export const {
     saveItemData,
@@ -509,8 +628,10 @@ export const {
     viewItemDetailsById,
     viewItemDetailsByLocation,
     saveUpdateFoundItems,
+    saveUpdateBusinessItems,
     saveBusinessUserDetails,
     saveItemDetails,
+    itemIdValue,
     clearData,
     saveUserDetails,
     dropdownItem,

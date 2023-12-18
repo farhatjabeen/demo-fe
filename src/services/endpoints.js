@@ -8,13 +8,17 @@ const apiPath = {
     registerBusinessUser: '/business/signup',
     loginAdmin: '/admin/login',
     resetPasswordAdmin: '/admin/resetPassword',
-    forgotPasswordBusiness:'/user/forgotpassword',
-    resetPasswordBusiness:'/business/resetpassword',
+    forgotPasswordBusiness: '/user/forgotpassword',
+    resetPasswordBusiness: '/business/resetpassword',
     businessProfile: '/business/userDetails',
     userProfile: '/user/editProfile',
     editBusinessProfile: '/business/editProfile',
     contactAdmin: '/user/sendQueryToAdmin',
     fileUpload: '/business/imageUpload',
+    filesUpload: '/business/multipleImageUpload',
+    addItemBusinessUser: '/business/addFoundItem',
+    addItemGeneralUser: '/user/addFoundItem',
+    editItemGeneralUser: '/user/updateItem',
     items: {
         fetchItems: '/business/getItems',
         fetchFoundItems: '/admin/getAllItem',
@@ -30,13 +34,15 @@ const apiPath = {
         searchById: '/user/item',
         myListing: '/user/myListings',
         viewById: '/business/item',
+        deleteBusinessUserItem: '/business/removeListing',
+        editBusinessUserItem: '/business/updateItem',
         generalUserItemsById: '/user/item',
         deleteUserItemId: '/user/removeListing',
         searchByLocation: '/user/getItemByLocation',
         claimItem: '/user/contactToClaim',
         locationDropdown: '/user/dropDownSearchLocation',
         categoryDropdown: '/user/dropDownSearchCategories',
-        itemDropdown: '/user/searchItemCategories'
+        itemDropdown: '/user/searchItemCategories',
     }
 }
 

@@ -24,12 +24,16 @@ const routers = [
         childPath: "/addmoredetails",
       },
       {
+        component: "AddMoreDetails",
+        childPath: "/addmoredetails/:id",
+      },
+      {
         component: "BusinessItemDetails",
         childPath:"/businessitemdetails/:id"
       },
       {
         component: "QueryPublished",
-        childPath: "/querypublished",
+        childPath: "/querypublished/:id",
       },
       {
         component: "ClaimItem",
@@ -71,6 +75,11 @@ const routers = [
         component: "AllItems",
         childPath: "/allitems",
       },
+      {
+        component: "editDetails",
+        childPath: "/editdetails/:id",
+      },
+
       {
         component: "AboutUs",
         childPath: "/aboutus",
