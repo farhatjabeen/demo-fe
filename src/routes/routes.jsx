@@ -76,6 +76,11 @@ const routers = [
         childPath: "/allitems",
       },
       {
+        component: "editDetails",
+        childPath: "/editdetails/:id",
+      },
+
+      {
         component: "AboutUs",
         childPath: "/aboutus",
       },

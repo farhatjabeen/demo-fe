@@ -16,7 +16,7 @@ const DropdownMenu = ({ dropdownValues, value, onChange, placeholder }) => {
     <div className='w-full '>
       <select
         onChange={handleChange}
-        value={selectedOption}
+        value={value}
         className='w-full px-2 py-3 border rounded'
       >
         <option value="" disabled>

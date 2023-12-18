@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { AiOutlineDelete } from "react-icons/ai";
+import { FiEdit } from "react-icons/fi";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
-import { fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
+import { deleteBusinessItem, fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
+import DeleteModal from '../../components/modal';
 
 export default function AllItems() {
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [PageLimit, setPageLimit] = useState(10);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const tableData = useSelector(itemDetails);
-
+    const handleDeleteClick = (id) => {
+        setSelectedItemId(id);
+        setDeleteModalOpen(true);
+    };
     useEffect(() => {
-        dispatch(fetchItems(currentPage, PageLimit))
-    }, [currentPage, PageLimit]);
+        dispatch(fetchItems(currentPage))
+    }, [currentPage]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -113,6 +119,11 @@ export default function AllItems() {
                                         </div>
                                     </div>
                                 </th>
+                                <th className="px-6 py-6 text-left cursor-pointer">
+                                    <div>
+                                        <p className='text-[#1B2E6B]'>Action</p>
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,11 +136,36 @@ export default function AllItems() {
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.locationIdentifiers}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundDate}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal flex">
+                                            <AiOutlineDelete size={24} onClick={(e) => {
+                                                handleDeleteClick(items._id)
+                                                e.stopPropagation();
+                                            }} className="text-gray-500 hover:text-black cursor-pointer"
+                                            />
+                                            <FiEdit size={24} className="text-gray-500 hover:text-black mr-4 cursor-pointer" onClick={(e) => {
+                                                navigate(`/editdetails/${items._id}`)
+                                                e.stopPropagation();
+                                            }} />
+                                        </td>
                                     </tr>
                                 );
                             })}
                         </tbody>
                     </table>
+                    <DeleteModal
+                        isOpen={deleteModalOpen}
+                        onCancel={() => {
+                            setDeleteModalOpen(false);
+                            setSelectedItemId(null);
+                        }}
+                        onDelete={() => {
+                            console.log(`Deleting item with ID ${selectedItemId}`);
+                            dispatch(deleteBusinessItem(selectedItemId));
+                            setDeleteModalOpen(false);
+                            setSelectedItemId(null);
+                        }}
+                        selectedItemId={selectedItemId}
+                    />
                 </div>
             </div>
             <div className=' flex justify-center mb-20'>
