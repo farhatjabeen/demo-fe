@@ -9,7 +9,8 @@ import { IoMdRefresh } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useRef } from 'react';
 import { MdClose } from "react-icons/md";
-import { itemDropdown, itemDropdownValues, viewDetails, viewItemById } from '../../redux/reducers/itemsSlice';
+import { useNavigate } from 'react-router-dom';
+import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
 import DropdownMenu from '../../components/common/dropdown';
@@ -20,13 +21,13 @@ export default function EditBusinessDetails() {
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [isReset, setIsReset] = useState(false);
+    const [updatedData, setUpdatedData] = useState([]);
     const dispatch = useDispatch();
     const items = useSelector(itemDropdown);
     const itemCategories = Object.values(items);
     const [selectedCategory, setSelectedCategory] = useState(" ");
     const itemDetails = useSelector(viewDetails);
-
-
+    const navigate = useNavigate();
     const fileInputRef = useRef();
     const reportDetails = useParams();
     const resolver = useValidationResolver(addMoreDetailsSchema);
@@ -70,7 +71,13 @@ export default function EditBusinessDetails() {
         dispatch(itemDropdownValues())
     }, [itemDetails.itemCategory])
     const submitData = async (data) => {
-
+        try {
+            dispatch(businessUpdateItems(reportDetails, data));
+            setUpdatedData(data);
+            navigate('/allItems');
+        } catch (error) {
+            console.error('Update failed:', error);
+        }
     };
 
     const handleReset = (e) => {
@@ -194,53 +201,7 @@ export default function EditBusinessDetails() {
                                         null
                                     }
 
-                                    <div className="flex justify-center items-center">
-                                        <ImageUpload
-                                            name="imageUpload"
-                                            designClass={
-                                                `${isUploaded
-                                                    ?
-                                                    "xl:w-80 md:w-80 sm:64 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
-                                                    :
-                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
-                                                }`
-                                            }
-                                            multiple={true}
-                                            handleFileUpload={handleFileUpload}
-                                            fileInputRef={fileInputRef}
-                                        />
-                                        {/* <label
-                                            htmlFor="fileInput"
-                                            className=
-                                            {
-                                                `${isUploaded
-                                                    ?
-                                                    "xl:w-80 md:w-80 sm:64 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
-                                                    :
-                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
-                                                }`
-                                            }
-                                        >
-                                            Upload Image
-                                        </label> */}
-                                        <input
-                                            type="file"
-                                            accept=".jpg, .jpeg, .png"
-                                            id="fileInput"
-                                            className="hidden"
-                                            multiple
-                                            onChange={handleFileUpload}
-                                            ref={fileInputRef}
-                                        />
-                                        {isUploaded ?
-                                            <div>
-                                                <button className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
-                                                    {isReset ? <IoMdRefresh className='h-6 w-6' onClick={handleReset} /> : <IoMdAddCircleOutline className='h-6 w-6' onClick={handleAddImages} />}
-                                                </button>
-                                            </div>
-                                            :
-                                            ""}
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <div className='border-b border-b-[#949494] mb-10'>
@@ -322,7 +283,7 @@ export default function EditBusinessDetails() {
                         <div className='flex flex-col items-center justify-between mt-20'>
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                 <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab' onClick={() => { window.history.back() }}>Cancel</button></div>
-                                <div><button type='submit' className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab' >Submit the changes</button></div>
+                                <div><button type='submit' onClick={submitData}  className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab' >Submit the changes</button></div>
                             </div>
                         </div>
                     </div>

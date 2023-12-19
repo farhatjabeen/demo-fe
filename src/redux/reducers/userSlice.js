@@ -179,7 +179,7 @@ export const businessResetPassword = (data, token) => async () => {
             data: data,
             tokenType: 'businessUserToken',
         }).then(res => {
-            return resolve(true);
+            return resolve(res);
         }).catch(err => {
             reject(err);
             console.log('rejected', err)

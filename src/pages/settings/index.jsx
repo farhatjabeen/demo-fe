@@ -42,7 +42,7 @@ const Settings = () => {
             <h1 className='text-black font-bold text-4xl mt-10'>
                 Settings
             </h1>
-            <div className='flex mt-24 border-b pb-4  mr-10'>
+            <div className='flex mt-24 border-b border-[#C7C7C7] pb-4  mr-10'>
                 <GoLock size={24} color='blue' />
                 <p className='text-black font-bold ml-10 text-2xl'>Reset Password</p>
             </div>

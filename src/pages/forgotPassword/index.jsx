@@ -44,7 +44,7 @@ export default function ForgotPassword() {
         <div className='flex justify-center mb-28'>
             <div className='bg-white xl:w-2/6 md:w-3/5 sm:w-4/5 border-[#878787] border rounded-lg p-8'>
                 <h2 className='font-medium text-3xl mt-5 mb-10'>Reset Password</h2>
-                <h2 className='font-medium text-xl mt-5 mb-10'>You can update your password now if you forgot it.
+                <h2 className='font-medium text-xl mt-5 mb-10'>Create a strong, secure password for your account.
                 </h2>
                 <div className='flex flex-col justify-center '>
                     <FormProvider {...methods}>
