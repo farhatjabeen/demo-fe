@@ -291,9 +291,8 @@ export const userProfileData = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.PUT,
             isAuth: true,
             data: data
-        }).then(async (res) => {
-            // const { currentPassword, newPassword, confirmPassword, name, mobileNumber, emailMailId } = res.data
-            // dispatch(saveUserProfile({ currentPassword, newPassword, confirmPassword, name, mobileNumber, emailMailId }))
+        }).then((res) => {
+            Toast({type:"success",message:res.message})
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -311,7 +310,8 @@ export const editCompanyProfileData = (data) => async (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
             data: data
-        }).then(async (res) => {
+        }).then( (res) => {
+            Toast({type:"success",message:res.message})
             const { companyName, companyCategory, location, name, mobileNumber, emailMailId } = res.data
             dispatch(saveCompanyProfile({ companyName, companyCategory, location, name, mobileNumber, emailMailId }))
             return resolve(true)

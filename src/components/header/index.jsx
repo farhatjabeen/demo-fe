@@ -13,8 +13,8 @@ const Header = (props) => {
     const [isBusiness, setIsBusiness] = useState(false);
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
-    
-    
+
+
     useEffect(() => {
         if (userDetails?.role === 'USER') {
             setLogin(true);
@@ -33,13 +33,11 @@ const Header = (props) => {
             if (userDetails?.role === 'USER') {
                 dispatch(generalUserLogout())
                 setLogin(false);
-                navigate('/')
             }
             if (userDetails?.role === 'BUSINESS') {
                 dispatch(businessUserLogout())
                 setLogin(false);
                 setIsBusiness(false);
-                navigate('/')
             }
 
             dispatch(clearItemData())
@@ -55,7 +53,7 @@ const Header = (props) => {
         <div className="headerContainer" style={{ position: 'relative', zIndex: 50 }}>
             <div className="flex justify-between items-center h-22 m-16 rounded-full bg-white shadow-lg">
                 <div className='flex justify-start grow p-5 xl:pl-12 md:pl-10 sm:pl-8'>
-                    <img onClick={()=>navigate('/')} className="cursor-grab xl:h-14 xl:w-32 md:h-12 md:w-28 sm:h-10 sm:w-20" src={Logo} alt="logo" />
+                    <img onClick={() => navigate('/')} className="cursor-grab xl:h-14 xl:w-32 md:h-12 md:w-28 sm:h-10 sm:w-20" src={Logo} alt="logo" />
                 </div>
                 <div className='flex justify-end grow items-center px-3 pr-6'>
                     {login
@@ -64,11 +62,11 @@ const Header = (props) => {
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems' 
-                                    titleTwo='Add Item' navigateTwo='/addmoredetails' handleLogout={handleLogout} />
+                                    <HeaderDropdown linkTo='/businesshome' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
+                                        titleTwo='Add Item' navigateTwo='/addmoredetails' handleLogout={handleLogout} />
                                     :
-                                    <HeaderDropdown isBusiness={isBusiness}  titleOne='My listing' navigateOne='/mylistings'  
-                                    titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />
+                                    <HeaderDropdown linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'
+                                        titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />
                             }
                         </div>
                         :
