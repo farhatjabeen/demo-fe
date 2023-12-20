@@ -61,7 +61,7 @@ const routers = [
       },
       {
         component: "forgotPassword",
-        childPath: "/businessSignin/resetpassword",
+        childPath: "/businessSignin/resetpassword/:token",
       },
       {
         component: "BusinessSignUp",
