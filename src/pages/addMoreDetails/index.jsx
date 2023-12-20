@@ -114,7 +114,7 @@ export default function AddMoreDetails() {
             }
             if (userDetails?.role === 'BUSINESS') {
                 dispatch(businessAddMoreDetails(data));
-                
+                navigate('/allitems')
             }
         } catch (error) {
             console.log(error, 'submitted errors')

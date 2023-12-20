@@ -24,7 +24,14 @@ export default function ContactUs() {
 
     const submitData = async (data) => {
         try {
-            dispatch(contactAdmin(data))
+            const contactUs = dispatch(contactAdmin(data))
+            if (contactUs) {
+                methods.reset({
+                    mail: "",
+                    subject: "",
+                    message: ""
+                })
+            }
         } catch (error) {
             console.log("submitData errors", error)
         }

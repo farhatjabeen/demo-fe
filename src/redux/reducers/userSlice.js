@@ -73,7 +73,7 @@ export const checkGeneralUserEmail = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            const{status} = res
+            const {status} = res
             const { emailMailId, isAlreadyRegistered } = res.data
             dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered, status }))
             return resolve(true);
@@ -114,6 +114,7 @@ export const generalUserLogin = (data) => (dispatch) => {
             const { role, emailMailId, mobileNumber, name, _id, token } = res.data
             dispatch(saveUserData({ role, emailMailId, mobileNumber, name, _id, token }))
             setEncryptedLocalStorageData("userToken", token);
+            Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -130,7 +131,8 @@ export const generalUserLogout = () => (dispatch) => {
             url: endpoints.apiPath.logoutGeneralUser,
             method: endpoints.ApiMethods.POST,
             isAuth: true,
-        }).then(() => {
+        }).then((res) => {
+            Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -147,7 +149,8 @@ export const businessUserRegister = (data) => async (dispatch) => {
             url: endpoints.apiPath.registerBusinessUser,
             method: endpoints.ApiMethods.POST,
             data: data
-        }).then(() => {
+        }).then((res) => {
+            Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -194,7 +197,9 @@ export const businessUserLogout = () => (dispatch) => {
             url: endpoints.apiPath.logoutBusinessUser,
             method: endpoints.ApiMethods.POST,
             isAuth: true,
-        }).then(() => {
+            tokenType: 'businessUserToken',
+        }).then((res) => {
+            Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -272,7 +277,7 @@ export const companyProfileData = () => async (dispatch) => {
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'businessUserToken'
-        }).then(async (res) => {
+        }).then((res) => {
             const { companyName, companyCategory, location, name, mobileNumber, emailMailId } = res.data
             dispatch(saveCompanyProfile({ companyName, companyCategory, location, name, mobileNumber, emailMailId }))
             return resolve(true)
@@ -330,7 +335,9 @@ export const contactAdmin = (data) => async (dispatch) => {
             url: endpoints.apiPath.contactAdmin,
             method: endpoints.ApiMethods.POST,
             data: data
-        }).then(() => {
+        }).then((res) => {
+            Toast({type:"success",message:res.message})
+            
             return resolve(true);
         }).catch((err) => {
             reject(err)
