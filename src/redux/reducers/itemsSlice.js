@@ -23,14 +23,8 @@ export const itemsSlice = createSlice({
         saveItemDetails: (state, action) => {
             state.itemDetails = { ...action.payload }
         },
-        saveUpdateBusinessItems: (state, action) => {
-            state.editBusinessUserItem = { ...action.payload }
-        },
         saveFoundItemDetails: (state, action) => {
             state.foundItemDetails = { ...action.payload }
-        },
-        saveUpdateFoundItems: (state, action) => {
-            state.updateFoundItems = { ...action.payload }
         },
         saveUserDetails: (state, action) => {
             state.userDetails = { ...action.payload }
@@ -111,17 +105,15 @@ export const deleteBusinessItem = (itemId) => (dispatch) => {
     }
 };
 //edit in businessuser
-export const businessUpdateItems = (itemId, updatedData) => (dispatch) => {
+export const businessUpdateItems = (itemId, data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.editBusinessUserItem}?itemid=${itemId}`,
             method: endpoints.ApiMethods.PUT,
-            data: updatedData,
+            data: data,
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
-            const { data } = res;
-            dispatch(saveUpdateBusinessItems(data));
             return resolve(true);
         }).catch(err => {
             console.log(err);
@@ -518,17 +510,15 @@ export const foundItemById = (itemId) => (dispatch) => {
 };
 
 //update found item in admin
-export const adminUpdateFoundItems = (itemId,updatedData) => (dispatch) => {
+export const adminUpdateFoundItems = (itemId,data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}`,
             method: endpoints.ApiMethods.PUT,
-            data: updatedData,
+            data: data,
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            const [data]  = res;
-            dispatch(saveUpdateFoundItems(data));
             return resolve(true);
         }).catch(err => {
             console.log(err);
@@ -603,8 +593,7 @@ export const adminExportItems = () => (dispatch) => {
     });
 };
 
-export const updateFoundItems = (state) => state.items?.updateFoundItems;
-export const editBusinessUserItem = (state) => state.items?.editBusinessUserItem;
+
 export const itemDetails = (state) => state.items?.itemDetails;
 export const userDetails = (state) => state.items?.userDetails;
 export const foundItemDetails = (state) => state.items?.foundItemDetails;
@@ -627,8 +616,6 @@ export const {
     saveItemDataById,
     viewItemDetailsById,
     viewItemDetailsByLocation,
-    saveUpdateFoundItems,
-    saveUpdateBusinessItems,
     saveBusinessUserDetails,
     saveItemDetails,
     itemIdValue,

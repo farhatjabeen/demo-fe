@@ -15,7 +15,7 @@ function ItemDetails () {
     dispatch(foundItemById(id))
   }, []);
   const foundItemDetails = useSelector(getItemId);
-  const { userName, mobileNumber, foundDate, foundTime, location,itemName,itemCategory,itemDescription } = foundItemDetails;
+  const { userName, mobileNumber, foundDate, foundTime, location,itemName,itemCategory,itemDescription } = foundItemDetails||{};
  
   return (
     <div className="m-4">

@@ -37,7 +37,7 @@ const EditFoundItems = () => {
     dispatch(foundItemById(id))
   }, [id])
   const foundItemDetails = useSelector(getItemId);
-  const { userName, mobileNumber, foundDate, foundTime, location, itemCategory } = foundItemDetails;
+  const { userName, mobileNumber, foundDate, foundTime, location, itemCategory } = foundItemDetails||{};
   useEffect(() => {
     if (foundItemDetails) {
       methods.reset({
@@ -52,17 +52,6 @@ const EditFoundItems = () => {
     dispatch(itemDropdownValues());
   }, [itemCategory]);
 
-  useEffect(() => {
-    if (updatedData) {
-      dispatch(adminUpdateFoundItems(updatedData))
-        .then(() => {
-          navigate('/admin/user/foundItems');
-        })
-        .catch((error) => {
-          console.error('Update failed:', error);
-        });
-    }
-  }, [updatedData]);
  
   const submitData = (data) => {
     try {
@@ -173,7 +162,6 @@ const EditFoundItems = () => {
             />
             <CustomCombinedButton
               text="Submit"
-              onClick={submitData}
               isReset={true}
               buttonColor="other"
             />
