@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import apiRequest from '../../services'
 import endpoints from "../../services/endpoints";
 import { setEncryptedLocalStorageData } from "../../utils/helper";
+import { Toast } from "../../components/toast";
 
 const initialState = {
     userData: null,
@@ -77,8 +78,6 @@ export const checkGeneralUserEmail = (data) => async (dispatch) => {
             dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered, status }))
             return resolve(true);
         }).catch(err => {
-            // const{status} = err
-            // dispatch(saveGeneralUserMail({status}))
             console.log(err)
             return err
         })
@@ -93,7 +92,8 @@ export const generalUserRegister = (data) => async (dispatch) => {
             url: endpoints.apiPath.registerGeneralUser,
             method: endpoints.ApiMethods.POST,
             data: data
-        }).then(() => {
+        }).then((res) => {
+            Toast({type:"success",message:res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
