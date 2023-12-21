@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FaMap, FaCalendar, FaClock } from 'react-icons/fa';
-import keys from '../../assets/images/keys.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { viewDetails, viewUserItemById } from '../../redux/reducers/itemsSlice';
 import { useNavigate, useParams } from 'react-router-dom';

@@ -13,7 +13,7 @@ const Home = () => {
   { questions: 'I have more questions. Who do I reach out to?', answers: 'answer5' }];
 
   return (
-    <div className='flex flex-col items-center'>
+    <div>
       <div>
         <SearchReport />
       </div>

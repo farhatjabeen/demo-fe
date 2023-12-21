@@ -19,7 +19,6 @@ const EditFoundItems = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [selectedCategory, setSelectedCategory] = useState();
-  const [updatedData, setUpdatedData] = useState([]);
   const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
   const items = useSelector(itemDropdown)
@@ -37,7 +36,7 @@ const EditFoundItems = () => {
     dispatch(foundItemById(id))
   }, [id])
   const foundItemDetails = useSelector(getItemId);
-  const { userName, mobileNumber, foundDate, foundTime, location, itemCategory } = foundItemDetails;
+  const { userName, mobileNumber, foundDate, foundTime, location, itemCategory } = foundItemDetails || {};
   useEffect(() => {
     if (foundItemDetails) {
       methods.reset({
@@ -52,22 +51,15 @@ const EditFoundItems = () => {
     dispatch(itemDropdownValues());
   }, [itemCategory]);
 
-  useEffect(() => {
-    if (updatedData) {
-      dispatch(adminUpdateFoundItems(updatedData))
-        .then(() => {
-          navigate('/admin/user/foundItems');
-        })
-        .catch((error) => {
-          console.error('Update failed:', error);
-        });
-    }
-  }, [updatedData]);
- 
+
   const submitData = (data) => {
     try {
-      dispatch(adminUpdateFoundItems(id, data));
-      setUpdatedData(data);
+      const updatedData = {
+        ...data,
+        itemCategory: selectedCategory,
+      };
+
+      dispatch(adminUpdateFoundItems(id, updatedData));
       navigate('/admin/user/foundItems');
     } catch (error) {
       console.error('Update failed:', error);
@@ -173,7 +165,6 @@ const EditFoundItems = () => {
             />
             <CustomCombinedButton
               text="Submit"
-              onClick={submitData}
               isReset={true}
               buttonColor="other"
             />

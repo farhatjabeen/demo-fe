@@ -6,45 +6,43 @@ import TextInput from "../../components/common/textInput";
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { businessUserForgotSchema } from '../../validations';
 import { businessResetPassword } from '../../redux/reducers/userSlice';
-
+import { useParams } from 'react-router-dom';
 export default function ForgotPassword() {
 
     const [createShowPassword, setCreateShowPassword] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
-
+    const { token } = useParams();
     const dispatch = useDispatch();
     const resolver = useValidationResolver(businessUserForgotSchema);
     const navigate = useNavigate();
 
     const methods = useForm({
         defaultValues: {
-            newPassword: "",
+            password: "",
             confirmPassword: ""
         },
         resolver
     });
-
-    const submitData = (data) => {
+    const password = methods.getValues().password;
+    const submitData = async () => {
         try {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
+            const reset = await dispatch(businessResetPassword({password}, token));
 
-            const reset = dispatch(businessResetPassword(data,token));
             if (reset) {
-                navigate('/businessSignin')
-            }
-            else {
+                navigate('/businessSignin');
+            } else {
                 console.log("Password reset failed");
             }
         } catch (error) {
-            console.log("submitData errors", error)
+            console.error("submitData errors", error);
         }
     };
+
     return (
         <div className='flex justify-center mb-28'>
             <div className='bg-white xl:w-2/6 md:w-3/5 sm:w-4/5 border-[#878787] border rounded-lg p-8'>
                 <h2 className='font-medium text-3xl mt-5 mb-10'>Reset Password</h2>
-                <h2 className='font-medium text-xl mt-5 mb-10'>You can update your password now if you forgot it.
+                <h2 className='font-medium text-xl mt-5 mb-10'>Create a strong, secure password for your account.
                 </h2>
                 <div className='flex flex-col justify-center '>
                     <FormProvider {...methods}>
@@ -54,7 +52,7 @@ export default function ForgotPassword() {
                                 <TextInput
                                     type="password"
                                     placeholder="Enter your new Password"
-                                    name="newPassword"
+                                    name="password"
                                     className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4 my-3'
                                     autoComplete="off"
                                     required

@@ -64,11 +64,11 @@ export default function ClaimItem() {
                     <div className='text-[#E3A903] font-bold xl:text-4xl md:text-3xl mb-2'>Phone</div>
                     <div className='text-sm font-normal'>+91 12345 12323</div>
                 </div>
-                <button className='bg-white rounded-3xl xl:h-48 xl:w-96 md:h-44 md:w-80 sm:h-40 sm:w-60 ml-14 shadow-lg flex flex-col items-center justify-center'>
+                <div className='bg-white rounded-3xl xl:h-48 xl:w-96 md:h-44 md:w-80 sm:h-40 sm:w-60 ml-14 shadow-lg flex flex-col items-center justify-center'>
                     <div className='xl:mb-5 md:mb-5 sm:mb-4'><HiMail className='xl:h-10 xl:w-10 md:h-9 md:w-9 sm:h-8 sm:w-8 ' style={{ color: "#E3A903" }} /></div>
                     <div className='text-[#E3A903] font-bold xl:text-4xl md:text-3xl mb-2'>Mail address</div>
                     <div className='text-sm font-normal'>admin@ilost.com</div>
-                </button>
+                </div>
             </div>
         </div>
     )

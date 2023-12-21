@@ -15,8 +15,6 @@ import ImageUpload from '../../components/common/imageUpload';
 import { userData } from '../../redux/reducers/userSlice';
 
 export default function AddMoreDetails() {
-    const [itemName, setItemName] = useState('');
-    const [location, setLocation] = useState('');
     const [newItemId,setNewItemId] = useState('');
     const [files, setFiles] = useState([]);
     const [filesFromDb, setFilesFromDb] = useState([]);
@@ -31,21 +29,13 @@ export default function AddMoreDetails() {
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
     const userDetails = useSelector(userData);
-    // const itemIdNew = useSelector(newItemId);
     const itemDetailsById = useSelector(searchDetailsById);
-    // console.log(itemIdNew, 'ud');
     const reportDetails = useParams();
-    console.log("routeValues", reportDetails);
     const [selectedLocation, setSelectedLocation] = useState("");
 
 
     useEffect(() => {
-        if (!itemName) {
-            setItemName(reportDetails.itemName);
-        }
-        if (!location) {
-            setLocation(reportDetails.location);
-        }
+        
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
         if (reportDetails.id) {
@@ -105,8 +95,8 @@ export default function AddMoreDetails() {
             e.preventDefault();
             methods.setValue('itemCategory', `${selectedCategory}` || itemDetailsById?.itemCategory || "")
 
-            methods.setValue("itemImage", itemImage || itemDetailsById?.itemImage);
-            methods.setValue("cloudinary_id", cloudinaryId || itemDetailsById?.cloudinaryId );
+            methods.setValue("itemImage", itemImage.length>0 ? itemImage : itemDetailsById?.itemImage);
+            methods.setValue("cloudinary_id", cloudinaryId.length>0 ? cloudinaryId :  itemDetailsById?.cloudinaryId );
             methods.setValue("location", `${selectedLocation}` || itemDetailsById?.location || "");
             const inputString = methods.getValues().keywords;
             methods.setValue('keywords', inputString.split(' '))
@@ -117,15 +107,14 @@ export default function AddMoreDetails() {
                 console.log('itemadded',addItem)
                 addItem?.then((res)=>{
                     setNewItemId( res.data._id)
-                })
-                
-                console.log(newItemId,'newitemid')
-                
+                })                
             } else {
                 dispatch(userEditItemDetails(reportDetails.id, data))
+                navigate('/mylistings')
             }
             if (userDetails?.role === 'BUSINESS') {
                 dispatch(businessAddMoreDetails(data));
+                navigate('/allitems')
             }
         } catch (error) {
             console.log(error, 'submitted errors')
@@ -152,7 +141,7 @@ export default function AddMoreDetails() {
     useEffect(() => {
         if (files && files?.length > 0) {
             let formData = new FormData();
-            files.map((items, i) => {
+            files?.map((items, i) => {
                 return (
                     formData.append("item", items)
                 );
@@ -263,7 +252,7 @@ export default function AddMoreDetails() {
                                             {
                                                 itemDetailsById?.itemImage ?
                                                     <div>
-                                                        {filesFromDb.map((items, i) => {
+                                                        {filesFromDb?.map((items, i) => {
                                                             return (
                                                                 <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
                                                                     <div>{items}</div>
