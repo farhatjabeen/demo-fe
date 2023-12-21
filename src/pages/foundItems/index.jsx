@@ -45,7 +45,7 @@ function FoundItems() {
 
 
   const tableHeaders = [
-    { key: "_id", label: "Item ID" },
+    { key: "itemCode", label: "Item ID" },
     { key: "itemName", label: "Item Name" },
     { key: "location", label: "Location" },
     { key: "foundTime", label: "Time Found" },

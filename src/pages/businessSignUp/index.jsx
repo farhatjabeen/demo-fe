@@ -192,7 +192,7 @@ export default function BusinessSignUp() {
                                 }
                                 <ImageUpload
                                     name="company"
-                                    designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl'
+                                    designClass='flex justify-center bg-primary-color  w-full py-3 rounded-xl'
                                     multiple={false}
                                     handleFileUpload={handleFileUpload}
                                 />
