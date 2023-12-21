@@ -177,11 +177,12 @@ export const businessForgotPassword = (data) => async () => {
 export const businessResetPassword = (data, token) => async () => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.resetPasswordBusiness}?token=${token}`,
+            url: `${endpoints.apiPath.resetPasswordBusiness}/${token}`,
             method: endpoints.ApiMethods.POST,
             data: data,
             tokenType: 'businessUserToken',
         }).then(res => {
+            Toast({ type: "success", message: res.message })
             return resolve(res);
         }).catch(err => {
             reject(err);
@@ -337,7 +338,7 @@ export const contactAdmin = (data) => async (dispatch) => {
             data: data
         }).then((res) => {
             Toast({type:"success",message:res.message})
-            
+
             return resolve(true);
         }).catch((err) => {
             reject(err)

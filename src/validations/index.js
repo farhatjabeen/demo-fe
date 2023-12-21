@@ -68,7 +68,7 @@ export const addMoreDetailsSchema = yup.object({
         .matches(emailRexExp, 'Invalid email address')
         .required('email required'),
     mobileNumber: yup
-        .string()
+        .number()
         .min(10)
         // .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('mobile number required'),
