@@ -15,7 +15,7 @@ import ImageUpload from '../../components/common/imageUpload';
 import { userData } from '../../redux/reducers/userSlice';
 
 export default function AddMoreDetails() {
-    const [newItemId,setNewItemId] = useState('');
+    const [newItemId, setNewItemId] = useState('');
     const [files, setFiles] = useState([]);
     const [filesFromDb, setFilesFromDb] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
@@ -35,7 +35,7 @@ export default function AddMoreDetails() {
 
 
     useEffect(() => {
-        
+
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
         if (reportDetails.id) {
@@ -82,11 +82,11 @@ export default function AddMoreDetails() {
         resolver
     });
 
-    useEffect(()=>{
-        if(newItemId){
+    useEffect(() => {
+        if (newItemId) {
             navigate(`/querypublished/${newItemId}`)
         }
-    },[newItemId])
+    }, [newItemId])
 
 
 
@@ -95,8 +95,8 @@ export default function AddMoreDetails() {
             e.preventDefault();
             methods.setValue('itemCategory', `${selectedCategory}` || itemDetailsById?.itemCategory || "")
 
-            methods.setValue("itemImage", itemImage.length>0 ? itemImage : itemDetailsById?.itemImage);
-            methods.setValue("cloudinary_id", cloudinaryId.length>0 ? cloudinaryId :  itemDetailsById?.cloudinaryId );
+            methods.setValue("itemImage", itemImage.length > 0 ? itemImage : itemDetailsById?.itemImage);
+            methods.setValue("cloudinary_id", cloudinaryId.length > 0 ? cloudinaryId : itemDetailsById?.cloudinaryId);
             methods.setValue("location", `${selectedLocation}` || itemDetailsById?.location || "");
             const inputString = methods.getValues().keywords;
             methods.setValue('keywords', inputString.split(' '))
@@ -104,10 +104,10 @@ export default function AddMoreDetails() {
             console.log("from submit form");
             if (userDetails?.role === 'USER' && !reportDetails.id) {
                 const addItem = dispatch(userAddMoreDetails(data));
-                console.log('itemadded',addItem)
-                addItem?.then((res)=>{
-                    setNewItemId( res.data._id)
-                })                
+                console.log('itemadded', addItem)
+                addItem?.then((res) => {
+                    setNewItemId(res.data._id)
+                })
             } else {
                 dispatch(userEditItemDetails(reportDetails.id, data))
                 navigate('/mylistings')
@@ -153,9 +153,9 @@ export default function AddMoreDetails() {
                     setCloudinaryId(res.data.cloudinary_id)
                     setItemImage(res.data.itemImage)
                 }).then(() => {
-                    if(itemDetailsById?.itemImage){
-                    setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
-                    setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
+                    if (itemDetailsById?.itemImage) {
+                        setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
+                        setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
                     }
                 })
         }
@@ -314,14 +314,14 @@ export default function AddMoreDetails() {
                                 </div>
                             </div>
                             <div className='border-b border-b-[#949494] mb-10'>
-                                <div className='flex justify-between h-12 mb-9 relative location'>
+                                <div className='flex justify-between mb-9 relative location'>
                                     <div>
                                         <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>
                                         <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location</p>
                                     </div>
                                     <FormDropdown
                                         name='location'
-                                        optionButtonClass='xl:w-96 md:w-96 sm:w-64 border border-[#B6B6B6] rounded-lg p-5'
+                                        optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                         editButton={true}
                                         selection={true}
                                         valueFromDb={itemDetailsById?.location || reportDetails?.location}
@@ -394,7 +394,7 @@ export default function AddMoreDetails() {
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                 <div>
                                     <button
-                                        className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
+                                        className='cursor-auto xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
                                         onClick={() => { window.history.back() }}
                                     >
                                         Cancel
@@ -403,7 +403,7 @@ export default function AddMoreDetails() {
                                 <div>
                                     <button
                                         type='submit'
-                                        className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
+                                        className='cursor-auto xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
                                     >
                                         Submit form
                                     </button>

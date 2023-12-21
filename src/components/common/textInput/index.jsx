@@ -9,7 +9,7 @@ import { FormErrorMessage } from '../FormErrorMessage';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
-function TextInput({ type = 'text', placeholder, name, disable, className: inputClassName, showPassword, setShowPassword }) {
+function TextInput({ type = 'text', placeholder, name, disable, eyeClass, className: inputClassName, showPassword, setShowPassword }) {
 
     return (
         <ConnectForm>
@@ -34,7 +34,7 @@ function TextInput({ type = 'text', placeholder, name, disable, className: input
                                         className={inputClassName}
                                         disabled={disable}
                                     />
-                                    {type === 'password' && <div className='absolute top-7 left-3/4 ml-16' onClick={() => setShowPassword(!showPassword)}>
+                                    {type === 'password' && <div className={eyeClass} onClick={() => setShowPassword(!showPassword)}>
                                         {showPassword ? <BsFillEyeFill className='h-6 w-6' />:<BsFillEyeSlashFill className='h-6 w-6' />  }
                                     </div>}
                                 </div>

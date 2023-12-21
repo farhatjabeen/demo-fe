@@ -170,12 +170,12 @@ export default function MyProfile() {
                             <div className='xl:w-4/12 md:w-7/12 sm:w-10/12 flex xl:ml-80 md:ml-32 sm:ml-12 mb-10 justify-between'>
 
                                 <div>
-                                    <button onClick={handleEditButton} className='w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
+                                    <button onClick={handleEditButton} className='cursor-auto w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
                                         Cancel
                                     </button>
                                 </div> 
                                 <div>
-                                    <button type='submit' className='w-44 h-14 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg cursor-grab'>
+                                    <button type='submit' className='cursor-auto w-44 h-14 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg cursor-grab'>
                                         Save Changes
                                     </button>
                                 </div>
