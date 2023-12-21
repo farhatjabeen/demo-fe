@@ -11,17 +11,17 @@ import { categoryDetails, categoryDropdownValues, fileUploadAPI } from '../../re
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
 import { businessUserRegister } from '../../redux/reducers/userSlice';
+import { Toast } from '../../components/toast';
 
 export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
     const categories = categoryValue ? Object.values(categoryValue) : [];
-    // const navigate = useNavigate();
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [responseFromFile, setResponseFromFile] = useState(null);
     const [cloudinaryId, setCloudinaryId] = useState('');
     const [companyLogo, setCompanyLogo] = useState('');
 
@@ -84,7 +84,11 @@ export default function BusinessSignUp() {
         const companyCategory = `${selectedCategory}` || "";
         const companylogo = `${companyLogo}` || "";
         const cloudinary_id = `${cloudinaryId}` || "";
-        dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyCategory, companyName, companylogo, cloudinary_id }))
+        if(isChecked){
+            dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyCategory, companyName, companylogo, cloudinary_id }))
+        }else{
+            Toast({type:"error",message: "Please accept the terms and conditions"})
+        }
     };
 
     const handleChildData = (dataFromChild) => {
@@ -206,7 +210,7 @@ export default function BusinessSignUp() {
                             </div>
                             <div className="flex ">
                                 <div className="flex items-center h-5">
-                                    <input id="remember" type="checkbox" className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
+                                    <input id="remember" type="checkbox" onChange={()=>setIsChecked(!isChecked)}  className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                     <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                 </div>
                                 <label htmlFor="remember" className="ms-2 text-sm"></label>

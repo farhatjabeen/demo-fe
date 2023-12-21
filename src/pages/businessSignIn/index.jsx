@@ -31,7 +31,7 @@ export default function BusinessSignIn() {
         try {
             const login = dispatch(loginUser(data));
             if (login) {
-                navigate('/allitems')
+                navigate('/')
             }
         } catch (error) {
             console.log("submitData errors", error)

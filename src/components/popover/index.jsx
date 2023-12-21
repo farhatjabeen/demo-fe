@@ -27,7 +27,7 @@ const PopoverComponent = () => {
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
     const [isEmailValid, setIsEmailValid] = useState(false);
-console.log(mailIdFromApi,'asdf')
+
     const validateEmail = (inputEmail) => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return emailRegex.test(inputEmail);
@@ -54,7 +54,7 @@ console.log(mailIdFromApi,'asdf')
     const methodsForRegister = useForm({
         defaultValues: {
             newPassword: "",
-            confirmPassword: ""
+            password: ""
         },
         resolverForRegister
     });
@@ -89,7 +89,6 @@ console.log(mailIdFromApi,'asdf')
             const password = methods.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             dispatch(generalUserLogin({ emailMailId, password }));
-            navigate('/')
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -101,7 +100,7 @@ console.log(mailIdFromApi,'asdf')
                 {({ open }) => (
                     <div>
                         <Popover.Button>
-                            <div className="flex justify-center items-center xl:w-64 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold bg-primary-color text-white rounded-full xl:mx-1">
+                            <div className="flex justify-center items-center xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold bg-primary-color text-white rounded-full xl:mx-1">
                                 Login / Register
                             </div>
                         </Popover.Button>
@@ -173,7 +172,7 @@ console.log(mailIdFromApi,'asdf')
                                                                     <div className='text-sm font-medium text-[#757780] mt-2.5'>Re-enter Password</div>
                                                                     <TextInput
                                                                         type='password'
-                                                                        name='confirmPassword'
+                                                                        name='password'
                                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                         autoComplete="off"
                                                                         required
@@ -195,7 +194,7 @@ console.log(mailIdFromApi,'asdf')
                                                 <div className="xl:w-full md:w-full sm:w-full">
                                                     <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                         <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Login/Register</div>
-                                                        <div className='pb-8 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                        <div className='pb-12 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                             Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                         </div>
                                                     </div>
@@ -210,7 +209,7 @@ console.log(mailIdFromApi,'asdf')
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
-                                                                onChange={(e)=>handleEmailChange(e.target.value)}
+                                                                onChange={(e) => handleEmailChange(e.target.value)}
                                                             />
                                                         </div>
                                                         <button
@@ -219,9 +218,9 @@ console.log(mailIdFromApi,'asdf')
                                                             CONTINUE
                                                         </button>
                                                         <div className="flex items-center mt-8">
-                                                            <hr className="flex-1 border border-t border-gray-300" />
+                                                            <hr className="flex-1 border border-t border-light-grey" />
                                                             <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
-                                                            <hr className="flex-1 border border-t border-gray-300" />
+                                                            <hr className="flex-1 border border-t border-light-grey" />
                                                         </div>
                                                         <div className='flex items-center justify-between w-11/12 h-6 mt-2'>
                                                             <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>

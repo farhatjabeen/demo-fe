@@ -225,7 +225,8 @@ export const deleteMyListingItems = ({ itemId }) => async (dispatch) => {
             url: `${endpoints.apiPath.items.deleteUserItemId}?itemId=${itemId}`,
             method: endpoints.ApiMethods.DELETE,
             isAuth: true
-        }).then(() => {
+        }).then((res) => {
+            Toast({type:"success",message:res.message})
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -311,13 +312,9 @@ export const viewUserItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.generalUserItemsById}/${itemId}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
-            const { itemImage, itemCode, foundDate, foundTime, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
-
-            if (Array.isArray(itemImage) && itemImage.length > 0) {
-                dispatch(viewItemDetailsById(itemImage))
-            }
+            const { itemImage, itemCode, foundDate, foundTime, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data;
             dispatch(viewItemDetailsById({ itemImage, foundDate, foundTime, itemCode, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
-
+            Toast({type:"success",message:"Query published"})
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -423,6 +420,7 @@ export const userAddMoreDetails = (data) => (dispatch) => {
             isAuth: true
 
         }).then((res) => {
+            Toast({type:"success",message:res.message})
             return resolve(res)
         }).catch(err => {
             console.log(err)
@@ -458,6 +456,7 @@ export const userEditItemDetails = (itemId,data) => (dispatch) => {
             data: data,
             isAuth: true
         }).then((res) => {
+            Toast({type:"success",message:res.message})
             return resolve(true)
         }).catch(err => {
             console.log(err)

@@ -38,11 +38,13 @@ export const generalUserRegisterSchema = yup.object({
         .required('email required'),
     newPassword: yup
         .string()
-        .matches(
+        .matches
+        (
             passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+            'Password must be 8-20 characters with at least one letter, one number, and one special character'
+        )
         .required('password required'),
-    confirmPassword: yup
+    password: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .required("Please re-type your password")
