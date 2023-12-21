@@ -1,29 +1,42 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { addMoreDetailsSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
-import { userData, userDetails, userProfileData } from '../../redux/reducers/userSlice';
+import { generalUserData, generalUserDetails, userData, userProfileData } from '../../redux/reducers/userSlice';
 
 export default function MyProfile() {
     const [editButton, setEditButton] = useState(false);
-    const [isPassword,setIsPassword] = useState(false);
-    console.log(isPassword,'ispass')
-
+    const [showPassword, setShowPassword] = useState(false)
+    const [showRegisterPassword, setShowRegisterPassword] = useState(false)
+    const [name, setName] = useState('');
+    const [mobileNumber, setMobileNumber] = useState('');
+    const [emailId, setEmailId] = useState('');
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
-    const fetchUserDetails = useSelector(userData);
-    console.log(fetchUserDetails,'fud')
+    const existingData = useSelector(userData);
+    const fetchUserDetails = useSelector(generalUserData);
+
+    useEffect(() => {
+        dispatch(generalUserDetails());
+        methods.reset({
+            emailMailId: fetchUserDetails?.emailMailId || "",
+            mobileNumber: `${fetchUserDetails?.mobileNumber}` || "",
+            name: fetchUserDetails?.name || "",
+        })
+    }, [])
+
+    // console.log(fetchUserDetails,'fud')
     const methods = useForm({
         defaultValues: {
-            emailMailId: fetchUserDetails?.emailMailId || "",
-            mobileNumber: fetchUserDetails?.mobileNumber || "",
-            name: fetchUserDetails?.name || "",
+            emailMailId: existingData?.emailMailId || "",
+            mobileNumber: `${existingData?.mobileNumber}` || "",
+            name: existingData?.name || "",
             currentPassword: "",
             newPassword: "",
-            confirmPassword:""
+            confirmPassword: ""
         },
         resolver
     });
@@ -36,17 +49,23 @@ export default function MyProfile() {
             const mobileNumber = methods.getValues().mobileNumber;
             const currentPassword = methods.getValues().currentPassword;
             const itemDetails = methods.getValues();
-            if(currentPassword){
-                dispatch(userProfileData(itemDetails));
-            } else{
-                dispatch(userProfileData({name,emailMailId,mobileNumber}))
+
+            if (currentPassword) {
+                const fetchUser = dispatch(userProfileData(itemDetails));
+                //    setFetchUser(true)
+                //    dispatch(generalUserDetails())
+            } else {
+                const fetchUser = dispatch(userProfileData({ name, emailMailId, mobileNumber }));
+                // fetchUser.then((res)=>{
+                //     console.log(res,'respons')
+                // })
+                // setFetchUser(true)
+                // dispatch(generalUserDetails())
             }
-            
-            
-      
-          } catch (error) {
+
+        } catch (error) {
             console.log("submitData errors", error)
-          }
+        }
     };
 
     const handleEditButton = () => {
@@ -63,7 +82,7 @@ export default function MyProfile() {
 
 
             <FormProvider {...methods}>
-                <form onSubmit={(e)=>submitData(e)} className='flex justify-around w-full'>
+                <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
                             <div className='flex justify-between mb-9'>
@@ -129,10 +148,13 @@ export default function MyProfile() {
                                     <TextInput
                                         type="password"
                                         placeholder="Current password"
+                                        eyeClass='absolute bottom-3 left-3/4 ml-16'
                                         name="currentPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         disable={!editButton}
+                                        showPassword={showRegisterPassword}
+                                        setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                     />
                                     {/* <input
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
@@ -154,12 +176,15 @@ export default function MyProfile() {
                                 <div className='flex justify-between'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Re - Enter New password</label>
                                     <TextInput
-                                        type="text"
+                                        type="password"
                                         placeholder="New password"
+                                        eyeClass='absolute bottom-3 left-3/4 ml-16'
                                         name="confirmPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         disable={!editButton}
+                                        showPassword={showPassword}
+                                        setShowPassword={() => setShowPassword(!showPassword)}
                                     />
                                 </div>
                             </div>
@@ -173,7 +198,7 @@ export default function MyProfile() {
                                     <button onClick={handleEditButton} className='cursor-auto w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
                                         Cancel
                                     </button>
-                                </div> 
+                                </div>
                                 <div>
                                     <button type='submit' className='cursor-auto w-44 h-14 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg cursor-grab'>
                                         Save Changes
