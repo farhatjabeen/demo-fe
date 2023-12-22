@@ -62,7 +62,7 @@ const Header = (props) => {
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown linkTo='/businesshome' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
+                                    <HeaderDropdown linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
                                         titleTwo='Add Item' navigateTwo='/addmoredetails' handleLogout={handleLogout} />
                                     :
                                     <HeaderDropdown linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'

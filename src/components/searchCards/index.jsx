@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 export default function SearchCards(props) {
     const navigate = useNavigate();
     return (
-        <div className='mt-12 h-96 w-80 flex flex-col items-center relative'>
+        <div className='mt-12 h-96 flex flex-col items-center relative'>
 
             <div>
                 <img src={`${props.imageName[0]}`} className='rounded-2xl xl:h-56 xl:w-72 md:h-48 md:w-56 sm:h-44 sm:w-52' alt='keys' />

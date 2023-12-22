@@ -65,7 +65,7 @@ export default function BusinessHome() {
             <div className='relative'>
                 <img className='w-full bg-[#00B8B8] opacity-80' src={businessDoodle} alt='businessDoodle' />
                 <div className='absolute top-0 xl:pt-36 md:pt-16 sm:pt-14 xl:pl-32 md:pl-16 sm:pl-5 z-50'>
-                    <div className='xl:text-4xl md:text-2xl sm:text-xl font-bold text-white'>BTZapp win contract to<br></br> replace Europe’s largest lost<br></br> property system</div>
+                    <div className='xl:text-3xl md:text-2xl sm:text-xl font-extrabold text-white'>BTZapp win contract to<br></br> replace Europe’s largest lost<br></br> property system</div>
                     <div className='xl:mt-4 md:mt-4 sm:mt-2'>
                         <p className={`text-white font-medium xl:text-lg md:text-sm sm:text-xs xl:w-4/12 md:w-5/12 sm:w-6/12 overflow-hidden ${readMore ? 'h-fit' : 'xl:h-36 md:h-36 sm:h-16'}`}>
                             New intelligent, cloud-based solution to be introduced across Transport for London.
@@ -76,9 +76,9 @@ export default function BusinessHome() {
                         <button className='text-[#444444] font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
                     </div>
                 </div>
-                <div className='absolute xl:top-0 xl:pt-36 md:top-14 sm:top-10 w-full flex flex-col items-end md:pr-16 sm:pr-7'>
-                    <div><img src={transportLondon} className='xl:h-72 xl:w-96 md:h-56 md:w-80 sm:h-40 sm:w-60' alt='transportLondon' /></div>
-                    <div className='flex justify-center xl:w-96 md:w-80 sm:w-56 xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-72 md:w-52 sm:w-44 xl:h-10 md:h-9 sm:h-7 xl:text-lg md:text-sm sm:text-xs'>Click here to find out more</button></div>
+                <div className='absolute xl:top-0 xl:pt-36 md:top-14 sm:top-10 w-full flex flex-col items-end xl:pr-32 md:pr-16 sm:pr-7'>
+                    <div><img src={transportLondon} className='xl:h-72 xl:w-full md:h-56 md:w-80 sm:h-40 sm:w-60' alt='transportLondon' /></div>
+                    <div className='flex  xl:w-96 md:w-80 sm:w-56 xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-80 md:w-52 sm:w-44 xl:h-10 md:h-9 sm:h-7 xl:text-lg md:text-sm sm:text-xs'>Click here to find out more</button></div>
                 </div>
             </div>
 
@@ -90,8 +90,8 @@ export default function BusinessHome() {
                     <Slider {...settings}>
                         {contentData.map((items, index) => (
                             <div key={index} className=' w-96'>
-                                <div className='text-center xl:text-2xl md:text-xl sm:text-lg font-normal'>{items.content}</div>
-                                <div className='text-center xl:text-xl md:text-xl sm:text-lg font-medium mt-2 pb-16'>{items.author}</div>
+                                <div className='text-center xl:text-3xl md:text-xl sm:text-lg font-normal'>{items.content}</div>
+                                <div className='text-center xl:text-2xl md:text-xl sm:text-lg font-semibold mt-2 pb-16'>{items.author}</div>
                             </div>
                         ))}
                     </Slider>
@@ -119,7 +119,7 @@ export default function BusinessHome() {
                 </div>
             </div>
 
-            <div className='bg-[#FFF0DA] py-16 flex justify-center text-center text-[#404041] xl:text-lg md:text-lg sm:text-base'>
+            <div className='bg-[#FFF0DA] py-16 flex justify-center text-center text-[#404041] font-semibold xl:text-xl md:text-lg sm:text-base'>
 
                 BTZapp is transforming lost and found management from a recurring problem into a fast<br></br>
                 and simple process for businesses. Free up valuable staff time, return more items of lost<br></br>
@@ -128,7 +128,7 @@ export default function BusinessHome() {
             </div>
 
             <div className='flex flex-col items-center'>
-                <div className='flex justify-center xl:text-2xl md:text-xl text-[#404041] font-semibold pt-10'>Explore our industry insights and customer success stories</div>
+                <div className='flex justify-center xl:text-3xl md:text-2xl text-[#404041] font-semibold pt-10'>Explore our industry insights and customer success stories</div>
                 <div className='flex justify-between py-16 xl:w-3/4 md:w-full sm:w-full md:px-8 sm:px-50 '>
                     {
                         cardValues.map((items, i) => {
@@ -138,7 +138,7 @@ export default function BusinessHome() {
                                     <div className='pt-5 pb-10 xl:pl-4 md:pl-4 sm:pl-3'>
                                         <div className='xl:text-xl md:text-base sm:text-sm font-semibold w-5/6'>2023 UPDATE: When it comes to software, should I buy or build?</div>
                                         <div className='text-[#666666] xl:text-sm md:text-xs sm:text-xs py-5'>May 23, 2023 | Blog, SaaS, Transport</div>
-                                        <div className={`text-[#666666] xl:w-64 md:w-52 sm:w-40 xl:text-base md:text-sm sm:text-xs overflow-hidden`}>
+                                        <div className={`text-[#666666] font-medium  xl:w-64 md:w-52 sm:w-40 xl:text-lg md:text-base sm:text-sm overflow-hidden`}>
                                             Today we'll be discussing the big question in software development....To buy or to build, This puzzle has been a quandary for heads of businesses...
                                            </div>
                                         <button className='text-[#FF9900] xl:text-base md:text-base sm:text-xs'>read more</button>

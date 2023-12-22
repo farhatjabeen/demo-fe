@@ -16,53 +16,54 @@ import ImageUpload from '../../components/common/imageUpload';
 import DropdownMenu from '../../components/common/dropdown';
 
 export default function EditBusinessDetails() {
-    const [itemName, setItemName] = useState('');
-    const [location, setLocation] = useState('');
-    const [files, setFiles] = useState([]);
-    const [isUploaded, setIsUploaded] = useState(false);
-    const [isReset, setIsReset] = useState(false);
-    const [updatedData, setUpdatedData] = useState([]);
+    // const [itemName, setItemName] = useState('');
+    // const [location, setLocation] = useState('');
+    // const [files, setFiles] = useState([]);
+    // const [isUploaded, setIsUploaded] = useState(false);
+    // const [isReset, setIsReset] = useState(false);
+    // const [updatedData, setUpdatedData] = useState([]);
+    // const fileInputRef = useRef();
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const [selectedCategory, setSelectedCategory] = useState(" ");
     const dispatch = useDispatch();
+    const resolver = useValidationResolver(addMoreDetailsSchema);
     const items = useSelector(itemDropdown);
     const itemCategories = Object.values(items);
-    const [selectedCategory, setSelectedCategory] = useState(" ");
-    const itemDetails = useSelector(viewDetails);
-    const navigate = useNavigate();
-    const fileInputRef = useRef();
-    const reportDetails = useParams();
-    const resolver = useValidationResolver(addMoreDetailsSchema);
 
     const methods = useForm({
         defaultValues: {
             itemName: "",
             itemCategory: "",
             itemDescription: "",
-            emailMail: "",
+            emailMailId: "",
             mobileNumber: "",
-            name: "",
+            userName: "",
             location: "",
-            landmark: "",
+            locationIdentifiers: "",
             keywords: "",
-            imageUpload: ""
+            // imageUpload: ""
         },
         resolver
     });
     useEffect(() => {
-        dispatch(viewItemById(reportDetails.id))
-    }, [reportDetails.id])
+        dispatch(viewItemById(id))
+    }, [id])
+    const itemDetails = useSelector(viewDetails);
+
     useEffect(() => {
         if (itemDetails) {
             methods.reset({
-                itemName: itemDetails.itemName,
-                itemDescription: itemDetails.itemDescription,
-                itemCategory: itemDetails.itemCategory,
-                emailMail: itemDetails.emailMailId,
-                mobileNumber: itemDetails.mobileNumber,
-                name: itemDetails.userName,
-                location: itemDetails.location,
-                landmark: itemDetails.locationIdentifiers,
-                keywords: itemDetails.keywords,
-                imageUpload: itemDetails.itemImage
+                itemName: itemDetails.itemName || "",
+                itemDescription: itemDetails.itemDescription || "",
+                itemCategory: itemDetails.itemCategory || "",
+                emailMailId: itemDetails.emailMailId || "",
+                mobileNumber: itemDetails.mobileNumber || "",
+                userName: itemDetails.userName || "",
+                location: itemDetails.location || "",
+                locationIdentifiers: itemDetails.locationIdentifiers || "",
+                keywords: itemDetails.keywords || "",
+                // imageUpload: itemDetails.itemImage
             });
         }
     }, [itemDetails]);
@@ -70,45 +71,52 @@ export default function EditBusinessDetails() {
         setSelectedCategory(itemDetails.itemCategory)
         dispatch(itemDropdownValues())
     }, [itemDetails.itemCategory])
-    const submitData = async (data) => {
+
+    const submitData = async (e) => {
         try {
-            dispatch(businessUpdateItems(reportDetails, data));
-            setUpdatedData(data);
+            const data = methods.getValues()
+            data.mobileNumber = String(data.mobileNumber);
+            const updatedData = {
+                ...data,
+                itemCategory: selectedCategory,
+            };
+            e.preventDefault();
+            dispatch(businessUpdateItems(id, updatedData));
             navigate('/allItems');
         } catch (error) {
             console.error('Update failed:', error);
         }
     };
 
-    const handleReset = (e) => {
-        setFiles([]);
-        setIsUploaded(false);
-    }
+    // const handleReset = (e) => {
+    //     setFiles([]);
+    //     setIsUploaded(false);
+    // }
 
-    const handleAddImages = (e) => {
-        fileInputRef.current.click();
-    }
-    const handleFileUpload = (e) => {
+    // const handleAddImages = (e) => {
+    //     fileInputRef.current.click();
+    // }
+    // const handleFileUpload = (e) => {
 
-        const selectedFiles = e.target.files;
-        setFiles((prevFiles) => {
-            const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
-            if (selectedFiles) {
-                setIsUploaded(true);
-                setIsReset(newFiles.length === 1 ? true : false);
-            }
-            return newFiles;
-        });
-    }
+    //     const selectedFiles = e.target.files;
+    //     setFiles((prevFiles) => {
+    //         const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
+    //         if (selectedFiles) {
+    //             setIsUploaded(true);
+    //             setIsReset(newFiles.length === 1 ? true : false);
+    //         }
+    //         return newFiles;
+    //     });
+    // }
 
-    useEffect(() => {
-        if (!itemName) {
-            setItemName(reportDetails.itemName);
-        }
-        if (!location) {
-            setLocation(reportDetails.location);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!itemName) {
+    //         setItemName(reportDetails.id.itemName);
+    //     }
+    //     if (!location) {
+    //         setLocation(reportDetails.id.location);
+    //     }
+    // }, []);
 
 
     return (
@@ -118,7 +126,8 @@ export default function EditBusinessDetails() {
             </div>
 
             <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
+                {/* <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'> */}
+                <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div>
                             <div className='flex justify-between mb-9'>
@@ -186,7 +195,7 @@ export default function EditBusinessDetails() {
                                     <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Upload Images</p>
                                 </div>
                                 <div>
-                                    {isUploaded ?
+                                    {/* {isUploaded ?
                                         <div className='flex flex-wrap w-96'>
                                             {files.map((items, i) => {
                                                 return (
@@ -199,9 +208,9 @@ export default function EditBusinessDetails() {
                                         </div>
                                         :
                                         null
-                                    }
+                                    } */}
 
-                                    
+
                                 </div>
                             </div>
                             <div className='border-b border-b-[#949494] mb-10'>
@@ -228,7 +237,7 @@ export default function EditBusinessDetails() {
                                     <TextInput
                                         type="text"
                                         placeholder="Landmarks of the location"
-                                        name="landmark"
+                                        name="locationIdentifiers"
                                         className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                         autoComplete="off"
                                         required
@@ -244,7 +253,7 @@ export default function EditBusinessDetails() {
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your Name"
-                                    name="name"
+                                    name="userName"
                                     className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                     autoComplete="off"
                                 />
@@ -273,7 +282,7 @@ export default function EditBusinessDetails() {
                                 <TextInput
                                     type="text"
                                     placeholder="Enter your Email address"
-                                    name="emailMail"
+                                    name="emailMailId"
                                     className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                     autoComplete="off"
                                     required
@@ -283,7 +292,7 @@ export default function EditBusinessDetails() {
                         <div className='flex flex-col items-center justify-between mt-20'>
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                 <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab' onClick={() => { window.history.back() }}>Cancel</button></div>
-                                <div><button type='submit' onClick={submitData}  className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab' >Submit the changes</button></div>
+                                <div><button type='submit' onClick={submitData} className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab' >Submit the changes</button></div>
                             </div>
                         </div>
                     </div>

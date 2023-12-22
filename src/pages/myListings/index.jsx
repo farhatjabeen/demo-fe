@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FaMap, FaCalendar, FaClock } from 'react-icons/fa';
+import { FaRegMap , FaRegCalendar , FaRegClock  } from 'react-icons/fa';
 import keys from '../../assets/images/keys.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteMyListingItems, itemDetails, myListingItems } from '../../redux/reducers/itemsSlice';
@@ -47,7 +47,7 @@ export default function MyListings() {
                                     <div className='xl:mt-6 md:mt-6 sm:mt-3'>
                                         <div className='w-64 flex'>
                                             <div className='flex items-center'>
-                                                <FaMap style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
+                                                <FaRegMap style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
                                             </div>
                                             <div className=' xl:text-lg md:text-lg sm:text-base ml-2'>
                                                 {details?.location}
@@ -56,7 +56,7 @@ export default function MyListings() {
 
                                         <div className='w-64 mt-2 flex'>
                                             <div className='flex items-center'>
-                                                <FaCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
+                                                <FaRegCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
                                             </div>
                                             <div className=' xl:text-lg md:text-lg sm:text-base ml-2'>
                                                 {details?.foundDate}
@@ -64,7 +64,7 @@ export default function MyListings() {
                                         </div>
                                         <div className='w-64 mt-2 flex'>
                                             <div className='flex items-center'>
-                                                <FaClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
+                                                <FaRegClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
                                             </div>
                                             <div className=' xl:text-lg md:text-lg sm:text-base ml-2'>
                                                 {details?.foundTime}

@@ -22,7 +22,8 @@ const PopoverComponent = () => {
 
     const navigate = useNavigate();
     const mailIdFromApi = useSelector(mailId);
-
+    const [showPassword, setShowPassword] = useState(false)
+    const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
@@ -123,7 +124,7 @@ const PopoverComponent = () => {
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                                 <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Enter Password</div>
-                                                                <div className='pb-8 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                                <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
                                                             </div>
@@ -135,9 +136,12 @@ const PopoverComponent = () => {
                                                                     <TextInput
                                                                         type='password'
                                                                         name='password'
+                                                                        eyeClass='absolute top-3 left-3/4 ml-16'
                                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                         autoComplete="off"
+                                                                        showPassword={showPassword}
                                                                         required
+                                                                        setShowPassword={() => setShowPassword(!showPassword)}
                                                                     />
                                                                 </div>
                                                                 <Popover.Button
@@ -149,17 +153,18 @@ const PopoverComponent = () => {
                                                         </FormProvider>
                                                     </div>
                                                     :
-                                                    <div className='mb-10'>
+                                                    <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                                 <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Enter Password</div>
-                                                                <div className='pb-8 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                                <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <FormProvider {...methodsForRegister}>
                                                             <form onSubmit={(e) => registerButton(e)}>
+                                                                {/* <form onSubmit={methods.handleSubmit(registerButton)}> */}
                                                                 <div>
                                                                     <div className=' text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
                                                                     <TextInput
@@ -173,9 +178,12 @@ const PopoverComponent = () => {
                                                                     <TextInput
                                                                         type='password'
                                                                         name='password'
+                                                                        eyeClass='absolute top-3 left-3/4 ml-16'
                                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                         autoComplete="off"
+                                                                        showPassword={showRegisterPassword}
                                                                         required
+                                                                        setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                                                     />
                                                                 </div>
                                                                 <Popover.Button

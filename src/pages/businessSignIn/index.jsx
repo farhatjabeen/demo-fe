@@ -60,6 +60,7 @@ export default function BusinessSignIn() {
                                     type="password"
                                     placeholder="Enter your Password"
                                     name="password"
+                                    eyeClass='absolute bottom-7 left-3/4 ml-16'
                                     className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4 my-3'
                                     autoComplete="off"
                                     showPassword={showPassword}

@@ -180,7 +180,7 @@ export default function BusinessSignUp() {
                                 <div className="block text-sm font-bold mb-4 w-full">
                                     Company Logo
                                 </div>
-                                {isUploaded ?
+                                {isUploaded && imageFiles[0] ?
                                     <div className='flex flex-wrap w-96'>
                                         <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
                                             <div>{imageFiles[0]?.name}</div>
@@ -192,7 +192,7 @@ export default function BusinessSignUp() {
                                 }
                                 <ImageUpload
                                     name="company"
-                                    designClass='flex justify-center bg-primary-color bg-green w-full py-3 rounded-xl'
+                                    designClass='flex justify-center bg-primary-color  w-full py-3 rounded-xl'
                                     multiple={false}
                                     handleFileUpload={handleFileUpload}
                                 />

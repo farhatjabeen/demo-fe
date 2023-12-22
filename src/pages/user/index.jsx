@@ -48,7 +48,7 @@ function User() {
     setCurrentPage(pageNumber);
   };
   const userHeaders = [
-    { key: "_id", label: "User ID" },
+    { key: "userCode", label: "User ID" },
     { key: "name", label: "User Name" },
     { key: "createdAt", label: "Listing Count" },
     { key: "emailMailId", label: "Mail ID" },
@@ -58,7 +58,7 @@ function User() {
   ];
 
   const businessHeaders = [
-    { key: "_id", label: "Business ID" },
+    { key: "userCode", label: "Business ID" },
     { key: "companyName", label: "Company Name" },
     { key: "companyCategory", label: "Category" },
     { key: "contactName", label: "Contact Name" },
