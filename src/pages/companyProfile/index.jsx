@@ -12,6 +12,8 @@ import FormDropdown from '../../components/common/formDropdown';
 export default function CompanyProfile() {
 
     const [editButton, setEditButton] = useState(false);
+    const [showPassword, setShowPassword] = useState(false)
+    const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [currentPassword, setCurrentPassword] = useState('');
     const [select, setSelect] = useState(false);
     const cities = useSelector(locationDetails);
@@ -198,10 +200,13 @@ export default function CompanyProfile() {
                                     <TextInput
                                         type="password"
                                         placeholder="Current password"
+                                        eyeClass='absolute bottom-3 left-3/4 ml-16'
                                         name="currentPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         disable={!editButton}
+                                        showPassword={showRegisterPassword}
+                                        setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                     />
                                     {/* <input className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>
@@ -220,13 +225,16 @@ export default function CompanyProfile() {
                                 <div className='flex justify-between'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Re - Enter New password</label>
                                     <TextInput
-                                        type="text"
+                                        type="password"
+                                        eyeClass='absolute bottom-3 left-3/4 ml-16'
                                         placeholder="New password"
                                         name="confirmPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
                                         required
                                         disable={!editButton}
+                                        showPassword={showPassword}
+                                        setShowPassword={() => setShowPassword(!showPassword)}
                                     />
                                 </div>
                             </div>
