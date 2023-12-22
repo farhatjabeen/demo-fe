@@ -108,7 +108,7 @@ export const deleteBusinessItem = (itemId) => (dispatch) => {
 export const businessUpdateItems = (itemId, data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.editBusinessUserItem}?itemid=${itemId}`,
+            url: `${endpoints.apiPath.items.editBusinessUserItem}/${itemId}`,
             method: endpoints.ApiMethods.PUT,
             data: data,
             isAuth: true,

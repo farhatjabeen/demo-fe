@@ -130,7 +130,7 @@ export default function AllItems() {
                             {tableData?.list?.length && tableData.list.map((items, i) => {
                                 return (
                                     <tr key={i} className={`cursor-grab ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">{items._id}</td>
+                                        <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">{items.itemCode}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemDescription}</td>
                                         <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>

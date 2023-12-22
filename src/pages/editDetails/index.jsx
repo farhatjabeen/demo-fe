@@ -6,26 +6,22 @@ import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
-import { IoMdAddCircleOutline } from "react-icons/io";
-import { useRef } from 'react';
 import { MdClose } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems } from '../../redux/reducers/itemsSlice';
+import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems, filesUploadAPI } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
 import DropdownMenu from '../../components/common/dropdown';
 
 export default function EditBusinessDetails() {
-    // const [itemName, setItemName] = useState('');
-    // const [location, setLocation] = useState('');
-    // const [files, setFiles] = useState([]);
-    // const [isUploaded, setIsUploaded] = useState(false);
-    // const [isReset, setIsReset] = useState(false);
-    // const [updatedData, setUpdatedData] = useState([]);
-    // const fileInputRef = useRef();
+    const [filesFromDb, setFilesFromDb] = useState([]);
+    const [files, setFiles] = useState([]);
+    const [isUploaded, setIsUploaded] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(" ");
+    const [cloudinaryId, setCloudinaryId] = useState([]);
+    const [itemImage, setItemImage] = useState([]);
     const navigate = useNavigate();
     const { id } = useParams();
-    const [selectedCategory, setSelectedCategory] = useState(" ");
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
     const items = useSelector(itemDropdown);
@@ -42,7 +38,9 @@ export default function EditBusinessDetails() {
             location: "",
             locationIdentifiers: "",
             keywords: "",
-            // imageUpload: ""
+            itemImage: "",
+            cloudinary_id: [],
+
         },
         resolver
     });
@@ -63,10 +61,16 @@ export default function EditBusinessDetails() {
                 location: itemDetails.location || "",
                 locationIdentifiers: itemDetails.locationIdentifiers || "",
                 keywords: itemDetails.keywords || "",
-                // imageUpload: itemDetails.itemImage
+                itemImage: itemDetails.itemImage || "",
+                cloudinary_id: itemDetails.cloudinary_id || []
             });
         }
     }, [itemDetails]);
+    useEffect(() => {
+        if (itemDetails?.itemImage) {
+            setFilesFromDb(itemDetails.itemImage);
+        }
+    }, [itemDetails?.itemImage]);
     useEffect(() => {
         setSelectedCategory(itemDetails.itemCategory)
         dispatch(itemDropdownValues())
@@ -75,6 +79,7 @@ export default function EditBusinessDetails() {
     const submitData = async (e) => {
         try {
             const data = methods.getValues()
+            data.keywords = data.keywords.split(',').map(keyword => keyword.trim());
             data.mobileNumber = String(data.mobileNumber);
             const updatedData = {
                 ...data,
@@ -87,36 +92,72 @@ export default function EditBusinessDetails() {
             console.error('Update failed:', error);
         }
     };
+    const handleReset = (e) => {
+        setFiles([]);
+        setIsUploaded(false);
+        setFilesFromDb([]);
+        setCloudinaryId([]);
+    }
 
-    // const handleReset = (e) => {
-    //     setFiles([]);
-    //     setIsUploaded(false);
-    // }
 
-    // const handleAddImages = (e) => {
-    //     fileInputRef.current.click();
-    // }
-    // const handleFileUpload = (e) => {
 
-    //     const selectedFiles = e.target.files;
-    //     setFiles((prevFiles) => {
-    //         const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
-    //         if (selectedFiles) {
-    //             setIsUploaded(true);
-    //             setIsReset(newFiles.length === 1 ? true : false);
-    //         }
-    //         return newFiles;
-    //     });
-    // }
+    const handleFileUpload = (e) => {
+        const selectedFiles = e.target.files;
+        setFiles((prevFiles) => {
+            const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
+            if (newFiles) {
+                setIsUploaded(true);
+            }
+            return newFiles;
+        });
+    }
+    const handleRemoveFile = (indexToRemove) => {
+        setFiles((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+    };
+    const handleRemoveApiFile = (indexToRemove) => {
+        setFilesFromDb((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+    };
 
-    // useEffect(() => {
-    //     if (!itemName) {
-    //         setItemName(reportDetails.id.itemName);
-    //     }
-    //     if (!location) {
-    //         setLocation(reportDetails.id.location);
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (files && files.length > 0) {
+            let formData = new FormData();
+            files.forEach((item, i) => {
+                formData.append("item", item);
+            });
+
+            const uploadFiles = async () => {
+                try {
+                    const res = await dispatch(filesUploadAPI(formData));
+                    return res.data;
+                } catch (error) {
+                    console.error("Error uploading files:", error);
+                }
+            };
+
+            const handleUpload = async () => {
+                const uploadedData = await uploadFiles();
+
+                if (uploadedData) {
+                    setCloudinaryId((prevIds) => [...prevIds, uploadedData.cloudinary_id]);
+                    setItemImage((prevImages) => [...prevImages, uploadedData.itemImage]);
+
+                    if (itemDetails?.cloudinary_id) {
+                        setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(itemDetails.cloudinary_id) ? itemDetails.cloudinary_id : [itemDetails.cloudinary_id])]);
+                    }
+
+
+                    if (itemDetails?.itemImage) {
+                        setItemImage((prevImages) => [...prevImages, ...(Array.isArray(itemDetails.itemImage) ? itemDetails.itemImage : [itemDetails.itemImage])]);
+                    }
+                }
+            };
+
+            handleUpload();
+        } else {
+            console.warn("No files to upload.");
+        }
+    }, [files, itemDetails]);
+
 
 
     return (
@@ -126,8 +167,9 @@ export default function EditBusinessDetails() {
             </div>
 
             <FormProvider {...methods}>
-                {/* <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'> */}
-                <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
+                {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
+                <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
+
                     <div className='w-full px-24'>
                         <div>
                             <div className='flex justify-between mb-9'>
@@ -195,22 +237,49 @@ export default function EditBusinessDetails() {
                                     <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Upload Images</p>
                                 </div>
                                 <div>
-                                    {/* {isUploaded ?
+                                    {isUploaded || itemDetails?.itemImage ? (
                                         <div className='flex flex-wrap w-96'>
-                                            {files.map((items, i) => {
-                                                return (
-                                                    <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color m-2'>
-                                                        <div>{items.name}</div>
-                                                        <div className='flex items-center ml-2'><MdClose /></div>
-                                                    </div>
-                                                );
-                                            })}
+                                            {filesFromDb.map((url, i) => (
+                                                <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                                                    <img src={url} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
+                                                    <div className='flex items-center ml-2' onClick={() => handleRemoveApiFile(i)}><MdClose /></div>
+                                                </div>
+                                            ))}
+                                            {files.map((file, i) => (
+                                                <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                                                    <img src={URL.createObjectURL(file)} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
+                                                    <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
+                                                </div>
+                                            ))}
                                         </div>
-                                        :
-                                        null
-                                    } */}
+                                    ) : null}
 
 
+
+                                    <div className="flex justify-center items-center">
+                                        <ImageUpload
+                                            name="item"
+                                            designClass={
+                                                `${isUploaded || itemDetails?.itemImage
+                                                    ?
+                                                    "xl:w-80 md:w-80 sm:64 xl:mr-2 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
+                                                    :
+                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                                }`
+                                            }
+                                            multiple={true}
+                                            handleFileUpload={handleFileUpload}
+                                        />
+
+                                        {itemDetails?.itemImage || isUploaded ?
+                                            <div>
+                                                <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
+                                                    <IoMdRefresh className='h-6 w-6' />
+                                                </button>
+                                            </div>
+                                            :
+                                            ""}
+                                    </div>
                                 </div>
                             </div>
                             <div className='border-b border-b-[#949494] mb-10'>
