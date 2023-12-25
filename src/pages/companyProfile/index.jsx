@@ -5,7 +5,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
-import { companyProfileData, editCompanyProfileData } from '../../redux/reducers/userSlice';
+import { companyProfileData, editCompanyProfileData, userDetails, userProfile } from '../../redux/reducers/userSlice';
 import { categoryDetails, categoryDropdownValues, locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
 import FormDropdown from '../../components/common/formDropdown';
 
@@ -22,6 +22,7 @@ export default function CompanyProfile() {
     const companyCategories = Object.values(categories);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
+    const userProfileData = useSelector(userProfile);
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -39,12 +40,12 @@ export default function CompanyProfile() {
 
     const methods = useForm({
         defaultValues: {
-            companyName: "",
-            companyCategory: "",
+            companyName: userProfileData?.companyName || "",
+            companyCategory:  "",
             companyLocation: "",
-            name: "",
-            mobileNumber: "",
-            emailMailId: "",
+            name: userProfileData?.name || "",
+            mobileNumber: userProfileData?.mobileNumber || "",
+            emailMailId: userProfileData?.emailMailId || "",
             currentPassword: "",
             newPassword: "",
             confirmPassword: ""
@@ -122,6 +123,7 @@ export default function CompanyProfile() {
                                     optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     editButton={editButton}
                                     selection={select}
+                                    valueFromDb={userProfileData?.companyCategory}
                                     dropdownValues={companyCategories}
                                     handleData={handleChildData}
                                 />
@@ -137,6 +139,7 @@ export default function CompanyProfile() {
                                     optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                     editButton={editButton}
                                     selection={select}
+                                    valueFromDb={userProfileData?.companyLocation}
                                     dropdownValues={citiesInSerbia}
                                     handleData={handleChildDataLocation} 
                                      />

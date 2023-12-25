@@ -102,6 +102,12 @@ export default function AddMoreDetails() {
             methods.setValue('keywords', inputString.split(' '))
             const data = methods.getValues();
             console.log("from submit form");
+
+            if (userDetails?.role === 'BUSINESS'&& !reportDetails.id) {
+                dispatch(businessAddMoreDetails(data));
+                navigate('/allitems')
+            }
+            
             if (userDetails?.role === 'USER' && !reportDetails.id) {
                 const addItem = dispatch(userAddMoreDetails(data));
                 console.log('itemadded', addItem)
@@ -109,13 +115,13 @@ export default function AddMoreDetails() {
                     setNewItemId(res.data._id)
                 })
             } else {
-                dispatch(userEditItemDetails(reportDetails.id, data))
+                methods.setValue("itemImage", filesFromDb.itemImage);
+                methods.setValue("cloudinary_id", filesFromDb.cloudinary_id);
+                const dataNow = methods.getValues();
+                dispatch(userEditItemDetails(reportDetails.id, dataNow))
                 navigate('/mylistings')
             }
-            if (userDetails?.role === 'BUSINESS') {
-                dispatch(businessAddMoreDetails(data));
-                navigate('/allitems')
-            }
+            
         } catch (error) {
             console.log(error, 'submitted errors')
         }
@@ -137,6 +143,22 @@ export default function AddMoreDetails() {
             return newFiles;
         });
     }
+
+    const handleFileDelete = (index) => {
+        setFiles((prevFiles) => {
+            const newFiles = [...prevFiles];
+            newFiles.splice(index, 1);
+            return newFiles;
+        });
+    };
+
+    const handleDbFileDelete = (index) => {
+        setFilesFromDb((prevFiles) => {
+            const newFiles = [...prevFiles];
+            newFiles.splice(index, 1);
+            return newFiles;
+        });
+    };
 
     useEffect(() => {
         if (files && files?.length > 0) {
@@ -256,7 +278,7 @@ export default function AddMoreDetails() {
                                                             return (
                                                                 <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
                                                                     <div>{items}</div>
-                                                                    <div className='flex items-center ml-2'><MdClose /></div>
+                                                                    <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
                                                                 </div>
                                                             );
                                                         })}
@@ -272,7 +294,7 @@ export default function AddMoreDetails() {
                                                             return (
                                                                 <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
                                                                     <div>{items.name}</div>
-                                                                    <div className='flex items-center ml-2'><MdClose /></div>
+                                                                    <div className='flex items-center ml-2' onClick={() => handleFileDelete(i)}><MdClose /></div>
                                                                 </div>
                                                             );
                                                         })

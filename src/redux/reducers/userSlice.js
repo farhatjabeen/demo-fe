@@ -320,7 +320,25 @@ export const generalUserDetails = () => (dispatch) => {
         }).then((res) => {
             const { emailMailId, name, mobileNumber } = res.data
             dispatch(getUserDetails({ emailMailId, name, mobileNumber }))
-            return resolve(true)
+            return resolve(res)
+        }).catch(err => {
+            console.log(err)
+            return err;
+        })
+    })
+}
+
+// get business user details
+export const businessUserDetails = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.userDetails,
+            method: endpoints.ApiMethods.GET,
+            isAuth: true,
+        }).then((res) => {
+            const { emailMailId, name, mobileNumber } = res.data
+            dispatch(getUserDetails({ emailMailId, name, mobileNumber }))
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;

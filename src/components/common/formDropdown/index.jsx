@@ -11,11 +11,6 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
 
     const [options, setOptions] = useState('');
     console.log(options, 'options')
-
-    useEffect(() => {
-        handleData(options);
-    }, [options, handleData]);
-
    
     return (
         <ConnectForm>
@@ -25,22 +20,23 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
                         <Controller
                             name={name}
                             control={control}
-                            render={() => (
+                            defaultValue={valueFromDb}
+                            render={({ field }) => (
                                 <div>
                                     <div>
                                         <select
                                             id={name}
                                             disabled={!editButton}
                                             className={optionButtonClass}
-                                            onChange={(e) => setOptions(e.target.value) }
+                                            onChange={(e) => {handleData(e.target.value); field.onChange(e);} }
                                         >
                                             <option value="">Select an option</option>
-                                            {dropdownValues?.map((items) => {
+                                            {dropdownValues?.map((items,i) => {
                                                 return (
                                                     <option
-                                                        key={items.id}
-                                                        value={`${items}`}
-                                                        selected={items === valueFromDb ? true : false}
+                                                        key={i}
+                                                        value={items}
+                                                        // selected={items === valueFromDb ? true : false}
                                                         className="px-4 py-2 flex w-full text-sm hover:bg-green"
                                                     >
                                                         {items}
@@ -49,7 +45,6 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
                                             })}
                                         </select>
                                     </div>
-
                                 </div>
                             )}
                         />

@@ -11,29 +11,33 @@ export default function MyProfile() {
     const [editButton, setEditButton] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
-    const [name, setName] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
-    const [emailId, setEmailId] = useState('');
+    const [fetchUsers, setFetchUsers] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
-    const existingData = useSelector(userData);
+    // const existingData = useSelector(userData);
+    // console.log(existingData,'existingdata')
     const fetchUserDetails = useSelector(generalUserData);
 
     useEffect(() => {
-        dispatch(generalUserDetails());
-        methods.reset({
+        const getUser = dispatch(generalUserDetails());
+
+        getUser?.then((res) => {
+            console.log(res.data.name, "respi")
+            methods.reset({
+                emailMailId: res?.data?.emailMailId || "",
+                mobileNumber: `${res?.data?.mobileNumber}` || "",
+                name: res?.data?.name || ""
+            })
+        })
+
+
+    }, [])
+
+    const methods = useForm({
+        defaultValues: {
             emailMailId: fetchUserDetails?.emailMailId || "",
             mobileNumber: `${fetchUserDetails?.mobileNumber}` || "",
             name: fetchUserDetails?.name || "",
-        })
-    }, [])
-
-    // console.log(fetchUserDetails,'fud')
-    const methods = useForm({
-        defaultValues: {
-            emailMailId: existingData?.emailMailId || "",
-            mobileNumber: `${existingData?.mobileNumber}` || "",
-            name: existingData?.name || "",
             currentPassword: "",
             newPassword: "",
             confirmPassword: ""
@@ -52,15 +56,14 @@ export default function MyProfile() {
 
             if (currentPassword) {
                 const fetchUser = dispatch(userProfileData(itemDetails));
-                //    setFetchUser(true)
-                //    dispatch(generalUserDetails())
+                if (fetchUser) {
+                    setFetchUsers(true)
+                }
             } else {
                 const fetchUser = dispatch(userProfileData({ name, emailMailId, mobileNumber }));
-                // fetchUser.then((res)=>{
-                //     console.log(res,'respons')
-                // })
-                // setFetchUser(true)
-                // dispatch(generalUserDetails())
+                if (fetchUser) {
+                    setFetchUsers(true)
+                }
             }
 
         } catch (error) {
@@ -156,7 +159,7 @@ export default function MyProfile() {
                                         showPassword={showRegisterPassword}
                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                     />
-                                    {/* <input
+                                    {/* <input 
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>

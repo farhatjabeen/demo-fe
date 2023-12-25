@@ -39,6 +39,12 @@ export default function BusinessSignUp() {
         resolver
     });
 
+    useEffect(()=>{
+        const values = sessionStorage.getItem("enteredData")
+        if(values){
+            methods.reset(JSON.parse(values))
+        }
+    },[])
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
@@ -74,8 +80,8 @@ export default function BusinessSignUp() {
     }, [imageFiles]);
 
 
-    const submitData = (e) => {
-        e.preventDefault();
+    const submitData = () => {
+        // e.preventDefault();
         const name = methods.getValues().name;
         const mobileNumber = methods.getValues().mobileNumber;
         const emailMailId = methods.getValues().emailMailId;
@@ -85,7 +91,7 @@ export default function BusinessSignUp() {
         const companylogo = `${companyLogo}` || "";
         const cloudinary_id = `${cloudinaryId}` || "";
         if(isChecked){
-            dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyCategory, companyName, companylogo, cloudinary_id }))
+            dispatch(businessUserRegister({name,mobileNumber,emailMailId,password,companyName,companyCategory,companylogo,cloudinary_id}))
         }else{
             Toast({type:"error",message: "Please accept the terms and conditions"})
         }
@@ -93,6 +99,7 @@ export default function BusinessSignUp() {
 
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
+        console.log(selectedCategory,"selectedcat")
     };
 
     return (
@@ -114,7 +121,8 @@ export default function BusinessSignUp() {
                     </div>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={(e) => submitData(e)}>
+                    {/* <form onSubmit={(e) => submitData(e)}> */}
+                    <form onSubmit={methods.handleSubmit(submitData)}>
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
@@ -184,7 +192,7 @@ export default function BusinessSignUp() {
                                     <div className='flex flex-wrap w-96'>
                                         <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
                                             <div>{imageFiles[0]?.name}</div>
-                                            <div className='flex items-center ml-2'><MdClose /></div>
+                                            <div className='flex items-center ml-2' onClick={()=>setImageFiles('')}><MdClose /></div>
                                         </div>
                                     </div>
                                     :
@@ -211,7 +219,7 @@ export default function BusinessSignUp() {
                             <div className="flex ">
                                 <div className="flex items-center h-5">
                                     <input id="remember" type="checkbox" onChange={()=>setIsChecked(!isChecked)}  className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                    <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
+                                    <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" onClick={()=>sessionStorage.setItem("enteredData",JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                 </div>
                                 <label htmlFor="remember" className="ms-2 text-sm"></label>
                             </div>
