@@ -30,7 +30,9 @@ export default function AddMoreDetails() {
     const [itemImage, setItemImage] = useState([]);
     const userDetails = useSelector(userData);
     const itemDetailsById = useSelector(searchDetailsById);
+    console.log(itemDetailsById,'itemDetailsById')
     const reportDetails = useParams();
+    console.log(reportDetails,"reportDetails")
     const [selectedLocation, setSelectedLocation] = useState("");
 
 
@@ -49,13 +51,13 @@ export default function AddMoreDetails() {
             setFilesFromDb(itemDetailsById?.cloudinary_id)
             methods.reset({
                 emailMailId: itemDetailsById?.emailMailId || "",
-                mobileNumber: `${itemDetailsById?.mobileNumber}` || "",
+                mobileNumber: itemDetailsById?.mobileNumber!= undefined ? `${itemDetailsById?.mobileNumber}` : "",
                 userName: itemDetailsById?.userName || "",
-                location: reportDetails.location || itemDetailsById?.location || "",
+                location: reportDetails?.location || itemDetailsById?.location || "",
                 locationIdentifiers: itemDetailsById?.locationIdentifiers || "",
                 itemDescription: itemDetailsById?.itemDescription || "",
                 itemCategory: itemDetailsById?.itemCategory || "",
-                itemName: reportDetails.newItem || itemDetailsById?.itemName || "",
+                itemName: reportDetails?.newItem || itemDetailsById?.itemName || "",
                 keywords: itemDetailsById?.keywords || "",
                 itemImage: itemDetailsById?.itemImage || "",
                 cloudinary_id: itemDetailsById?.cloudinary_id || ""
@@ -74,7 +76,7 @@ export default function AddMoreDetails() {
             locationIdentifiers: "",
             itemDescription: "",
             itemCategory: "",
-            itemName: "",
+            itemName: "", 
             keywords: "",
             itemImage: "",
             cloudinary_id: ""
@@ -93,7 +95,7 @@ export default function AddMoreDetails() {
     const submitData = async (e) => {
         try {
             e.preventDefault();
-            methods.setValue('itemCategory', `${selectedCategory}` || itemDetailsById?.itemCategory || "")
+            methods.setValue('itemCategory', selectedCategory || itemDetailsById?.itemCategory || "")
 
             methods.setValue("itemImage", itemImage.length > 0 ? itemImage : itemDetailsById?.itemImage);
             methods.setValue("cloudinary_id", cloudinaryId.length > 0 ? cloudinaryId : itemDetailsById?.cloudinaryId);
@@ -200,6 +202,7 @@ export default function AddMoreDetails() {
 
             <FormProvider {...methods}>
                 <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
+                {/* <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'> */}
                     <div className='w-full px-24'>
                         <div>
                             <div className='flex justify-between mb-9'>
@@ -416,7 +419,7 @@ export default function AddMoreDetails() {
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                 <div>
                                     <button
-                                        className='cursor-auto xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
+                                        className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
                                         onClick={() => { window.history.back() }}
                                     >
                                         Cancel
@@ -425,7 +428,7 @@ export default function AddMoreDetails() {
                                 <div>
                                     <button
                                         type='submit'
-                                        className='cursor-auto xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
+                                        className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
                                     >
                                         Submit form
                                     </button>

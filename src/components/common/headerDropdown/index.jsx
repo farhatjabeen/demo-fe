@@ -31,11 +31,9 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                                     <FaRegUser className="mb-1 h-5 w-5" />
                             }
 
-                            <h1 className="ml-2 ">Hi, there!</h1>
+                            {/* <h1 className="ml-2 ">Hi, there!</h1> */}
 
-
-
-                            {/* <h1 className="ml-2 ">Hi, {userDetails ? userDetails?.name : <h1>there</h1>}!</h1> */}
+                            <h1 className="ml-2 ">Hi, {userDetails?.name ? userDetails?.name.split(' ')[0] : "there"}!</h1>
                         </div>
                         <div>
                             <RxChevronDown className='h-6 w-6' />

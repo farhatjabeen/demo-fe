@@ -5,12 +5,15 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../common/textInput';
+import { useSelector } from 'react-redux';
+import { userData } from '../../redux/reducers/userSlice';
+import { Toast } from '../toast';
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
     const navigate = useNavigate();
     const resolver = useValidationResolver(searchSchema);
-
+    const isUser = useSelector(userData)
     const methods = useForm({
         defaultValues: {
             itemName: "",
@@ -25,8 +28,12 @@ export default function SearchReport() {
 
             if (buttonActive) {
                 navigate(`/findMissingItem/${itemName}/${location}`);
-            }else{
-                navigate(`/addmoredetails/${itemName}/${location}`);
+            }else {
+                if (isUser){
+                    navigate(`/addmoredetails/${itemName}/${location}`);
+                }else{
+                    Toast({type:"error",message:"Login Required"})
+                }
             }
 
         } catch (error) {
@@ -49,7 +56,7 @@ export default function SearchReport() {
     // }
 
     return (
-        <div className='flex xl:justify-center xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
+        <div className='flex xl:w-11/12 xl:justify-between xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
 
             <div className='xl:my-20 flex xl:items-start md:flex-col sm:flex-col items-center'>
                 <div className='flex sm:items-center p-2 bg-white border-solid xl:rounded-3xl xl:h-1/5 xl:w-fit md:rounded-2xl md:h-14 md:w-80 sm:h-12 sm:rounded-2xl sm:w-64 border border-[#B6B6B6]'>
@@ -124,7 +131,7 @@ export default function SearchReport() {
                         </FormProvider>
                 }
             </div>
-            <div className='xl:mr-14 xl:ml-28 flex justify-center'><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
+            <div><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
         </div>
     )
 }

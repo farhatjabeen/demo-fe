@@ -22,7 +22,9 @@ export default function CompanyProfile() {
     const companyCategories = Object.values(categories);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
+    console.log(selectedCategory,'selectedcat')
     const userProfileData = useSelector(userProfile);
+    console.log(userProfileData,'userProfileData')
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -41,8 +43,8 @@ export default function CompanyProfile() {
     const methods = useForm({
         defaultValues: {
             companyName: userProfileData?.companyName || "",
-            companyCategory:  "",
-            companyLocation: "",
+            companyCategory:  userProfileData?.companyCategory || "",
+            companyLocation: userProfileData?.location || "",
             name: userProfileData?.name || "",
             mobileNumber: userProfileData?.mobileNumber || "",
             emailMailId: userProfileData?.emailMailId || "",
@@ -53,19 +55,20 @@ export default function CompanyProfile() {
         resolver
     });
 
-    useEffect(() => {
-        methods.setValue("companyCategory", selectedCategory);
-        methods.setValue("companyLocation", selectedLocation);
-    }, [selectedCategory, selectedLocation, methods]);
+    // useEffect(() => {
+    //     methods.setValue("companyCategory", selectedCategory);
+    //     methods.setValue("companyLocation", selectedLocation);
+    // }, [selectedCategory, selectedLocation,methods]);
 
-    const submitData = (data) => {
+    const submitData = (e) => {
+        e.preventDefault();
         try {
             const name = methods.getValues().name;
             const emailMailId = methods.getValues().emailMailId;
-            const mobileNumber = methods.getValues().mobileNumber;
+            const mobileNumber = `${methods.getValues().mobileNumber}`;
             const companyName = methods.getValues().companyName;
-            const companyCategory = methods.getValues().companyCategory;
-            const companyLocation = methods.getValues().companyLocation;
+            const companyCategory = selectedCategory;
+            const companyLocation = selectedLocation;
 
             const currentPassword = methods.getValues().currentPassword;
             if(currentPassword){
@@ -94,7 +97,7 @@ export default function CompanyProfile() {
                 {editButton ? null : <div><button className='w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
             </div>
             <FormProvider {...methods}>
-                <form onSubmit={(e) => { e.preventDefault(); submitData() }} className='flex justify-around w-full'>
+                <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
                             <div className='flex justify-between mb-9'>

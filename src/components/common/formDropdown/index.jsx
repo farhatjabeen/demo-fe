@@ -12,6 +12,9 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
     const [options, setOptions] = useState('');
     console.log(options, 'options')
    
+    useEffect(()=>{
+        handleData(options)
+    },[options])
     return (
         <ConnectForm>
             {({ errors, control }) => (
@@ -21,22 +24,22 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
                             name={name}
                             control={control}
                             defaultValue={valueFromDb}
-                            render={({ field }) => (
+                            render={() => (
                                 <div>
                                     <div>
                                         <select
                                             id={name}
                                             disabled={!editButton}
                                             className={optionButtonClass}
-                                            onChange={(e) => {handleData(e.target.value); field.onChange(e);} }
+                                            onChange={(e) => setOptions(e.target.value) }
                                         >
-                                            <option value="">Select an option</option>
+                                            <option value="" >Select an option</option>
                                             {dropdownValues?.map((items,i) => {
                                                 return (
                                                     <option
                                                         key={i}
                                                         value={items}
-                                                        // selected={items === valueFromDb ? true : false}
+                                                        selected={items === valueFromDb ? true : false}
                                                         className="px-4 py-2 flex w-full text-sm hover:bg-green"
                                                     >
                                                         {items}
