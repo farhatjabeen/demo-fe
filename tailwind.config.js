@@ -28,7 +28,9 @@ module.exports = {
       'blueback': '#F8FCFF',
       'primary-colorback': '#F9DE8C',
       'light-gray':'#DDE2E4',
-      'light-black':'#455A64'
+      'light-black':'#455A64',
+      'shadow-color':'#C8FFFF',
+      'text-color':'#404041'
     },
     extend: {}
   },

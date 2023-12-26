@@ -22,7 +22,7 @@ const Home = () => {
         <ImageWorkFlow />
       </div>
 
-      <div className='w-full '>
+      <div className=' ml-24 '>
         <OurBrands />
       </div>
 

@@ -24,7 +24,7 @@ export default function AboutUs() {
             </div>
 
             <div className='text-center'>
-                <h1 className=' mt-32 font-bold text-3xl'>
+                <h1 className=' mt-32 font-bold text-4xl'>
                     What Sets Us Apart
                 </h1>
                 <p className='text-2xl font-medium px-20 pt-6 pb-32 '>

@@ -20,7 +20,7 @@ export default function EditBusinessDetails() {
     const [selectedCategory, setSelectedCategory] = useState(" ");
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
-    const navigate = useNavigate();
+        const navigate = useNavigate();
     const { id } = useParams();
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
@@ -84,7 +84,13 @@ export default function EditBusinessDetails() {
             const updatedData = {
                 ...data,
                 itemCategory: selectedCategory,
+                itemImage: Array.isArray(itemImage) ? itemImage : [itemImage],
+                cloudinary_id: Array.isArray(cloudinaryId) ? cloudinaryId : [cloudinaryId],
             };
+
+            updatedData.itemImage = updatedData.itemImage.map(image => typeof image === 'string' ? image : image.toString());
+            updatedData.cloudinary_id = updatedData.cloudinary_id.map(id => typeof id === 'string' ? id : id.toString());
+
             e.preventDefault();
             dispatch(businessUpdateItems(id, updatedData));
             navigate('/allItems');
@@ -92,7 +98,7 @@ export default function EditBusinessDetails() {
             console.error('Update failed:', error);
         }
     };
-    const handleReset = (e) => {
+        const handleReset = (e) => {
         setFiles([]);
         setIsUploaded(false);
         setFilesFromDb([]);
@@ -107,7 +113,7 @@ export default function EditBusinessDetails() {
             const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
             if (newFiles) {
                 setIsUploaded(true);
-            }
+                            }
             return newFiles;
         });
     }
@@ -129,25 +135,25 @@ export default function EditBusinessDetails() {
                 try {
                     const res = await dispatch(filesUploadAPI(formData));
                     return res.data;
-                } catch (error) {
+                                    } catch (error) {
                     console.error("Error uploading files:", error);
                 }
             };
 
             const handleUpload = async () => {
-                const uploadedData = await uploadFiles();
+                                const uploadedData = await uploadFiles();
 
                 if (uploadedData) {
                     setCloudinaryId((prevIds) => [...prevIds, uploadedData.cloudinary_id]);
                     setItemImage((prevImages) => [...prevImages, uploadedData.itemImage]);
-
+                    
                     if (itemDetails?.cloudinary_id) {
-                        setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(itemDetails.cloudinary_id) ? itemDetails.cloudinary_id : [itemDetails.cloudinary_id])]);
+                    setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(itemDetails.cloudinary_id) ? itemDetails.cloudinary_id : [itemDetails.cloudinary_id])]);
                     }
 
 
                     if (itemDetails?.itemImage) {
-                        setItemImage((prevImages) => [...prevImages, ...(Array.isArray(itemDetails.itemImage) ? itemDetails.itemImage : [itemDetails.itemImage])]);
+                    setItemImage((prevImages) => [...prevImages, ...(Array.isArray(itemDetails.itemImage) ? itemDetails.itemImage : [itemDetails.itemImage])]);
                     }
                 }
             };

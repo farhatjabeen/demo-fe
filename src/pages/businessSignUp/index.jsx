@@ -99,16 +99,16 @@ export default function BusinessSignUp() {
         <>
             <div className=' md:flex  mx-20 my-10'>
                 <div className='basis-8/12'>
-                    <h1 className='text-4xl font-bold'>Transform your lost and found
-                        <br></br> process with BTZ app</h1>
+                    <h1 className='text-3xl font-bold'>Transform your lost and found
+                        <br></br> process with BTZapp</h1>
                     <div className='mt-20'>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg  shadow-lg shadow-light-blue">
+                        <div className=" p-10 w-3/4 m-4 rounded-lg bg-white shadow-lg shadow-shadow-color">
                             <p>Spend 50-80% less time handling items and enquiries</p>
                         </div>
-                        <div className=" p-10 w-3/4 my-10 ml-24 rounded-lg shadow-lg shadow-light-blue">
+                        <div className=" p-10 w-3/4 my-10 ml-24 bg-white rounded-lg shadow-lg shadow-shadow-color">
                             <p>Recoup the costs of handling lost property</p>
                         </div>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg shadow-lg shadow-light-blue">
+                        <div className=" p-10 w-3/4 m-4 rounded-lg bg-white shadow-lg shadow-shadow-color">
                             <p>Generate positive feedback and reviews</p>
                         </div>
                     </div>
@@ -220,7 +220,7 @@ export default function BusinessSignUp() {
                     </form>
                 </FormProvider>
             </div>
-            <div className='mb-20'>
+            <div className='mb-20 ml-24 '>
                 <OurBrands
                     asTrustedBy
                 />
