@@ -11,7 +11,6 @@ export default function MyProfile() {
     const [editButton, setEditButton] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
-    const [fetchUsers, setFetchUsers] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
     // const existingData = useSelector(userData);
@@ -22,7 +21,7 @@ export default function MyProfile() {
         const getUser = dispatch(generalUserDetails());
 
         getUser?.then((res) => {
-            console.log(res.data.name, "respi")
+            console.log(res, "respi")
             methods.reset({
                 emailMailId: res?.data?.emailMailId || "",
                 mobileNumber: `${res?.data?.mobileNumber}` || "",
@@ -55,15 +54,9 @@ export default function MyProfile() {
             const itemDetails = methods.getValues();
 
             if (currentPassword) {
-                const fetchUser = dispatch(userProfileData(itemDetails));
-                if (fetchUser) {
-                    setFetchUsers(true)
-                }
+                dispatch(userProfileData(itemDetails));
             } else {
-                const fetchUser = dispatch(userProfileData({ name, emailMailId, mobileNumber }));
-                if (fetchUser) {
-                    setFetchUsers(true)
-                }
+                dispatch(userProfileData({ name, emailMailId, mobileNumber }));
             }
 
         } catch (error) {

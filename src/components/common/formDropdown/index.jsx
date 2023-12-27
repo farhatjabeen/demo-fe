@@ -13,8 +13,8 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
     console.log(options, 'options')
    
     useEffect(()=>{
-        handleData(options)
-    },[options])
+        handleData(options ? options : valueFromDb)
+    },[options,valueFromDb])
     return (
         <ConnectForm>
             {({ errors, control }) => (

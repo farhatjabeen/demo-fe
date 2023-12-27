@@ -14,7 +14,6 @@ export default function CompanyProfile() {
     const [editButton, setEditButton] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
-    const [currentPassword, setCurrentPassword] = useState('');
     const [select, setSelect] = useState(false);
     const cities = useSelector(locationDetails);
     const citiesInSerbia = Object.values(cities);
@@ -22,9 +21,9 @@ export default function CompanyProfile() {
     const companyCategories = Object.values(categories);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
-    console.log(selectedCategory,'selectedcat')
+    console.log(selectedCategory, 'selectedcat')
     const userProfileData = useSelector(userProfile);
-    console.log(userProfileData,'userProfileData')
+    console.log(userProfileData, 'userProfileData')
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -35,30 +34,39 @@ export default function CompanyProfile() {
     const resolver = useValidationResolver(companyProfile);
 
     useEffect(() => {
-        dispatch(companyProfileData())
+        const getUser = dispatch(companyProfileData())
         dispatch(locationDropdownValues())
         dispatch(categoryDropdownValues())
+
+        getUser?.then((res) => {
+            console.log(res.data.name, "respi")
+            methods.reset({
+                companyName: res?.data?.companyName || "",
+                companyCategory: res?.data?.companyCategory || "",
+                companyLocation: res?.data?.companyLocation || "",
+                name: res?.data?.name || "",
+                mobileNumber: `${res?.data?.mobileNumber}` || "",
+                emailMailId: res?.data?.emailMailId || "",
+                currentPassword: "",
+                newPassword: "",
+                confirmPassword: ""
+            })
+        })
+
     }, [])
 
     const methods = useForm({
         defaultValues: {
             companyName: userProfileData?.companyName || "",
-            companyCategory:  userProfileData?.companyCategory || "",
+            companyCategory: userProfileData?.companyCategory || "",
             companyLocation: userProfileData?.location || "",
             name: userProfileData?.name || "",
-            mobileNumber: userProfileData?.mobileNumber || "",
+            mobileNumber: `${userProfileData?.mobileNumber}` || "",
             emailMailId: userProfileData?.emailMailId || "",
-            currentPassword: "",
-            newPassword: "",
-            confirmPassword: ""
+            
         },
         resolver
     });
-
-    // useEffect(() => {
-    //     methods.setValue("companyCategory", selectedCategory);
-    //     methods.setValue("companyLocation", selectedLocation);
-    // }, [selectedCategory, selectedLocation,methods]);
 
     const submitData = (e) => {
         e.preventDefault();
@@ -71,17 +79,22 @@ export default function CompanyProfile() {
             const companyLocation = selectedLocation;
 
             const currentPassword = methods.getValues().currentPassword;
-            if(currentPassword){
-                dispatch(editCompanyProfileData(methods.getValues()))
-            } else{
-                dispatch(editCompanyProfileData({name,emailMailId,mobileNumber,companyName,companyCategory,companyLocation}))
+            if (currentPassword) {
+                dispatch(editCompanyProfileData(methods.getValues()));
+                methods.reset({
+                    currentPassword: "",
+                    newPassword: "",
+                    confirmPassword: ""
+                })
+            } else {
+                dispatch(editCompanyProfileData({ name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }))
             }
-            
+
         } catch (error) {
             console.log("submitData errors", error)
         }
     };
-    
+
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
     };
@@ -123,7 +136,7 @@ export default function CompanyProfile() {
                                 </div>
                                 <FormDropdown
                                     name='companyCategory'
-                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0] opacity-100'}`}
                                     editButton={editButton}
                                     selection={select}
                                     valueFromDb={userProfileData?.companyCategory}
@@ -139,13 +152,13 @@ export default function CompanyProfile() {
                                 </div>
                                 <FormDropdown
                                     name='companyLocation'
-                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0] opacity-100'}`}
                                     editButton={editButton}
                                     selection={select}
                                     valueFromDb={userProfileData?.companyLocation}
                                     dropdownValues={citiesInSerbia}
-                                    handleData={handleChildDataLocation} 
-                                     />
+                                    handleData={handleChildDataLocation}
+                                />
                             </div>
 
                             <div className='border-b border-b-solid border-b-[#949494] mt-12'>

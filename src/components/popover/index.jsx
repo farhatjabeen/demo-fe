@@ -215,7 +215,7 @@ const PopoverComponent = () => {
                                             <div>
                                                 <div className="xl:w-full md:w-full sm:w-full">
                                                     <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                        <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Login/Register</div>
+                                                        <div className=' xl:text-4xl md:text-3xl sm:text-xl text-[#18181B] font-bold'>Login/Register</div>
                                                         <div className='pb-12 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                             Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                         </div>
@@ -231,7 +231,7 @@ const PopoverComponent = () => {
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
-                                                                onChange={(e)=>handleEmailChange(e)}
+                                                                onClick={(e)=>handleEmailChange(e)}
                                                             />
                                                         </div>
                                                         <button

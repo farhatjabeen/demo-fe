@@ -59,6 +59,7 @@ export const loginUser = (data) => (dispatch) => {
             const { role, name, emailMailId, _id, token } = res.data
             dispatch(saveUserData({ role, name, emailMailId, _id }))
             setEncryptedLocalStorageData("businessUserToken", token);
+            Toast({type:"success",message:res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -273,7 +274,7 @@ export const clearUserData = () => async (dispatch) => {
 
 export const userData = (state) => state.user?.userData;
 
-
+// get company profile details
 export const companyProfileData = () => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -284,7 +285,7 @@ export const companyProfileData = () => async (dispatch) => {
         }).then((res) => {
             const { companyName, companyCategory, companyLocation, name, mobileNumber, emailMailId } = res.data
             dispatch(saveCompanyProfile({ companyName, companyCategory, companyLocation, name, mobileNumber, emailMailId }))
-            return resolve(true)
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
