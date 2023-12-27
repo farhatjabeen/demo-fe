@@ -156,8 +156,8 @@ const PopoverComponent = () => {
                                                     <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Enter Password</div>
-                                                                <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl font-extrabold'>Enter Password</div>
+                                                                <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
                                                             </div>
@@ -202,7 +202,7 @@ const PopoverComponent = () => {
                                                 <div className="xl:w-full md:w-full sm:w-full">
                                                     <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                         <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Login/Register</div>
-                                                        <div className='pb-12 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                        <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                             Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                         </div>
                                                     </div>
@@ -238,7 +238,7 @@ const PopoverComponent = () => {
                                                                 </div>
                                                                 <Popover.Button
                                                                     onClick={() => navigate('/businessSignIn')}
-                                                                    className=' xl:text-sm md:text-xs sm:text-xs font-medium text-[#00B8B8]'>
+                                                                    className=' xl:text-base md:text-sm sm:text-xs font-semibold text-[#00B8B8]'>
                                                                     Sign in for business
                                                                 </Popover.Button>
                                                             </div>

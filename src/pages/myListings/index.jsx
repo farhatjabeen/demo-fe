@@ -1,34 +1,40 @@
-import React, { useEffect } from 'react'
-import { FaRegMap , FaRegCalendar , FaRegClock  } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react'
+import { FaRegMap, FaRegCalendar, FaRegClock } from 'react-icons/fa';
 import keys from '../../assets/images/keys.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMyListingItems, itemDetails, myListingItems } from '../../redux/reducers/itemsSlice';
+import { deleteMyListingItems, itemDetails, myListingItems, saveItemDetails } from '../../redux/reducers/itemsSlice';
 import { useNavigate } from 'react-router-dom';
+import Pagination from '../../components/common/pagination';
 
 export default function MyListings() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const myReports = useSelector(itemDetails);
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const PageLimit = 10;
+    const tableData = useSelector(saveItemDetails);
     useEffect(() => {
-        dispatch(myListingItems())
+        dispatch(myListingItems(currentPage, PageLimit))
         if (!myReports) {
             navigate('/')
         }
-    }, []);
+    }, [currentPage, PageLimit]);
 
     const handleEditItem = (itemId) => {
         navigate(`/addmoredetails/${itemId}`)
     }
 
-    const handleListingDelete =  (itemId) => {
+    const handleListingDelete = (itemId) => {
         try {
             dispatch(deleteMyListingItems({ itemId }))
-           dispatch(myListingItems())
+            dispatch(myListingItems())
         } catch (error) {
             console.log("submitData errors", error)
         }
     }
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     return (
         <div className='mb-5 flex flex-col items-center'>
 
@@ -73,7 +79,7 @@ export default function MyListings() {
                                     </div>
                                     <div className='flex mt-5'>
                                         <button
-                                        onClick={() => handleEditItem(details._id)}
+                                            onClick={() => handleEditItem(details._id)}
                                             className='bg-primary-color xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm'
                                         >
                                             Edit Content
@@ -92,6 +98,12 @@ export default function MyListings() {
                     })
                 }
             </div>
+            <Pagination
+                isBlueBackground={false}
+                currentPage={tableData?.pageMeta?.page}
+                totalPages={tableData?.pageMeta?.totalPages}
+                onPageChange={handlePageChange}
+            />
         </div>
     )
 }

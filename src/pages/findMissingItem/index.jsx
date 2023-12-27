@@ -32,9 +32,9 @@ export default function FindMissingItem() {
 
   useEffect(() => {
     if (searchParameters?.itemNameAgain) {
-      dispatch(searchItem(searchParameters.itemNameAgain,currentPage));
+      dispatch(searchItem(searchParameters.itemNameAgain, currentPage));
     }
-  }, [searchParameters,currentPage])
+  }, [searchParameters, currentPage])
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -63,23 +63,23 @@ export default function FindMissingItem() {
         Search results
       </h1>
 
-      <div className='xl:h-20 xl:w-4/6 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center justify-center'>
+      <div className='xl:h-20 xl:w-4/6 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center '>
         <FormProvider {...methods}>
-          <form onSubmit={(e) => submitData(e)} className='w-full flex '>
-            <div className='w-11/12 '>
+          <form onSubmit={(e) => submitData(e)} className='w-full flex'>
+            <div className='w-9/12'>
               <TextInput
                 type='text'
                 placeholder='Search...'
                 name="itemName"
-                className='ml-2 p-4 xl:h-14 sm:h-13 sm:w-8/12 rounded-2xl border border-solid border-[#B6B6B6]'
+                className='ml-2 p-4 xl:h-14 sm:h-13 w-11/12 rounded-2xl border border-solid border-[#B6B6B6]'
                 autoComplete="off"
                 required
               />
             </div>
-            <div className='w-96'>
+            <div className='w-3/12'>
               <button
                 type='submit'
-                className='xl:w-fit px-16 sm:w-1/4 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color ml-3.5' >Search</button>
+                className='px-16 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
             </div>
 
           </form>
@@ -104,10 +104,10 @@ export default function FindMissingItem() {
           onPageChange={handlePageChange} />
       </div>
       {isLastPage && (
-      <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
-        <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
-        <div className='font-medium flex justify-center xl:text-base md:text-base sm:text-xs'>Subscribe and send an alert and Ilost will ping you if your item is found</div>
-      </div>
+        <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
+          <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
+          <div className='font-medium flex justify-center xl:text-base md:text-base sm:text-xs'>Subscribe and send an alert and Ilost will ping you if your item is found</div>
+        </div>
       )}
     </div>
   );

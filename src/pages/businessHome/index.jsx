@@ -16,14 +16,19 @@ import { useNavigate } from 'react-router-dom';
 
 export default function BusinessHome() {
     const [readMore, setReadMore] = useState(false);
-
+    const [activeIndex, setActiveIndex] = useState(0);
     const navigate = useNavigate();
 
-    const contentData = [{
-        content: "“I have points across so many programs. Thanks to BTZapp, I can now use all these points together to get what I want.”",
-        author: "Mark"
-    },
-    { content: "“Rise up & attack the day with Passion. The struggle you're in today is developing the strength you need for tomorrow.”", author: "Antony" }, { content: "“life isn't about black and white,look around and you will see that the world is much more colorful than you thought”", author: "John" }];
+    const contentData = [
+        {
+            content: "“I have points across so many programs. Thanks to BTZapp, I can now use all these points together to get what I want.”", author: "Mark"
+        },
+        {
+            content: "“Rise up & attack the day with Passion. The struggle you're in today is developing the strength you need for tomorrow.”", author: "Antony"
+        },
+        {
+            content: "“life isn't about black and white,look around and you will see that the world is much more colorful than you thought”", author: "John"
+        }];
 
     const iconAndCaption = [{ icons: bione, caption: "Simple and reassuring for your customers" },
     { icons: bitwo, caption: "Generate positive feedback and reviews" },
@@ -33,22 +38,22 @@ export default function BusinessHome() {
     { icons: bisix, caption: "Improve visibility for management" }]
 
     const cardValues = [containers, containers, containers]
-
+    const intervalTime = 2000;
     useEffect(() => {
-        const interval = setInterval((prevIndex) => (prevIndex + 1) % contentData.length);
-
+        const interval = setInterval(() => {
+            setActiveIndex((prevIndex) => (prevIndex + 1) % contentData.length);
+        }, 2000);
         return () => clearInterval(interval);
     }, []);
 
     const settings = {
-        dots: true,
         infinite: true,
         arrows: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000
+        autoplaySpeed: intervalTime
     };
 
     return (
@@ -90,11 +95,23 @@ export default function BusinessHome() {
                     <Slider {...settings}>
                         {contentData.map((items, index) => (
                             <div key={index} className=' w-96'>
-                                <div className='text-center xl:text-3xl md:text-xl sm:text-lg font-normal'>{items.content}</div>
+                                <div className='text-center xl:text-3xl md:text-xl sm:text-lg  font-normal'>{items.content}</div>
                                 <div className='text-center xl:text-2xl md:text-xl sm:text-lg font-semibold mt-2 pb-16'>{items.author}</div>
                             </div>
                         ))}
                     </Slider>
+                    <div className=" flex justify-center">
+                        <ul className="flex">
+                            {contentData.map((_, index) => (
+                                <li key={index} className="mx-1">
+                                    <button
+                                        className={`h-3 w-3 ${index === activeIndex ? "bg-orange" : "bg-light-gray"
+                                            }`}
+                                    ></button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -126,30 +143,31 @@ export default function BusinessHome() {
                 property and deliver an excellent customer experience.
 
             </div>
-
             <div className='flex flex-col items-center'>
                 <div className='flex justify-center xl:text-3xl md:text-2xl text-text-color font-semibold pt-10'>Explore our industry insights and customer success stories</div>
-                <div className='flex justify-between py-16 xl:w-3/4 md:w-full sm:w-full md:px-8 sm:px-50 '>
+                <div className='flex flex-wrap justify-between py-16 xl:w-3/4 md:w-full sm:w-full md:px-8 sm:px-5 '>
                     {
                         cardValues.map((items, i) => {
                             return (
-                                <div key={i} className='xl:w-80 md:w-64 sm:w-48 bg-white border border-[#DDDDDD]'>
+                                <div key={i} className='w-full sm:w-1/1 lg:w-1/4 xl:w-1/4 md:w-1/4 bg-white border border-[#DDDDDD] mb-8 mx-auto'>
                                     <div><img src={items} alt='containers' /></div>
-                                    <div className='pt-5 pb-10 xl:pl-4 md:pl-4 sm:pl-3'>
-                                        <div className='xl:text-xl md:text-base sm:text-sm font-semibold w-5/6'>2023 UPDATE: When it comes to software, should I buy or build?</div>
-                                        <div className='text-[#666666] xl:text-sm md:text-xs sm:text-xs py-5'>May 23, 2023 | Blog, SaaS, Transport</div>
-                                        <div className={`text-[#666666] font-medium  xl:w-64 md:w-52 sm:w-40 xl:text-lg md:text-base sm:text-sm overflow-hidden`}>
+                                    <div className='pt-5 pb-10 px-4'>
+                                        <div className='text-lg font-semibold'>2023 UPDATE: When it comes to software, should I buy or build?</div>
+                                        <div className='text-[#666666] text-xs py-2'>May 23, 2023 | Blog, SaaS, Transport</div>
+                                        <div className='text-[#666666] font-medium text-sm overflow-hidden'>
                                             Today we'll be discussing the big question in software development....To buy or to build, This puzzle has been a quandary for heads of businesses...
-                                           </div>
-                                        <button className='text-[#FF9900] xl:text-base md:text-base sm:text-xs'>read more</button>
+                                        </div>
+                                        <button className='text-[#FF9900] text-xs'>read more</button>
                                     </div>
                                 </div>
                             );
                         })
                     }
-
                 </div>
             </div>
+
+
+
         </div>
     )
 }
