@@ -165,7 +165,7 @@ export default function SearchReport() {
                         </div>
                 }
             </div>
-            <div><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
+            <div className='h-full w-full'><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
         </div>
     )
 }
