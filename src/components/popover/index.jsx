@@ -243,7 +243,7 @@ const PopoverComponent = () => {
                                                             <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
                                                             <hr className="flex-1 border border-t border-light-grey" />
                                                         </div>
-                                                        <div className='flex items-center justify-between w-11/12 h-6 mt-2'>
+                                                        <div className='flex items-center justify-between w-full h-6 mt-2'>
                                                             <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>
                                                             <div className='flex items-center w-fit '>
                                                                 <div className='flex items-center xl:mr-2.5 md:mr-1.5 sm:mr-1'>

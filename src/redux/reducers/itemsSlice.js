@@ -205,7 +205,7 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
 export const myListingItems = () => (dispatch , currentPage = 1, PageLimit = 10) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.myListing}?page=${currentPage}&limit=${PageLimit}`,
+            url: endpoints.apiPath.items.myListing,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
         }).then((res) => {
@@ -450,7 +450,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
 export const userEditItemDetails = (itemId,data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.editItemGeneralUser}/${itemId}`,
+            url: `${endpoints.apiPath.editItemGeneralUser}?itemId=${itemId}`,
             method: endpoints.ApiMethods.PUT,
             data: data,
             isAuth: true
