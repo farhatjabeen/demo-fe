@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div>
-      <div>
+      <div className='xl:flex xl:justify-center'>
         <SearchReport />
       </div>
 
@@ -22,7 +22,7 @@ const Home = () => {
         <ImageWorkFlow />
       </div>
 
-      <div className='w-full '>
+      <div className=' ml-24 '>
         <OurBrands />
       </div>
 

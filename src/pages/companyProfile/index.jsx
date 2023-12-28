@@ -5,7 +5,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
-import { companyProfileData, editCompanyProfileData } from '../../redux/reducers/userSlice';
+import { companyProfileData, editCompanyProfileData, userDetails, userProfile } from '../../redux/reducers/userSlice';
 import { categoryDetails, categoryDropdownValues, locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
 import FormDropdown from '../../components/common/formDropdown';
 
@@ -14,7 +14,6 @@ export default function CompanyProfile() {
     const [editButton, setEditButton] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
-    const [currentPassword, setCurrentPassword] = useState('');
     const [select, setSelect] = useState(false);
     const cities = useSelector(locationDetails);
     const citiesInSerbia = Object.values(cities);
@@ -22,6 +21,9 @@ export default function CompanyProfile() {
     const companyCategories = Object.values(categories);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
+    console.log(selectedCategory, 'selectedcat')
+    const userProfileData = useSelector(userProfile);
+    console.log(userProfileData, 'userProfileData')
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -32,52 +34,67 @@ export default function CompanyProfile() {
     const resolver = useValidationResolver(companyProfile);
 
     useEffect(() => {
-        dispatch(companyProfileData())
+        const getUser = dispatch(companyProfileData())
         dispatch(locationDropdownValues())
         dispatch(categoryDropdownValues())
+
+        getUser?.then((res) => {
+            console.log(res.data.name, "respi")
+            methods.reset({
+                companyName: res?.data?.companyName || "",
+                companyCategory: res?.data?.companyCategory || "",
+                companyLocation: res?.data?.companyLocation || "",
+                name: res?.data?.name || "",
+                mobileNumber: `${res?.data?.mobileNumber}` || "",
+                emailMailId: res?.data?.emailMailId || "",
+                currentPassword: "",
+                newPassword: "",
+                confirmPassword: ""
+            })
+        })
+
     }, [])
 
     const methods = useForm({
         defaultValues: {
-            companyName: "",
-            companyCategory: "",
-            companyLocation: "",
-            name: "",
-            mobileNumber: "",
-            emailMailId: "",
-            currentPassword: "",
-            newPassword: "",
-            confirmPassword: ""
+            companyName: userProfileData?.companyName || "",
+            companyCategory: userProfileData?.companyCategory || "",
+            companyLocation: userProfileData?.location || "",
+            name: userProfileData?.name || "",
+            mobileNumber: `${userProfileData?.mobileNumber}` || "",
+            emailMailId: userProfileData?.emailMailId || "",
+            
         },
         resolver
     });
 
-    useEffect(() => {
-        methods.setValue("companyCategory", selectedCategory);
-        methods.setValue("companyLocation", selectedLocation);
-    }, [selectedCategory, selectedLocation, methods]);
-
-    const submitData = (data) => {
+    const submitData = (e) => {
+        e.preventDefault();
         try {
             const name = methods.getValues().name;
             const emailMailId = methods.getValues().emailMailId;
-            const mobileNumber = methods.getValues().mobileNumber;
+            const mobileNumber = `${methods.getValues().mobileNumber}`;
             const companyName = methods.getValues().companyName;
-            const companyCategory = methods.getValues().companyCategory;
-            const companyLocation = methods.getValues().companyLocation;
+            const companyCategory = selectedCategory;
+            const companyLocation = selectedLocation;
 
             const currentPassword = methods.getValues().currentPassword;
-            if(currentPassword){
-                dispatch(editCompanyProfileData(methods.getValues()))
-            } else{
-                dispatch(editCompanyProfileData({name,emailMailId,mobileNumber,companyName,companyCategory,companyLocation}))
+            if (currentPassword) {
+                dispatch(editCompanyProfileData(methods.getValues()));
+                methods.reset({
+                    currentPassword: "",
+                    newPassword: "",
+                    confirmPassword: ""
+                })
+            } else {
+                dispatch(editCompanyProfileData({ name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }))
             }
-            
+
         } catch (error) {
             console.log("submitData errors", error)
         }
     };
-    
+
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
     };
@@ -93,7 +110,7 @@ export default function CompanyProfile() {
                 {editButton ? null : <div><button className='w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
             </div>
             <FormProvider {...methods}>
-                <form onSubmit={(e) => { e.preventDefault(); submitData() }} className='flex justify-around w-full'>
+                <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
                             <div className='flex justify-between mb-9'>
@@ -119,9 +136,10 @@ export default function CompanyProfile() {
                                 </div>
                                 <FormDropdown
                                     name='companyCategory'
-                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0] opacity-100'}`}
                                     editButton={editButton}
                                     selection={select}
+                                    valueFromDb={userProfileData?.companyCategory}
                                     dropdownValues={companyCategories}
                                     handleData={handleChildData}
                                 />
@@ -134,12 +152,13 @@ export default function CompanyProfile() {
                                 </div>
                                 <FormDropdown
                                     name='companyLocation'
-                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0] opacity-100'}`}
                                     editButton={editButton}
                                     selection={select}
+                                    valueFromDb={userProfileData?.companyLocation}
                                     dropdownValues={citiesInSerbia}
-                                    handleData={handleChildDataLocation} 
-                                     />
+                                    handleData={handleChildDataLocation}
+                                />
                             </div>
 
                             <div className='border-b border-b-solid border-b-[#949494] mt-12'>

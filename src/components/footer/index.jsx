@@ -21,8 +21,8 @@ const Footer = () => {
                             <li className='px-8 text-white'><a href='/privacyPolicy'>Privacy Policy</a></li>
                         </ul>
                     </div>
-                    <div className='flex justify-center p-5'>
-                        <button className='text-white px-4 bg-trans-white rounded-lg font-semibold curs' onClick={()=>navigate('/businessSignIn')}>Are you a business user? Sign in here</button>
+                    <div className='flex justify-center py-5'>
+                        <button className='text-white text-lg px-5 py-1 bg-trans-white rounded-xl font-semibold curs' onClick={()=>navigate('/businessSignIn')}>Are you a business user? Sign in here</button>
                     </div>
                     
 

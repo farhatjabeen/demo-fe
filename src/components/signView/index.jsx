@@ -59,6 +59,7 @@ function SignInView() {
             <TextInput
               type="password"
               name="password"
+              eyeClass='absolute top-4 left-3/4 ml-24'
               autoComplete="off"
               placeholder="Enter password"
               className="w-full py-4 px-3 border border-gray-300 rounded-md"

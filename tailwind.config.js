@@ -21,14 +21,17 @@ module.exports = {
       'gray': '#f3f2f2',
       'red': '#ff0000',
       'background-white': '#ffffff',
-      'gray-sideBar': '#bdbdbd',
       'border': '#f2f3f7',
       'menu_icon': '#8a92a6',
       'black': '#000000',
       'blueback': '#F8FCFF',
       'primary-colorback': '#F9DE8C',
       'light-gray':'#DDE2E4',
-      'light-black':'#455A64'
+      'light-black':'#455A64',
+      'shadow-color':'#C8FFFF',
+      'text-color':'#404041',
+      'orange':'#FFBA00',
+      'yellow':'#E8B810'
     },
     extend: {}
   },

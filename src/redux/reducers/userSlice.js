@@ -56,9 +56,10 @@ export const loginUser = (data) => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            const { role, emailMailId, _id, token } = res.data
-            dispatch(saveUserData({ role, emailMailId, _id }))
+            const { role, name, emailMailId, _id, token } = res.data
+            dispatch(saveUserData({ role, name, emailMailId, _id }))
             setEncryptedLocalStorageData("businessUserToken", token);
+            Toast({type:"success",message:res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -168,6 +169,7 @@ export const businessForgotPassword = (data) => async () => {
             method: endpoints.ApiMethods.POST,
             data: data,
         }).then(res => {
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             reject(err);
@@ -273,6 +275,7 @@ export const clearUserData = () => async (dispatch) => {
 
 export const userData = (state) => state.user?.userData;
 
+// get company profile details
 export const companyProfileData = () => async (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -281,9 +284,9 @@ export const companyProfileData = () => async (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
-            const { companyName, companyCategory, location, name, mobileNumber, emailMailId } = res.data
-            dispatch(saveCompanyProfile({ companyName, companyCategory, location, name, mobileNumber, emailMailId }))
-            return resolve(true)
+            const { companyName, companyCategory, companyLocation, name, mobileNumber, emailMailId } = res.data
+            dispatch(saveCompanyProfile({ companyName, companyCategory, companyLocation, name, mobileNumber, emailMailId }))
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
@@ -320,13 +323,31 @@ export const generalUserDetails = () => (dispatch) => {
         }).then((res) => {
             const { emailMailId, name, mobileNumber } = res.data
             dispatch(getUserDetails({ emailMailId, name, mobileNumber }))
-            return resolve(true)
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
         })
     })
 }
+
+// get business user details
+// export const businessUserDetails = () => (dispatch) => {
+//     return new Promise((resolve, reject) => {
+//         apiRequest({
+//             url: endpoints.apiPath.userDetails,
+//             method: endpoints.ApiMethods.GET,
+//             isAuth: true,
+//         }).then((res) => {
+//             const { emailMailId, name, mobileNumber,companyLocation,companyCategory } = res.data
+//             dispatch(getUserDetails({ emailMailId, name, mobileNumber,companyLocation,companyCategory   }))
+//             return resolve(res)
+//         }).catch(err => {
+//             console.log(err)
+//             return err;
+//         })
+//     })
+// }
 
 // company profile
 export const editCompanyProfileData = (data) => async (dispatch) => {
@@ -339,8 +360,9 @@ export const editCompanyProfileData = (data) => async (dispatch) => {
             data: data
         }).then( (res) => {
             Toast({type:"success",message:res.message})
-            const { companyName, companyCategory, location, name, mobileNumber, emailMailId } = res.data
-            dispatch(saveCompanyProfile({ companyName, companyCategory, location, name, mobileNumber, emailMailId }))
+            // console.log(res,'reee')
+            // const { companyName, companyCategory, companyLocation, name, mobileNumber, emailMailId } = res.data
+            // dispatch(saveCompanyProfile({ companyName, companyCategory, companyLocation, name, mobileNumber, emailMailId }))
             return resolve(true)
         }).catch(err => {
             console.log(err)

@@ -108,7 +108,7 @@ export const deleteBusinessItem = (itemId) => (dispatch) => {
 export const businessUpdateItems = (itemId, data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.editBusinessUserItem}?itemid=${itemId}`,
+            url: `${endpoints.apiPath.items.editBusinessUserItem}/${itemId}`,
             method: endpoints.ApiMethods.PUT,
             data: data,
             isAuth: true,
@@ -202,10 +202,10 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
 }
 
 // my listings general user
-export const myListingItems = () => (dispatch) => {
+export const myListingItems = () => (dispatch , currentPage = 1, PageLimit = 10) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.items.myListing,
+            url: `${endpoints.apiPath.items.myListing}?page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
         }).then((res) => {
@@ -314,7 +314,6 @@ export const viewUserItemById = (itemId) => (dispatch) => {
         }).then((res) => {
             const { itemImage, itemCode, foundDate, foundTime, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data;
             dispatch(viewItemDetailsById({ itemImage, foundDate, foundTime, itemCode, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
-            Toast({type:"success",message:"Query published"})
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -451,7 +450,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
 export const userEditItemDetails = (itemId,data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.editItemGeneralUser}?itemId=${itemId}`,
+            url: `${endpoints.apiPath.editItemGeneralUser}/${itemId}`,
             method: endpoints.ApiMethods.PUT,
             data: data,
             isAuth: true

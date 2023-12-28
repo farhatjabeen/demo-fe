@@ -17,6 +17,7 @@ export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    const [isCleared, setIsCleared] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
     const categories = categoryValue ? Object.values(categoryValue) : [];
@@ -39,6 +40,12 @@ export default function BusinessSignUp() {
         resolver
     });
 
+    useEffect(() => {
+        const values = sessionStorage.getItem("enteredData")
+        if (values) {
+            methods.reset(JSON.parse(values))
+        }
+    }, [])
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
@@ -66,6 +73,7 @@ export default function BusinessSignUp() {
                         console.log("responseFromFile", res.data.companylogo)
                         setCompanyLogo(res.data.companylogo);
                         setCloudinaryId(res.data.cloudinary_id);
+                        
                     })
             }
         } catch (error) {
@@ -84,37 +92,51 @@ export default function BusinessSignUp() {
         const companyCategory = `${selectedCategory}` || "";
         const companylogo = `${companyLogo}` || "";
         const cloudinary_id = `${cloudinaryId}` || "";
-        if(isChecked){
-            dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyCategory, companyName, companylogo, cloudinary_id }))
-        }else{
-            Toast({type:"error",message: "Please accept the terms and conditions"})
-        }
+        if (isChecked) {
+            const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
+            if (registering) {
+                methods.reset({
+                    name: "",
+                    mobileNumber: "",
+                    emailMailId: "",
+                    password: "",
+                    companyName: ""
+                })
+                setImageFiles('');
+                setIsCleared(true);
+                setIsChecked(false);
+            }
+        } else {
+            Toast({ type: "error", message: "Please accept the terms and conditions" })
+        }  
     };
 
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
+        console.log(selectedCategory, "selectedcat")
     };
 
     return (
         <>
             <div className=' md:flex  mx-20 my-10'>
                 <div className='basis-8/12'>
-                    <h1 className='text-4xl font-bold'>Transform your lost and found
-                        <br></br> process with BTZ app</h1>
+                    <h1 className='text-3xl font-bold'>Transform your lost and found
+                        <br></br> process with BTZapp</h1>
                     <div className='mt-20'>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg  shadow-lg shadow-light-blue">
+                        <div className=" p-10 w-3/4 m-4 rounded-lg bg-white shadow-lg shadow-shadow-color">
                             <p>Spend 50-80% less time handling items and enquiries</p>
                         </div>
-                        <div className=" p-10 w-3/4 my-10 ml-24 rounded-lg shadow-lg shadow-light-blue">
+                        <div className=" p-10 w-3/4 my-10 ml-24 bg-white rounded-lg shadow-lg shadow-shadow-color">
                             <p>Recoup the costs of handling lost property</p>
                         </div>
-                        <div className=" p-10 w-3/4 m-2 rounded-lg shadow-lg shadow-light-blue">
+                        <div className=" p-10 w-3/4 m-4 rounded-lg bg-white shadow-lg shadow-shadow-color">
                             <p>Generate positive feedback and reviews</p>
                         </div>
                     </div>
                 </div>
                 <FormProvider {...methods}>
                     <form onSubmit={(e) => submitData(e)}>
+                        {/* <form onSubmit={methods.handleSubmit(submitData)}> */}
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
@@ -184,7 +206,7 @@ export default function BusinessSignUp() {
                                     <div className='flex flex-wrap w-96'>
                                         <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
                                             <div>{imageFiles[0]?.name}</div>
-                                            <div className='flex items-center ml-2'><MdClose /></div>
+                                            <div className='flex items-center ml-2' onClick={() => setImageFiles('')}><MdClose /></div>
                                         </div>
                                     </div>
                                     :
@@ -206,12 +228,13 @@ export default function BusinessSignUp() {
                                     editButton={true}
                                     handleData={handleChildData}
                                     selection={true}
+                                    isCleared={isCleared}
                                 />
                             </div>
                             <div className="flex ">
                                 <div className="flex items-center h-5">
-                                    <input id="remember" type="checkbox" onChange={()=>setIsChecked(!isChecked)}  className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                    <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
+                                    <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
+                                    <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                 </div>
                                 <label htmlFor="remember" className="ms-2 text-sm"></label>
                             </div>
@@ -220,7 +243,7 @@ export default function BusinessSignUp() {
                     </form>
                 </FormProvider>
             </div>
-            <div className='mb-20'>
+            <div className='mb-20 ml-24 '>
                 <OurBrands
                     asTrustedBy
                 />

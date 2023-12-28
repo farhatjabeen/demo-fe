@@ -11,29 +11,32 @@ export default function MyProfile() {
     const [editButton, setEditButton] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
-    const [name, setName] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
-    const [emailId, setEmailId] = useState('');
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
-    const existingData = useSelector(userData);
+    // const existingData = useSelector(userData);
+    // console.log(existingData,'existingdata')
     const fetchUserDetails = useSelector(generalUserData);
 
     useEffect(() => {
-        dispatch(generalUserDetails());
-        methods.reset({
+        const getUser = dispatch(generalUserDetails());
+
+        getUser?.then((res) => {
+            console.log(res, "respi")
+            methods.reset({
+                emailMailId: res?.data?.emailMailId || "",
+                mobileNumber: `${res?.data?.mobileNumber}` || "",
+                name: res?.data?.name || ""
+            })
+        })
+
+
+    }, [])
+
+    const methods = useForm({
+        defaultValues: {
             emailMailId: fetchUserDetails?.emailMailId || "",
             mobileNumber: `${fetchUserDetails?.mobileNumber}` || "",
             name: fetchUserDetails?.name || "",
-        })
-    }, [])
-
-    // console.log(fetchUserDetails,'fud')
-    const methods = useForm({
-        defaultValues: {
-            emailMailId: existingData?.emailMailId || "",
-            mobileNumber: `${existingData?.mobileNumber}` || "",
-            name: existingData?.name || "",
             currentPassword: "",
             newPassword: "",
             confirmPassword: ""
@@ -51,16 +54,9 @@ export default function MyProfile() {
             const itemDetails = methods.getValues();
 
             if (currentPassword) {
-                const fetchUser = dispatch(userProfileData(itemDetails));
-                //    setFetchUser(true)
-                //    dispatch(generalUserDetails())
+                dispatch(userProfileData(itemDetails));
             } else {
-                const fetchUser = dispatch(userProfileData({ name, emailMailId, mobileNumber }));
-                // fetchUser.then((res)=>{
-                //     console.log(res,'respons')
-                // })
-                // setFetchUser(true)
-                // dispatch(generalUserDetails())
+                dispatch(userProfileData({ name, emailMailId, mobileNumber }));
             }
 
         } catch (error) {
@@ -156,7 +152,7 @@ export default function MyProfile() {
                                         showPassword={showRegisterPassword}
                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                     />
-                                    {/* <input
+                                    {/* <input 
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>
@@ -192,15 +188,15 @@ export default function MyProfile() {
                         </div>
 
                         {editButton ?
-                            <div className='xl:w-4/12 md:w-7/12 sm:w-10/12 flex xl:ml-80 md:ml-32 sm:ml-12 mb-10 justify-between'>
+                            <div className='w-full flex mb-10 justify-center'>
 
                                 <div>
-                                    <button onClick={handleEditButton} className='cursor-auto w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
+                                    <button onClick={handleEditButton} className='cursor-default w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
                                         Cancel
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' className='cursor-auto w-44 h-14 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg cursor-grab'>
+                                    <button type='submit' className='cursor-default w-44 h-14 ml-5 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg cursor-grab'>
                                         Save Changes
                                     </button>
                                 </div>
