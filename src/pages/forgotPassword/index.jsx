@@ -53,6 +53,7 @@ export default function ForgotPassword() {
                                     type="password"
                                     placeholder="Enter your new Password"
                                     name="password"
+                                    eyeClass='absolute top-7 left-3/4 ml-16'
                                     className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4 my-3'
                                     autoComplete="off"
                                     required
@@ -65,6 +66,7 @@ export default function ForgotPassword() {
                                     type="password"
                                     placeholder="Confirm your Password"
                                     name="confirmPassword"
+                                    eyeClass='absolute top-7 left-3/4 ml-16'
                                     className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4 my-3'
                                     autoComplete="off"
                                     showPassword={showPassword}

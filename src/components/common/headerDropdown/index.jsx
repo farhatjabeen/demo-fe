@@ -12,7 +12,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
     const [select, setSelect] = useState(false);
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <Menu as="div" className="relative text-left">
@@ -50,13 +50,11 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className={` absolute top-14 left-6 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-md bg-white shadow-lg border border-solid border-[#B6B6B6] `}>
-
+                <Menu.Items className={` absolute top-14 left-6 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-lg bg-white shadow-lg`}>
                     <Menu.Item>
-
                         <Link
                             to={navigateOne}
-                            className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '
+                            className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal '
                         >
                             {titleOne}
                         </Link>
@@ -64,7 +62,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     <Menu.Item>
                         <Link
                             to={navigateTwo}
-                            className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium '
+                            className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
                         >
                             {titleTwo}
                         </Link>
@@ -72,7 +70,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     <Menu.Item>
                         <Link
                             to='/contactus'
-                            className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-black font-medium'
+                            className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
                         >
                             Need Help?
                         </Link>
@@ -81,12 +79,11 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                         <Link
                             to={linkTo}
                             onClick={() => { handleLogout(); dispatch(clearItemData()); dispatch(clearUserData()); }}
-                            className='w-full hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 text-black font-medium'
+                            className='w-full hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 text-xl font-normal'
                         >
                             Sign Out
                         </Link>
                     </Menu.Item>
-
                 </Menu.Items>
             </Transition>
         </Menu>
