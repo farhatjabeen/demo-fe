@@ -17,6 +17,7 @@ export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    const [isCleared, setIsCleared] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
     const categories = categoryValue ? Object.values(categoryValue) : [];
@@ -72,6 +73,7 @@ export default function BusinessSignUp() {
                         console.log("responseFromFile", res.data.companylogo)
                         setCompanyLogo(res.data.companylogo);
                         setCloudinaryId(res.data.cloudinary_id);
+                        
                     })
             }
         } catch (error) {
@@ -98,15 +100,15 @@ export default function BusinessSignUp() {
                     mobileNumber: "",
                     emailMailId: "",
                     password: "",
-                    companyName: "",
-                    companyCategory: "",
-                    companylogo: "",
-                    cloudinary_id: ""
+                    companyName: ""
                 })
+                setImageFiles('');
+                setIsCleared(true);
+                setIsChecked(false);
             }
         } else {
             Toast({ type: "error", message: "Please accept the terms and conditions" })
-        }
+        }  
     };
 
     const handleChildData = (dataFromChild) => {
@@ -226,11 +228,12 @@ export default function BusinessSignUp() {
                                     editButton={true}
                                     handleData={handleChildData}
                                     selection={true}
+                                    isCleared={isCleared}
                                 />
                             </div>
                             <div className="flex ">
                                 <div className="flex items-center h-5">
-                                    <input id="remember" type="checkbox" onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
+                                    <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                     <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                 </div>
                                 <label htmlFor="remember" className="ms-2 text-sm"></label>
