@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import addressMan from '../../assets/images/location.png';
 import useValidationResolver from '../../hooks/useValidationResolver';
@@ -8,9 +8,12 @@ import TextInput from '../common/textInput';
 import { useSelector } from 'react-redux';
 import { userData } from '../../redux/reducers/userSlice';
 import { Toast } from '../toast';
+import { Switch } from '@headlessui/react';
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
+    const [searchActive, setSearchActive] = useState(false);
+    const [reportActive, setReportActive] = useState(false);
     const navigate = useNavigate();
     const resolver = useValidationResolver(searchSchema);
     const isUser = useSelector(userData)
@@ -21,6 +24,13 @@ export default function SearchReport() {
         },
         resolver
     })
+
+    // useEffect(()=>{
+    //     if(buttonActive===false){
+    //         setReportButton(true)
+    //     }
+    // },[buttonActive])
+
     const submitData = async () => {
         try {
             const itemName = methods.getValues().itemName;
@@ -28,11 +38,11 @@ export default function SearchReport() {
 
             if (buttonActive) {
                 navigate(`/findMissingItem/${itemName}/${location}`);
-            }else {
-                if (isUser){
+            } else {
+                if (isUser) {
                     navigate(`/addmoredetails/${itemName}/${location}`);
-                }else{
-                    Toast({type:"error",message:"Login Required"})
+                } else {
+                    Toast({ type: "error", message: "Login Required" })
                 }
             }
 
@@ -55,6 +65,12 @@ export default function SearchReport() {
     //     }
     // }
 
+    const [toggleState, setToggleState] = useState('search');
+
+    const handleToggle = () => {
+        setToggleState((prevState) => (prevState === 'search' ? 'report' : 'search'));
+    };
+
     return (
         <div className='flex xl:w-11/12 xl:justify-between xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
 
@@ -63,6 +79,22 @@ export default function SearchReport() {
                     <button onClick={handleSearchButton} className='xl:h-14 xl:w-64 xl:rounded-xl md:w-52 md:h-10 md:rounded-2xl md:text-md xl:text-xl sm:rounded-xl sm:text-sm sm:h-9 sm:w-44 font-normal' style={{ backgroundColor: buttonActive ? '#266867' : 'white', color: buttonActive ? 'white' : 'black' }}>Search lost item</button>
                     <button onClick={handleReportButton} className='xl:h-14 xl:w-64 xl:rounded-xl md:w-52 md:h-10 md:rounded-2xl md:text-md xl:text-xl sm:rounded-xl sm:text-sm sm:h-9 sm:w-44 font-normal' style={{ backgroundColor: buttonActive ? 'white' : '#266867', color: buttonActive ? 'black' : 'white' }}>Report found item</button>
                 </div>
+
+                {/* <Switch
+                    checked={buttonActive}
+                    onChange={setButtonActive}
+                    className={`${buttonActive ? 'bg-white' : 'bg-teal-700'}
+          relative inline-flex xl:rounded-2xl xl:px-2 xl:h-1/5 xl:w-6/12 md:rounded-3xl md:h-14 md:w-80 sm:h-12 sm:rounded-2xl sm:w-64 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
+                >
+
+                    <span
+
+                        className={`${buttonActive ? 'translate-x-64 content' : 'translate-x-0'}
+            pointer-events-none inline-block xl:h-14 xl:w-64 xl:rounded-xl md:w-52 md:h-10 md:rounded-2xl md:text-md xl:text-xl sm:rounded-xl sm:text-sm sm:h-9 sm:w-44 transform rounded-full bg-green shadow-lg ring-0 transition duration-200 ease-in-out`}
+                    >
+                        <div>{buttonActive ? "Report" : "Search"}</div>
+                    </span>
+                </Switch> */}
                 {
                     buttonActive ?
                         <div className='flex items-center mt-6 xl:h-fit xl:py-2 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-[#B6B6B6] border-solid border-opacity-50'>
@@ -78,7 +110,7 @@ export default function SearchReport() {
                                             required
                                             isSearchReport="true"
                                         />
-                                        
+
                                         <TextInput
                                             type="text"
                                             placeholder="Location"
@@ -99,36 +131,38 @@ export default function SearchReport() {
                             </FormProvider>
                         </div>
                         :
-                        <FormProvider {...methods}>
-                            <form onSubmit={methods.handleSubmit(submitData)}>
-                                <div className='flex items-center mt-6 xl:h-20 xl:w-2xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-[#B6B6B6] border-solid'>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="Describe Item"
-                                        name="itemName"
-                                        className={`placeholder:text-black placeholder:text-ba se xl:w-96 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
-                                        autoComplete="off"
-                                        required
-                                        isSearchReport="true"
-                                    />
-                                   <TextInput
-                                        type="text"
-                                        placeholder="Location"
-                                        name="location"
-                                        className={`placeholder:text-black placeholder:text-base xl:w-96 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
-                                        autoComplete="off"
-                                        required
-                                        isSearchReport="true"
-                                    />
-                                    <button
-                                        type='submit'
-                                        className='xl:w-60 xl:h-20 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl border border-solid border-[#B6B6B6] mx-2.5 font-semibold text-white bg-primary-color'
-                                    >
-                                        Continue
-                                    </button>
-                                </div>
-                            </form>
-                        </FormProvider>
+                        <div className='flex items-center mt-6 xl:h-fit xl:py-2 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-[#B6B6B6] border-solid border-opacity-50'>
+                            <FormProvider {...methods}>
+                                <form onSubmit={methods.handleSubmit(submitData)}>
+                                    <div className='flex'>
+                                        <TextInput
+                                            type="text"
+                                            placeholder="Describe Item"
+                                            name="itemName"
+                                            className={`placeholder:text-black placeholder:text-ba se xl:w-96 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                                            autoComplete="off"
+                                            required
+                                            isSearchReport="true"
+                                        />
+                                        <TextInput
+                                            type="text"
+                                            placeholder="Location"
+                                            name="location"
+                                            className={`placeholder:text-black placeholder:text-base xl:w-96 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                                            autoComplete="off"
+                                            required
+                                            isSearchReport="true"
+                                        />
+                                        <button
+                                            type='submit'
+                                            className='xl:w-52 xl:h-20 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white bg-primary-color border border-solid border-[#B6B6B6] mx-2.5'
+                                        >
+                                            Continue
+                                        </button>
+                                    </div>
+                                </form>
+                            </FormProvider>
+                        </div>
                 }
             </div>
             <div><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
