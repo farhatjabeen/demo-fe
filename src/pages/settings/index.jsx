@@ -30,7 +30,7 @@ const Settings = () => {
             if (reset) {
                 navigate('/admin/signin');
             }
-            else{
+            else {
                 console.log("Password reset failed");
             }
         } catch (error) {
@@ -83,6 +83,7 @@ const Settings = () => {
                                 <TextInput
                                     type="password"
                                     name="currentPassword"
+                                    eyeClass='absolute top-4 left-3/4 ml-24'
                                     autoComplete="off"
                                     placeholder="currentPassword"
                                     className="w-full py-4 px-3 border border-gray-300 rounded-md"
@@ -96,6 +97,7 @@ const Settings = () => {
                                 <TextInput
                                     type="password"
                                     name="newPassword"
+                                    eyeClass='absolute top-4 left-3/4 ml-24'
                                     autoComplete="off"
                                     placeholder="newPassword"
                                     className="w-full py-4 px-3 border border-gray-300 rounded-md"
@@ -110,6 +112,7 @@ const Settings = () => {
                                 <TextInput
                                     type="password"
                                     name="confirmPassword"
+                                    eyeClass='absolute top-4 left-3/4 ml-24'
                                     placeholder="confirmPassword"
                                     autoComplete="off"
                                     className="w-full py-4 px-3 border border-gray-300 rounded-md"

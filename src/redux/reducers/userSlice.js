@@ -169,6 +169,7 @@ export const businessForgotPassword = (data) => async () => {
             method: endpoints.ApiMethods.POST,
             data: data,
         }).then(res => {
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             reject(err);
