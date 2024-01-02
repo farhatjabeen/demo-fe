@@ -25,6 +25,7 @@ export default function BusinessSignUp() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [cloudinaryId, setCloudinaryId] = useState('');
     const [companyLogo, setCompanyLogo] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const methods = useForm({
         defaultValues: {
@@ -135,8 +136,8 @@ export default function BusinessSignUp() {
                     </div>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={(e) => submitData(e)}>
-                        {/* <form onSubmit={methods.handleSubmit(submitData)}> */}
+                    {/* <form onSubmit={(e) => submitData(e)}> */}
+                        <form onSubmit={methods.handleSubmit(submitData)}>
                         <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
                             <div className="mb-2">
                                 <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
@@ -145,7 +146,7 @@ export default function BusinessSignUp() {
                                     placeholder="Full name"
                                     name="name"
                                     id="fullName"
-                                    className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
                                     autoComplete="off"
                                     required
                                 />
@@ -157,7 +158,7 @@ export default function BusinessSignUp() {
                                     placeholder="1234567890"
                                     name="mobileNumber"
                                     id="fullName"
-                                    className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
                                     autoComplete="off"
                                     required
                                 />
@@ -169,7 +170,7 @@ export default function BusinessSignUp() {
                                     placeholder="abc@xyz.com"
                                     name="emailMailId"
                                     id="fullName"
-                                    className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
                                     autoComplete="off"
                                     required
                                 />
@@ -177,13 +178,16 @@ export default function BusinessSignUp() {
                             <div className="mb-2">
                                 <label htmlFor="password" className="block text-sm font-bold mb-2">Password</label>
                                 <TextInput
-                                    type="text"
+                                    type="password"
                                     placeholder="Glorpus Galaxies"
                                     name="password"
                                     id="fullName"
-                                    className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
                                     autoComplete="off"
+                                    eyeClass='absolute bottom-2 left-48 ml-16'
                                     required
+                                    showPassword={showPassword}
+                                    setShowPassword={() => setShowPassword(!showPassword)}
                                 />
                             </div>
                             <div className="mb-2">
@@ -193,7 +197,7 @@ export default function BusinessSignUp() {
                                     placeholder="Glorpus Galaxies"
                                     name="companyName"
                                     id="fullName"
-                                    className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
                                     autoComplete="off"
                                     required
                                 />
@@ -214,7 +218,7 @@ export default function BusinessSignUp() {
                                 }
                                 <ImageUpload
                                     name="company"
-                                    designClass='flex justify-center bg-primary-color  w-full py-3 rounded-xl'
+                                    designClass='flex justify-center bg-primary-color w-full py-3 rounded-xl'
                                     multiple={false}
                                     handleFileUpload={handleFileUpload}
                                 />

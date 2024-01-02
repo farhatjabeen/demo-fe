@@ -128,6 +128,29 @@ export const addMoreDetailsSchema = yup.object({
 
 });
 
+export const myProfileSchema = yup.object({
+    emailMailId: yup
+        .string()
+        .matches(emailRexExp, 'Invalid email address')
+        .required('email required'),
+    mobileNumber: yup
+        .number()
+        .min(10)
+        // .matches(serbiaMobileNumberRegExp, 'Invalid number')
+        .required('mobile number required'),
+    name: yup
+        .string()
+        .min(3),
+    currentPassword: yup
+        .string(),
+    newPassword: yup
+        .string(),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("newPassword")], "Passwords does not match"),
+
+});
+
 export const companyProfile = yup.object({
     companyCategory: yup
         .string()

@@ -41,8 +41,7 @@ function TextInput({ type = 'text', placeholder, name, disable, isSearchReport=f
                                     </div>}
                                     {
                                         isSearchReport && (
-                                            <div className="absolute bottom-5 left-6 text-red-600 text- mt-1">
-
+                                            <div className="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1">
                                               <FormErrorMessage error={getFormErrorMessage(errors, name)} />
                                             </div>
                                           )
