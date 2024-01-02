@@ -50,7 +50,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className={` absolute top-14 left-6 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-lg bg-white shadow-lg`}>
+                <Menu.Items className={` absolute top-14 left-12 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-lg bg-white shadow-lg`}>
                     <Menu.Item>
                         <Link
                             to={navigateOne}

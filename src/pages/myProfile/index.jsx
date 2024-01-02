@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { addMoreDetailsSchema } from '../../validations';
+import {  myProfileSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { generalUserData, generalUserDetails, userData, userProfileData } from '../../redux/reducers/userSlice';
@@ -12,7 +12,7 @@ export default function MyProfile() {
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const dispatch = useDispatch();
-    const resolver = useValidationResolver(addMoreDetailsSchema);
+    const resolver = useValidationResolver(myProfileSchema);
     // const existingData = useSelector(userData);
     // console.log(existingData,'existingdata')
     const fetchUserDetails = useSelector(generalUserData);
@@ -44,17 +44,17 @@ export default function MyProfile() {
         resolver
     });
 
-    const submitData = async (e) => {
+    const submitData = async (data) => {
         try {
-            e.preventDefault();
+            // e.preventDefault();
             const name = methods.getValues().name;
             const emailMailId = methods.getValues().emailMailId;
             const mobileNumber = methods.getValues().mobileNumber;
             const currentPassword = methods.getValues().currentPassword;
-            const itemDetails = methods.getValues();
+            // const itemDetails = methods.getValues();
 
             if (currentPassword) {
-                dispatch(userProfileData(itemDetails));
+                dispatch(userProfileData(data));
             } else {
                 dispatch(userProfileData({ name, emailMailId, mobileNumber }));
             }
@@ -78,7 +78,8 @@ export default function MyProfile() {
 
 
             <FormProvider {...methods}>
-                <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
+                {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
+                <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
                             <div className='flex justify-between mb-9'>
@@ -144,7 +145,7 @@ export default function MyProfile() {
                                     <TextInput
                                         type="password"
                                         placeholder="Current password"
-                                        eyeClass='absolute bottom-3 left-3/4 ml-16'
+                                        eyeClass='absolute bottom-3 left-80 pl-5'
                                         name="currentPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"
@@ -174,7 +175,7 @@ export default function MyProfile() {
                                     <TextInput
                                         type="password"
                                         placeholder="New password"
-                                        eyeClass='absolute bottom-3 left-3/4 ml-16'
+                                        eyeClass='absolute bottom-3 left-80 pl-5'
                                         name="confirmPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
                                         autoComplete="off"

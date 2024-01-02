@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClose } from "react-icons/md";
@@ -25,6 +25,7 @@ export default function BusinessSignUp() {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [cloudinaryId, setCloudinaryId] = useState('');
     const [companyLogo, setCompanyLogo] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const methods = useForm({
         defaultValues: {
@@ -73,7 +74,7 @@ export default function BusinessSignUp() {
                         console.log("responseFromFile", res.data.companylogo)
                         setCompanyLogo(res.data.companylogo);
                         setCloudinaryId(res.data.cloudinary_id);
-                        
+
                     })
             }
         } catch (error) {
@@ -108,7 +109,7 @@ export default function BusinessSignUp() {
             }
         } else {
             Toast({ type: "error", message: "Please accept the terms and conditions" })
-        }  
+        }
     };
 
     const handleChildData = (dataFromChild) => {
@@ -117,7 +118,7 @@ export default function BusinessSignUp() {
     };
 
     return (
-        <>
+        <Fragment>
             <div className='md:flex mx-20 my-10'>
                 <div className='w-6/12'>
                     <h1 className='text-3xl font-bold'>Transform your lost and found
@@ -134,57 +135,76 @@ export default function BusinessSignUp() {
                         </div>
                     </div>
                 </div>
-                <div className="max-w-md mx-auto">
-                    <FormProvider {...methods}>
-                        <form onSubmit={(e) => submitData(e)}>
-                            <div className="w-full p-8 m-6 bg-white rounded-xl">
-                                <div className="mb-2">
-                                    <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="Full name"
-                                        name="name"
-                                        id="fullName"
-                                        className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
-                                        autoComplete="off"
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-2">
-                                    <label htmlFor="mobileNumber" className="block text-sm font-bold mb-2">Mobile Number</label>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="1234567890"
-                                        name="mobileNumber"
-                                        id="fullName"
-                                        className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
-                                        autoComplete="off"
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-2">
-                                    <label htmlFor="email" className="block text-sm font-bold mb-2">Email Address</label>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="abc@xyz.com"
-                                        name="emailMailId"
-                                        id="fullName"
-                                        className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
-                                        autoComplete="off"
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-2">
-                                    <label htmlFor="password" className="block text-sm font-bold mb-2">Password</label>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="Glorpus Galaxies"
-                                        name="password"
-                                        id="fullName"
-                                        className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
-                                        autoComplete="off"
-                                        required
-                                    />
+                <FormProvider {...methods}>
+                    {/* <form onSubmit={(e) => submitData(e)}> */}
+                    <form onSubmit={methods.handleSubmit(submitData)}>
+                        <div className="basis-5/12 p-8 m-6 bg-white rounded-xl">
+                            <div className="mb-2">
+                                <label htmlFor="fullName" className="block text-sm font-bold mb-2">Your Name</label>
+                                <TextInput
+                                    type="text"
+                                    placeholder="Full name"
+                                    name="name"
+                                    id="fullName"
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-2">
+                                <label htmlFor="mobileNumber" className="block text-sm font-bold mb-2">Mobile Number</label>
+                                <TextInput
+                                    type="text"
+                                    placeholder="1234567890"
+                                    name="mobileNumber"
+                                    id="fullName"
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-2">
+                                <label htmlFor="email" className="block text-sm font-bold mb-2">Email Address</label>
+                                <TextInput
+                                    type="text"
+                                    placeholder="abc@xyz.com"
+                                    name="emailMailId"
+                                    id="fullName"
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-2">
+                                <label htmlFor="password" className="block text-sm font-bold mb-2">Password</label>
+                                <TextInput
+                                    type="password"
+                                    placeholder="Glorpus Galaxies"
+                                    name="password"
+                                    id="fullName"
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                    autoComplete="off"
+                                    eyeClass='absolute bottom-2 left-48 ml-16'
+                                    required
+                                    showPassword={showPassword}
+                                    setShowPassword={() => setShowPassword(!showPassword)}
+                                />
+                            </div>
+                            <div className="mb-2">
+                                <label htmlFor="companyName" className="block  text-sm font-bold mb-2">Company Name</label>
+                                <TextInput
+                                    type="text"
+                                    placeholder="Glorpus Galaxies"
+                                    name="companyName"
+                                    id="fullName"
+                                    className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                    autoComplete="off"
+                                    required
+                                />
+                            </div>
+                            <div className="mb-2 w-full">
+                                <div className="block text-sm font-bold mb-4 w-full">
+                                    Company Logo
                                 </div>
                                 <div className="mb-2">
                                     <label htmlFor="companyName" className="block  text-sm font-bold mb-2">Company Name</label>
@@ -235,19 +255,42 @@ export default function BusinessSignUp() {
                                         <input id="remember" type="checkbox" onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                         <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                     </div>
-                                    <label htmlFor="remember" className="ms-2 text-sm"></label>
+                                    <ImageUpload
+                                        name="company"
+                                        designClass='flex justify-center bg-primary-color w-full py-3 rounded-xl'
+                                        multiple={false}
+                                        handleFileUpload={handleFileUpload}
+                                    />
                                 </div>
-                                <button type='submit' className="bg-[#FF9900] w-full py-3 mt-2 rounded-lg">Continue</button>
+                                <div className="mb-2 mt-4">
+                                    <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
+                                    <FormDropdown
+                                        name='companyCategory'
+                                        optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
+                                        dropdownValues={categories}
+                                        editButton={true}
+                                        handleData={handleChildData}
+                                        selection={true}
+                                        isCleared={isCleared}
+                                    />
+                                </div>
+                                <div className="flex ">
+                                    <div className="flex items-center h-5">
+                                        <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
+                                        <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
+                                    </div>
+                                    <button type='submit' className="bg-[#FF9900] w-full py-3 mt-2 rounded-lg">Continue</button>
+                                </div>
                             </div>
-                        </form>
-                    </FormProvider>
-                </div>
+                        </div>
+                    </form>
+                </FormProvider>
             </div>
             <div className='mb-20 ml-24 '>
                 <OurBrands
                     asTrustedBy
                 />
             </div>
-        </>
+        </Fragment>
     )
 };
