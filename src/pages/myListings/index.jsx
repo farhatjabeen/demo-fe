@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaRegMap, FaRegCalendar, FaRegClock } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMyListingItems, itemDetails, myListingItems, saveItemDetails } from '../../redux/reducers/itemsSlice';
+import { deleteMyListingItems, itemDetails, myListingItems } from '../../redux/reducers/itemsSlice';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '../../components/common/pagination';
 
@@ -10,7 +10,7 @@ export default function MyListings() {
     const navigate = useNavigate();
     const myReports = useSelector(itemDetails);
     const [currentPage, setCurrentPage] = useState(1);
-    const tableData = useSelector(saveItemDetails);
+    const tableData = useSelector(itemDetails);
 
     useEffect(() => {
         dispatch(myListingItems(currentPage));
@@ -18,7 +18,7 @@ export default function MyListings() {
             navigate('/');
         }
     }, [currentPage]);
-    
+
 
     const handleEditItem = (itemId) => {
         navigate(`/addmoredetails/${itemId}`);
@@ -27,7 +27,7 @@ export default function MyListings() {
     const handleListingDelete = (itemId) => {
         try {
             dispatch(deleteMyListingItems({ itemId }));
-            dispatch(myListingItems());
+            dispatch(myListingItems(currentPage));
         } catch (error) {
             console.error("submitData errors", error);
         }
@@ -37,7 +37,6 @@ export default function MyListings() {
         setCurrentPage(pageNumber);
     };
 
-    const totalPages = tableData?.pageMeta?.totalPages || 1;
 
     return (
         <div className='mb-5 flex flex-col items-center'>
@@ -96,18 +95,13 @@ export default function MyListings() {
                         </div>
                     </div>
                 ))}
-        </div>
-
-            {
-        totalPages && (
+            </div>
             <Pagination
-                isBlueBackground={false}
                 currentPage={currentPage}
-                totalPages={totalPages}
+                totalPages={tableData?.pageMeta?.totalPages}
+                isBlueBackground={false}
                 onPageChange={handlePageChange}
             />
-        )
-    }
         </div >
     );
 }
