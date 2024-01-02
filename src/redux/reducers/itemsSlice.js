@@ -202,10 +202,10 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
 }
 
 // my listings general user
-export const myListingItems = () => (dispatch , currentPage = 1, PageLimit = 10) => {
+export const myListingItems = (currentPage, PageLimit=10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.items.myListing,
+            url: `${endpoints.apiPath.items.myListing}?page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
         }).then((res) => {

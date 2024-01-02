@@ -110,7 +110,7 @@ export default function EditBusinessDetails() {
     const handleRemoveApiFile = (indexToRemove) => {
         setFilesFromDb((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
     };
-
+    
     useEffect(() => {
         if (files && files.length > 0) {
             let formData = new FormData();
@@ -150,7 +150,7 @@ export default function EditBusinessDetails() {
             console.warn("No files to upload.");
         }
     }, [files, itemDetails]);
-    const submitData = async (e) => {
+        const submitData = async (e) => {
         try {
             const data = methods.getValues()
             data.keywords = data.keywords.split(',').map(keyword => keyword.trim());
@@ -159,13 +159,9 @@ export default function EditBusinessDetails() {
                 ...data,
                 itemCategory: selectedCategory,
                 location: selectedLocation,
-                itemImage: Array.isArray(itemImage) ? itemImage : [itemImage],
-                cloudinary_id: Array.isArray(cloudinaryId) ? cloudinaryId : [cloudinaryId],
+                itemImage: itemImage.length > 0 ? itemImage[0] :filesFromDb.length>0 ? itemDetails.itemImage:[],
+                cloudinary_id: cloudinaryId.length>0 ? cloudinaryId[0] : itemDetails.cloudinary_id,
             };
-
-            updatedData.itemImage = updatedData.itemImage.map(image => typeof image === 'string' ? image : image.toString());
-            updatedData.cloudinary_id = updatedData.cloudinary_id.map(id => typeof id === 'string' ? id : id.toString());
-
             e.preventDefault();
             dispatch(businessUpdateItems(id, updatedData));
             navigate('/allItems');
@@ -173,7 +169,6 @@ export default function EditBusinessDetails() {
             console.error('Update failed:', error);
         }
     };
-
 
 
     return (

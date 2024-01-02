@@ -33,7 +33,7 @@ const apiPath = {
         deleteBusinessUser: '/admin/deleteUser',
         searchByKeyword: '/user/getItemByKeyword',
         searchById: '/user/item',
-        myListing: '/user/getAllItem',
+        myListing: '/user/myListings',
         viewById: '/business/item',
         deleteBusinessUserItem: '/business/removeListing',
         editBusinessUserItem: '/business/updateItem',
