@@ -567,6 +567,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
         }
     }
 };
+
 //admin export file 
 export const adminExportItems = () => (dispatch) => {
     return new Promise((resolve, reject) => {
@@ -576,7 +577,8 @@ export const adminExportItems = () => (dispatch) => {
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            const blob = new Blob([res.data], { type: 'text/csv' });
+            debugger;
+            const blob = new Blob([res], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
