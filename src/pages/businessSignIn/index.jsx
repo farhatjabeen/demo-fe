@@ -73,7 +73,7 @@ export default function BusinessSignIn() {
                                         <div className='text-xs text-[#4D4D4D] font-light'>Remember me</div>
                                     </div>
                                     <button
-                                        onClick={handleForgot}
+                                        onClick={()=>handleForgot}
                                     >
                                         <div className='text-xs text-[#4D4D4D] font-light'>
                                             Forgot Password?

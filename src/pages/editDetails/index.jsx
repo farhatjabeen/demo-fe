@@ -8,7 +8,7 @@ import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems, filesUploadAPI } from '../../redux/reducers/itemsSlice';
+import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems, filesUploadAPI, locationDropdownValues, dropdownLocation, locationDetails } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
 import DropdownMenu from '../../components/common/dropdown';
@@ -18,14 +18,18 @@ export default function EditBusinessDetails() {
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(" ");
+    const [selectedLocation, setSelectedLocation] = useState(" ");
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
-        const navigate = useNavigate();
+    const navigate = useNavigate();
     const { id } = useParams();
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
     const items = useSelector(itemDropdown);
     const itemCategories = Object.values(items);
+    const locations = useSelector(locationDetails);
+    const locationCategory = Object.values(locations);
+
 
     const methods = useForm({
         defaultValues: {
@@ -50,6 +54,20 @@ export default function EditBusinessDetails() {
     const itemDetails = useSelector(viewDetails);
 
     useEffect(() => {
+        if (itemDetails?.itemImage) {
+            setFilesFromDb(itemDetails.itemImage);
+        }
+    }, [itemDetails?.itemImage]);
+    useEffect(() => {
+        setSelectedLocation(itemDetails.location)
+        dispatch(locationDropdownValues());
+    }, [itemDetails.location]);
+
+    useEffect(() => {
+        setSelectedCategory(itemDetails.itemCategory)
+        dispatch(itemDropdownValues())
+    }, [itemDetails.itemCategory])
+    useEffect(() => {
         if (itemDetails) {
             methods.reset({
                 itemName: itemDetails.itemName || "",
@@ -66,39 +84,8 @@ export default function EditBusinessDetails() {
             });
         }
     }, [itemDetails]);
-    useEffect(() => {
-        if (itemDetails?.itemImage) {
-            setFilesFromDb(itemDetails.itemImage);
-        }
-    }, [itemDetails?.itemImage]);
-    useEffect(() => {
-        setSelectedCategory(itemDetails.itemCategory)
-        dispatch(itemDropdownValues())
-    }, [itemDetails.itemCategory])
 
-    const submitData = async (e) => {
-        try {
-            const data = methods.getValues()
-            data.keywords = data.keywords.split(',').map(keyword => keyword.trim());
-            data.mobileNumber = String(data.mobileNumber);
-            const updatedData = {
-                ...data,
-                itemCategory: selectedCategory,
-                itemImage: Array.isArray(itemImage) ? itemImage : [itemImage],
-                cloudinary_id: Array.isArray(cloudinaryId) ? cloudinaryId : [cloudinaryId],
-            };
-
-            updatedData.itemImage = updatedData.itemImage.map(image => typeof image === 'string' ? image : image.toString());
-            updatedData.cloudinary_id = updatedData.cloudinary_id.map(id => typeof id === 'string' ? id : id.toString());
-
-            e.preventDefault();
-            dispatch(businessUpdateItems(id, updatedData));
-            navigate('/allItems');
-        } catch (error) {
-            console.error('Update failed:', error);
-        }
-    };
-        const handleReset = (e) => {
+    const handleReset = (e) => {
         setFiles([]);
         setIsUploaded(false);
         setFilesFromDb([]);
@@ -113,7 +100,7 @@ export default function EditBusinessDetails() {
             const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
             if (newFiles) {
                 setIsUploaded(true);
-                            }
+            }
             return newFiles;
         });
     }
@@ -123,7 +110,7 @@ export default function EditBusinessDetails() {
     const handleRemoveApiFile = (indexToRemove) => {
         setFilesFromDb((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
     };
-
+    
     useEffect(() => {
         if (files && files.length > 0) {
             let formData = new FormData();
@@ -135,25 +122,25 @@ export default function EditBusinessDetails() {
                 try {
                     const res = await dispatch(filesUploadAPI(formData));
                     return res.data;
-                                    } catch (error) {
+                } catch (error) {
                     console.error("Error uploading files:", error);
                 }
             };
 
             const handleUpload = async () => {
-                                const uploadedData = await uploadFiles();
+                const uploadedData = await uploadFiles();
 
                 if (uploadedData) {
                     setCloudinaryId((prevIds) => [...prevIds, uploadedData.cloudinary_id]);
                     setItemImage((prevImages) => [...prevImages, uploadedData.itemImage]);
-                    
+
                     if (itemDetails?.cloudinary_id) {
-                    setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(itemDetails.cloudinary_id) ? itemDetails.cloudinary_id : [itemDetails.cloudinary_id])]);
+                        setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(itemDetails.cloudinary_id) ? itemDetails.cloudinary_id : [itemDetails.cloudinary_id])]);
                     }
 
 
                     if (itemDetails?.itemImage) {
-                    setItemImage((prevImages) => [...prevImages, ...(Array.isArray(itemDetails.itemImage) ? itemDetails.itemImage : [itemDetails.itemImage])]);
+                        setItemImage((prevImages) => [...prevImages, ...(Array.isArray(itemDetails.itemImage) ? itemDetails.itemImage : [itemDetails.itemImage])]);
                     }
                 }
             };
@@ -163,7 +150,25 @@ export default function EditBusinessDetails() {
             console.warn("No files to upload.");
         }
     }, [files, itemDetails]);
-
+        const submitData = async (e) => {
+        try {
+            const data = methods.getValues()
+            data.keywords = data.keywords.split(',').map(keyword => keyword.trim());
+            data.mobileNumber = String(data.mobileNumber);
+            const updatedData = {
+                ...data,
+                itemCategory: selectedCategory,
+                location: selectedLocation,
+                itemImage: itemImage.length > 0 ? itemImage[0] :filesFromDb.length>0 ? itemDetails.itemImage:[],
+                cloudinary_id: cloudinaryId.length>0 ? cloudinaryId[0] : itemDetails.cloudinary_id,
+            };
+            e.preventDefault();
+            dispatch(businessUpdateItems(id, updatedData));
+            navigate('/allItems');
+        } catch (error) {
+            console.error('Update failed:', error);
+        }
+    };
 
 
     return (
@@ -294,14 +299,14 @@ export default function EditBusinessDetails() {
                                         <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>
                                         <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location</p>
                                     </div>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="Type Address"
-                                        name="location"
-                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
-                                        autoComplete="off"
-                                        required
-                                    />
+
+                                    <div className='w-96'>
+                                        <DropdownMenu
+                                            dropdownValues={locationCategory}
+                                            value={selectedLocation}
+                                            onChange={setSelectedLocation}
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className='flex justify-between h-12 mb-9 relative'>

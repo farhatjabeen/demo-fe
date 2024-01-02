@@ -94,7 +94,7 @@ export default function FindMissingItem() {
       <div className='flex flex-wrap justify-center items-center w-full'>
         {searchValue?.list?.length && searchValue.list.map((items, i) => {
           return (
-            <div className='sm:w-60 md:w-52 xl:w-96 xl:ml-2 sm:flex sm:items-center'>
+            <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 sm:flex sm:items-center'>
               <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
             </div>
           );

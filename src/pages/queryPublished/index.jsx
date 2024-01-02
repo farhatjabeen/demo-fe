@@ -56,7 +56,7 @@ export default function QueryPublished() {
                                     <p className='font-semibold text-lg ml-2'>{itemDetailsFromApi?.foundTime}</p>
                                 </div>
                             </div>
-                            <div className='flex justify-between xl:w-96 xl:mt-8 md:w-80 md:mt-7 sm:w-72 sm:mt-5'>
+                            <div className='flex justify-between xl:w-80 xl:mt-8 md:w-80 md:mt-7 sm:w-72 sm:mt-5'>
                                 <div >
                                     <button 
                                     onClick={() => handleEditItem(itemId.id)}
@@ -65,7 +65,7 @@ export default function QueryPublished() {
                                     </button>
                                 </div>
                                 <div >
-                                    <button className='xl:h-14 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
+                                    <button className='xl:h-14 xl:ml-3 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
                                         Contact Us
                                     </button>
                                 </div>

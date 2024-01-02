@@ -10,33 +10,34 @@ import { adminFetchUser, userDetails, adminFetchBusinessUser, businessUserDetail
 
 
 function User() {
+  // Local states
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchUserTerm, setsearchUserTerm] = useState("");
-  const [searchBusinessTerm, setsearchBusinessTerm] = useState("");
-  const dispatch = useDispatch();
+  const [searchUserTerm, setSearchUserTerm] = useState("");
+  const [searchBusinessTerm, setSearchBusinessTerm] = useState("");
   const [PageLimit, setPageLimit] = useState(10);
+  
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(adminFetchUser(currentPage, PageLimit))
-  }, [dispatch, currentPage, PageLimit]);
-  useEffect(() => {
     dispatch(adminFetchBusinessUser(currentPage, PageLimit))
   }, [dispatch, currentPage, PageLimit]);
 
   const handleReset = (tab) => {
     if (tab === 1) {
-      setsearchUserTerm("");
+      setSearchUserTerm("");
     } else if (tab === 2) {
-      setsearchBusinessTerm("");
+      setSearchBusinessTerm("");
     }
   };
+
   const handleSearch = (tab) => {
     if (tab === 1) {
-      dispatch(adminFetchUser(currentPage, PageLimit,  searchUserTerm));
+      dispatch(adminFetchUser(currentPage, PageLimit, searchUserTerm));
     } else if (tab === 2) {
-      dispatch(adminFetchBusinessUser(currentPage, PageLimit,  searchBusinessTerm));
+      dispatch(adminFetchBusinessUser(currentPage, PageLimit, searchBusinessTerm));
     }
   };
 
@@ -68,8 +69,6 @@ function User() {
     { key: "action", label: "Actions" },
   ];
 
-
- 
   return (
     <>
       <div className="m-4">
@@ -82,7 +81,7 @@ function User() {
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
                 value={searchUserTerm}
-                onChange={(event) => setsearchUserTerm(event.target.value)}
+                onChange={(event) => setSearchUserTerm(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
@@ -103,7 +102,7 @@ function User() {
                 />
               </div>
             </div>
-            <Table headers={userHeaders} data={tableData?.list} context="user"  />
+            <Table headers={userHeaders} data={tableData?.list} context="user" />
             <Pagination
               isBlueBackground={true}
               currentPage={tableData?.pageMeta?.page}
@@ -118,7 +117,7 @@ function User() {
                 placeholder="Search"
                 className="border pl-2 basis-10/12 rounded-md text-grey py-2"
                 value={searchBusinessTerm}
-                onChange={(event) => setsearchBusinessTerm(event.target.value)}
+                onChange={(event) => setSearchBusinessTerm(event.target.value)}
               />
               <div className="basis-1/12">
                 <CustomCombinedButton
@@ -154,4 +153,3 @@ function User() {
 }
 
 export default User;
-
