@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router';
 export default function SearchCards(props) {
     const navigate = useNavigate();
     return (
-        <div className='mt-12 h-96 flex flex-col items-center relative'>
+        <div className='mt-16 h-96 flex flex-col items-center relative'>
 
-            <div>
-                <img src={`${props.imageName[0]}`} className='rounded-2xl xl:h-56 xl:w-72 md:h-48 md:w-56 sm:h-44 sm:w-52' alt='keys' />
+            <div className='h-full'>
+                <img src={`${props.imageName[0]}`} className='rounded-2xl xl:h-60 xl:w-80 md:h-48 md:w-56 sm:h-44 sm:w-52' alt='keys' />
             </div>
-            <div className='absolute bg-white xl:w-72 xl:h-56 md:h-48 md:w-56 sm:h-44 sm:w-52 border border-[#D8FFFF] xl:top-44 md:top-40 sm:top-36 rounded-2xl flex justify-center items-center'>
+            <div className='absolute bg-white xl:w-80 xl:h-60 md:h-48 md:w-56 sm:h-44 sm:w-52 border border-[#D8FFFF] xl:top-52 md:top-40 sm:top-36 rounded-2xl flex justify-center items-center'>
                 <div className='xl:h-44 xl:w-60 md:w-48 md:h-40 sm:w-44 sm:h-36  xl:mt-5' key={props.idx}>
                     <div className='font-bold xl:text-2xl md:text-xl sm:text-xl'>{props.itemName}</div>
                     <div className='h-16 mt-3'>

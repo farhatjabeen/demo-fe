@@ -3,7 +3,7 @@ import Logo from "../../assets/images/logo.svg"
 import { useNavigate } from "react-router-dom";
 import PopoverComponent from "../popover";
 import { useDispatch, useSelector } from "react-redux";
-import { userData, clearUserData, generalUserLogout, businessUserLogout } from '../../redux/reducers/userSlice';
+import { userData, clearUserData, generalUserLogout, businessUserLogout, generalUserDetails, companyProfileData } from '../../redux/reducers/userSlice';
 import { clearItemData } from "../../redux/reducers/itemsSlice";
 import HeaderDropdown from "../common/headerDropdown";
 
@@ -19,17 +19,17 @@ const Header = (props) => {
         if (userDetails?.role === 'USER') {
             setLogin(true);
             setIsBusiness(false);
+            dispatch(generalUserDetails())
         }
         if (userDetails?.role === 'BUSINESS') {
             setLogin(true);
             setIsBusiness(true);
+            dispatch(companyProfileData())
         }
     }, [userDetails])
 
     const handleLogout = () => {
         try {
-
-
             if (userDetails?.role === 'USER') {
                 dispatch(generalUserLogout())
                 setLogin(false);
@@ -63,7 +63,7 @@ const Header = (props) => {
                                 isBusiness
                                     ?
                                     <HeaderDropdown linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
-                                        titleTwo='Add Item' navigateTwo='/addmoredetails' handleLogout={handleLogout} />
+                                        titleTwo='My Profile' navigateTwo='/companyprofile' handleLogout={handleLogout} />
                                     :
                                     <HeaderDropdown linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'
                                         titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />

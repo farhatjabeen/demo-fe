@@ -9,7 +9,7 @@ import { FormErrorMessage } from '../FormErrorMessage';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
-function TextInput({ type = 'text', placeholder, name, disable, eyeClass, className: inputClassName, showPassword, setShowPassword }) {
+function TextInput({ type = 'text', placeholder, name, disable, isSearchReport=false, eyeClass, className: inputClassName, showPassword, setShowPassword }) {
 
     return (
         <ConnectForm>
@@ -22,27 +22,44 @@ function TextInput({ type = 'text', placeholder, name, disable, eyeClass, classN
                             render={({
                                 field: { onChange, value: fieldValue, ref, props }
                             }) => (
-                                <div className={` ${type === 'password' && 'relative'}`}>
+                                <div className={` flex ${type === 'password' && 'relative'}`}>
+                                    <div className="relative w-full">
                                     <input
                                         {...props}
                                         ref={ref}
                                         type={showPassword ? 'text' : type}
                                         onChange={onChange}
                                         value={fieldValue || ''}
-                                        placeholder={placeholder}
+                                        placeholder={getFormErrorMessage(errors, name) ? " " : placeholder}
                                         id={name}
                                         className={inputClassName}
                                         disabled={disable}
+
                                     />
                                     {type === 'password' && <div className={eyeClass} onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? <BsFillEyeFill className='h-6 w-6' />:<BsFillEyeSlashFill className='h-6 w-6' />  }
+                                        {showPassword ? <BsFillEyeFill className='h-6 w-6' /> : <BsFillEyeSlashFill className='h-6 w-6' />}
                                     </div>}
+                                    {
+                                        isSearchReport && (
+                                            <div className="absolute bottom-5 left-6 text-red-600 text- mt-1">
+
+                                              <FormErrorMessage error={getFormErrorMessage(errors, name)} />
+                                            </div>
+                                          )
+                                    }
+                                    </div>
                                 </div>
                             )}
                         />
-                        <FormErrorMessage
-                            error={getFormErrorMessage(errors, name)}
-                        />
+                        {
+                            isSearchReport ?
+                                ""
+                                :
+                                <FormErrorMessage
+                                    error={getFormErrorMessage(errors, name)}
+                                />
+                        }
+
                     </from>
                 </div>
             )}

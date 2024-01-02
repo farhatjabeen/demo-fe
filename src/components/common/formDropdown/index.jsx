@@ -11,12 +11,10 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
 
     const [options, setOptions] = useState('');
     console.log(options, 'options')
-
-    useEffect(() => {
-        handleData(options);
-    }, [options, handleData]);
-
    
+    useEffect(()=>{
+        handleData(options ? options : valueFromDb)
+    },[options,valueFromDb])
     return (
         <ConnectForm>
             {({ errors, control }) => (
@@ -25,6 +23,7 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
                         <Controller
                             name={name}
                             control={control}
+                            defaultValue={valueFromDb}
                             render={() => (
                                 <div>
                                     <div>
@@ -34,12 +33,12 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
                                             className={optionButtonClass}
                                             onChange={(e) => setOptions(e.target.value) }
                                         >
-                                            <option value="">Select an option</option>
-                                            {dropdownValues?.map((items) => {
+                                            <option value="" >Select an option</option>
+                                            {dropdownValues?.map((items,i) => {
                                                 return (
                                                     <option
-                                                        key={items.id}
-                                                        value={`${items}`}
+                                                        key={i}
+                                                        value={items}
                                                         selected={items === valueFromDb ? true : false}
                                                         className="px-4 py-2 flex w-full text-sm hover:bg-green"
                                                     >
@@ -49,7 +48,6 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
                                             })}
                                         </select>
                                     </div>
-
                                 </div>
                             )}
                         />

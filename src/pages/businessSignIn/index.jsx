@@ -23,8 +23,8 @@ export default function BusinessSignIn() {
         resolver
     });
     const handleForgot = () => {
-        const emailMailId=methods.getValues().emailMailId;
-        dispatch(businessForgotPassword({emailMailId}))
+        const emailMailId = methods.getValues().emailMailId;
+        dispatch(businessForgotPassword({ emailMailId }))
     }
 
     const submitData = (data) => {
@@ -73,7 +73,7 @@ export default function BusinessSignIn() {
                                         <div className='text-xs text-[#4D4D4D] font-light'>Remember me</div>
                                     </div>
                                     <button
-                                        onClick={handleForgot}
+                                        onClick={()=>handleForgot}
                                     >
                                         <div className='text-xs text-[#4D4D4D] font-light'>
                                             Forgot Password?
@@ -83,7 +83,8 @@ export default function BusinessSignIn() {
                                 <button
                                     className='bg-primary-color w-full h-14 rounded-md mt-8'
                                     type="submit"
-                                >Login
+                                >
+                                    Login
                                 </button>
                             </div>
                         </form>

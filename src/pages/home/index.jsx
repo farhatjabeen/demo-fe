@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div>
-      <div>
+      <div className='xl:flex xl:justify-center'>
         <SearchReport />
       </div>
 

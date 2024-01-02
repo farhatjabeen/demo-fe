@@ -12,7 +12,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
     const [select, setSelect] = useState(false);
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <Menu as="div" className="relative text-left">
@@ -31,11 +31,9 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                                     <FaRegUser className="mb-1 h-5 w-5" />
                             }
 
-                            <h1 className="ml-2 font-extrabold  text-yellow">Hi, there!</h1>
+                            {/* <h1 className="ml-2 ">Hi, there!</h1> */}
 
-
-
-                            {/* <h1 className="ml-2 ">Hi, {userDetails ? userDetails?.name : <h1>there</h1>}!</h1> */}
+                            <h1 className="ml-2 ">Hi, {userDetails?.name ? userDetails?.name.split(' ')[0] : "there"}!</h1>
                         </div>
                         <div>
                             <RxChevronDown className='h-6 w-6' />
@@ -53,9 +51,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                 leaveTo="transform opacity-0 scale-95"
             >
                 <Menu.Items className={` absolute top-14 left-6 z-10 mt-2 xl:w-56 md:w-44 sm:w-28 rounded-lg bg-white shadow-lg`}>
-
                     <Menu.Item>
-
                         <Link
                             to={navigateOne}
                             className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal '
@@ -88,7 +84,6 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                             Sign Out
                         </Link>
                     </Menu.Item>
-
                 </Menu.Items>
             </Transition>
         </Menu>

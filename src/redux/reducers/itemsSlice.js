@@ -205,7 +205,7 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
 export const myListingItems = () => (dispatch , currentPage = 1, PageLimit = 10) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.myListing}?page=${currentPage}&limit=${PageLimit}`,
+            url: endpoints.apiPath.items.myListing,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
         }).then((res) => {
@@ -314,7 +314,6 @@ export const viewUserItemById = (itemId) => (dispatch) => {
         }).then((res) => {
             const { itemImage, itemCode, foundDate, foundTime, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data;
             dispatch(viewItemDetailsById({ itemImage, foundDate, foundTime, itemCode, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
-            Toast({type:"success",message:"Query published"})
             return resolve(true)
         }).catch(err => {
             console.log(err)

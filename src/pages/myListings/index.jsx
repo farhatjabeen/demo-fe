@@ -41,7 +41,6 @@ export default function MyListings() {
 
     return (
         <div className='mb-5 flex flex-col items-center'>
-
             <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl'>
                 My listings
             </div>

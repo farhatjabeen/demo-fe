@@ -9,6 +9,7 @@ import SearchCards from '../../components/searchCards';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { clearItemData, searchByLocation, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
+import { Toast } from '../../components/toast';
 
 export default function FindMissingItem() {
   const navigate = useNavigate();
@@ -44,7 +45,11 @@ export default function FindMissingItem() {
     try {
       e.preventDefault()
       const productName = methods.getValues();
+      if(productName.itemName){
       navigate(`/findmissingitem/${productName.itemName}`)
+      }else{
+        Toast({type:'error',message:'Enter Item Name'})
+      }
       dispatch(searchItem(productName.itemName));
     } catch (error) {
       console.log("submitData errors", error)
@@ -58,7 +63,7 @@ export default function FindMissingItem() {
   }, [])
 
   return (
-    <div className="flex flex-col items-center mt-5">
+    <div className="flex flex-col items-center mt-5 mb-20">
       <h1 className="font-bold text-4xl mb-10">
         Search results
       </h1>
@@ -86,17 +91,17 @@ export default function FindMissingItem() {
         </FormProvider>
       </div>
 
-      <div className='flex flex-wrap justify-center items-center xl:w-11/12 md:w-11/12 sm:w-11/12 mt-12'>
+      <div className='flex flex-wrap justify-center items-center w-full'>
         {searchValue?.list?.length && searchValue.list.map((items, i) => {
           return (
-            <div className='h-5/6 sm:w-60 md:w-52 xl:w-80 sm:flex sm:items-center'>
+            <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 sm:flex sm:items-center'>
               <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
             </div>
           );
         })}
       </div>
 
-      <div className='my-10'>
+      <div className='mb-10 mt-36'>
         <Pagination
           isBlueBackground={false}
           currentPage={searchValue?.pageMeta?.page}

@@ -13,13 +13,10 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { checkGeneralUserEmail, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
 import { generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
 import TextInput from '../common/textInput';
-import { clearData } from '../../redux/reducers/itemsSlice';
-
 
 const PopoverComponent = () => {
 
     const [passwordBox, setPasswordBox] = useState(false);
-
     const navigate = useNavigate();
     const mailIdFromApi = useSelector(mailId);
     const [showPassword, setShowPassword] = useState(false)
@@ -34,13 +31,11 @@ const PopoverComponent = () => {
         return emailRegex.test(inputEmail);
     };
 
-    const handleEmailChange = (mailId) => {
+    const handleEmailChange = (e) => {
+        const mailId = e.target.value;
         const isValid = validateEmail(mailId);
-        if (isValid) {
-            setIsEmailValid(true)
-        } else {
-            setIsEmailValid(false)
-        }
+            setIsEmailValid(isValid);
+            console.log('Email:', mailId, 'isValid:', isValid);
     };
 
     const methods = useForm({
@@ -50,7 +45,6 @@ const PopoverComponent = () => {
         },
         resolver
     });
-    console.log(methods.getValues().emailMailId, "emailMailId")
 
     const methodsForRegister = useForm({
         defaultValues: {
@@ -78,7 +72,10 @@ const PopoverComponent = () => {
             e.preventDefault();
             const password = methodsForRegister.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
-            dispatch(generalUserRegister({ emailMailId, password }));
+            const registerSuccessful = dispatch(generalUserRegister({ emailMailId, password }));
+            if (registerSuccessful) {
+                Popover.close();
+              }
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -89,10 +86,26 @@ const PopoverComponent = () => {
             e.preventDefault();
             const password = methods.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
-            dispatch(generalUserLogin({ emailMailId, password }));
+            const loginSuccessful = dispatch(generalUserLogin({ emailMailId, password }));
+            if (loginSuccessful) {
+                Popover.close();
+              }
+            
         } catch (error) {
             console.log("submitData errors", error)
         }
+    };
+
+    const handleClose = () => {
+        setPasswordBox(false);
+        methods.reset({
+            emailMailId: "",
+            password: ""
+        })
+        methodsForRegister.reset({
+            newPassword: "",
+            password: ""
+        })
     }
 
     return (
@@ -144,11 +157,11 @@ const PopoverComponent = () => {
                                                                         setShowPassword={() => setShowPassword(!showPassword)}
                                                                     />
                                                                 </div>
-                                                                <Popover.Button
+                                                                <button
                                                                     type='submit'
                                                                     className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
                                                                     LOGIN
-                                                                </Popover.Button>
+                                                                </button>
                                                             </form>
                                                         </FormProvider>
                                                     </div>
@@ -186,12 +199,12 @@ const PopoverComponent = () => {
                                                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                                                     />
                                                                 </div>
-                                                                <Popover.Button
+                                                                <button
                                                                     type='submit'
                                                                     className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'
                                                                 >
                                                                     REGISTER
-                                                                </Popover.Button>
+                                                                </button>
                                                             </form>
                                                         </FormProvider>
                                                     </div>
@@ -217,7 +230,7 @@ const PopoverComponent = () => {
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
-                                                                onChange={(e) => handleEmailChange(e.target.value)}
+                                                                onClick={(e)=>handleEmailChange(e)}
                                                             />
                                                         </div>
                                                         <button
@@ -230,7 +243,7 @@ const PopoverComponent = () => {
                                                             <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
                                                             <hr className="flex-1 border border-t border-light-grey" />
                                                         </div>
-                                                        <div className='flex items-center justify-between w-11/12 h-6 mt-2'>
+                                                        <div className='flex items-center justify-between w-full h-6 mt-2'>
                                                             <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>
                                                             <div className='flex items-center w-fit '>
                                                                 <div className='flex items-center xl:mr-2.5 md:mr-1.5 sm:mr-1'>
@@ -252,7 +265,7 @@ const PopoverComponent = () => {
                                     <IoTriangleSharp className='absolute xl:-top-6 md:-top-5 sm:-top-4 xl:h-7 xl:w-7 md:h-6 md:w-6 sm:h-5 sm:w-5 text-white' />
                                 </div>
                                 <div className="w-full flex justify-end pr-3 xl:ml-9 md:ml-8 sm:ml-5">
-                                    <Popover.Button onClick={() => setPasswordBox(false)} className='absolute top-4 border-none bg-white space-x-end'>
+                                    <Popover.Button onClick={handleClose} className='absolute top-4 border-none bg-white space-x-end'>
                                         <AiFillCloseCircle className=' xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
                                     </Popover.Button>
                                 </div>

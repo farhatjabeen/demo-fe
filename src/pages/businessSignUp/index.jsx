@@ -17,6 +17,7 @@ export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    const [isCleared, setIsCleared] = useState(false);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
     const categories = categoryValue ? Object.values(categoryValue) : [];
@@ -39,6 +40,12 @@ export default function BusinessSignUp() {
         resolver
     });
 
+    useEffect(() => {
+        const values = sessionStorage.getItem("enteredData")
+        if (values) {
+            methods.reset(JSON.parse(values))
+        }
+    }, [])
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
@@ -66,6 +73,7 @@ export default function BusinessSignUp() {
                         console.log("responseFromFile", res.data.companylogo)
                         setCompanyLogo(res.data.companylogo);
                         setCloudinaryId(res.data.cloudinary_id);
+                        
                     })
             }
         } catch (error) {
@@ -84,15 +92,28 @@ export default function BusinessSignUp() {
         const companyCategory = `${selectedCategory}` || "";
         const companylogo = `${companyLogo}` || "";
         const cloudinary_id = `${cloudinaryId}` || "";
-        if(isChecked){
-            dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyCategory, companyName, companylogo, cloudinary_id }))
-        }else{
-            Toast({type:"error",message: "Please accept the terms and conditions"})
-        }
+        if (isChecked) {
+            const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
+            if (registering) {
+                methods.reset({
+                    name: "",
+                    mobileNumber: "",
+                    emailMailId: "",
+                    password: "",
+                    companyName: ""
+                })
+                setImageFiles('');
+                setIsCleared(true);
+                setIsChecked(false);
+            }
+        } else {
+            Toast({ type: "error", message: "Please accept the terms and conditions" })
+        }  
     };
 
     const handleChildData = (dataFromChild) => {
         setSelectedCategory(dataFromChild);
+        console.log(selectedCategory, "selectedcat")
     };
 
     return (
