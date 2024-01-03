@@ -42,8 +42,8 @@ export default function FindMissingItem() {
   };
 
   const submitData = (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault()
       const productName = methods.getValues();
       if(productName.itemName){
       navigate(`/findmissingitem/${productName.itemName}`)
@@ -71,6 +71,8 @@ export default function FindMissingItem() {
       <div className='xl:h-20 xl:w-4/6 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center '>
         <FormProvider {...methods}>
           <form onSubmit={(e) => submitData(e)} className='w-full flex'>
+          {/* <form onSubmit={methods.handleSubmit(submitData)} className='w-full flex'> */}
+
             <div className='w-9/12'>
               <TextInput
                 type='text'

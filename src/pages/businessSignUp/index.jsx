@@ -10,8 +10,9 @@ import FormDropdown from '../../components/common/formDropdown';
 import { categoryDetails, categoryDropdownValues, fileUploadAPI } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
-import { businessUserRegister } from '../../redux/reducers/userSlice';
+import { businessUserRegister, clearUserData } from '../../redux/reducers/userSlice';
 import { Toast } from '../../components/toast';
+import { data } from 'autoprefixer';
 
 export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
@@ -83,38 +84,37 @@ export default function BusinessSignUp() {
     }, [imageFiles]);
 
 
-    const submitData = (e) => {
-        e.preventDefault();
+    const submitData = (data) => {
         const name = methods.getValues().name;
         const mobileNumber = methods.getValues().mobileNumber;
         const emailMailId = methods.getValues().emailMailId;
         const password = methods.getValues().password;
         const companyName = methods.getValues().companyName;
-        const companyCategory = `${selectedCategory}` || "";
+        const companyCategory = methods.getValues().companyCategory;
         const companylogo = `${companyLogo}` || "";
         const cloudinary_id = `${cloudinaryId}` || "";
+        methods.setValue("companylogo", companyLogo);
+                methods.setValue("cloudinary_id", cloudinaryId);
         if (isChecked) {
-            const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
+            // const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
+            const registering = dispatch(businessUserRegister(data))
             if (registering) {
                 methods.reset({
                     name: "",
                     mobileNumber: "",
                     emailMailId: "",
                     password: "",
-                    companyName: ""
+                    companyName: "",
+                    companyCategory: "",
                 })
                 setImageFiles('');
                 setIsCleared(true);
                 setIsChecked(false);
+                dispatch(clearUserData());
             }
         } else {
             Toast({ type: "error", message: "Please accept the terms and conditions" })
         }
-    };
-
-    const handleChildData = (dataFromChild) => {
-        setSelectedCategory(dataFromChild);
-        console.log(selectedCategory, "selectedcat")
     };
 
     return (
@@ -203,25 +203,12 @@ export default function BusinessSignUp() {
                                 />
                             </div>
                             <div className="mb-2 w-full">
-                                <div className="block text-sm font-bold mb-4 w-full">
+                                <div className="block text-sm font-bold mb-2 w-full">
                                     Company Logo
                                 </div>
-                                <div className="mb-2">
-                                    <label htmlFor="companyName" className="block  text-sm font-bold mb-2">Company Name</label>
-                                    <TextInput
-                                        type="text"
-                                        placeholder="Glorpus Galaxies"
-                                        name="companyName"
-                                        id="fullName"
-                                        className='border pl-2 w-full rounded-xl text-grey placeholder:text-sm py-2'
-                                        autoComplete="off"
-                                        required
-                                    />
-                                </div>
+                               
                                 <div className="mb-2 w-full">
-                                    <div className="block text-sm font-bold mb-4 w-full">
-                                        Company Logo
-                                    </div>
+                                    
                                     {isUploaded && imageFiles[0] ?
                                         <div className='flex flex-wrap w-96'>
                                             <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
@@ -233,7 +220,7 @@ export default function BusinessSignUp() {
                                         null
                                     }
                                     <ImageUpload
-                                        name="company"
+                                        name="companylogos"
                                         designClass='flex justify-center bg-primary-color  w-full py-3 rounded-xl'
                                         multiple={false}
                                         handleFileUpload={handleFileUpload}
@@ -246,11 +233,10 @@ export default function BusinessSignUp() {
                                         optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
                                         dropdownValues={categories}
                                         editButton={true}
-                                        handleData={handleChildData}
                                         selection={true}
                                     />
                                 </div>
-                                <div className="flex ">
+                                {/* <div className="flex ">
                                     <div className="flex items-center h-5">
                                         <input id="remember" type="checkbox" onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                         <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
@@ -261,20 +247,19 @@ export default function BusinessSignUp() {
                                         multiple={false}
                                         handleFileUpload={handleFileUpload}
                                     />
-                                </div>
-                                <div className="mb-2 mt-4">
+                                </div> */}
+                                {/* <div className="mb-2 mt-4">
                                     <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
                                     <FormDropdown
                                         name='companyCategory'
                                         optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
                                         dropdownValues={categories}
                                         editButton={true}
-                                        handleData={handleChildData}
                                         selection={true}
                                         isCleared={isCleared}
                                     />
-                                </div>
-                                <div className="flex ">
+                                </div> */}
+                                <div >
                                     <div className="flex items-center h-5">
                                         <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                         <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>

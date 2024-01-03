@@ -11,7 +11,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { checkGeneralUserEmail, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
-import { generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
+import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
 import TextInput from '../common/textInput';
 
 const PopoverComponent = () => {
@@ -23,6 +23,7 @@ const PopoverComponent = () => {
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
+    const resolverForLogin = useValidationResolver(generalUserLoginSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
     const [isEmailValid, setIsEmailValid] = useState(false);
 
@@ -40,10 +41,16 @@ const PopoverComponent = () => {
 
     const methods = useForm({
         defaultValues: {
-            emailMailId: "",
-            password: ""
+            emailMailId: ""
         },
         resolver
+    });
+
+    const methodsForLogin = useForm({
+        defaultValues: {
+            password: ""
+        },
+        resolverForLogin
     });
 
     const methodsForRegister = useForm({
@@ -54,11 +61,11 @@ const PopoverComponent = () => {
         resolverForRegister
     });
 
-    const handleContinue = async (e) => {
+    const handleContinue = async (data) => {
         try {
-            e.preventDefault();
+            // e.preventDefault();
             const emailMailId = methods.getValues().emailMailId;
-            const login = dispatch(checkGeneralUserEmail({ emailMailId }));
+            const login = dispatch(checkGeneralUserEmail({emailMailId}));
             if (login) {
                 setPasswordBox(true);
             }
@@ -67,9 +74,9 @@ const PopoverComponent = () => {
         }
     };
 
-    const registerButton = async (e) => {
+    const registerButton = async () => {
         try {
-            e.preventDefault();
+            // e.preventDefault();
             const password = methodsForRegister.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             const registerSuccessful = dispatch(generalUserRegister({ emailMailId, password }));
@@ -81,10 +88,10 @@ const PopoverComponent = () => {
         }
     }
 
-    const handleLogin = async (e) => {
+    const handleLogin = async () => {
         try {
-            e.preventDefault();
-            const password = methods.getValues().password;
+            // e.preventDefault();
+            const password = methodsForLogin.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             const loginSuccessful = dispatch(generalUserLogin({ emailMailId, password }));
             if (loginSuccessful) {
@@ -142,8 +149,9 @@ const PopoverComponent = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <FormProvider {...methods}>
-                                                            <form onSubmit={(e) => handleLogin(e)}>
+                                                        <FormProvider {...methodsForLogin}>
+                                                            {/* <form onSubmit={(e) => handleLogin(e)}> */}
+                                                            <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
                                                                 <div >
                                                                     <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
                                                                     <TextInput
@@ -176,8 +184,8 @@ const PopoverComponent = () => {
                                                             </div>
                                                         </div>
                                                         <FormProvider {...methodsForRegister}>
-                                                            <form onSubmit={(e) => registerButton(e)}>
-                                                                {/* <form onSubmit={methods.handleSubmit(registerButton)}> */}
+                                                            {/* <form onSubmit={(e) => registerButton(e)}> */}
+                                                                <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
                                                                 <div>
                                                                     <div className=' text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
                                                                     <TextInput
@@ -221,7 +229,8 @@ const PopoverComponent = () => {
                                                     </div>
                                                 </div>
                                                 <FormProvider {...methods}>
-                                                    <form onSubmit={(e) => handleContinue(e)}>
+                                                    {/* <form onSubmit={(e) => handleContinue(e)}> */}
+                                                    <form onSubmit={methods.handleSubmit(handleContinue)}>
                                                         <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-[#757780] mb-1.5'>Email Address</div>
                                                         <div>
                                                             <TextInput
@@ -230,7 +239,7 @@ const PopoverComponent = () => {
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
-                                                                onClick={(e)=>handleEmailChange(e)}
+                                                                // onClick={(e)=>handleEmailChange(e)}
                                                             />
                                                         </div>
                                                         <button

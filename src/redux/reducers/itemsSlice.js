@@ -450,7 +450,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
 export const userEditItemDetails = (itemId,data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.editItemGeneralUser}?itemId=${itemId}`,
+            url: `${endpoints.apiPath.editItemGeneralUser}/${itemId}`,
             method: endpoints.ApiMethods.PUT,
             data: data,
             isAuth: true

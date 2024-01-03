@@ -7,7 +7,7 @@ import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { MdClose } from "react-icons/md";
-import { businessAddMoreDetails, filesUploadAPI, itemDropdown, itemDropdownValues, locationDetails, locationDropdownValues, newItemId, searchDetailsById, searchItemById, userAddMoreDetails, userEditItemDetails } from '../../redux/reducers/itemsSlice';
+import { businessAddMoreDetails, clearItemData, filesUploadAPI, itemDropdown, itemDropdownValues, locationDetails, locationDropdownValues, newItemId, searchDetailsById, searchItemById, userAddMoreDetails, userEditItemDetails } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import FormDropdown from '../../components/common/formDropdown';
@@ -17,47 +17,49 @@ import { userData } from '../../redux/reducers/userSlice';
 export default function AddMoreDetails() {
     const [newItemId, setNewItemId] = useState('');
     const [files, setFiles] = useState([]);
-    const [filesFromDb, setFilesFromDb] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
+    const [isCancelled, setIsCancelled] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const items = useSelector(itemDropdown);
     const itemCategories = Object.values(items);
     const cities = useSelector(locationDetails);
     const citiesInSerbia = Object.values(cities);
-    const [selectedCategory, setSelectedCategory] = useState("");
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
     const userDetails = useSelector(userData);
     const itemDetailsById = useSelector(searchDetailsById);
-    console.log(itemDetailsById,'itemDetailsById')
     const reportDetails = useParams();
-    console.log(reportDetails,"reportDetails")
-    const [selectedLocation, setSelectedLocation] = useState("");
 
 
     useEffect(() => {
-
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
         if (reportDetails.id) {
             dispatch(searchItemById(reportDetails.id))
         }
+        if (reportDetails.newItem) {
+            methods.setValue("itemName", reportDetails.newItem)
+            setIsCancelled(true);
+            setIsUploaded(false)
+        }
 
     }, []);
 
     useEffect(() => {
-        if (itemDetailsById) {
-            setFilesFromDb(itemDetailsById?.cloudinary_id)
+        if (itemDetailsById && reportDetails.id) {
+            
+            setItemImage(itemDetailsById?.itemImage);
+            setCloudinaryId(itemDetailsById?.cloudinary_id);
             methods.reset({
                 emailMailId: itemDetailsById?.emailMailId || "",
-                mobileNumber: itemDetailsById?.mobileNumber!= undefined ? `${itemDetailsById?.mobileNumber}` : "",
+                mobileNumber: itemDetailsById?.mobileNumber != undefined ? `${itemDetailsById?.mobileNumber}` : "",
                 userName: itemDetailsById?.userName || "",
-                location: reportDetails?.location || itemDetailsById?.location || "",
+                location: itemDetailsById?.location || "",
                 locationIdentifiers: itemDetailsById?.locationIdentifiers || "",
                 itemDescription: itemDetailsById?.itemDescription || "",
                 itemCategory: itemDetailsById?.itemCategory || "",
-                itemName: reportDetails?.newItem || itemDetailsById?.itemName || "",
+                itemName: itemDetailsById?.itemName || "",
                 keywords: itemDetailsById?.keywords || "",
                 itemImage: itemDetailsById?.itemImage || "",
                 cloudinary_id: itemDetailsById?.cloudinary_id || ""
@@ -76,7 +78,7 @@ export default function AddMoreDetails() {
             locationIdentifiers: "",
             itemDescription: "",
             itemCategory: "",
-            itemName: "", 
+            itemName: "",
             keywords: "",
             itemImage: "",
             cloudinary_id: ""
@@ -92,47 +94,58 @@ export default function AddMoreDetails() {
 
 
 
-    const submitData = async (e) => {
+    const submitData = async (data) => {
         try {
-            e.preventDefault();
-            methods.setValue('itemCategory', selectedCategory || itemDetailsById?.itemCategory || "")
-
-            methods.setValue("itemImage", itemImage.length > 0 ? itemImage : itemDetailsById?.itemImage);
-            methods.setValue("cloudinary_id", cloudinaryId.length > 0 ? cloudinaryId : itemDetailsById?.cloudinaryId);
-            methods.setValue("location", `${selectedLocation}` || itemDetailsById?.location || "");
             const inputString = methods.getValues().keywords;
-            methods.setValue('keywords', inputString.split(' '))
-            const data = methods.getValues();
+            methods.setValue('keywords', inputString.split(' ').filter(keyword => keyword.trim() !== ''));
             console.log("from submit form");
 
-            if (userDetails?.role === 'BUSINESS'&& !reportDetails.id) {
-                dispatch(businessAddMoreDetails(data));
+            if (userDetails?.role === 'BUSINESS' && !reportDetails.id) {
+                methods.setValue("itemImage", itemImage?.map(item => item));
+                methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
+                const inputString = methods.getValues().keywords;
+                methods.setValue('keywords', inputString.split(' ').filter(keyword => keyword.trim() !== ''));
+                const datas = methods.getValues()
+                dispatch(businessAddMoreDetails(datas));
                 navigate('/allitems')
             }
-            
+
             if (userDetails?.role === 'USER' && !reportDetails.id) {
+                methods.setValue("itemImage", itemImage);
+                methods.setValue("cloudinary_id", cloudinaryId);
+               
                 const addItem = dispatch(userAddMoreDetails(data));
                 console.log('itemadded', addItem)
                 addItem?.then((res) => {
                     setNewItemId(res.data._id)
                 })
             } else {
-                methods.setValue("itemImage", filesFromDb.itemImage);
-                methods.setValue("cloudinary_id", filesFromDb.cloudinary_id);
+                setItemImage((prevFiles) => {
+                    return prevFiles || itemDetailsById?.itemImage ? [...prevFiles, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage
+                })
+                setCloudinaryId((prevFiles) => {
+                    return prevFiles || itemDetailsById?.cloudinary_id ? [...prevFiles, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id
+                })
+                methods.setValue("itemImage", itemImage?.map(item => item));
+                methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
+
                 const dataNow = methods.getValues();
-                dispatch(userEditItemDetails(reportDetails.id, dataNow))
-                navigate('/mylistings')
+                const isEdited = dispatch(userEditItemDetails(reportDetails.id, dataNow))
+                setItemImage([]);
+                setCloudinaryId([]);
+                isEdited && (navigate('/mylistings'))
             }
-            
+
         } catch (error) {
             console.log(error, 'submitted errors')
         }
     };
 
-    const handleReset = (e) => {
+    const handleReset = () => {
         setFiles([]);
         setIsUploaded(false);
-        setFilesFromDb([]);
+        setItemImage([]);
+        setCloudinaryId([]);
     }
 
     const handleFileUpload = (e) => {
@@ -155,7 +168,13 @@ export default function AddMoreDetails() {
     };
 
     const handleDbFileDelete = (index) => {
-        setFilesFromDb((prevFiles) => {
+        console.log(index, "hi from delete")
+        setItemImage((prevFiles) => {
+            const newFiles = [...prevFiles];
+            newFiles.splice(index, 1);
+            return newFiles;
+        });
+        setCloudinaryId((prevFiles) => {
             const newFiles = [...prevFiles];
             newFiles.splice(index, 1);
             return newFiles;
@@ -177,7 +196,7 @@ export default function AddMoreDetails() {
                     setCloudinaryId(res.data.cloudinary_id)
                     setItemImage(res.data.itemImage)
                 }).then(() => {
-                    if (itemDetailsById?.itemImage) {
+                    if (itemDetailsById?.itemImage&&reportDetails.id) {
                         setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
                         setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
                     }
@@ -186,14 +205,15 @@ export default function AddMoreDetails() {
 
     }, [files])
 
-    const handleChildData = (dataFromChild) => {
-        setSelectedCategory(dataFromChild);
-    };
+    const handleCancel = () => {
+        dispatch(clearItemData())
+        setIsUploaded(false)
+        
+        window.history.back();
+    }
 
-    const handleChildDataLocation = (dataFromChild) => {
-        setSelectedLocation(dataFromChild);
-    };
-
+    console.log(itemImage, "itemimage");
+    console.log(cloudinaryId, 'cloudi')
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
@@ -201,8 +221,8 @@ export default function AddMoreDetails() {
             </div>
 
             <FormProvider {...methods}>
-                <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'>
-                {/* <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'> */}
+                {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
+                <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div>
                             <div className='flex justify-between mb-9'>
@@ -230,8 +250,7 @@ export default function AddMoreDetails() {
                                     name='itemCategory'
                                     optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                     editButton={true}
-                                    handleData={handleChildData}
-                                    valueFromDb={itemDetailsById?.itemCategory}
+                                    valueFromDb={isCancelled ? "" : itemDetailsById?.itemCategory}
                                     selection={true}
                                     dropdownValues={itemCategories} />
                             </div>
@@ -277,7 +296,7 @@ export default function AddMoreDetails() {
                                             {
                                                 itemDetailsById?.itemImage ?
                                                     <div>
-                                                        {filesFromDb?.map((items, i) => {
+                                                        {cloudinaryId?.map((items, i) => {
                                                             return (
                                                                 <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
                                                                     <div>{items}</div>
@@ -289,7 +308,7 @@ export default function AddMoreDetails() {
                                                     :
                                                     ""
                                             }
-                                            {files
+                                            {/* {files
                                                 ?
                                                 <div>
                                                     {
@@ -305,7 +324,7 @@ export default function AddMoreDetails() {
                                                 </div>
                                                 :
                                                 ""
-                                            }
+                                            } */}
 
                                         </div>
                                         :
@@ -314,22 +333,18 @@ export default function AddMoreDetails() {
 
                                     <div className="flex justify-center items-center">
                                         <ImageUpload
-                                            name="item"
-                                            designClass={
-                                                `${isUploaded || itemDetailsById?.itemImage
-                                                    ?
-                                                    "xl:w-80 md:w-80 sm:64 xl:mr-2 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
-                                                    :
-                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
-                                                }`
-                                            }
+                                            name="imageUploads"
+                                            designClass={cloudinaryId?.length > 0 || isUploaded ?
+                                                "xl:w-80 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                                :
+                                                "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
                                             multiple={true}
                                             handleFileUpload={handleFileUpload}
                                         />
 
-                                        {itemDetailsById?.itemImage || isUploaded ?
+                                        {cloudinaryId?.length > 0 || isUploaded ?
                                             <div>
-                                                <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
+                                                <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
                                                     <IoMdRefresh className='h-6 w-6' />
                                                 </button>
                                             </div>
@@ -349,9 +364,8 @@ export default function AddMoreDetails() {
                                         optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                         editButton={true}
                                         selection={true}
-                                        valueFromDb={itemDetailsById?.location || reportDetails?.location}
+                                        valueFromDb={reportDetails.location || itemDetailsById?.location}
                                         dropdownValues={citiesInSerbia}
-                                        handleData={handleChildDataLocation}
                                     />
                                 </div>
 
@@ -420,7 +434,7 @@ export default function AddMoreDetails() {
                                 <div>
                                     <button
                                         className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
-                                        onClick={() => { window.history.back() }}
+                                        onClick={handleCancel}
                                     >
                                         Cancel
                                     </button>
