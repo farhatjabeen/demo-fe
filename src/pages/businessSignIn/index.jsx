@@ -82,13 +82,6 @@ export default function BusinessSignIn() {
                                         <input type='checkbox' />
                                         <div className='text-xs text-[#4D4D4D] font-light'>Remember me</div>
                                     </div>
-                                    <button
-                                        onClick={handleForgot}
-                                    >
-                                        <div className='text-xs text-[#4D4D4D] font-light'>
-                                            Forgot Password?
-                                        </div>
-                                    </button>
                                 </div>
                                 <button
                                     className='bg-primary-color w-full h-14 rounded-md mt-8'
