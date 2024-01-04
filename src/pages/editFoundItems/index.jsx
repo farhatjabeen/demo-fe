@@ -27,6 +27,8 @@ const EditFoundItems = () => {
       itemName: "",
       itemDescription: "",
       itemCategory: "",
+      keywords: "",
+      locationIdentifiers: "",
     },
     resolver
   });
@@ -34,12 +36,14 @@ const EditFoundItems = () => {
     dispatch(foundItemById(id))
   }, [id])
   const foundItemDetails = useSelector(getItemId);
-  const { userName, mobileNumber, foundDate, foundTime, location, itemCategory } = foundItemDetails || {};
+  const { userName, mobileNumber, emailMailId, foundDate, foundTime, location, itemCategory } = foundItemDetails || {};
   useEffect(() => {
     if (foundItemDetails) {
       methods.reset({
         itemName: foundItemDetails.itemName,
+        keywords: foundItemDetails.keywords,
         itemDescription: foundItemDetails.itemDescription,
+        locationIdentifiers: foundItemDetails.locationIdentifiers,
         itemCategory: foundItemDetails.itemCategory,
       });
     }
@@ -70,8 +74,8 @@ const EditFoundItems = () => {
       <div>
         <Breadcrumbs
           items={[
-            { label: 'Found Items', link: '/admin/user/foundItems', className: 'text-black  text-4xl mt-10' },
-            { label: 'Edit Found Items', className: 'text-black font-bold text-4xl mt-10' },
+            { label: 'Found Items', link: '/admin/user/foundItems', className: 'text-black xl:text-4xl sm:text-2xl mt-10' },
+            { label: 'Edit Found Items', className: 'text-black font-bold xl:text-4xl sm:text-2xl  mt-10' },
           ]}
         />
       </div>
@@ -84,30 +88,34 @@ const EditFoundItems = () => {
                 Founder Details
               </h1>
             </div>
-            <div className="flex p-4 ">
-              <div className="w-1/2">
-                <div className=" mb-4">
+            <div className="p-4">
+              <div className='xl:flex lg:flex md:flex xs:block '>
+                <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-4">
                   <label >Founder Name</label>
-                  <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{userName}</p>
-                </div>
-                <div className="mb-2 mb-4  ">
-                  <label>Found Date</label>
-                  <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{foundDate}</p>
+                  <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray  rounded-md" >{userName}</p>
                 </div>
 
-                <div className="mb-2 mb-4">
-                  <label >Found Location </label>
-                  <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{location}</p>
+                <div className=" xl:w-1/3 xs:w-full md:w-1/2 mb-4">
+                  <label >Founder Mobile Number</label>
+                  <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{mobileNumber}</p>
+                </div>
+                <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-4">
+                  <label >Founder Email ID</label>
+                  <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{emailMailId}</p>
                 </div>
               </div>
-              <div className="w-1/2">
-                <div className="mb-4">
-                  <label >Founder Mobile Number</label>
-                  <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{mobileNumber}</p>
+              <div className='xl:flex lg:flex md:flex xs:block '>
+                <div className="mb-4  xl:w-1/3 xs:w-full md:w-1/2">
+                  <label>Found Date</label>
+                  <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{foundDate}</p>
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 xl:w-1/3 xs:w-full md:w-1/2">
                   <label >Found Time</label>
-                  <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{foundTime}</p>
+                  <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{foundTime}</p>
+                </div>
+                <div className=" mb-4 xl:w-1/3 xs:w-full md:w-1/2">
+                  <label >Found Location </label>
+                  <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{location}</p>
                 </div>
               </div>
             </div>
@@ -116,16 +124,16 @@ const EditFoundItems = () => {
             <div className="mx-4 pb-4 ">
               <h1 className="text-navy-blue font-bold text-xl">Items Details</h1>
             </div>
-            <div className="flex p-4 ">
-              <div className="w-1/2 mb-2">
+            <div className="xl:flex lg:flex md:flex xs:block p-4 ">
+              <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-2">
                 <label >Item Name</label>
                 <TextInput
                   name='itemName'
-                  className="w-11/12 py-2 px-3  border border-gray rounded-md"
+                  className="w-11/12 py-2 px-3  border border-light-gray rounded-md"
                   required
                 />
               </div>
-              <div className="mb-2 w-5/12">
+              <div className="mb-2 xl:w-1/3 xs:w-full md:w-1/2">
                 <label>Item Category</label>
                 <DropdownMenu
                   dropdownValues={dropdownValues}
@@ -133,16 +141,44 @@ const EditFoundItems = () => {
                   onChange={setSelectedCategory}
                 />
               </div>
+              <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-2 xl:ml-6 md:ml-4">
+                <label >Keywords</label>
+                <TextInput
+                  name='keywords'
+                  className="w-11/12 py-2 px-3  border border-light-gray rounded-md"
+                  required
+                />
+              </div>
             </div>
-            <div className="p-4">
-              <label >Item Description</label>
-              <TextAreaInput
-                name='itemDescription'
-                autoComplete="off"
-                className="w-11/12 py-2 px-3 border border-gray rounded-md"
-                rows="4"
-                required
-              ></TextAreaInput>
+            <div className="p-4 xl:flex lg:flex md:flex xs:block">
+              <div className='xl:w-1/3 xs:w-full md:w-1/2'>
+                <label >Item Description</label>
+                <TextAreaInput
+                  name='itemDescription'
+                  autoComplete="off"
+                  className="w-11/12 py-2 px-3 border border-light-gray rounded-md"
+                  rows="4"
+                  required
+                ></TextAreaInput>
+              </div>
+              <div className='xl:w-1/3 xs:w-full md:w-1/2'>
+                <label >Landmark</label>
+                <TextAreaInput
+                  name='locationIdentifiers'
+                  autoComplete="off"
+                  className="w-11/12 py-2 px-3 border border-light-gray rounded-md"
+                  rows="4"
+                  required
+                ></TextAreaInput>
+              </div>
+              <div className='xl:w-1/3 xs:w-full md:w-1/2'>
+                <label >Upload Images</label>
+                <div>
+                  <button className='bg-primary-color py-2 rounded-xl w-80'>
+                    Upload Image
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div className=" flex justify-end mt-6">

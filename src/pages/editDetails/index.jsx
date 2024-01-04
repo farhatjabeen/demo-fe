@@ -43,7 +43,7 @@ export default function EditBusinessDetails() {
             locationIdentifiers: "",
             keywords: "",
             itemImage: "",
-            cloudinary_id: [],
+            cloudinary_id: "",
 
         },
         resolver
@@ -80,7 +80,7 @@ export default function EditBusinessDetails() {
                 locationIdentifiers: itemDetails.locationIdentifiers || "",
                 keywords: itemDetails.keywords || "",
                 itemImage: itemDetails.itemImage || "",
-                cloudinary_id: itemDetails.cloudinary_id || []
+                cloudinary_id: itemDetails.cloudinary_id || ""
             });
         }
     }, [itemDetails]);
