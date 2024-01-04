@@ -29,7 +29,7 @@ export default function ClaimItem() {
                 <div >
                     <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl'>Prove your authenticity to claim the item</div>
                 </div>
-                <div className='mt-10 w-full flex justify-center items-center'>
+                <div className='mt-10 px-16 w-full flex justify-center items-center'>
                     <div>
                         {productDetails?.itemImage && productDetails.itemImage[0] && (
                             <img src={productDetails?.itemImage[0]}
@@ -38,7 +38,7 @@ export default function ClaimItem() {
                             </img>
                         )}
                     </div>
-                    <div className='bg-white xl:w-8/12 xl:h-72 md:w-9/12 md:h-60 sm:w-11/12 sm:h-48 rounded-3xl xl:p-8 md:p-8 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
+                    <div className='bg-white xl:w-4/5 xl:h-72 md:w-9/12 md:h-60 sm:w-11/12 sm:h-48 rounded-3xl xl:p-8 md:p-8 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
                         <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl' >{productDetails?.itemName} (Item #{productDetails?.itemCode})</div>
                         <div className='xl:mt-6 md:mt-6 sm:mt-3'>
                             <div className='w-64 flex'>

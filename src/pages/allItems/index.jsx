@@ -37,9 +37,9 @@ export default function AllItems() {
                     </div>
                 </div>
 
-                <div className='h-32 mb-10 p-5 flex flex-col space-y-10 rounded-lg w-full bg-primary-color'>
+                <div className='h-32 mb-10 p-5 flex flex-col space-y-10 rounded-lg w-full bg-gradient-to-r from-dark-yellow to-yellow'>
                     <div className='text-xs font-medium text-white'>TOTAL FOUND ITEMS</div>
-                    <div className='text-4xl font-bold text-white'>120</div>
+                    <div className='text-4xl font-bold text-white'>{tableData?.list?.length}</div>
                 </div>
 
                 <div className='mt-10 mb-4 font-semibold text-2xl'>All Items</div>

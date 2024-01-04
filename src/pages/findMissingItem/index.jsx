@@ -68,12 +68,12 @@ export default function FindMissingItem() {
         Search results
       </h1>
 
-      <div className='xl:h-20 xl:w-4/6 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center '>
+      <div className='xl:h-20 xl:w-3/5 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center '>
         <FormProvider {...methods}>
           <form onSubmit={(e) => submitData(e)} className='w-full flex'>
           {/* <form onSubmit={methods.handleSubmit(submitData)} className='w-full flex'> */}
 
-            <div className='w-9/12'>
+            <div className='w-10/12'>
               <TextInput
                 type='text'
                 placeholder='Search...'
@@ -83,10 +83,10 @@ export default function FindMissingItem() {
                 required
               />
             </div>
-            <div className='w-3/12'>
+            <div className='w-4/12 mr-2'>
               <button
                 type='submit'
-                className='px-16 h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
+                className='w-full h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
             </div>
 
           </form>
