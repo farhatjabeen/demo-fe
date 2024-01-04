@@ -110,6 +110,7 @@ console.log(methods.getValues().location,"location from dropdown")
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
 
                                         <FormDropdown
@@ -121,6 +122,7 @@ console.log(methods.getValues().location,"location from dropdown")
                                             required
                                             isSearchReport="true"
                                             dropdownValues={citiesInSerbia}
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
                                         <button
                                             type='submit'
@@ -145,6 +147,7 @@ console.log(methods.getValues().location,"location from dropdown")
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
                                         <FormDropdown
                                             placeholder="Location"
@@ -154,6 +157,7 @@ console.log(methods.getValues().location,"location from dropdown")
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                             dropdownValues={citiesInSerbia}
                                         />
                                         <button

@@ -56,7 +56,9 @@ export default function BusinessItemDetails() {
                 <Slider {...settings}>
                     {itemDetails?.itemImage?.map((items, i) => {
                         return (
-                            <div key={i} className='w-1/2 flex justify-end'><img className='h-96 w-fit' src={items} alt='keys' /></div>
+                            // <div key={i} className='w-1/2 flex justify-end'>
+                                <img className='h-96 w-fit' src={items} alt='keys' />
+                            // </div>
                         );
                     })}
                 </Slider>
@@ -77,19 +79,19 @@ export default function BusinessItemDetails() {
                 </div>
 
                 {userDetails?.role === 'BUSINESS' ?
-                <div className='bg-white rounded-lg xl:w-max md:w-96 sm:w-72 p-5 mr-10'>
-                    <div className='xl:text-3xl md:text-xl sm:text-lg text-primary-color w-full xl:pt-5 md:pt-3 sm:pt-2 xl:pb-10 md:pb-6 sm:pb-5'>Posted person details</div>
-                    {personTitles.map((items, i) => {
-                        return (
-                            <div key={i} className='flex justify-start'>
-                                <div className='xl:w-52 md:w-60 sm:w-56 text-[#455A64] xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
-                                <div className='xl:w-96 md:w-60 sm:w-56 text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'>{items.answer}</div>
-                            </div>
-                        );
-                    })}
-                </div>
-                :
-                ""}
+                    <div className='bg-white rounded-lg xl:w-max md:w-96 sm:w-72 p-5 mr-10'>
+                        <div className='xl:text-3xl md:text-xl sm:text-lg text-primary-color w-full xl:pt-5 md:pt-3 sm:pt-2 xl:pb-10 md:pb-6 sm:pb-5'>Posted person details</div>
+                        {personTitles.map((items, i) => {
+                            return (
+                                <div key={i} className='flex justify-start'>
+                                    <div className='xl:w-52 md:w-60 sm:w-56 text-[#455A64] xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
+                                    <div className='xl:w-96 md:w-60 sm:w-56 text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'>{items.answer}</div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    :
+                    ""}
             </div>
 
         </div>

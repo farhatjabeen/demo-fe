@@ -188,7 +188,7 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBu
 export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}&page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
             const { list, pageMeta } = res.data

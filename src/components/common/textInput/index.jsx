@@ -9,7 +9,7 @@ import { FormErrorMessage } from '../FormErrorMessage';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
-function TextInput({ type = 'text', placeholder, name, disable, isSearchReport=false, eyeClass, className: inputClassName, showPassword, setShowPassword }) {
+function TextInput({ type = 'text', placeholder, name, disable, errorClass, isSearchReport=false, eyeClass, className: inputClassName, showPassword, setShowPassword }) {
 
     return (
         <ConnectForm>
@@ -41,7 +41,7 @@ function TextInput({ type = 'text', placeholder, name, disable, isSearchReport=f
                                     </div>}
                                     {
                                         isSearchReport && (
-                                            <div className="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1">
+                                            <div className={errorClass}>
                                               <FormErrorMessage error={getFormErrorMessage(errors, name)} />
                                             </div>
                                           )

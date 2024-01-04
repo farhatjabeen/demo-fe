@@ -7,7 +7,7 @@ import Pagination from '../../components/common/pagination'
 import TextInput from '../../components/common/textInput';
 import SearchCards from '../../components/searchCards';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { searchSchema } from '../../validations';
+import { searchByKeywordSchema, searchSchema } from '../../validations';
 import { clearItemData, searchByLocation, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
 import { Toast } from '../../components/toast';
 
@@ -15,14 +15,13 @@ export default function FindMissingItem() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const searchParameters = useParams();
-
-  const dispatch = useDispatch();
-  const resolver = useValidationResolver(searchSchema);
+    const dispatch = useDispatch();
+  const resolver = useValidationResolver(searchByKeywordSchema);
   const searchValue = useSelector(searchKey);
   const isLastPage = searchValue?.pageMeta?.page === searchValue?.pageMeta?.totalPages;
   const methods = useForm({
     defaultValues: {
-      itemName: ""
+      keyword: ""
     },
     resolver
   });
@@ -41,16 +40,15 @@ export default function FindMissingItem() {
     setCurrentPage(pageNumber);
   };
 
-  const submitData = (e) => {
-    e.preventDefault();
+  const submitData = () => {
     try {
       const productName = methods.getValues();
-      if(productName.itemName){
-      navigate(`/findmissingitem/${productName.itemName}`)
+      if(productName.keyword){
+      navigate(`/findmissingitem/${productName.keyword}`)
       }else{
         Toast({type:'error',message:'Enter Item Name'})
       }
-      dispatch(searchItem(productName.itemName));
+      dispatch(searchItem(productName.keyword));
     } catch (error) {
       console.log("submitData errors", error)
     }
@@ -68,18 +66,20 @@ export default function FindMissingItem() {
         Search results
       </h1>
 
-      <div className='xl:h-20 xl:w-3/5 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center '>
+      <div className='xl:h-20 xl:w-3/5 md:h-20 md:w-4/5 sm:h-20 sm:w-4/5 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center justify-center'>
         <FormProvider {...methods}>
-          <form onSubmit={(e) => submitData(e)} className='w-full flex'>
-          {/* <form onSubmit={methods.handleSubmit(submitData)} className='w-full flex'> */}
+          {/* <form onSubmit={(e) => submitData(e)} className='w-full flex'> */}
+          <form onSubmit={methods.handleSubmit(submitData)} className='w-full flex'>
 
             <div className='w-10/12'>
               <TextInput
                 type='text'
                 placeholder='Search...'
-                name="itemName"
+                name="keyword"
                 className='ml-2 p-4 xl:h-14 sm:h-13 w-11/12 rounded-2xl border border-solid border-[#B6B6B6]'
                 autoComplete="off"
+                isSearchReport={true}
+                errorClass="absolute xl:bottom-4 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                 required
               />
             </div>
@@ -93,10 +93,10 @@ export default function FindMissingItem() {
         </FormProvider>
       </div>
 
-      <div className='flex flex-wrap justify-center items-center w-full'>
+      <div className='flex flex-wrap justify-center items-center w-full mr-7'>
         {searchValue?.list?.length && searchValue.list.map((items, i) => {
           return (
-            <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 sm:flex sm:items-center'>
+            <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 mt-8 sm:flex sm:items-center'>
               <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
             </div>
           );
