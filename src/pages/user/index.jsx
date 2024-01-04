@@ -14,8 +14,7 @@ function User() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchUserTerm, setSearchUserTerm] = useState("");
   const [searchBusinessTerm, setSearchBusinessTerm] = useState("");
-  const PageLimit = useState(10);
-
+  const PageLimit = 10;
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
   const dispatch = useDispatch();

@@ -80,10 +80,10 @@ export default function BusinessHome() {
                         </p>
                         <button className='text-[#444444] font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
                     </div>
+                    <div className='text-white'><button className='bg-[#FF9900] px-4 py-1 rounded-md xl:text-lg md:text-sm sm:text-xs'>Know more</button></div>
                 </div>
                 <div className='absolute xl:top-0 xl:pt-36 md:top-14 sm:top-10 w-full flex flex-col items-end xl:pr-32 md:pr-16 sm:pr-7'>
                     <div><img src={transportLondon} className='xl:h-72 xl:w-full md:h-56 md:w-80 sm:h-40 sm:w-60' alt='transportLondon' /></div>
-                    <div className='flex  xl:w-96 md:w-80 sm:w-56 xl:mt-8 md:mt-6 sm:mt-4 text-white'><button className='bg-[#FF9900] xl:w-80 md:w-52 sm:w-44 xl:h-10 md:h-9 sm:h-7 xl:text-lg md:text-sm sm:text-xs'>Click here to find out more</button></div>
                 </div>
             </div>
 
