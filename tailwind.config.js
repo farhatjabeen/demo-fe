@@ -31,7 +31,8 @@ module.exports = {
       'shadow-color':'#C8FFFF',
       'text-color':'#404041',
       'orange':'#FFBA00',
-      'yellow':'#E8B810'
+      'yellow':'#DFD935',
+      'dark-yellow': '#D47A11'
     },
     extend: {}
   },

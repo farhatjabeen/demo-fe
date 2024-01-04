@@ -46,7 +46,7 @@ export const generalUserRegisterSchema = yup.object({
     password: yup
         .string()
         .required("Please re-type your password")
-        .oneOf([yup.ref('newPassword')], null, "Passwords does not match"),
+        .oneOf([yup.ref('newPassword')], "Passwords does not match"),
     newPassword: yup
         .string()
         .matches
