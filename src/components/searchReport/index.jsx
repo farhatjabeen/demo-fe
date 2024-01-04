@@ -8,17 +8,16 @@ import TextInput from '../common/textInput';
 import {useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../redux/reducers/userSlice';
 import { Toast } from '../toast';
-import { Switch } from '@headlessui/react';
+// import { Switch } from '@headlessui/react';
 import FormDropdown from '../common/formDropdown';
 import { locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
-    const [searchActive, setSearchActive] = useState(false);
-    const [reportActive, setReportActive] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState("");
+
     const cities = useSelector(locationDetails);
     const citiesInSerbia = Object.values(cities);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const resolver = useValidationResolver(searchSchema);
@@ -29,25 +28,23 @@ export default function SearchReport() {
             location: ""
         },
         resolver
-    })
-console.log(methods.getValues().location,"location from dropdown")
+    });
+
+    console.log("citiesInSerbia", citiesInSerbia)
+
     useEffect(() => {
-
+        console.log("search report API called")
         dispatch(locationDropdownValues())
-       
-
     }, []);
 
     const submitData = async () => {
         try {
             const itemName = methods.getValues().itemName;
-            const location = methods.getValues().location;
-
             if (buttonActive) {
                 navigate(`/findMissingItem/${itemName}/${methods.getValues().location}`);
             } else {
                 if (isUser) {
-                    navigate(`/addmoredetails/${itemName}/${methods.getValues().location}`);
+                    navigate(`/addMoreDetails/${itemName}/${methods.getValues().location}`);
                 } else {
                     Toast({ type: "error", message: "Login Required" })
                 }
@@ -110,7 +107,6 @@ console.log(methods.getValues().location,"location from dropdown")
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
 
                                         <FormDropdown
@@ -122,7 +118,6 @@ console.log(methods.getValues().location,"location from dropdown")
                                             required
                                             isSearchReport="true"
                                             dropdownValues={citiesInSerbia}
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
                                         <button
                                             type='submit'
@@ -147,7 +142,6 @@ console.log(methods.getValues().location,"location from dropdown")
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
                                         <FormDropdown
                                             placeholder="Location"
@@ -157,7 +151,6 @@ console.log(methods.getValues().location,"location from dropdown")
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                             dropdownValues={citiesInSerbia}
                                         />
                                         <button

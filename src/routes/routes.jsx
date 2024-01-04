@@ -21,11 +21,11 @@ const routers = [
       },
       {
         component: "AddMoreDetails",
-        childPath: "/addmoredetails",
+        childPath: "/addMoreDetails",
       },
       {
         component: "AddMoreDetails",
-        childPath: "/addmoredetails/:id",
+        childPath: "/addMoreDetails/:id",
       },
       {
         component: "BusinessItemDetails",

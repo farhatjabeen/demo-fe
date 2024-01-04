@@ -15,7 +15,7 @@ export default function QueryPublished() {
     }, [])
 
     const handleEditItem = (id) => {
-        navigate(`/addmoredetails/${id}`)
+        navigate(`/addMoreDetails/${id}`)
     }
 
     return (
