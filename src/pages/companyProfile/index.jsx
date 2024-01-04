@@ -19,9 +19,6 @@ export default function CompanyProfile() {
     const citiesInSerbia = Object.values(cities);
     const categories = useSelector(categoryDetails);
     const companyCategories = Object.values(categories);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedLocation, setSelectedLocation] = useState("");
-    console.log(selectedCategory, 'selectedcat')
     const userProfileData = useSelector(userProfile);
     console.log(userProfileData, 'userProfileData')
 
