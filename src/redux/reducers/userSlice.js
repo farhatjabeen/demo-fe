@@ -161,6 +161,38 @@ export const businessUserRegister = (data) => async (dispatch) => {
         })
     })
 }
+//forgot password in generaluser
+export const generalForgotPassword = (data) => async () => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.forgotPasswordGeneral,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+        }).then(res => {
+            Toast({ type: "success", message: res.message })
+            return resolve(true);
+        }).catch(err => {
+            reject(err);
+            console.log('rejected', err)
+        })
+    })
+}
+// reset password in generaluser
+export const generalResetPassword = (data, token) => async () => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.resetPasswordGeneral}/${token}`,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+        }).then(res => {
+            Toast({ type: "success", message: res.message })
+            return resolve(res);
+        }).catch(err => {
+            reject(err);
+            console.log('rejected', err)
+        })
+    })
+}
 //forgot password in businessuser
 export const businessForgotPassword = (data) => async () => {
     return new Promise((resolve, reject) => {

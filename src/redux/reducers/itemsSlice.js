@@ -67,7 +67,7 @@ export const itemsSlice = createSlice({
 export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchItems}?page=${currentPage}&limit=${PageLimit}`,
+            url: `${endpoints.apiPath.items.fetchItems}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'businessUserToken'
@@ -143,7 +143,7 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategor
 };
 
 //get user in admin
-export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm) => (dispatch) => {
+export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm='') => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchUserTerm || ''}`,
@@ -164,7 +164,7 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm) 
 };
 
 //get businessUser in admin
-export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm) => (dispatch) => {
+export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm='') => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchBusinessTerm || ''}`,
@@ -450,7 +450,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
 export const userEditItemDetails = (itemId,data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.editItemGeneralUser}?itemId=${itemId}`,
+            url: `${endpoints.apiPath.editItemGeneralUser}/${itemId}`,
             method: endpoints.ApiMethods.PUT,
             data: data,
             isAuth: true

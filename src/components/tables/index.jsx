@@ -14,7 +14,11 @@ const Table = ({ headers, data, showEdit = false, context }) => {
     setSelectedItemId(id);
     setDeleteModalOpen(true);
   };
-
+  const handleSelect=(item)=>{
+    if (window.location.pathname === "/admin/user/foundItems") {
+      navigate(`/admin/user/foundItems/itemDetails/${item._id}`);
+    }
+  }
   return (
     <div className="my-5">
       <table className="w-full">
@@ -48,7 +52,7 @@ const Table = ({ headers, data, showEdit = false, context }) => {
                       )}
                     </td>
                   ) : (
-                    <td key={header.key} className="py-4 px-6" onClick={() => navigate(`/admin/user/foundItems/itemDetails/${item._id}`)}>{item[header.key]}</td>
+                    <td key={header.key} className="py-4 px-6" onClick={() => handleSelect(item)}>{item[header.key]}</td>
                   )
                 ))}
             </tr>

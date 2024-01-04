@@ -16,7 +16,7 @@ const SideMenu = () => {
       setShowSubUSer(true);
     }
   };
-
+  const settingsTabWidth = isCollapsed ? "w-12" : "w-52";
   return (
     <div className="sidebar relative bg-[#F6F8F9] shadow-slate-50 m-4">
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
@@ -82,7 +82,7 @@ const SideMenu = () => {
             </li>
           </>
         )}
-        <li className={`fixed bottom-4 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold py-3 rounded-lg " : ""}`}>
+        <li className={`fixed bottom-4 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold py-3 rounded-lg " : ""}${settingsTabWidth}`}>
           <Link to="/admin/user/settings" >
             <span className="pl-2 flex">
               <FiSettings size={26}/>

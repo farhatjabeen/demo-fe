@@ -49,7 +49,7 @@ function FoundItems() {
     { key: "itemName", label: "Item Name" },
     { key: "location", label: "Location" },
     { key: "foundTime", label: "Time Found" },
-    { key: "found by", label: "Found By" },
+    { key: "userName", label: "Found By" },
     { key: "mobileNumber", label: "Phone Number" },
     { key: "action", label: "Actions" },
   ];

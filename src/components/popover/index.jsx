@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Fragment } from 'react';
-
 import { IoTriangleSharp } from "react-icons/io5";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Popover, Transition } from "@headlessui/react";
-
 import linkSymbol from '../../assets/images/linksymbol.png';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { checkGeneralUserEmail, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
-import { generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
+import { checkGeneralUserEmail, generalForgotPassword, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
+import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
 import TextInput from '../common/textInput';
 
 const PopoverComponent = () => {
@@ -23,6 +21,7 @@ const PopoverComponent = () => {
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
+    const resolverForLogin = useValidationResolver(generalUserLoginSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
     const [isEmailValid, setIsEmailValid] = useState(false);
 
@@ -34,16 +33,22 @@ const PopoverComponent = () => {
     const handleEmailChange = (e) => {
         const mailId = e.target.value;
         const isValid = validateEmail(mailId);
-            setIsEmailValid(isValid);
-            console.log('Email:', mailId, 'isValid:', isValid);
+        setIsEmailValid(isValid);
+        console.log('Email:', mailId, 'isValid:', isValid);
     };
 
     const methods = useForm({
         defaultValues: {
-            emailMailId: "",
-            password: ""
+            emailMailId: ""
         },
         resolver
+    });
+
+    const methodsForLogin = useForm({
+        defaultValues: {
+            password: ""
+        },
+        resolverForLogin
     });
 
     const methodsForRegister = useForm({
@@ -54,11 +59,11 @@ const PopoverComponent = () => {
         resolverForRegister
     });
 
-    const handleContinue = async (e) => {
+    const handleContinue = async (data) => {
         try {
-            e.preventDefault();
+            // e.preventDefault();
             const emailMailId = methods.getValues().emailMailId;
-            const login = dispatch(checkGeneralUserEmail({ emailMailId }));
+            const login = dispatch(checkGeneralUserEmail({emailMailId}));
             if (login) {
                 setPasswordBox(true);
             }
@@ -67,30 +72,30 @@ const PopoverComponent = () => {
         }
     };
 
-    const registerButton = async (e) => {
+    const registerButton = async () => {
         try {
-            e.preventDefault();
+            // e.preventDefault();
             const password = methodsForRegister.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             const registerSuccessful = dispatch(generalUserRegister({ emailMailId, password }));
             if (registerSuccessful) {
                 Popover.close();
-              }
+            }
         } catch (error) {
             console.log("submitData errors", error)
         }
     }
 
-    const handleLogin = async (e) => {
+    const handleLogin = async () => {
         try {
-            e.preventDefault();
-            const password = methods.getValues().password;
+            // e.preventDefault();
+            const password = methodsForLogin.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             const loginSuccessful = dispatch(generalUserLogin({ emailMailId, password }));
             if (loginSuccessful) {
                 Popover.close();
-              }
-            
+            }
+
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -107,6 +112,20 @@ const PopoverComponent = () => {
             password: ""
         })
     }
+    const handleForgot = async () => {
+        try {
+            await methods.trigger('emailMailId');
+
+            if (methods.formState.errors.emailMailId) {
+                console.log('Email is not valid');
+                return;
+            }
+            const emailMailId = methods.getValues().emailMailId;
+            dispatch(generalForgotPassword({ emailMailId }));
+        } catch (error) {
+            console.log('handleForgot error', error);
+        }
+    };
 
     return (
         <div>
@@ -142,28 +161,37 @@ const PopoverComponent = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <FormProvider {...methods}>
-                                                            <form onSubmit={(e) => handleLogin(e)}>
-                                                                <div >
-                                                                    <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
-                                                                    <TextInput
-                                                                        type='password'
-                                                                        name='password'
-                                                                        eyeClass='absolute top-3 left-3/4 ml-16'
-                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
-                                                                        autoComplete="off"
-                                                                        showPassword={showPassword}
-                                                                        required
-                                                                        setShowPassword={() => setShowPassword(!showPassword)}
-                                                                    />
-                                                                </div>
+                                                        <div className='relative'>
+                                                            <FormProvider {...methodsForLogin}>
+                                                            <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
+                                                                    <div >
+                                                                        <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
+                                                                        <TextInput
+                                                                            type='password'
+                                                                            name='password'
+                                                                            eyeClass='absolute top-3 left-3/4 ml-16'
+                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
+                                                                            autoComplete="off"
+                                                                            showPassword={showPassword}
+                                                                            required
+                                                                            setShowPassword={() => setShowPassword(!showPassword)}
+                                                                        />
+                                                                    </div>
+                                                                    <button
+                                                                        type='submit'
+                                                                        className='w-full h-11 rounded-md mt-12 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                        LOGIN
+                                                                    </button>
+                                                                </form>
+                                                            </FormProvider>
+                                                            <div className='absolute top-20 right-2.5'>
                                                                 <button
-                                                                    type='submit'
-                                                                    className='w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
-                                                                    LOGIN
+                                                                    onClick={handleForgot}
+                                                                    className='text-light-grey text-xs font-light'>
+                                                                    Forgot Password?
                                                                 </button>
-                                                            </form>
-                                                        </FormProvider>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     :
                                                     <div className='mb-5'>
@@ -176,8 +204,8 @@ const PopoverComponent = () => {
                                                             </div>
                                                         </div>
                                                         <FormProvider {...methodsForRegister}>
-                                                            <form onSubmit={(e) => registerButton(e)}>
-                                                                {/* <form onSubmit={methods.handleSubmit(registerButton)}> */}
+                                                            {/* <form onSubmit={(e) => registerButton(e)}> */}
+                                                                <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
                                                                 <div>
                                                                     <div className=' text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
                                                                     <TextInput
@@ -221,7 +249,8 @@ const PopoverComponent = () => {
                                                     </div>
                                                 </div>
                                                 <FormProvider {...methods}>
-                                                    <form onSubmit={(e) => handleContinue(e)}>
+                                                    {/* <form onSubmit={(e) => handleContinue(e)}> */}
+                                                    <form onSubmit={methods.handleSubmit(handleContinue)}>
                                                         <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-[#757780] mb-1.5'>Email Address</div>
                                                         <div>
                                                             <TextInput
@@ -230,7 +259,7 @@ const PopoverComponent = () => {
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
-                                                                onClick={(e)=>handleEmailChange(e)}
+                                                                // onClick={(e)=>handleEmailChange(e)}
                                                             />
                                                         </div>
                                                         <button

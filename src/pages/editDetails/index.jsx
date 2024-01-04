@@ -8,7 +8,7 @@ import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems, filesUploadAPI, locationDropdownValues, dropdownLocation, locationDetails } from '../../redux/reducers/itemsSlice';
+import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems, filesUploadAPI, locationDropdownValues,  locationDetails } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
 import DropdownMenu from '../../components/common/dropdown';

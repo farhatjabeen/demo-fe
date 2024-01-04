@@ -5,16 +5,22 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../common/textInput';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../redux/reducers/userSlice';
 import { Toast } from '../toast';
 import { Switch } from '@headlessui/react';
+import FormDropdown from '../common/formDropdown';
+import { locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
     const [searchActive, setSearchActive] = useState(false);
     const [reportActive, setReportActive] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState("");
+    const cities = useSelector(locationDetails);
+    const citiesInSerbia = Object.values(cities);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const resolver = useValidationResolver(searchSchema);
     const isUser = useSelector(userData)
     const methods = useForm({
@@ -24,12 +30,13 @@ export default function SearchReport() {
         },
         resolver
     })
+console.log(methods.getValues().location,"location from dropdown")
+    useEffect(() => {
 
-    // useEffect(()=>{
-    //     if(buttonActive===false){
-    //         setReportButton(true)
-    //     }
-    // },[buttonActive])
+        dispatch(locationDropdownValues())
+       
+
+    }, []);
 
     const submitData = async () => {
         try {
@@ -37,10 +44,10 @@ export default function SearchReport() {
             const location = methods.getValues().location;
 
             if (buttonActive) {
-                navigate(`/findMissingItem/${itemName}/${location}`);
+                navigate(`/findMissingItem/${itemName}/${methods.getValues().location}`);
             } else {
                 if (isUser) {
-                    navigate(`/addmoredetails/${itemName}/${location}`);
+                    navigate(`/addmoredetails/${itemName}/${methods.getValues().location}`);
                 } else {
                     Toast({ type: "error", message: "Login Required" })
                 }
@@ -58,12 +65,6 @@ export default function SearchReport() {
     const handleReportButton = () => {
         setButtonActive(!buttonActive);
     }
-
-    // const handleReportKey = () => {
-    //     if (reportKey && locationKey) {
-    //         navigate(`/addMoreDetails/${reportKey}/${locationKey}`);
-    //     }
-    // }
 
     const [toggleState, setToggleState] = useState('search');
 
@@ -111,14 +112,15 @@ export default function SearchReport() {
                                             isSearchReport="true"
                                         />
 
-                                        <TextInput
-                                            type="text"
+                                        <FormDropdown
                                             placeholder="Location"
                                             name="location"
-                                            className={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                                            editButton={true}
+                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
+                                            dropdownValues={citiesInSerbia}
                                         />
                                         <button
                                             type='submit'
@@ -144,14 +146,15 @@ export default function SearchReport() {
                                             required
                                             isSearchReport="true"
                                         />
-                                        <TextInput
-                                            type="text"
+                                        <FormDropdown
                                             placeholder="Location"
                                             name="location"
-                                            className={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                                            editButton={true}
+                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
+                                            dropdownValues={citiesInSerbia}
                                         />
                                         <button
                                             type='submit'

@@ -50,7 +50,7 @@ export default function BusinessItemDetails() {
 
 
     return (
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex  flex-col justify-center items-center'>
             <div className='font-semibold text-3xl '>Item details</div>
             <div className='w-3/12 mt-20 '>
                 <Slider {...settings}>
@@ -64,18 +64,19 @@ export default function BusinessItemDetails() {
 
 
             <div className='my-20 w-full flex justify-center'>
-                <div className='bg-white rounded-lg  xl:w-fit md:w-96 sm:w-72 p-5 mr-10'>
+                <div className={userDetails?.role === 'BUSINESS' ? 'bg-white rounded-lg xl:w-fit md:w-96 sm:w-72 p-5 mr-10' : 'bg-white rounded-lg mx-16 bg-green xl:w-full md:w-96 sm:w-72 p-5 '}>
                     <div className='xl:text-3xl md:text-xl sm:text-lg text-primary-color w-full xl:pt-5 md:pt-3 sm:pt-2 xl:pb-10 md:pb-6 sm:pb-5'>Item Description</div>
                     {itemTitles.map((items, i) => {
                         return (
                             <div key={i} className='flex justify-start'>
                                 <div className='xl:w-52 md:w-60 sm:w-56 text-[#455A64] xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
-                                <div className='xl:w-72 md:w-60 sm:w-56 text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'>{items.answer}</div>
+                                <div className={userDetails?.role === 'BUSINESS' ? 'xl:w-72 md:w-60 sm:w-56 text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1' : 'xl:w-full text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'}>{items.answer}</div>
                             </div>
                         );
                     })}
                 </div>
 
+                {userDetails?.role === 'BUSINESS' ?
                 <div className='bg-white rounded-lg xl:w-max md:w-96 sm:w-72 p-5 mr-10'>
                     <div className='xl:text-3xl md:text-xl sm:text-lg text-primary-color w-full xl:pt-5 md:pt-3 sm:pt-2 xl:pb-10 md:pb-6 sm:pb-5'>Posted person details</div>
                     {personTitles.map((items, i) => {
@@ -87,6 +88,8 @@ export default function BusinessItemDetails() {
                         );
                     })}
                 </div>
+                :
+                ""}
             </div>
 
         </div>

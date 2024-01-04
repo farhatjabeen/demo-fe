@@ -7,34 +7,41 @@ import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionButtonClass, value, handleData }) {
+function FormDropdown({ name, editButton, dropdownValues, isSearchReport, valueFromDb, optionButtonClass}) {
 
-    const [options, setOptions] = useState('');
-    console.log(options, 'options')
-   
-    useEffect(()=>{
-        handleData(options ? options : valueFromDb)
-    },[options,valueFromDb])
     return (
         <ConnectForm>
             {({ errors, control }) => (
                 <div>
                     <from>
                         <Controller
+
                             name={name}
                             control={control}
                             defaultValue={valueFromDb}
-                            render={() => (
+                            render={({
+                                field: { onChange, value: fieldValue, ref, props }
+                            }) => (
                                 <div>
                                     <div>
                                         <select
+                                            {...props}
+                                            ref={ref}
                                             id={name}
                                             disabled={!editButton}
                                             className={optionButtonClass}
-                                            onChange={(e) => setOptions(e.target.value) }
+                                            onChange={onChange}
                                         >
-                                            <option value="" >Select an option</option>
-                                            {dropdownValues?.map((items,i) => {
+
+                                            <option value="" >{
+                                                getFormErrorMessage(errors, name)&&isSearchReport ?
+                                                    <div className="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1">
+                                                        <FormErrorMessage error={getFormErrorMessage(errors, name)} />
+                                                    </div>
+                                                    :
+                                                    "Select an option"
+                                            }</option>
+                                            {dropdownValues?.map((items, i) => {
                                                 return (
                                                     <option
                                                         key={i}
@@ -46,14 +53,21 @@ function FormDropdown({ name, editButton, dropdownValues, valueFromDb, optionBut
                                                     </option>
                                                 );
                                             })}
+
                                         </select>
+
                                     </div>
                                 </div>
                             )}
                         />
-                        <FormErrorMessage
-                            error={getFormErrorMessage(errors, name)}
-                        />
+                        {
+                            isSearchReport ?
+                                ""
+                                :
+                                <FormErrorMessage
+                                    error={getFormErrorMessage(errors, name)}
+                                />
+                        }
                     </from>
                 </div>
             )}

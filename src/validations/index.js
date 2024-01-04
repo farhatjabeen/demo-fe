@@ -25,6 +25,13 @@ export const generalUserMailSchema = yup.object({
     emailMailId: yup
         .string()
         .matches(emailRexExp, 'Invalid email address')
+        .required('email required')
+});
+
+export const generalUserLoginSchema = yup.object({
+    emailMailId: yup
+        .string()
+        .matches(emailRexExp, 'Invalid email address')
         .required('email required'),
     password: yup
         .string()
@@ -36,6 +43,10 @@ export const generalUserRegisterSchema = yup.object({
         .string()
         .matches(emailRexExp, 'Invalid email address')
         .required('email required'),
+    password: yup
+        .string()
+        .required("Please re-type your password")
+        .oneOf([yup.ref('newPassword')], "Passwords does not match"),
     newPassword: yup
         .string()
         .matches
@@ -43,11 +54,9 @@ export const generalUserRegisterSchema = yup.object({
             passwordRegExp,
             'Password must be 8-20 characters with at least one letter, one number, and one special character'
         )
-        .required('password required'),
-    password: yup
-        .string()
-        .oneOf([yup.ref("newPassword")], "Passwords does not match")
-        .required("Please re-type your password")
+        
+        .required('password required')
+
 });
 export const businessUserForgotSchema = yup.object({
     password: yup
@@ -68,30 +77,14 @@ export const addMoreDetailsSchema = yup.object({
         .matches(emailRexExp, 'Invalid email address')
         .required('email required'),
     mobileNumber: yup
-        .number()
+        .string()
         .min(10)
         // .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('mobile number required'),
     userName: yup
         .string()
-        .min(3)
-        .max(10),
-    currentPassword: yup
-        .string()
-        .matches(
-            passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character'),
-    newPassword: yup
-        .string()
-        .matches(
-            passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character')
-        .required('password required'),
-    confirmPassword: yup
-        .string()
-        .oneOf([yup.ref("newPassword")], "Passwords does not match")
-        .required("Please re-type your password"),
-    companyLocation: yup
+        .min(3),
+    location: yup
         .string()
         .required('location required'),
     locationIdentifiers: yup
@@ -115,16 +108,7 @@ export const addMoreDetailsSchema = yup.object({
             const words = value.trim().split(/\s+/);
             return words.length >= 2;
         })
-        .required('keywords required'),
-    imageUpload: yup
-        .mixed()
-        .test('imageCount', 'Maximum of 3 images only allowed.', (value) => {
-            if (!value) {
-                return false;
-            }
-            return value.length > 3;
-        })
-        .required('images required'),
+        .required('keywords required')
 
 });
 
@@ -134,7 +118,7 @@ export const myProfileSchema = yup.object({
         .matches(emailRexExp, 'Invalid email address')
         .required('email required'),
     mobileNumber: yup
-        .number()
+        .string()
         .min(10)
         // .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('mobile number required'),
@@ -170,24 +154,19 @@ export const companyProfile = yup.object({
         .matches(emailRexExp, 'Invalid email address')
         .required('email required'),
     mobileNumber: yup
-        .number()
+        .string()
         .min(10)
         .required('mobile number required'),
     currentPassword: yup
-        .string()
-        .matches(
-            passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character'),
+        .string(),
     newPassword: yup
-        .string()
-        .matches(
-            passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character')
-        .required('password required'),
+        .string(),
+    // .matches(
+    //     passwordRegExp,
+    //     'Password must be 8-20 characters with at least one letter, one number, and one special character'),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
-        .required("Please re-type your password")
 });
 
 export const AdminSignInSchema = yup.object({
@@ -237,7 +216,7 @@ export const businessSignUpSchema = yup.object({
             'Password must be 8-20 characters with at least one letter, one number, and one special character')
         .required('password required'),
     mobileNumber: yup
-        .number()
+        .string()
         .min(10)
         .required('mobile number required'),
     name: yup
@@ -247,28 +226,12 @@ export const businessSignUpSchema = yup.object({
     companyName: yup
         .string()
         .required('company name required'),
-    companylogo: yup
-        .mixed()
-        .required('image required'),
-    cloudinary_id: yup
-        .mixed()
-        .required('image required'),
     companyCategory: yup
         .string()
         .required("company category required"),
     checkboxField: yup
         .boolean()
-        .oneOf([true], 'Checkbox must be checked'),
-    keywords: yup
-        .string()
-        .test('wordCount', 'Keywords must have at least 2 keys', (value) => {
-            if (!value) {
-                return false;
-            }
-            const words = value.trim().split(/\s+/);
-            return words.length >= 2;
-        })
-        .required('keywords required')
+        .oneOf([true], 'Checkbox must be checked')
 });
 
 export const searchSchema = yup.object({
