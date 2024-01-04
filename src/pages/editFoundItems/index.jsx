@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import CustomCombinedButton from "../../components/common/adminButton";
-import { MdOutlineCalendarToday } from "react-icons/md";
-import { FaRegClock } from "react-icons/fa";
 import DropdownMenu from '../../components/common/dropdown';
 import Breadcrumbs from '../../components/common/breadcrumbs';
 import useValidationResolver from '../../hooks/useValidationResolver';
@@ -94,12 +92,7 @@ const EditFoundItems = () => {
                 </div>
                 <div className="mb-2 mb-4  ">
                   <label>Found Date</label>
-                  <div className='relative '>
-                    <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{foundDate}</p>
-                    <div className="absolute inset-y-0 right-10 flex items-center pr-6">
-                      <MdOutlineCalendarToday size={24} />
-                    </div>
-                  </div>
+                  <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{foundDate}</p>
                 </div>
 
                 <div className="mb-2 mb-4">
@@ -114,12 +107,7 @@ const EditFoundItems = () => {
                 </div>
                 <div className="mb-4">
                   <label >Found Time</label>
-                  <div className='relative '>
-                    <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{foundTime}</p>
-                    <div className="absolute inset-y-0 right-10 flex items-center pr-6">
-                      <FaRegClock size={24} />
-                    </div>
-                  </div>
+                  <p className="w-11/12 py-2 px-3  bg-white border border-gray rounded-md" >{foundTime}</p>
                 </div>
               </div>
             </div>

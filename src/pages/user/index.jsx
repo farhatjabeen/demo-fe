@@ -14,8 +14,8 @@ function User() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchUserTerm, setSearchUserTerm] = useState("");
   const [searchBusinessTerm, setSearchBusinessTerm] = useState("");
-  const [PageLimit, setPageLimit] = useState(10);
-  
+  const PageLimit = useState(10);
+
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ function User() {
   const userHeaders = [
     { key: "userCode", label: "User ID" },
     { key: "name", label: "User Name" },
-    { key: "createdAt", label: "Listing Count" },
+    { key: "count", label: "Listing Count" },
     { key: "emailMailId", label: "Mail ID" },
     { key: "mobileNumber", label: "Mobile Number" },
     { key: "action", label: "Actions" },
@@ -62,10 +62,10 @@ function User() {
     { key: "userCode", label: "Business ID" },
     { key: "companyName", label: "Company Name" },
     { key: "companyCategory", label: "Category" },
-    { key: "contactName", label: "Contact Name" },
+    { key: "name", label: "Contact Name" },
     { key: "emailMailId", label: "Mail ID" },
     { key: "mobileNumber", label: "Contact Phone" },
-    { key: "listingCount", label: "Listing Count" },
+    { key: "count", label: "Listing Count" },
     { key: "action", label: "Actions" },
   ];
 

@@ -10,7 +10,6 @@ import { businessForgotPassword, loginUser } from '../../redux/reducers/userSlic
 export default function BusinessSignIn() {
 
     const [showPassword, setShowPassword] = useState(false)
-
     const dispatch = useDispatch();
     const resolver = useValidationResolver(loginSchema);
     const navigate = useNavigate();
@@ -22,10 +21,21 @@ export default function BusinessSignIn() {
         },
         resolver
     });
-    const handleForgot = () => {
-        const emailMailId = methods.getValues().emailMailId;
-        dispatch(businessForgotPassword({ emailMailId }))
-    }
+
+    const handleForgot = async () => {
+        try {
+            await methods.trigger('emailMailId');
+
+            if (methods.formState.errors.emailMailId) {
+                console.log('Email is not valid');
+                return;
+            }
+            const emailMailId = methods.getValues().emailMailId;
+            dispatch(businessForgotPassword({ emailMailId }));
+        } catch (error) {
+            console.log('handleForgot error', error);
+        }
+    };
 
     const submitData = (data) => {
         try {
@@ -42,10 +52,10 @@ export default function BusinessSignIn() {
             <div className='bg-white xl:w-2/6 md:w-3/5 sm:w-4/5 border-[#878787] border rounded-lg p-8'>
                 <h1 className='font-light text-2xl'>Welcome!</h1>
                 <h2 className='font-medium text-3xl mt-5 mb-10'>Sign in to your business</h2>
-                <div className='flex flex-col justify-center '>
+                <div className='flex relative  flex-col justify-center '>
                     <FormProvider {...methods}>
                         <form onSubmit={methods.handleSubmit(submitData)}>
-                            <div className='flex flex-col'>
+                            <div className='flex  flex-col'>
                                 <label className='font-normal text-base'>Email address</label>
                                 <TextInput
                                     type="text"
@@ -89,6 +99,15 @@ export default function BusinessSignIn() {
                             </div>
                         </form>
                     </FormProvider>
+                    <div className='absolute bottom-24 right-4'>
+                        <button
+                            onClick={handleForgot}
+                            className='text-xs text-[#4D4D4D] font-light'
+                        >
+                            Forgot Password?
+                        </button>
+                    </div>
+
                 </div>
                 <div className='text-[#7D7D7D] font-light mt-14 flex justify-center'>
                     Don't have an Account&nbsp;? <span className='text-[#000000] font-semibold'>&nbsp;Get more info</span>
