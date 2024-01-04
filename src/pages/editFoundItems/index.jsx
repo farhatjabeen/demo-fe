@@ -53,7 +53,10 @@ const EditFoundItems = () => {
     dispatch(itemDropdownValues());
   }, [itemCategory]);
 
-
+  const handleCancel = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
   const submitData = (data) => {
     try {
       const updatedData = {
@@ -186,6 +189,7 @@ const EditFoundItems = () => {
               text="Cancel"
               isReset={false}
               buttonColor="blue"
+              onClick={(e) => handleCancel(e)}
             />
             <CustomCombinedButton
               text="Submit"

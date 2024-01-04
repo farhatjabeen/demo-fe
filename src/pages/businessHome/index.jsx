@@ -62,8 +62,8 @@ export default function BusinessHome() {
                 <div className='xl:text-4xl md:text-4xl sm:text-2xl font-bold text-text-color'>Transform your lost and found process</div>
                 <div className='font-normal xl:text-lg md:text-lg sm:text-xs text-center mt-3 mb-8 text-text-color'>Reassure your customers, save time & money and return <br></br> more items of lost property with our lost and found software.</div>
                 <div>
-                    <button className='border border-[#FF9900] xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-[#834F00]' onClick={() => navigate('/businessSignIn')}>Sign in</button>
-                    <button className='xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-[#FF9900] ml-5 ' onClick={() => navigate('/businessignup')}>Sign Up</button>
+                    <button className='border border-primary-color xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-[#834F00]' onClick={() => navigate('/businessSignIn')}>Sign in</button>
+                    <button className='xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-primary-color ml-5 ' onClick={() => navigate('/businessignup')}>Sign Up</button>
                 </div>
             </div>
 
@@ -78,9 +78,11 @@ export default function BusinessHome() {
                             increasing efficiency and ensuring more items can be returned. <span > New intelligent,
                                 cloud-based solution to be introduced across Transport for London.</span>
                         </p>
-                        <button className='text-[#444444] font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
+                        <button className='text-primary-color font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
                     </div>
-                    <div className='text-white'><button className='bg-[#FF9900] px-4 py-1 rounded-md xl:text-lg md:text-sm sm:text-xs'>Know more</button></div>
+                    <div className='text-white'>
+                        <button className='bg-primary-color px-4 py-1 rounded-md xl:text-lg md:text-sm sm:text-xs' onClick={() => navigate('/businesshome/detailpage')}>Know more</button>
+                        </div>
                 </div>
                 <div className='absolute xl:top-0 xl:pt-36 md:top-14 sm:top-10 w-full flex flex-col items-end xl:pr-32 md:pr-16 sm:pr-7'>
                     <div><img src={transportLondon} className='xl:h-72 xl:w-full md:h-56 md:w-80 sm:h-40 sm:w-60' alt='transportLondon' /></div>
