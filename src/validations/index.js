@@ -243,6 +243,12 @@ export const searchSchema = yup.object({
         .required('location required')
 });
 
+export const searchByKeywordSchema = yup.object({
+    keyword: yup
+        .string()
+        .required('item name required'),
+});
+
 export const AdminChangePasswordSchema = yup.object({
     currentPassword: yup
         .string()

@@ -91,8 +91,10 @@ const PopoverComponent = () => {
             // e.preventDefault();
             const password = methodsForLogin.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
-            const loginSuccessful = dispatch(generalUserLogin({ emailMailId, password }));
+            const loginSuccessful = await dispatch(generalUserLogin({ emailMailId, password }));
+            console.log("loginSuccessful",loginSuccessful)
             if (loginSuccessful) {
+                navigate('/');
                 Popover.close();
             }
 

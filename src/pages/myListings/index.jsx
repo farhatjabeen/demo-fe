@@ -21,7 +21,7 @@ export default function MyListings() {
 
 
     const handleEditItem = (itemId) => {
-        navigate(`/addmoredetails/${itemId}`);
+        navigate(`/addMoreDetails/${itemId}`);
     };
 
     const handleListingDelete = (itemId) => {
