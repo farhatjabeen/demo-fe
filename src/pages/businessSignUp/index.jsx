@@ -120,7 +120,7 @@ export default function BusinessSignUp() {
     return (
         <Fragment>
             <div className='md:flex mx-20 my-10 '>
-                <div className='w-7/12'>
+                <div className='xl:w-7/12 md:w-12/12'>
                     <h1 className='text-3xl font-bold'>Transform your lost and found
                         <br></br> process with BTZapp</h1>
                     <div className='mt-20'>
@@ -135,7 +135,7 @@ export default function BusinessSignUp() {
                         </div>
                     </div>
                 </div>
-                <div className='w-5/12'>
+                <div className='xl:w-5/12 md:12/12'>
                     <FormProvider {...methods}>
                         {/* <form onSubmit={(e) => submitData(e)}> */}
                         <form onSubmit={methods.handleSubmit(submitData)}>
