@@ -101,12 +101,10 @@ export default function AddMoreDetails() {
             console.log("from submit form");
 
             if (userDetails?.role === 'BUSINESS' && !reportDetails.id) {
-                methods.setValue("itemImage", itemImage?.map(item => item));
-                methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
-                const inputString = methods.getValues().keywords;
-                methods.setValue('keywords', inputString.split(' ').filter(keyword => keyword.trim() !== ''));
-                const datas = methods.getValues()
-                dispatch(businessAddMoreDetails(datas));
+                methods.setValue("itemImage", itemImage);
+                methods.setValue("cloudinary_id", cloudinaryId);
+                // const datas = methods.getValues()
+                dispatch(businessAddMoreDetails(data));
                 navigate('/allitems')
             }
 
@@ -293,8 +291,7 @@ export default function AddMoreDetails() {
                                 <div>
                                     {isUploaded || itemDetailsById?.itemImage ?
                                         <div className='flex flex-wrap w-96'>
-                                            {
-                                                itemDetailsById?.itemImage ?
+                                            
                                                     <div>
                                                         {cloudinaryId?.map((items, i) => {
                                                             return (
@@ -305,9 +302,7 @@ export default function AddMoreDetails() {
                                                             );
                                                         })}
                                                     </div>
-                                                    :
-                                                    ""
-                                            }
+                                                    
                                             {/* {files
                                                 ?
                                                 <div>
