@@ -26,9 +26,9 @@ export default function EditBusinessDetails() {
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
     const items = useSelector(itemDropdown);
-    const itemCategories = Object.values(items);
+    const itemCategories = items ? Object.values(items) : [];
     const locations = useSelector(locationDetails);
-    const locationCategory = Object.values(locations);
+    const locationCategory = locations ? Object.values(locations) : [];
 
 
     const methods = useForm({
@@ -264,8 +264,6 @@ export default function EditBusinessDetails() {
                                             ))}
                                         </div>
                                     ) : null}
-
-
 
                                     <div className="flex justify-center items-center">
                                         <ImageUpload

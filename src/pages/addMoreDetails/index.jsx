@@ -22,15 +22,14 @@ export default function AddMoreDetails() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const items = useSelector(itemDropdown);
-    const itemCategories = Object.values(items);
+    const itemCategories = items ? Object.values(items) : [];
     const cities = useSelector(locationDetails);
-    const citiesInSerbia = Object.values(cities);
+    const citiesInSerbia = cities ? Object.values(cities) : [];
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
     const userDetails = useSelector(userData);
     const itemDetailsById = useSelector(searchDetailsById);
     const reportDetails = useParams();
-
 
     useEffect(() => {
         dispatch(locationDropdownValues())
@@ -44,12 +43,11 @@ export default function AddMoreDetails() {
             setIsCancelled(true);
             setIsUploaded(false)
         }
-
     }, []);
 
     useEffect(() => {
         if (itemDetailsById && reportDetails.id) {
-            
+
             setItemImage(itemDetailsById?.itemImage);
             setCloudinaryId(itemDetailsById?.cloudinary_id);
             methods.reset({
@@ -106,13 +104,13 @@ export default function AddMoreDetails() {
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
                 const addedItem = await dispatch(businessAddMoreDetails(data));
-                if(addedItem){
+                if (addedItem) {
                     navigate('/allitems')
                 }
-            }else if (userDetails?.role === 'USER' && !reportDetails.id) {
+            } else if (userDetails?.role === 'USER' && !reportDetails.id) {
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
-               
+
                 const addItem = dispatch(userAddMoreDetails(data));
                 console.log('itemadded', addItem)
                 addItem?.then((res) => {
@@ -195,7 +193,7 @@ export default function AddMoreDetails() {
                     setCloudinaryId(res.data.cloudinary_id)
                     setItemImage(res.data.itemImage)
                 }).then(() => {
-                    if (itemDetailsById?.itemImage&&reportDetails.id) {
+                    if (itemDetailsById?.itemImage && reportDetails.id) {
                         setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
                         setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
                     }
@@ -207,12 +205,10 @@ export default function AddMoreDetails() {
     const handleCancel = () => {
         dispatch(clearItemData())
         setIsUploaded(false)
-        
+
         window.history.back();
     }
 
-    console.log(itemImage, "itemimage");
-    console.log(cloudinaryId, 'cloudi')
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
@@ -292,18 +288,18 @@ export default function AddMoreDetails() {
                                 <div>
                                     {isUploaded || itemDetailsById?.itemImage ?
                                         <div className='flex flex-wrap w-96'>
-                                            
-                                                    <div>
-                                                        {cloudinaryId?.map((items, i) => {
-                                                            return (
-                                                                <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                                    <div>{items}</div>
-                                                                    <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
-                                                                </div>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                    
+
+                                            <div>
+                                                {cloudinaryId?.map((items, i) => {
+                                                    return (
+                                                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                                                            <div>{items}</div>
+                                                            <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+
                                             {/* {files
                                                 ?
                                                 <div>

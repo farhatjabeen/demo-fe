@@ -17,7 +17,7 @@ function FoundItems() {
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
   const items = useSelector(itemDropdown)
-  const dropdownValues = Object.values(items);
+  const dropdownValues = items ? Object.values(items) : [];
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
@@ -29,9 +29,9 @@ function FoundItems() {
   useEffect(() => {
     dispatch(itemDropdownValues());
   }, []);
-  
 
-  const handleExport = () => { 
+
+  const handleExport = () => {
     dispatch(adminExportItems())
   };
 
@@ -71,7 +71,7 @@ function FoundItems() {
             onClick={handleExport}
             isReset={false}
             buttonColor="blue"
-            
+
           />
         </div>
       </div>
@@ -88,7 +88,7 @@ function FoundItems() {
             <DropdownMenu
               dropdownValues={dropdownValues}
               value={selectedCategory}
-              onChange={setSelectedCategory} 
+              onChange={setSelectedCategory}
               placeholder="Filter by Category"
             />
           </div>
@@ -125,6 +125,3 @@ function FoundItems() {
 }
 
 export default FoundItems;
-
-
-

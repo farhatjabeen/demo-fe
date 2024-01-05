@@ -16,11 +16,10 @@ export default function CompanyProfile() {
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [select, setSelect] = useState(false);
     const cities = useSelector(locationDetails);
-    const citiesInSerbia = Object.values(cities);
+    const citiesInSerbia = cities ? Object.values(cities) : [];
     const categories = useSelector(categoryDetails);
-    const companyCategories = Object.values(categories);
+    const companyCategories = categories ? Object.values(categories) : [];
     const userProfileData = useSelector(userProfile);
-    console.log(userProfileData, 'userProfileData')
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -59,8 +58,7 @@ export default function CompanyProfile() {
             companyLocation: userProfileData?.location || "",
             name: userProfileData?.name || "",
             mobileNumber: userProfileData?.mobileNumber || "",
-            emailMailId: userProfileData?.emailMailId || "",
-            
+            emailMailId: userProfileData?.emailMailId || ""
         },
         resolver
     });
@@ -115,7 +113,6 @@ export default function CompanyProfile() {
                                     autoComplete="off"
                                     disable={!editButton}
                                 />
-
                             </div>
 
                             <div className='flex justify-between mb-9'>
