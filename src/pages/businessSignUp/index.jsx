@@ -84,7 +84,7 @@ export default function BusinessSignUp() {
     }, [imageFiles]);
 
 
-    const submitData = (data) => {
+    const submitData = async(data) => {
         const name = methods.getValues().name;
         const mobileNumber = methods.getValues().mobileNumber;
         const emailMailId = methods.getValues().emailMailId;
@@ -97,20 +97,14 @@ export default function BusinessSignUp() {
         methods.setValue("cloudinary_id", cloudinaryId);
         if (isChecked) {
             // const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
-            const registering = dispatch(businessUserRegister(data))
+            const registering = await dispatch(businessUserRegister(data))
             if (registering) {
-                methods.reset({
-                    name: "",
-                    mobileNumber: "",
-                    emailMailId: "",
-                    password: "",
-                    companyName: "",
-                    companyCategory: "",
-                })
-                setImageFiles('');
-                setIsCleared(true);
-                setIsChecked(false);
-                dispatch(clearUserData());
+                // setImageFiles('');
+                // setIsCleared(true);
+                // setIsChecked(false);
+                setTimeout(() => {
+                    window.location.reload();
+                  }, 2000);
             }
         } else {
             Toast({ type: "error", message: "Please accept the terms and conditions" })
@@ -274,7 +268,7 @@ export default function BusinessSignUp() {
                 </div>
 
             </div>
-            <div className='mb-20 ml-24 '>
+            <div className='mb-20 '>
                 <OurBrands
                     asTrustedBy
                 />

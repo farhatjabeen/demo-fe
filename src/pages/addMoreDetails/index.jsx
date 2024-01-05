@@ -40,6 +40,7 @@ export default function AddMoreDetails() {
         }
         if (reportDetails.newItem) {
             methods.setValue("itemName", reportDetails.newItem)
+            methods.setValue("location", reportDetails.location)
             setIsCancelled(true);
             setIsUploaded(false)
         }
@@ -60,7 +61,7 @@ export default function AddMoreDetails() {
                 itemDescription: itemDetailsById?.itemDescription || "",
                 itemCategory: itemDetailsById?.itemCategory || "",
                 itemName: itemDetailsById?.itemName || "",
-                keywords: itemDetailsById?.keywords || "",
+                keywords: `${itemDetailsById?.keywords}` || "",
                 itemImage: itemDetailsById?.itemImage || "",
                 cloudinary_id: itemDetailsById?.cloudinary_id || ""
             });
@@ -97,18 +98,18 @@ export default function AddMoreDetails() {
     const submitData = async (data) => {
         try {
             const inputString = methods.getValues().keywords;
-            methods.setValue('keywords', inputString.split(' ').filter(keyword => keyword.trim() !== ''));
+            methods.setValue('keywords', inputString.split(','));
             console.log("from submit form");
 
             if (userDetails?.role === 'BUSINESS' && !reportDetails.id) {
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
-                dispatch(businessAddMoreDetails(data));
-                navigate('/allitems')
-            }
-
-            if (userDetails?.role === 'USER' && !reportDetails.id) {
+                const addedItem = await dispatch(businessAddMoreDetails(data));
+                if(addedItem){
+                    navigate('/allitems')
+                }
+            }else if (userDetails?.role === 'USER' && !reportDetails.id) {
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                
@@ -439,7 +440,7 @@ export default function AddMoreDetails() {
                                         type='submit'
                                         className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
                                     >
-                                        Submit form
+                                        {itemDetailsById && reportDetails.id ? <p>Edit form</p> : <p>Submit form</p>}
                                     </button>
                                 </div>
                             </div>
