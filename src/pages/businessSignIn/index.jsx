@@ -6,6 +6,7 @@ import TextInput from "../../components/common/textInput";
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { loginSchema } from '../../validations';
 import { businessForgotPassword, loginUser } from '../../redux/reducers/userSlice';
+import { Link } from 'react-router-dom';
 
 export default function BusinessSignIn() {
 
@@ -37,9 +38,9 @@ export default function BusinessSignIn() {
         }
     };
 
-    const submitData = (data) => {
+    const submitData = async(data) => {
         try {
-            const login = dispatch(loginUser(data));
+            const login = await dispatch(loginUser(data));
             if (login) {
                 navigate('/')
             }
@@ -77,12 +78,12 @@ export default function BusinessSignIn() {
                                     required
                                     setShowPassword={() => setShowPassword(!showPassword)}
                                 />
-                                <div className='flex justify-between mt-3'>
+                                {/* <div className='flex justify-between mt-3'>
                                     <div className='flex justify-between w-24'>
                                         <input type='checkbox' />
                                         <div className='text-xs text-[#4D4D4D] font-light'>Remember me</div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <button
                                     className='bg-primary-color w-full h-14 rounded-md mt-8'
                                     type="submit"
@@ -92,7 +93,7 @@ export default function BusinessSignIn() {
                             </div>
                         </form>
                     </FormProvider>
-                    <div className='absolute bottom-24 right-4'>
+                    <div className='absolute bottom-20 mt-5 right-4'>
                         <button
                             onClick={handleForgot}
                             className='text-xs text-[#4D4D4D] font-light'
@@ -103,7 +104,7 @@ export default function BusinessSignIn() {
 
                 </div>
                 <div className='text-[#7D7D7D] font-light mt-14 flex justify-center'>
-                    Don't have an Account&nbsp;? <span className='text-[#000000] font-semibold'>&nbsp;Get more info</span>
+                    Don't have an Account&nbsp;? <Link className='text-[#000000] font-semibold' to='/businessignup'>&nbsp;Sign Up</Link>
                 </div>
             </div>
         </div >

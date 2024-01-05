@@ -190,6 +190,7 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
         apiRequest({
             url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
             method: endpoints.ApiMethods.GET,
+            isLoader:false,
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemData({ list, pageMeta }))

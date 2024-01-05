@@ -9,7 +9,7 @@ import { FormErrorMessage } from '../FormErrorMessage';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
-function TextInput({ type = 'text', placeholder, name, disable, errorClass, isSearchReport=false, eyeClass, className: inputClassName, showPassword, setShowPassword }) {
+function TextInput({ type = 'text', onChange , placeholder, name, disable, errorClass, isSearchReport=false, eyeClass, className: inputClassName, showPassword, setShowPassword }) {
 
     return (
         <ConnectForm>
@@ -20,7 +20,7 @@ function TextInput({ type = 'text', placeholder, name, disable, errorClass, isSe
                             name={name}
                             control={control}
                             render={({
-                                field: { onChange, value: fieldValue, ref, props }
+                                field: { onChange: onFieldChange, value: fieldValue, ref, props }
                             }) => (
                                 <div className={` flex ${type === 'password' && 'relative'}`}>
                                     <div className="relative w-full">
@@ -28,7 +28,12 @@ function TextInput({ type = 'text', placeholder, name, disable, errorClass, isSe
                                         {...props}
                                         ref={ref}
                                         type={showPassword ? 'text' : type}
-                                        onChange={onChange}
+                                        onChange={(e) => {
+                                            onFieldChange(e);
+                                            if (onChange) {
+                                                onChange(e);
+                                            }
+                                        }}
                                         value={fieldValue || ''}
                                         placeholder={getFormErrorMessage(errors, name) ? " " : placeholder}
                                         id={name}

@@ -10,10 +10,15 @@ export default function MyListings() {
     const navigate = useNavigate();
     const myReports = useSelector(itemDetails);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLoader, setIsLoader] = useState(false);
     const tableData = useSelector(itemDetails);
 
-    useEffect(() => {
-        dispatch(myListingItems(currentPage));
+    useEffect(async() => {
+        setIsLoader(true)
+        const listingItems = await dispatch(myListingItems(currentPage));
+        if(listingItems){
+            setIsLoader(false)
+        }
         if (!myReports) {
             navigate('/');
         }
@@ -44,8 +49,10 @@ export default function MyListings() {
                 My listings
             </div>
 
+            {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
+            :
             <div className='mt-14 xl:w-8/12 md:w-7/12 sm:w-9/12 '>
-                {myReports?.list?.length && myReports.list.map((details, i) => (
+                {myReports?.list?.length ? myReports.list.map((details, i) => (
                     <div key={i} className='mb-5 w-full flex justify-center items-center'>
                         <div className='w-1/3'><img src={details.itemImage[0]} alt='keys' className='rounded-3xl w-full xl:h-72 md:h-60 sm:h-56'></img></div>
                         <div className='bg-white w-2/3 xl:h-72 md:h-60 sm:h-56 rounded-3xl xl:p-8 md:p-6 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
@@ -87,15 +94,18 @@ export default function MyListings() {
 
                                 <button
                                     onClick={() => handleListingDelete(details._id)}
-                                    className='border border-red text-[#BC0000] xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'
+                                    className='border border-#BC0000 text-[#BC0000] xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'
                                 >
                                     Remove Listing
                                 </button>
                             </div>
                         </div>
                     </div>
-                ))}
-            </div>
+                ))
+            :
+            <p className='font-bold p-24 flex justify-center w-full text-md'>No Data Found</p>
+            }
+            </div>}
             <Pagination
                 currentPage={currentPage}
                 totalPages={tableData?.pageMeta?.totalPages}
