@@ -42,7 +42,7 @@ const OurBrands = ({ asTrustedBy = false }) => {
 
   return (
     <div className="w-full overflow-hidden py-6">
-      <div className='font-bold xl:text-4xl md:text-3xl sm:text-3xl text-[#676767]  py-6'>
+      <div className='font-bold xl:text-4xl md:text-3xl sm:text-3xl text-[#676767] pl-14 py-6'>
       {asTrustedBy ? 'As Trusted By' : 'Businesses that use our platform'}
       </div>
       <div>

@@ -7,7 +7,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
 import { deleteBusinessItem, fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
-import DeleteModal from '../../components/modal';
+import DeleteModal from '../../components/deleteModal';
 
 export default function AllItems() {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);

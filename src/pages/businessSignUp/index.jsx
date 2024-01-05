@@ -274,7 +274,7 @@ export default function BusinessSignUp() {
                 </div>
 
             </div>
-            <div className='mb-20 ml-24 '>
+            <div className='mb-20 '>
                 <OurBrands
                     asTrustedBy
                 />
