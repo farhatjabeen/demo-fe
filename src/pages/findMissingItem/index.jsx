@@ -99,7 +99,7 @@ export default function FindMissingItem() {
       </div>
 
       {isLoader ?
-        <p>Loading...</p>
+        <p className='font-bold pt-24 flex justify-center ml-7 w-full text-md'>Loading...</p>
         :
         <div className='flex flex-wrap justify-center items-center w-full mr-7'>
           {searchValue?.list?.length ? searchValue?.list?.map((items, i) => {
@@ -110,10 +110,10 @@ export default function FindMissingItem() {
             );
           })
             :
-            <p>No Data Found</p>}
+            <p className='font-bold pt-24 flex justify-center ml-7 w-full text-md'>No Data Found</p>}
         </div>}
 
-      <div className='mb-10 mt-36'>
+      <div className='mb-10 mt-32'>
         <Pagination
           isBlueBackground={false}
           currentPage={searchValue?.pageMeta?.page}
@@ -123,7 +123,6 @@ export default function FindMissingItem() {
       {isLastPage && (
         <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
           <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
-          <div className='font-medium flex justify-center xl:text-base md:text-base sm:text-xs'>Subscribe and send an alert and Ilost will ping you if your item is found</div>
         </div>
       )}
     </div>

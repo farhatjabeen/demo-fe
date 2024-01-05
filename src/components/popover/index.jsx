@@ -68,7 +68,7 @@ const PopoverComponent = () => {
     const handleContinue = async (data) => {
         try {
             const emailMailId = methods.getValues().emailMailId;
-            const login = dispatch(checkGeneralUserEmail({emailMailId}));
+            const login = await dispatch(checkGeneralUserEmail({emailMailId}));
             if (login) {
                 setPasswordBox(true);
             }
@@ -182,7 +182,7 @@ const PopoverComponent = () => {
                                                             </div>
                                                         </div>
                                                         <div className='relative'>
-                                                            <FormProvider {...methods}>
+                                                            <FormProvider {...methodsForLogin}>
                                                             <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
                                                                     <div >
                                                                         <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
