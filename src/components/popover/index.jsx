@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { Fragment } from 'react';
 import { IoTriangleSharp } from "react-icons/io5";
@@ -19,22 +19,17 @@ const PopoverComponent = () => {
     const mailIdFromApi = useSelector(mailId);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
+    const [showRegisterNewPassword, setShowRegisterNewPassword] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForLogin = useValidationResolver(generalUserLoginSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
     const [isEmailValid, setIsEmailValid] = useState(false);
+    const [passwordMatch, setPasswordMatch] = useState(true);
 
     const validateEmail = (inputEmail) => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return emailRegex.test(inputEmail);
-    };
-
-    const handleEmailChange = (e) => {
-        const mailId = e.target.value;
-        const isValid = validateEmail(mailId);
-        setIsEmailValid(isValid);
-        console.log('Email:', mailId, 'isValid:', isValid);
     };
 
     const methods = useForm({
@@ -55,13 +50,23 @@ const PopoverComponent = () => {
         defaultValues: {
             newPassword: "",
             password: ""
-        },
+        }, 
         resolverForRegister
     });
 
+    const handleEmailChange = (e) => {
+        console.log("hi from email change")
+        const isValid = validateEmail(e.target.value);
+        setIsEmailValid(isValid);
+        console.log('Email:', mailId, 'isValid:', isValid);
+    };
+
+    useEffect(()=>{
+        
+    },[methods])
+
     const handleContinue = async (data) => {
         try {
-            // e.preventDefault();
             const emailMailId = methods.getValues().emailMailId;
             const login = dispatch(checkGeneralUserEmail({emailMailId}));
             if (login) {
@@ -74,13 +79,22 @@ const PopoverComponent = () => {
 
     const registerButton = async () => {
         try {
-            // e.preventDefault();
             const password = methodsForRegister.getValues().password;
+            const newPassword = methodsForRegister.getValues().newPassword;
             const emailMailId = mailIdFromApi.emailMailId;
-            const registerSuccessful = dispatch(generalUserRegister({ emailMailId, password }));
-            if (registerSuccessful) {
-                Popover.close();
+
+            if(password === newPassword){
+                setPasswordMatch(true);
+                const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
+                console.log(registerSuccessful,"regsucc")
+                if (registerSuccessful) {
+                    navigate('/');
+                    Popover.close();
+                }
+            }else{
+                setPasswordMatch(false);
             }
+            
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -88,7 +102,6 @@ const PopoverComponent = () => {
 
     const handleLogin = async () => {
         try {
-            // e.preventDefault();
             const password = methodsForLogin.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             const loginSuccessful = await dispatch(generalUserLogin({ emailMailId, password }));
@@ -105,6 +118,8 @@ const PopoverComponent = () => {
 
     const handleClose = () => {
         setPasswordBox(false);
+        setIsEmailValid(false);
+        setPasswordMatch(true);
         methods.reset({
             emailMailId: "",
             password: ""
@@ -112,6 +127,9 @@ const PopoverComponent = () => {
         methodsForRegister.reset({
             newPassword: "",
             password: ""
+        })
+        methodsForLogin.reset({
+            password:""
         })
     }
     const handleForgot = async () => {
@@ -164,7 +182,7 @@ const PopoverComponent = () => {
                                                             </div>
                                                         </div>
                                                         <div className='relative'>
-                                                            <FormProvider {...methodsForLogin}>
+                                                            <FormProvider {...methods}>
                                                             <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
                                                                     <div >
                                                                         <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
@@ -211,11 +229,14 @@ const PopoverComponent = () => {
                                                                 <div>
                                                                     <div className=' text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
                                                                     <TextInput
-                                                                        type='text'
+                                                                        type='password'
                                                                         name="newPassword"
                                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                         autoComplete="off"
                                                                         required
+                                                                        eyeClass='absolute top-3 left-3/4 ml-16'
+                                                                        showPassword={showRegisterNewPassword}
+                                                                        setShowPassword={() => setShowRegisterNewPassword(!showRegisterNewPassword)}
                                                                     />
                                                                     <div className='text-sm font-medium text-[#757780] mt-2.5'>Re-enter Password</div>
                                                                     <TextInput
@@ -228,6 +249,10 @@ const PopoverComponent = () => {
                                                                         required
                                                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                                                     />
+                                                                    {passwordMatch ? ""
+                                                                    :
+                                                                    <p className='text-sm'>Passwords does not match</p>
+                                                                    }
                                                                 </div>
                                                                 <button
                                                                     type='submit'
@@ -261,7 +286,9 @@ const PopoverComponent = () => {
                                                                 className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
                                                                 autoComplete="off"
                                                                 required
-                                                                // onClick={(e)=>handleEmailChange(e)}
+                                                                onChange={(e) => {
+                                                                    handleEmailChange(e)
+                                                                }}
                                                             />
                                                         </div>
                                                         <button

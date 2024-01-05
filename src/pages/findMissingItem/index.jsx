@@ -15,7 +15,8 @@ export default function FindMissingItem() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const searchParameters = useParams();
-    const dispatch = useDispatch();
+  const [isLoader, setIsLoader] = useState(false);
+  const dispatch = useDispatch();
   const resolver = useValidationResolver(searchByKeywordSchema);
   const searchValue = useSelector(searchKey);
   const isLastPage = searchValue?.pageMeta?.page === searchValue?.pageMeta?.totalPages;
@@ -40,15 +41,19 @@ export default function FindMissingItem() {
     setCurrentPage(pageNumber);
   };
 
-  const submitData = () => {
+  const submitData = async () => {
     try {
       const productName = methods.getValues();
-      if(productName.keyword){
-      navigate(`/findmissingitem/${productName.keyword}`)
-      }else{
-        Toast({type:'error',message:'Enter Item Name'})
+      if (productName.keyword) {
+        navigate(`/findmissingitem/${productName.keyword}`)
+      } else {
+        Toast({ type: 'error', message: 'Enter Item Name' })
       }
-      dispatch(searchItem(productName.keyword));
+      setIsLoader(true)
+      const searchKeyword = await dispatch(searchItem(productName.keyword));
+      if (searchKeyword) {
+        setIsLoader(false)
+      }
     } catch (error) {
       console.log("submitData errors", error)
     }
@@ -93,15 +98,20 @@ export default function FindMissingItem() {
         </FormProvider>
       </div>
 
-      <div className='flex flex-wrap justify-center items-center w-full mr-7'>
-        {searchValue?.list?.length && searchValue.list.map((items, i) => {
-          return (
-            <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 mt-8 sm:flex sm:items-center'>
-              <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
-            </div>
-          );
-        })}
-      </div>
+      {isLoader ?
+        <p>Loading...</p>
+        :
+        <div className='flex flex-wrap justify-center items-center w-full mr-7'>
+          {searchValue?.list?.length ? searchValue?.list?.map((items, i) => {
+            return (
+              <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 mt-8 sm:flex sm:items-center'>
+                <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
+              </div>
+            );
+          })
+            :
+            <p>No Data Found</p>}
+        </div>}
 
       <div className='mb-10 mt-36'>
         <Pagination

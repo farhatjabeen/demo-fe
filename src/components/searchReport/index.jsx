@@ -107,6 +107,7 @@ export default function SearchReport() {
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
 
                                         <FormDropdown
@@ -118,6 +119,7 @@ export default function SearchReport() {
                                             required
                                             isSearchReport="true"
                                             dropdownValues={citiesInSerbia}
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
                                         <button
                                             type='submit'
@@ -142,6 +144,7 @@ export default function SearchReport() {
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
                                         <FormDropdown
                                             placeholder="Location"
@@ -152,6 +155,7 @@ export default function SearchReport() {
                                             required
                                             isSearchReport="true"
                                             dropdownValues={citiesInSerbia}
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                                         />
                                         <button
                                             type='submit'
