@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
-import DeleteModal from "../modal";
+import DeleteModal from "../deleteModal";
 import { useNavigate } from "react-router-dom";
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 import { useDispatch } from "react-redux";

@@ -89,7 +89,7 @@ export default function BusinessHome() {
                 </div>
             </div>
 
-            <div className=' ml-24'> <OurBrands /> </div>
+            <div> <OurBrands /> </div>
 
             <div className='overflow-hidden flex justify-center py-20'>
                 <div><img src={quotes} alt='quotes' className='sm:h-20 w-20' /></div>
