@@ -35,7 +35,7 @@ export default function SearchReport() {
     useEffect(() => {
         console.log("search report API called")
         dispatch(locationDropdownValues())
-    }, []);
+    }, [dispatch]);
 
     const submitData = async () => {
         try {
