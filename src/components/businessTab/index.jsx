@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 const BusinessTab = ({ children, className }) => {
     const location = useLocation();
     useEffect(() => {
-        if (location.pathname === '/itemdescription') {
+        if (location.pathname === '/itemDescription') {
             setActiveTab(1);
         } else {
             setActiveTab(0);
