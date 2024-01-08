@@ -54,7 +54,7 @@ export default function MyListings() {
 
             {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
             :
-            <div className='mt-14 xl:w-8/12 md:w-7/12 sm:w-9/12 '>
+            <div className='mt-14  xl:w-11/12 md:w-10/12 sm:w-8/12 '> 
                 {myReports?.list?.length ? myReports.list.map((details, i) => (
                     <div key={i} className='mb-5 w-full flex justify-center items-center'>
                         <div className='w-1/3'><img src={details.itemImage[0]} alt='keys' className='rounded-3xl w-full xl:h-72 md:h-60 sm:h-56'></img></div>

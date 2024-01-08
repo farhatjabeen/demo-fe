@@ -114,6 +114,7 @@ export const businessUpdateItems = (itemId, data) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
+            Toast({type:"success",message:res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err);

@@ -11,7 +11,7 @@ function ItemDetails() {
 
   useEffect(() => {
     dispatch(foundItemById(id))
-  }, []);
+  }, [dispatch, id]);
   const foundItemDetails = useSelector(getItemId);
   const { userName, mobileNumber, foundDate, emailMailId, keywords, locationIdentifiers, foundTime, location, itemName, itemCategory, itemDescription } = foundItemDetails || {};
 
@@ -90,7 +90,7 @@ function ItemDetails() {
             {locationIdentifiers}
           </p>
         </div>
-        <div className="p-4">
+        <div className="p-4  max-w-screen-xl">
           <p className="font-bold mb-2">Item Description</p>
           <p>
             {itemDescription}
@@ -99,8 +99,12 @@ function ItemDetails() {
         <div className="p-4">
           <p className="font-bold mb-2">Images</p>
           <div className="flex">
-            <img src={foundItemDetails.itemImage} alt="key" />
-            <img src={foundItemDetails.itemImage} alt="key" className="ml-2" />
+            {foundItemDetails.itemImage && (
+              <>
+                <img src={foundItemDetails.itemImage} alt="key" />
+                <img src={foundItemDetails.itemImage} alt="key" className="ml-2" />
+              </>
+            )}
           </div>
         </div>
       </div>
