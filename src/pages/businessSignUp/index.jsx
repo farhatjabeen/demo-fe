@@ -97,14 +97,19 @@ export default function BusinessSignUp() {
         methods.setValue("cloudinary_id", cloudinaryId);
         if (isChecked) {
             // const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
-            const registering = await dispatch(businessUserRegister(data))
-            if (registering) {
-                // setImageFiles('');
-                // setIsCleared(true);
-                // setIsChecked(false);
-                setTimeout(() => {
-                    window.location.reload();
-                  }, 2000);
+            const registered = await dispatch(businessUserRegister(data))
+            if (registered) {
+                setImageFiles('');
+                setIsCleared(true);
+                setIsChecked(false);
+                methods.reset({
+                    name: "",
+                    mobileNumber: "",
+                    emailMailId: "",
+                    password: "",
+                    companyName: "",
+                    companyCategory: "",
+                })
             }
         } else {
             Toast({ type: "error", message: "Please accept the terms and conditions" })
@@ -228,7 +233,7 @@ export default function BusinessSignUp() {
                                             optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
                                             dropdownValues={categories}
                                             editButton={true}
-                                            selection={true}
+                                            iscleared={isCleared}
                                         />
                                     </div>
                                     {/* <div className="flex ">

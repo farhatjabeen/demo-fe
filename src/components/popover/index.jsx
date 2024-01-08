@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Fragment } from 'react';
 import { IoTriangleSharp } from "react-icons/io5";
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -31,6 +31,23 @@ const PopoverComponent = () => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return emailRegex.test(inputEmail);
     };
+
+    useEffect(()=>{
+        setPasswordBox(false);
+        setIsEmailValid(false);
+        setPasswordMatch(true);
+        methods.reset({
+            emailMailId: "",
+            password: ""
+        })
+        methodsForRegister.reset({
+            newPassword: "",
+            password: ""
+        })
+        methodsForLogin.reset({
+            password:""
+        })
+    },[navigate])
 
     const methods = useForm({
         defaultValues: {
@@ -175,7 +192,7 @@ const PopoverComponent = () => {
                                                     <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Enter Password</div>
+                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-bold'>Enter Password</div>
                                                                 <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
@@ -217,7 +234,7 @@ const PopoverComponent = () => {
                                                     <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl font-extrabold'>Enter Password</div>
+                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-extrabold'>Enter Password</div>
                                                                 <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
@@ -269,14 +286,13 @@ const PopoverComponent = () => {
                                             <div>
                                                 <div className="xl:w-full md:w-full sm:w-full">
                                                     <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                        <div className=' xl:text-4xl md:text-3xl sm:text-xl font-bold'>Login/Register</div>
+                                                        <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-bold'>Login/Register</div>
                                                         <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
                                                             Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <FormProvider {...methods}>
-                                                    {/* <form onSubmit={(e) => handleContinue(e)}> */}
                                                     <form onSubmit={methods.handleSubmit(handleContinue)}>
                                                         <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-[#757780] mb-1.5'>Email Address</div>
                                                         <div>

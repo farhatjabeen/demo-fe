@@ -114,7 +114,7 @@ export default function SearchReport() {
                                             placeholder="Location"
                                             name="location"
                                             editButton={true}
-                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 py-4 pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
