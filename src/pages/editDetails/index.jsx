@@ -26,9 +26,9 @@ export default function EditBusinessDetails() {
     const dispatch = useDispatch();
     const resolver = useValidationResolver(addMoreDetailsSchema);
     const items = useSelector(itemDropdown);
-    const itemCategories = Object.values(items);
+    const itemCategories = items ? Object.values(items) : [];
     const locations = useSelector(locationDetails);
-    const locationCategory = Object.values(locations);
+    const locationCategory = locations ? Object.values(locations) : [];
 
 
     const methods = useForm({
@@ -174,7 +174,7 @@ export default function EditBusinessDetails() {
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
-                <div className='font-bold xl:text-4xl md:text-4xl sm:text-3xl mb-16'>Edit details</div>
+                <div className='font-bold xl:text-4xl md:text-4xl sm:text-3xl mb-16'>Add More details</div>
             </div>
 
             <FormProvider {...methods}>
@@ -264,8 +264,6 @@ export default function EditBusinessDetails() {
                                             ))}
                                         </div>
                                     ) : null}
-
-
 
                                     <div className="flex justify-center items-center">
                                         <ImageUpload

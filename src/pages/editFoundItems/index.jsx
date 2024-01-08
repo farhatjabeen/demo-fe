@@ -9,8 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextInput from "../../components/common/textInput";
 import TextAreaInput from '../../components/common/textAreaInput';
-import { adminUpdateFoundItems, foundItemById, getItemId, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
+import { adminUpdateFoundItems, filesUploadAPI, foundItemById, getItemId, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
 import { useParams } from "react-router-dom";
+import ImageUpload from '../../components/common/imageUpload';
+import { MdClose } from "react-icons/md";
+import { IoMdRefresh } from "react-icons/io";
 
 
 const EditFoundItems = () => {
@@ -20,7 +23,12 @@ const EditFoundItems = () => {
   const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
   const items = useSelector(itemDropdown)
-  const dropdownValues = Object.values(items);
+  const dropdownValues = items ? Object.values(items) : [];
+  const [filesFromDb, setFilesFromDb] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [cloudinaryId, setCloudinaryId] = useState([]);
+  const [itemImage, setItemImage] = useState([]);
 
   const methods = useForm({
     defaultValues: {
@@ -29,6 +37,8 @@ const EditFoundItems = () => {
       itemCategory: "",
       keywords: "",
       locationIdentifiers: "",
+      itemImage: "",
+      cloudinary_id: "",
     },
     resolver
   });
@@ -45,6 +55,8 @@ const EditFoundItems = () => {
         itemDescription: foundItemDetails.itemDescription,
         locationIdentifiers: foundItemDetails.locationIdentifiers,
         itemCategory: foundItemDetails.itemCategory,
+        itemImage: foundItemDetails.itemImage,
+        cloudinary_id: foundItemDetails.cloudinary_id
       });
     }
   }, [foundItemDetails]);
@@ -53,15 +65,87 @@ const EditFoundItems = () => {
     dispatch(itemDropdownValues());
   }, [itemCategory]);
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
+  useEffect(() => {
+    if (foundItemDetails?.itemImage) {
+      setFilesFromDb(foundItemDetails.itemImage);
+    }
+  }, [foundItemDetails?.itemImage]);
+  const handleFileUpload = (e) => {
+    const selectedFiles = e.target.files;
+    setFiles((prevFiles) => {
+      const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
+      if (newFiles) {
+        setIsUploaded(true);
+      }
+      return newFiles;
+    });
+  }
+  const handleRemoveFile = (indexToRemove) => {
+    setFiles((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+  };
+  const handleRemoveApiFile = (indexToRemove) => {
+    setFilesFromDb((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+  };
+  const handleReset = (e) => {
+    setFiles([]);
+    setIsUploaded(false);
+    setFilesFromDb([]);
+    setCloudinaryId([]);
+  }
+  useEffect(() => {
+    if (files && files.length > 0) {
+      let formData = new FormData();
+      files.forEach((item, i) => {
+        formData.append("item", item);
+      });
 
-  const submitData = (data) => {
+      const uploadFiles = async () => {
+        try {
+          const res = await dispatch(filesUploadAPI(formData));
+          return res.data;
+        } catch (error) {
+          console.error("Error uploading files:", error);
+        }
+      };
+
+      const handleUpload = async () => {
+        const uploadedData = await uploadFiles();
+
+        if (uploadedData) {
+          setCloudinaryId((prevIds) => [...prevIds, uploadedData.cloudinary_id]);
+          setItemImage((prevImages) => [...prevImages, uploadedData.itemImage]);
+
+          if (foundItemDetails?.cloudinary_id) {
+            setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(foundItemDetails.cloudinary_id) ? foundItemDetails.cloudinary_id : [foundItemDetails.cloudinary_id])]);
+          }
+
+
+          if (foundItemDetails?.itemImage) {
+            setItemImage((prevImages) => [...prevImages, ...(Array.isArray(foundItemDetails.itemImage) ? foundItemDetails.itemImage : [foundItemDetails.itemImage])]);
+          }
+        }
+      };
+
+      handleUpload();
+    } else {
+      console.warn("No files to upload.");
+    }
+  }, [files, foundItemDetails]);
+  const submitData = async () => {
     try {
+      const data = methods.getValues()
       const updatedData = {
         ...data,
         itemCategory: selectedCategory,
+        keywords: Array.isArray(data.keywords) ? data.keywords : (data.keywords ? data.keywords.split(',').map(keyword => keyword.trim()) : []),
+        itemImage: itemImage.length > 0 ? itemImage[0] : filesFromDb.length > 0 ? foundItemDetails.itemImage : [],
+        cloudinary_id: cloudinaryId.length > 0 ? cloudinaryId[0] : foundItemDetails.cloudinary_id,
       };
-
-      dispatch(adminUpdateFoundItems(id, updatedData));
+      await dispatch(adminUpdateFoundItems(id, updatedData));
       navigate('/admin/user/foundItems');
     } catch (error) {
       console.error('Update failed:', error);
@@ -91,30 +175,30 @@ const EditFoundItems = () => {
             <div className="p-4">
               <div className='xl:flex lg:flex md:flex xs:block '>
                 <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-4">
-                  <label >Founder Name</label>
+                  <label className='text-base font-normal' >Founder Name</label>
                   <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray  rounded-md" >{userName}</p>
                 </div>
 
                 <div className=" xl:w-1/3 xs:w-full md:w-1/2 mb-4">
-                  <label >Founder Mobile Number</label>
+                  <label className='text-base font-normal' >Founder Mobile Number</label>
                   <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{mobileNumber}</p>
                 </div>
                 <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-4">
-                  <label >Founder Email ID</label>
+                  <label className='text-base font-normal' >Founder Email ID</label>
                   <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{emailMailId}</p>
                 </div>
               </div>
               <div className='xl:flex lg:flex md:flex xs:block '>
                 <div className="mb-4  xl:w-1/3 xs:w-full md:w-1/2">
-                  <label>Found Date</label>
+                  <label className='text-base font-normal'>Found Date</label>
                   <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{foundDate}</p>
                 </div>
                 <div className="mb-4 xl:w-1/3 xs:w-full md:w-1/2">
-                  <label >Found Time</label>
+                  <label className='text-base font-normal' >Found Time</label>
                   <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{foundTime}</p>
                 </div>
                 <div className=" mb-4 xl:w-1/3 xs:w-full md:w-1/2">
-                  <label >Found Location </label>
+                  <label className='text-base font-normal' >Found Location </label>
                   <p className="w-11/12 py-2 px-3  bg-gray border border-light-gray rounded-md" >{location}</p>
                 </div>
               </div>
@@ -126,7 +210,7 @@ const EditFoundItems = () => {
             </div>
             <div className="xl:flex lg:flex md:flex xs:block p-4 ">
               <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-2">
-                <label >Item Name</label>
+                <label className='text-base font-normal' >Item Name</label>
                 <TextInput
                   name='itemName'
                   className="w-11/12 py-2 px-3  border border-light-gray rounded-md"
@@ -134,7 +218,7 @@ const EditFoundItems = () => {
                 />
               </div>
               <div className="mb-2 xl:w-1/3 xs:w-full md:w-1/2">
-                <label>Item Category</label>
+                <label className='text-base font-normal'>Item Category</label>
                 <DropdownMenu
                   dropdownValues={dropdownValues}
                   value={selectedCategory}
@@ -142,7 +226,7 @@ const EditFoundItems = () => {
                 />
               </div>
               <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-2 xl:ml-6 md:ml-4">
-                <label >Keywords</label>
+                <label className='text-base font-normal' >Keywords</label>
                 <TextInput
                   name='keywords'
                   className="w-11/12 py-2 px-3  border border-light-gray rounded-md"
@@ -152,7 +236,7 @@ const EditFoundItems = () => {
             </div>
             <div className="p-4 xl:flex lg:flex md:flex xs:block">
               <div className='xl:w-1/3 xs:w-full md:w-1/2'>
-                <label >Item Description</label>
+                <label className='text-base font-normal' >Item Description</label>
                 <TextAreaInput
                   name='itemDescription'
                   autoComplete="off"
@@ -162,7 +246,7 @@ const EditFoundItems = () => {
                 ></TextAreaInput>
               </div>
               <div className='xl:w-1/3 xs:w-full md:w-1/2'>
-                <label >Landmark</label>
+                <label className='text-base font-normal' >Landmark</label>
                 <TextAreaInput
                   name='locationIdentifiers'
                   autoComplete="off"
@@ -172,11 +256,41 @@ const EditFoundItems = () => {
                 ></TextAreaInput>
               </div>
               <div className='xl:w-1/3 xs:w-full md:w-1/2'>
-                <label >Upload Images</label>
+                <label className='text-base font-normal' >Upload Images</label>
                 <div>
-                  <button className='bg-primary-color py-2 rounded-xl w-80'>
-                    Upload Image
-                  </button>
+                  {isUploaded || foundItemDetails?.itemImage ? (
+                    <div className='flex flex-wrap w-96'>
+                      {filesFromDb.map((url, i) => (
+                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                          <img src={url} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
+                          <div className='flex items-center ml-2' onClick={() => handleRemoveApiFile(i)}><MdClose /></div>
+                        </div>
+                      ))}
+                      {files.map((file, i) => (
+                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                          <img src={URL.createObjectURL(file)} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
+                          <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                  <div className="flex">
+                    <ImageUpload
+                      name="item"
+                      designClass="xl:w-88 md:w-96 sm:w-80 h-14 sm:h-12 rounded-xl bg-primary-color flex items-center justify-center cursor-pointer"
+                      multiple={true}
+                      handleFileUpload={handleFileUpload}
+                    />
+
+                    {foundItemDetails?.itemImage || isUploaded ?
+                      <div>
+                        <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-2 rounded-xl flex justify-center items-center'>
+                          <IoMdRefresh className='h-6 w-6' />
+                        </button>
+                      </div>
+                      :
+                      ""}
+                  </div>
                 </div>
               </div>
             </div>
@@ -186,11 +300,13 @@ const EditFoundItems = () => {
               text="Cancel"
               isReset={false}
               buttonColor="blue"
+              onClick={(e) => handleCancel(e)}
             />
             <CustomCombinedButton
               text="Submit"
               isReset={true}
               buttonColor="other"
+              type="submit"
             />
           </div>
         </form>

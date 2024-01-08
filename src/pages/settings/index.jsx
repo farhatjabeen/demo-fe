@@ -8,12 +8,13 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
 import adminPasswordimage from '../../assets/images/adminPasswordimage.png'
 import { adminResetPassword } from "../../redux/reducers/userSlice";
-
+import  OTPVerificationModal  from '../../components/OTPModal'
 const Settings = () => {
     const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false)
-    const [showNewPassword, setShowNewPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isOTPOpen, setIsOTPOpen] = useState(false);
     const dispatch = useDispatch();
     const resolver = useValidationResolver(AdminChangePasswordSchema);
     const methods = useForm({
@@ -26,15 +27,24 @@ const Settings = () => {
     });
     const submitData = async (data) => {
         try {
-            const reset = dispatch(adminResetPassword(data))
-            if (reset) {
-                navigate('/admin/signin');
-            }
-            else {
-                console.log("Password reset failed");
-            }
+            setIsOTPOpen(true);
+            // const reset = dispatch(adminResetPassword(data))
+            // if (reset) {
+            //     navigate('/admin/signin');
+            // }
+            // else {
+            //     console.log("Password reset failed");
+            // }
         } catch (error) {
             console.log("submitData errors", error)
+        }
+    };
+    const handleOTPVerification = async (otp) => {
+        try {
+            console.log("Verifying OTP:", otp);
+            setIsOTPOpen(false);
+        } catch (error) {
+            console.log("OTP verification error", error);
         }
     };
     return (
@@ -42,7 +52,7 @@ const Settings = () => {
             <h1 className='text-black font-bold text-4xl mt-10'>
                 Settings
             </h1>
-            <div className='flex mt-24 border-b border-[#C7C7C7] pb-4  mr-10'>
+            <div className='flex mt-24 border-b border-grey pb-4  mr-10'>
                 <GoLock size={24} color='blue' />
                 <p className='text-black font-bold ml-10 text-2xl'>Reset Password</p>
             </div>
@@ -132,6 +142,11 @@ const Settings = () => {
                             </div>
                         </form>
                     </FormProvider>
+                    <OTPVerificationModal
+                        isOpen={isOTPOpen}
+                        onCancel={() => setIsOTPOpen(false)}
+                        onVerify={handleOTPVerification}
+                    />
                 </div>
 
                 <div>

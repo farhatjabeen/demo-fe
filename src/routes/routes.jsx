@@ -97,6 +97,10 @@ const routers = [
         childPath: "/businesshome",
       },
       {
+        component: "detailPage",
+        childPath: "/businesshome/detailpage",
+      },
+      {
         component: "changePassword",
         childPath: "/changepassword",
       },

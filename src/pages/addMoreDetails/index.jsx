@@ -23,46 +23,44 @@ export default function AddMoreDetails() {
     const navigate = useNavigate();
     const [isLoader, setIsLoader] = useState(false);
     const items = useSelector(itemDropdown);
-    const itemCategories = Object.values(items);
+    const itemCategories = items ? Object.values(items) : [];
     const cities = useSelector(locationDetails);
-    const citiesInSerbia = Object.values(cities);
+    const citiesInSerbia = cities ? Object.values(cities) : [];
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
     const userDetails = useSelector(userData);
     const itemDetailsById = useSelector(searchDetailsById);
     const reportDetails = useParams();
 
-
     useEffect(() => {
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
         setIsLoader(true)
-        const addData = async()=>{
-        if (reportDetails.id) {
-            const getDetails = await dispatch(searchItemById(reportDetails.id))
-            if(getDetails){
-                setIsLoader(false)
+        const addData = async () => {
+            if (reportDetails.id) {
+                const getDetails = await dispatch(searchItemById(reportDetails.id))
+                if (getDetails) {
+                    setIsLoader(false)
+                }
             }
         }
-    }
-    addData();
-    
+        addData();
+
         if (reportDetails.newItem) {
             methods.setValue("itemName", reportDetails.newItem)
             methods.setValue("location", reportDetails.location)
             setIsCancelled(true);
             setIsUploaded(false)
         }
-
     }, []);
 
     useEffect(() => {
-        
+
         if (itemDetailsById && reportDetails.id) {
-            
+
             setItemImage(itemDetailsById?.itemImage);
             setCloudinaryId(itemDetailsById?.cloudinary_id);
-             methods.reset({
+            methods.reset({
                 emailMailId: itemDetailsById?.emailMailId || "",
                 mobileNumber: itemDetailsById?.mobileNumber != undefined ? `${itemDetailsById?.mobileNumber}` : "",
                 userName: itemDetailsById?.userName || "",
@@ -75,10 +73,10 @@ export default function AddMoreDetails() {
                 itemImage: itemDetailsById?.itemImage || "",
                 cloudinary_id: itemDetailsById?.cloudinary_id || ""
             });
-            
-        
+
+
         }
-        
+
     }, [itemDetailsById])
 
     const resolver = useValidationResolver(addMoreDetailsSchema);
@@ -224,8 +222,6 @@ export default function AddMoreDetails() {
         window.history.back();
     }
 
-    console.log(itemImage, "itemimage");
-    console.log(cloudinaryId, 'cloudi')
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>

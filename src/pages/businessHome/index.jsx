@@ -78,16 +78,18 @@ export default function BusinessHome() {
                             increasing efficiency and ensuring more items can be returned. <span > New intelligent,
                                 cloud-based solution to be introduced across Transport for London.</span>
                         </p>
-                        <button className='text-[#444444] font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
+                        <button className='text-primary-color font-medium xl:text-lg md:text-sm sm:text-xs' onClick={() => setReadMore(!readMore)}>{readMore ? 'Less' : 'More'}...</button>
                     </div>
-                    <div className='text-white'><button className='bg-[#FF9900] px-4 py-1 rounded-md xl:text-lg md:text-sm sm:text-xs'>Know more</button></div>
+                    <div className='text-white'>
+                        <button className='bg-primary-color px-4 py-1 rounded-md xl:text-lg md:text-sm sm:text-xs' onClick={() => navigate('/businesshome/detailpage')}>Know more</button>
+                        </div>
                 </div>
                 <div className='absolute xl:top-0 xl:pt-36 md:top-14 sm:top-10 w-full flex flex-col items-end xl:pr-32 md:pr-16 sm:pr-7'>
                     <div><img src={transportLondon} className='xl:h-72 xl:w-full md:h-56 md:w-80 sm:h-40 sm:w-60' alt='transportLondon' /></div>
                 </div>
             </div>
 
-            <div className=' ml-24'> <OurBrands /> </div>
+            <div> <OurBrands /> </div>
 
             <div className='overflow-hidden flex justify-center py-20'>
                 <div><img src={quotes} alt='quotes' className='sm:h-20 w-20' /></div>

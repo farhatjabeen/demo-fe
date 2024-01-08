@@ -5,7 +5,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../common/textInput';
-import {useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../redux/reducers/userSlice';
 import { Toast } from '../toast';
 // import { Switch } from '@headlessui/react';
@@ -16,7 +16,7 @@ export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
 
     const cities = useSelector(locationDetails);
-    const citiesInSerbia = Object.values(cities);
+    const citiesInSerbia = cities ? Object.values(cities) : [];
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -30,10 +30,7 @@ export default function SearchReport() {
         resolver
     });
 
-    console.log("citiesInSerbia", citiesInSerbia)
-
     useEffect(() => {
-        console.log("search report API called")
         dispatch(locationDropdownValues())
     }, [dispatch]);
 
@@ -174,4 +171,4 @@ export default function SearchReport() {
             <div className='h-full w-full'><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
         </div>
     )
-}
+};
