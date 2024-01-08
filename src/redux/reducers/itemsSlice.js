@@ -519,6 +519,7 @@ export const adminUpdateFoundItems = (itemId, data) => (dispatch) => {
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
+            Toast({type:"success",message:res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err);

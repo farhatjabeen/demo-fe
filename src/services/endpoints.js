@@ -1,5 +1,4 @@
 const apiPath = {
-    login: '/business/login',
     loginBusinessUser: '/business/login',
     loginGeneralUser: '/user/login',
     logoutGeneralUser: '/user/logout',
