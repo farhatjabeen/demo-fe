@@ -235,8 +235,8 @@ export default function AddMoreDetails() {
             <FormProvider {...methods}>
                 {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
                 <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
-                    {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
-                        :
+                    {/* {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
+                        : */}
                         <div className='w-full px-24'>
                             <div>
                                 <div className='flex justify-between mb-9'>
@@ -264,6 +264,7 @@ export default function AddMoreDetails() {
                                         name='itemCategory'
                                         optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                         editButton={true}
+                                        firstOptionName="Select Category"
                                         valueFromDb={isCancelled ? "" : itemDetailsById?.itemCategory}
                                         dropdownValues={itemCategories} />
                                 </div>
@@ -290,7 +291,7 @@ export default function AddMoreDetails() {
                                     </div>
                                     <TextInput
                                         type="text"
-                                        placeholder="Keywords"
+                                        placeholder="Enter Keywords comma seperated"
                                         name="keywords"
                                         className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                         autoComplete="off"
@@ -354,7 +355,7 @@ export default function AddMoreDetails() {
 
                                             {cloudinaryId?.length > 0 || isUploaded ?
                                                 <div>
-                                                    <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
+                                                    <button onClick={handleReset} className='cursor-pointer h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
                                                         <IoMdRefresh className='h-6 w-6' />
                                                     </button>
                                                 </div>
@@ -374,6 +375,7 @@ export default function AddMoreDetails() {
                                             optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
                                             editButton={true}
                                             selection={true}
+                                            firstOptionName="Select Location"
                                             valueFromDb={reportDetails.location || itemDetailsById?.location}
                                             dropdownValues={citiesInSerbia}
                                         />
@@ -443,7 +445,7 @@ export default function AddMoreDetails() {
                                 <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                     <div>
                                         <button
-                                            className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
+                                            className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
                                             onClick={handleCancel}
                                         >
                                             Cancel
@@ -452,7 +454,7 @@ export default function AddMoreDetails() {
                                     <div>
                                         <button
                                             type='submit'
-                                            className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
+                                            className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
                                         >
                                             {itemDetailsById && reportDetails.id ? <p>Edit form</p> : <p>Submit form</p>}
                                         </button>
@@ -460,7 +462,7 @@ export default function AddMoreDetails() {
                                 </div>
                             </div>
                         </div>
-                    }
+                    {/* } */}
                 </form>
             </FormProvider>
         </div>

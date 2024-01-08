@@ -70,7 +70,7 @@ const Carousel = () => {
           {contentData.map((_, index) => (
             <li key={index} className="mx-1">
               <button
-                className={`h-2 w-2 rounded-full ${
+                className={`cursor-pointer h-2 w-2 rounded-full ${
                   index === activeIndex? "bg-primary-color"   :"bg-grey"
                 }`}
               ></button>

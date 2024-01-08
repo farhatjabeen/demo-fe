@@ -52,7 +52,7 @@ export const userSlice = createSlice({
 export const loginUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.login,
+            url: endpoints.apiPath.loginBusinessUser,
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
@@ -265,19 +265,19 @@ export const loginAdminUser = (data) => (dispatch) => {
     })
 }
 
-export const changePassword = (data) => async (dispatch) => {
-    return new Promise((resolve, reject) => {
-        apiRequest({
-            url: endpoints.apiPath.login,
-            method: endpoints.ApiMethods.POST,
-            data: data
-        }).then(res => {
-            return resolve(res?.data);
-        }).catch(err => {
-            reject(err)
-        })
-    })
-}
+// export const changePassword = (data) => async (dispatch) => {
+//     return new Promise((resolve, reject) => {
+//         apiRequest({
+//             url: endpoints.apiPath.login,
+//             method: endpoints.ApiMethods.POST,
+//             data: data
+//         }).then(res => {
+//             return resolve(res?.data);
+//         }).catch(err => {
+//             reject(err)
+//         })
+//     })
+// }
 
 export const adminResetPassword = (data) => async () => {
 

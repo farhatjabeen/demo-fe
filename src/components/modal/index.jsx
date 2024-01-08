@@ -20,13 +20,13 @@ const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId,context }) => 
           <br></br>Process cannot be undone</p>
         <div className="flex justify-center pb-4">
           <button
-            className="bg-light-gray text-white font-bold px-4 py-2 mr-2 w-32 rounded"
+            className="cursor-pointer bg-light-gray text-white font-bold px-4 py-2 mr-2 w-32 rounded"
             onClick={onCancel}
           >
             Cancel
           </button>
           <button
-            className="bg-red  text-white font-bold  px-4 py-2 w-32 rounded"
+            className="cursor-pointer bg-red  text-white font-bold  px-4 py-2 w-32 rounded"
             onClick={handleConfirmDelete}
           >
             Delete

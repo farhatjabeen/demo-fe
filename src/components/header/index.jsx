@@ -72,7 +72,7 @@ const Header = (props) => {
                         :
                         <div className="flex">
                             <button
-                                className="xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
+                                className="cursor-pointer xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
                                 onClick={() => navigate('/businessHome')}
                             >
                                 Ilost for Business

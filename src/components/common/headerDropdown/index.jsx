@@ -20,7 +20,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
             <div>
                 <Menu.Button
                     onClick={() => setSelect(!select)}
-                    className=' xl:w-fit  xl:px-9 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color'>
+                    className=' cursor-pointer xl:w-fit  xl:px-9 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color'>
                     <div className="flex  items-center justify-between px-3">
                         <div className="flex text-[#FFC727] mr-4 items-center">
                             {

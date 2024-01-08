@@ -29,11 +29,11 @@ export default function SearchCards(props) {
                     </div>
                     <div className='flex justify-between'>
                         <div >
-                            <button onClick={() => navigate(`/claimItem/${props.itemId}`)} className='xl:h-10 xl:w-32 md:h-8 md:w-24 sm:h-8 sm:w-20 rounded-lg bg-primary-color border-none text-sm font-normal xl:mt-7 md:mt-5 sm:mt-2'>
+                            <button onClick={() => navigate(`/claimItem/${props.itemId}`)} className='cursor-pointer xl:h-10 xl:w-32 md:h-8 md:w-24 sm:h-8 sm:w-20 rounded-lg bg-primary-color border-none text-sm font-normal xl:mt-7 md:mt-5 sm:mt-2'>
                                 Contact
                             </button>
                         </div>
-                        <div className='xl:mt-8 md:mt-6 sm:mt-2 flex justify-center items-center text-sm font-normal' >
+                        <div className='cursor-pointer xl:mt-8 md:mt-6 sm:mt-2 flex justify-center items-center text-sm font-normal' >
                             <button onClick={() => navigate(`/businessitemdetails/${props.itemId}`)}>View item</button>
                             <FaArrowRight className=' ml-1.5' />
                         </div>

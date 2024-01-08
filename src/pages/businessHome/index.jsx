@@ -62,8 +62,8 @@ export default function BusinessHome() {
                 <div className='xl:text-4xl md:text-4xl sm:text-2xl font-bold text-text-color'>Transform your lost and found process</div>
                 <div className='font-normal xl:text-lg md:text-lg sm:text-xs text-center mt-3 mb-8 text-text-color'>Reassure your customers, save time & money and return <br></br> more items of lost property with our lost and found software.</div>
                 <div>
-                    <button className='border border-[#FF9900] xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-[#834F00]' onClick={() => navigate('/businessSignIn')}>Sign in</button>
-                    <button className='xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-[#FF9900] ml-5 ' onClick={() => navigate('/businessignup')}>Sign Up</button>
+                    <button className='cursor-pointer border border-[#FF9900] xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-[#834F00]' onClick={() => navigate('/businessSignIn')}>Sign in</button>
+                    <button className='cursor-pointer xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-[#FF9900] ml-5 ' onClick={() => navigate('/businessignup')}>Sign Up</button>
                 </div>
             </div>
 
@@ -105,7 +105,7 @@ export default function BusinessHome() {
                             {contentData.map((_, index) => (
                                 <li key={index} className="mx-1">
                                     <button
-                                        className={`h-3 w-3 ${index === activeIndex ? "bg-orange" : "bg-light-gray"
+                                        className={`cursor-pointer h-3 w-3 ${index === activeIndex ? "bg-orange" : "bg-light-gray"
                                             }`}
                                     ></button>
                                 </li>
@@ -157,7 +157,7 @@ export default function BusinessHome() {
                                         <div className='text-[#666666] font-medium text-sm overflow-hidden'>
                                             Today we'll be discussing the big question in software development....To buy or to build, This puzzle has been a quandary for heads of businesses...
                                         </div>
-                                        <button className='text-[#FF9900] text-xs'>read more</button>
+                                        <button className='cursor-pointer text-[#FF9900] text-xs'>read more</button>
                                     </div>
                                 </div>
                             );

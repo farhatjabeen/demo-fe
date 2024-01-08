@@ -60,12 +60,12 @@ export default function QueryPublished() {
                                 <div >
                                     <button 
                                     onClick={() => handleEditItem(itemId.id)}
-                                    className='xl:h-14 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-primary-color border-none font-normal sm:text-base text-lg'>
+                                    className='cursor-pointer xl:h-14 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-primary-color border-none font-normal sm:text-base text-lg'>
                                         Edit Content
                                     </button>
                                 </div>
                                 <div >
-                                    <button className='xl:h-14 xl:ml-3 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
+                                    <button className='cursor-pointer xl:h-14 xl:ml-3 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
                                         Contact Us
                                     </button>
                                 </div>

@@ -85,7 +85,7 @@ export default function BusinessSignIn() {
                                     </div>
                                 </div> */}
                                 <button
-                                    className='bg-primary-color w-full h-14 rounded-md mt-8'
+                                    className='cursor-pointer bg-primary-color w-full h-14 rounded-md mt-8'
                                     type="submit"
                                 >
                                     Login
@@ -96,7 +96,7 @@ export default function BusinessSignIn() {
                     <div className='absolute bottom-20 mt-5 right-4'>
                         <button
                             onClick={handleForgot}
-                            className='text-xs text-[#4D4D4D] font-light'
+                            className='cursor-pointer text-xs text-[#4D4D4D] font-light'
                         >
                             Forgot Password?
                         </button>
