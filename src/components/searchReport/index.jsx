@@ -5,7 +5,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../common/textInput';
-import {useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userData } from '../../redux/reducers/userSlice';
 import { Toast } from '../toast';
 // import { Switch } from '@headlessui/react';
@@ -16,7 +16,7 @@ export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
 
     const cities = useSelector(locationDetails);
-    const citiesInSerbia = Object.values(cities);
+    const citiesInSerbia = cities ? Object.values(cities) : [];
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -30,10 +30,7 @@ export default function SearchReport() {
         resolver
     });
 
-    console.log("citiesInSerbia", citiesInSerbia)
-
     useEffect(() => {
-        console.log("search report API called")
         dispatch(locationDropdownValues())
     }, [dispatch]);
 
@@ -114,7 +111,7 @@ export default function SearchReport() {
                                             placeholder="Location"
                                             name="location"
                                             editButton={true}
-                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 py-4 pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
@@ -172,4 +169,4 @@ export default function SearchReport() {
             <div className='h-full w-full'><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
         </div>
     )
-}
+};

@@ -23,7 +23,7 @@ const EditFoundItems = () => {
   const dispatch = useDispatch();
   const resolver = useValidationResolver(editFoundItemsSchema);
   const items = useSelector(itemDropdown)
-  const dropdownValues = Object.values(items);
+  const dropdownValues = items ? Object.values(items) : [];
   const [filesFromDb, setFilesFromDb] = useState([]);
   const [files, setFiles] = useState([]);
   const [isUploaded, setIsUploaded] = useState(false);
