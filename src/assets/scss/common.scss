@@ -1,9 +1,8 @@
-
 .authLayout,
 .mainLayout {
-    background-image: url("../../assets/images/header-bg.png");
-    background-size: cover;
-    max-height: 2vh;
+    background: url("../../assets/images/header-bg.png") top center no-repeat;
+    background-size: 100% 50%;
+    background-position: 0px 0px;
 }
 
 .btn-primary {
