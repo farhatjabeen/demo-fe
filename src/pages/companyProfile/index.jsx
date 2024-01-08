@@ -93,7 +93,7 @@ export default function CompanyProfile() {
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
                 <div className='font-bold xl:text-4xl md:text-4xl sm:text-3xl mb-16 mr-4'>Company Profile</div>
-                {editButton ? null : <div><button className='cursor-pointer w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
+                {editButton ? null : <div><button className='cursor-pointer w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
             </div>
             <FormProvider {...methods}>
                 {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
@@ -250,12 +250,12 @@ export default function CompanyProfile() {
                         {editButton ?
                             <div className='xl:w-4/12 md:w-7/12 sm:w-8/12 flex xl:ml-80 md:ml-32 sm:ml-12 mb-10 items-center justify-between'>
                                 <div>
-                                    <button onClick={handleEditButton} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-[#B6B6B6] bg-white rounded-xl xl:text-lg md:text-lg sm:text-base cursor-grab'>
+                                    <button onClick={handleEditButton} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-[#B6B6B6] bg-white rounded-xl xl:text-lg md:text-lg sm:text-base'>
                                         Cancel
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base cursor-grab'>
+                                    <button type='submit' className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base'>
                                         Save Changes
                                     </button>
                                 </div>

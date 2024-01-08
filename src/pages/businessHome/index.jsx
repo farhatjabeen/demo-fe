@@ -64,6 +64,14 @@ export default function BusinessHome() {
                 <div>
                     <button className='cursor-pointer border border-[#FF9900] xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-[#834F00]' onClick={() => navigate('/businessSignIn')}>Sign in</button>
                     <button className='cursor-pointer xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-[#FF9900] ml-5 ' onClick={() => navigate('/businessignup')}>Sign Up</button>
+                    <button
+                        className='cursor-pointer border border-[#FF9900] xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-[#834F00]'
+                        onClick={() => navigate('/businessSignIn')}
+                    >Sign in</button>
+                    <button
+                        className='cursor-pointer xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-[#FF9900] ml-5 '
+                        onClick={() => navigate('/businessignup')}
+                    >Sign Up</button>
                 </div>
             </div>
 

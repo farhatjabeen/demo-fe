@@ -60,7 +60,10 @@ export const getDecryptedLocalStorageData = (key) => {
     if (!key || !storageKeyMapper[key]) return null;
     return Promise.resolve().then(function () {
         const data = localStorage.getItem(storageKeyMapper[key])
-        return Encryption.decrypt(data.toString());
+        if (data) {
+            return Encryption.decrypt(data.toString());
+        }
+        return '';
     });
 };
 

@@ -93,7 +93,7 @@ export default function BusinessSignIn() {
                             </div>
                         </form>
                     </FormProvider>
-                    <div className='absolute bottom-20 mt-5 right-4'>
+                    <div className='absolute bottom-16 mt-5 right-3'>
                         <button
                             onClick={handleForgot}
                             className='cursor-pointer text-xs text-[#4D4D4D] font-light'

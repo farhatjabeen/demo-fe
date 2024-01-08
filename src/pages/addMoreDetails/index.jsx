@@ -441,7 +441,7 @@ export default function AddMoreDetails() {
                                 <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                     <div>
                                         <button
-                                            className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
+                                            className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg'
                                             onClick={handleCancel}
                                         >
                                             Cancel
@@ -450,7 +450,7 @@ export default function AddMoreDetails() {
                                     <div>
                                         <button
                                             type='submit'
-                                            className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
+                                            className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg'
                                         >
                                             {itemDetailsById && reportDetails.id ? <p>Edit form</p> : <p>Submit form</p>}
                                         </button>
