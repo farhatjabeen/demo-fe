@@ -21,6 +21,7 @@ export default function AddMoreDetails() {
     const [isCancelled, setIsCancelled] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isLoader, setIsLoader] = useState(false);
     const items = useSelector(itemDropdown);
     const itemCategories = items ? Object.values(items) : [];
     const cities = useSelector(locationDetails);
@@ -34,9 +35,17 @@ export default function AddMoreDetails() {
     useEffect(() => {
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
-        if (reportDetails.id) {
-            dispatch(searchItemById(reportDetails.id))
+        setIsLoader(true)
+        const addData = async () => {
+            if (reportDetails.id) {
+                const getDetails = await dispatch(searchItemById(reportDetails.id))
+                if (getDetails) {
+                    setIsLoader(false)
+                }
+            }
         }
+        addData();
+
         if (reportDetails.newItem) {
             methods.setValue("itemName", reportDetails.newItem)
             methods.setValue("location", reportDetails.location)
@@ -46,6 +55,7 @@ export default function AddMoreDetails() {
     }, []);
 
     useEffect(() => {
+
         if (itemDetailsById && reportDetails.id) {
 
             setItemImage(itemDetailsById?.itemImage);
@@ -63,7 +73,10 @@ export default function AddMoreDetails() {
                 itemImage: itemDetailsById?.itemImage || "",
                 cloudinary_id: itemDetailsById?.cloudinary_id || ""
             });
+
+
         }
+
     }, [itemDetailsById])
 
     const resolver = useValidationResolver(addMoreDetailsSchema);
@@ -218,89 +231,90 @@ export default function AddMoreDetails() {
             <FormProvider {...methods}>
                 {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
                 <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
-                    <div className='w-full px-24'>
-                        <div>
-                            <div className='flex justify-between mb-9'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Name</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Name</p>
-                                </div>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Type Name"
-                                    name="itemName"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
-                                    autoComplete="off"
-                                    required
-                                />
-                            </div>
-
-                            <div className='flex justify-between mb-9'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Category</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Category</p>
+                    {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
+                        :
+                        <div className='w-full px-24'>
+                            <div>
+                                <div className='flex justify-between mb-9'>
+                                    <div>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Name</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Name</p>
+                                    </div>
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Type Name"
+                                        name="itemName"
+                                        className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                        autoComplete="off"
+                                        required
+                                    />
                                 </div>
 
-                                <FormDropdown
-                                    name='itemCategory'
-                                    optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
-                                    editButton={true}
-                                    valueFromDb={isCancelled ? "" : itemDetailsById?.itemCategory}
-                                    selection={true}
-                                    dropdownValues={itemCategories} />
-                            </div>
+                                <div className='flex justify-between mb-9'>
+                                    <div>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Category</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Category</p>
+                                    </div>
 
-                            <div className='flex justify-between mb-9'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Description</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Description</p>
+                                    <FormDropdown
+                                        name='itemCategory'
+                                        optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
+                                        editButton={true}
+                                        valueFromDb={isCancelled ? "" : itemDetailsById?.itemCategory}
+                                        dropdownValues={itemCategories} />
                                 </div>
-                                <TextAreaInput
-                                    rows="4"
-                                    placeholder="Type desc"
-                                    name="itemDescription"
-                                    className='border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
-                                    autoComplete="off"
-                                    required
-                                />
-                            </div>
 
-                            <div className='flex justify-between h-12 mb-16'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Keywords</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Keywords</p>
+                                <div className='flex justify-between mb-9'>
+                                    <div>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Item Description</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Item Description</p>
+                                    </div>
+                                    <TextAreaInput
+                                        rows="4"
+                                        placeholder="Type desc"
+                                        name="itemDescription"
+                                        className='border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                        autoComplete="off"
+                                        required
+                                    />
                                 </div>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Keywords"
-                                    name="keywords"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
-                                    autoComplete="off"
-                                    required
-                                />
-                            </div>
 
-                            <div className='flex justify-between h-fit mb-9 relative'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Upload Images</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Upload Images</p>
+                                <div className='flex justify-between h-12 mb-16'>
+                                    <div>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Keywords</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Keywords</p>
+                                    </div>
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Keywords"
+                                        name="keywords"
+                                        className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                        autoComplete="off"
+                                        required
+                                    />
                                 </div>
-                                <div>
-                                    {isUploaded || itemDetailsById?.itemImage ?
-                                        <div className='flex flex-wrap w-96'>
 
-                                            <div>
-                                                {cloudinaryId?.map((items, i) => {
-                                                    return (
-                                                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                            <div>{items}</div>
-                                                            <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
+                                <div className='flex justify-between h-fit mb-9 relative'>
+                                    <div>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Upload Images</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Upload Images</p>
+                                    </div>
+                                    <div>
+                                        {isUploaded || itemDetailsById?.itemImage ?
+                                            <div className='flex flex-wrap w-96'>
 
-                                            {/* {files
+                                                <div>
+                                                    {cloudinaryId?.map((items, i) => {
+                                                        return (
+                                                            <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                                                                <div>{items}</div>
+                                                                <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+
+                                                {/* {files
                                                 ?
                                                 <div>
                                                     {
@@ -318,130 +332,131 @@ export default function AddMoreDetails() {
                                                 ""
                                             } */}
 
-                                        </div>
-                                        :
-                                        null
-                                    }
-
-                                    <div className="flex justify-center items-center">
-                                        <ImageUpload
-                                            name="imageUploads"
-                                            designClass={cloudinaryId?.length > 0 || isUploaded ?
-                                                "xl:w-80 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
-                                                :
-                                                "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
-                                            multiple={true}
-                                            handleFileUpload={handleFileUpload}
-                                        />
-
-                                        {cloudinaryId?.length > 0 || isUploaded ?
-                                            <div>
-                                                <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
-                                                    <IoMdRefresh className='h-6 w-6' />
-                                                </button>
                                             </div>
                                             :
-                                            ""}
+                                            null
+                                        }
+
+                                        <div className="flex justify-center items-center">
+                                            <ImageUpload
+                                                name="imageUploads"
+                                                designClass={cloudinaryId?.length > 0 || isUploaded ?
+                                                    "xl:w-80 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                                    :
+                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
+                                                multiple={true}
+                                                handleFileUpload={handleFileUpload}
+                                            />
+
+                                            {cloudinaryId?.length > 0 || isUploaded ?
+                                                <div>
+                                                    <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
+                                                        <IoMdRefresh className='h-6 w-6' />
+                                                    </button>
+                                                </div>
+                                                :
+                                                ""}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='border-b border-b-[#949494] mb-10'>
-                                <div className='flex justify-between mb-9 relative location'>
-                                    <div>
-                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>
-                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location</p>
+                                <div className='border-b border-b-[#949494] mb-10'>
+                                    <div className='flex justify-between mb-9 relative location'>
+                                        <div>
+                                            <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>
+                                            <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location</p>
+                                        </div>
+                                        <FormDropdown
+                                            name='location'
+                                            optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
+                                            editButton={true}
+                                            selection={true}
+                                            valueFromDb={reportDetails.location || itemDetailsById?.location}
+                                            dropdownValues={citiesInSerbia}
+                                        />
                                     </div>
-                                    <FormDropdown
-                                        name='location'
-                                        optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
-                                        editButton={true}
-                                        selection={true}
-                                        valueFromDb={reportDetails.location || itemDetailsById?.location}
-                                        dropdownValues={citiesInSerbia}
+
+                                    <div className='flex justify-between h-12 mb-9 relative'>
+                                        <div>
+                                            <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location Identifiers</label>
+                                            <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location Identifiers</p>
+                                        </div>
+                                        <TextInput
+                                            type="text"
+                                            placeholder="Landmarks of the location"
+                                            name="locationIdentifiers"
+                                            className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                            autoComplete="off"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className='flex justify-between h-12 mb-9 relative location'>
+                                    <div>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Name</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Name</p>
+                                    </div>
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Enter your Name"
+                                        name="userName"
+                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                        autoComplete="off"
                                     />
                                 </div>
 
                                 <div className='flex justify-between h-12 mb-9 relative'>
                                     <div>
-                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location Identifiers</label>
-                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Location Identifiers</p>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Phone Number</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Phone Number</p>
                                     </div>
                                     <TextInput
                                         type="text"
-                                        placeholder="Landmarks of the location"
-                                        name="locationIdentifiers"
+                                        placeholder="Enter your Number"
+                                        name="mobileNumber"
+                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                        autoComplete="off"
+                                        required
+                                    />
+                                </div>
+
+                                <div className='flex justify-between h-12 mb-9 relative'>
+                                    <div>
+                                        <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Mail address</label>
+                                        <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Mail address</p>
+                                    </div>
+                                    <TextInput
+                                        type="text"
+                                        placeholder="Enter your Email address"
+                                        name="emailMailId"
                                         className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
                                         autoComplete="off"
                                         required
                                     />
                                 </div>
                             </div>
-
-                            <div className='flex justify-between h-12 mb-9 relative location'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Name</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Name</p>
-                                </div>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Enter your Name"
-                                    name="userName"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
-                                    autoComplete="off"
-                                />
-                            </div>
-
-                            <div className='flex justify-between h-12 mb-9 relative'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Phone Number</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Phone Number</p>
-                                </div>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Enter your Number"
-                                    name="mobileNumber"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
-                                    autoComplete="off"
-                                    required
-                                />
-                            </div>
-
-                            <div className='flex justify-between h-12 mb-9 relative'>
-                                <div>
-                                    <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Your Mail address</label>
-                                    <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Your Mail address</p>
-                                </div>
-                                <TextInput
-                                    type="text"
-                                    placeholder="Enter your Email address"
-                                    name="emailMailId"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
-                                    autoComplete="off"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className='flex flex-col items-center justify-between mt-20'>
-                            <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
-                                <div>
-                                    <button
-                                        className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
-                                        onClick={handleCancel}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                                <div>
-                                    <button
-                                        type='submit'
-                                        className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
-                                    >
-                                        {itemDetailsById && reportDetails.id ? <p>Edit form</p> : <p>Submit form</p>}
-                                    </button>
+                            <div className='flex flex-col items-center justify-between mt-20'>
+                                <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
+                                    <div>
+                                        <button
+                                            className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-grab'
+                                            onClick={handleCancel}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button
+                                            type='submit'
+                                            className='cursor-default xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-grab'
+                                        >
+                                            {itemDetailsById && reportDetails.id ? <p>Edit form</p> : <p>Submit form</p>}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </form>
             </FormProvider>
         </div>

@@ -13,15 +13,18 @@ export default function MyListings() {
     const [isLoader, setIsLoader] = useState(false);
     const tableData = useSelector(itemDetails);
 
-    useEffect(async() => {
+    useEffect(() => {
+        const fetchData = async () => {
         setIsLoader(true)
-        const listingItems = await dispatch(myListingItems(currentPage));
+        const listingItems =  await dispatch(myListingItems(currentPage));
         if(listingItems){
             setIsLoader(false)
         }
         if (!myReports) {
-            navigate('/');
+           navigate('/');
         }
+        }
+        fetchData();
     }, [currentPage]);
 
 

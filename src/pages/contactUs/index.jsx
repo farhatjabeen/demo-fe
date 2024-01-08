@@ -49,7 +49,7 @@ export default function ContactUs() {
                         </div>
                         <div className='font-normal text-xl underline underline-offset-4'>+12345657890</div>
                     </div>
-                    <div className='sm:h-32 sm:w-80 md:w-80 xl:w-11/12 sm:ml-0 sm:mt-6 md:mt-0 md:ml-5 sm:mt-0 xl:ml-7 h-28 rounded-2xl flex flex-col justify-center items-center bg-[#F3F3F3]'>
+                    <div className='sm:h-32 sm:w-80 md:w-80 xl:w-11/12 sm:ml-0 md:mt-0 md:ml-5 sm:mt-0 xl:ml-7 h-28 rounded-2xl flex flex-col justify-center items-center bg-[#F3F3F3]'>
                         <div className='flex justify-between'>
                             <div className='w-8 flex items-center'><FaEnvelope style={{ color: "#00b8b8", height: '23.95px', width: '23.95px' }} /></div>
                             <div className='font-medium text-2xl'>Email Us</div>
@@ -91,7 +91,9 @@ export default function ContactUs() {
                                         autoComplete="off"
                                         required
                                     />
-                                    <div className='flex justify-end w-96'><button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button></div>
+                                    <div className='flex justify-end w-96'>
+                                        <button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -100,4 +102,4 @@ export default function ContactUs() {
             </div>
         </div >
     )
-}
+};

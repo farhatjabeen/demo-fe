@@ -19,7 +19,8 @@ const TermsOfUSe = () => {
                     </h1>
                     <p className='text-xl mb-4'>
                         You agree to use the Service only for lawful purposes and in accordance with these Terms of Use. You are prohibited from violating or attempting to violate the security of the Service, including, but not limited to:
-                        <ul className='list-disc ml-6'>
+                    </p>
+                        <ul className='text-xl list-disc ml-6'>
                             <li>
                                 Accessing data not intended for you or logging into a server or account that you are not authorized to access.
                             </li>
@@ -30,7 +31,6 @@ const TermsOfUSe = () => {
                                 Interfering with, disrupting, or attempting to gain unauthorized access to any computer network.
                             </li>
                         </ul>
-                    </p>
                 </div>
                 <div>
                     <h1 className='text-2xl text-primary-color font-bold mb-4'>
