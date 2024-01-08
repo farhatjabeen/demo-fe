@@ -256,6 +256,7 @@ export const loginAdminUser = (data) => (dispatch) => {
             const { role, emailMailId, _id, token } = res.data
             dispatch(saveUserData({ role, emailMailId, _id }))
             setEncryptedLocalStorageData("adminToken", token);
+            Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -289,6 +290,7 @@ export const adminResetPassword = (data) => async () => {
             isAuth: true,
             tokenType: 'adminToken',
         }).then(res => {
+            Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
             reject(err);
