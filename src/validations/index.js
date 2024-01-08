@@ -5,7 +5,7 @@ const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#
 const emailRexExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
-// const serbiaMobileNumberRegExp = /^(\+381|0)(6[0-9])\d{6,8}$/;
+const serbiaMobileNumberRegExp = /^(\+381|0)6[0-9]\d{6,7}$/;
 
 export const loginSchema = yup.object({
     emailMailId: yup
@@ -75,7 +75,7 @@ export const addMoreDetailsSchema = yup.object({
     mobileNumber: yup
         .string()
         .min(10)
-        // .matches(serbiaMobileNumberRegExp, 'Invalid number')
+        .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('Mobile number required'),
     userName: yup
         .string()
