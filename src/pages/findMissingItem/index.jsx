@@ -7,8 +7,8 @@ import Pagination from '../../components/common/pagination'
 import TextInput from '../../components/common/textInput';
 import SearchCards from '../../components/searchCards';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { searchByKeywordSchema, searchSchema } from '../../validations';
-import { clearItemData, searchByLocation, searchItem, searchKey } from '../../redux/reducers/itemsSlice';
+import { searchByKeywordSchema } from '../../validations';
+import { clearItemData, searchByLocation, searchItem, searchKey, resetSearchByLocation } from '../../redux/reducers/itemsSlice';
 import { Toast } from '../../components/toast';
 
 export default function FindMissingItem() {
@@ -27,15 +27,15 @@ export default function FindMissingItem() {
     resolver
   });
 
-  useEffect(() => {
-    dispatch(searchByLocation(searchParameters.itemName, searchParameters.location));
-  }, [])
 
   useEffect(() => {
+    if (searchParameters?.location) {
+      dispatch(searchByLocation(searchParameters.itemName, searchParameters.location, currentPage));
+    }
     if (searchParameters?.itemNameAgain) {
       dispatch(searchItem(searchParameters.itemNameAgain, currentPage));
     }
-  }, [searchParameters, currentPage])
+  }, [searchParameters, currentPage]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -45,7 +45,7 @@ export default function FindMissingItem() {
     try {
       const productName = methods.getValues();
       if (productName.keyword) {
-        navigate(`/findmissingitem/${productName.keyword}`)
+        navigate(`/findMissingItem/${productName.keyword}`)
       } else {
         Toast({ type: 'error', message: 'Enter Item Name' })
       }
@@ -91,7 +91,7 @@ export default function FindMissingItem() {
             <div className='w-3/12 ml-7 mr-3 '>
               <button
                 type='submit'
-                className='w-full h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
+                className='cursor-pointer w-full h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
             </div>
 
           </form>

@@ -22,7 +22,7 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className='flex justify-center py-5'>
-                        <button className='text-white text-lg px-5 py-1 bg-trans-white rounded-xl font-semibold curs' onClick={()=>navigate('/businessSignIn')}>Are you a business user? Sign in here</button>
+                        <button className='cursor-pointer text-white text-lg px-5 py-1 bg-trans-white rounded-xl font-semibold curs' onClick={()=>navigate('/businessSignIn')}>Are you a business user? Sign in here</button>
                     </div>
                     
 

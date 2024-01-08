@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-
+import './index.css';
 import { Controller } from 'react-hook-form';
 // import { RxChevronDown, RxChevronUp } from "react-icons/rx";
 import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function FormDropdown({ name, editButton, dropdownValues, isSearchReport, valueFromDb, optionButtonClass}) {
+function FormDropdown({ name, editButton, dropdownValues, firstOptionName, isBusinesSignUp=false, isSearchReport=false, valueFromDb, optionButtonClass}) {
 
     return (
         <ConnectForm>
@@ -29,7 +29,7 @@ function FormDropdown({ name, editButton, dropdownValues, isSearchReport, valueF
                                             ref={ref}
                                             id={name}
                                             disabled={!editButton}
-                                            className={optionButtonClass}
+                                            className={`${optionButtonClass} ${isSearchReport ? "custom-arrow": isBusinesSignUp ? "custom-arrow-for-business" : "custom-arrow-for-companyProfile"}`}
                                             onChange={onChange}
                                         >
 
@@ -39,7 +39,7 @@ function FormDropdown({ name, editButton, dropdownValues, isSearchReport, valueF
                                                         <FormErrorMessage error={getFormErrorMessage(errors, name)} />
                                                     </div>
                                                     :
-                                                    "Select an option"
+                                                    `${firstOptionName}`
                                             }</option>
                                             {dropdownValues?.map((items, i) => {
                                                 return (

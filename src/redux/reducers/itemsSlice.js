@@ -57,7 +57,7 @@ export const itemsSlice = createSlice({
             state.foundItemId = { ...action.payload }
         },
         newItemId: (state, action) => {
-            state.itemIdValue = {...action.payload}
+            state.itemIdValue = { ...action.payload }
         },
         clearItemState: () => initialState
     }
@@ -144,7 +144,7 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategor
 };
 
 //get user in admin
-export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm='') => (dispatch) => {
+export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm = '') => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchUserTerm || ''}`,
@@ -165,7 +165,7 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm='
 };
 
 //get businessUser in admin
-export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm='') => (dispatch) => {
+export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm = '') => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchBusinessTerm || ''}`,
@@ -189,9 +189,9 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBu
 export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}`,
+            url: `${endpoints.apiPath.items.searchByKeyword}?keyword=${itemName}&page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
-            isLoader:false,
+            isLoader: false
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemData({ list, pageMeta }))
@@ -204,7 +204,7 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
 }
 
 // my listings general user
-export const myListingItems = (currentPage, PageLimit=10) => (dispatch) => {
+export const myListingItems = (currentPage, PageLimit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.myListing}?page=${currentPage}&limit=${PageLimit}`,
@@ -228,7 +228,7 @@ export const deleteMyListingItems = ({ itemId }) => async (dispatch) => {
             method: endpoints.ApiMethods.DELETE,
             isAuth: true
         }).then((res) => {
-            Toast({type:"success",message:res.message})
+            Toast({ type: "success", message: res.message })
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -238,11 +238,11 @@ export const deleteMyListingItems = ({ itemId }) => async (dispatch) => {
 }
 
 // get items by item name and location
-export const searchByLocation = (itemName, location) => (dispatch) => {
+export const searchByLocation = (itemName, location, page = 1, limit = 10) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.searchByLocation}?page=1&limit=10&itemName=${itemName}&location=${location}`,
-            method: endpoints.ApiMethods.GET,
+            url: `${endpoints.apiPath.items.searchByLocation}?page=${page}&limit=${limit}&itemName=${itemName}&location=${location}`,
+            method: endpoints.ApiMethods.GET
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(viewItemDetailsByLocation({ list, pageMeta }))
@@ -252,10 +252,10 @@ export const searchByLocation = (itemName, location) => (dispatch) => {
             return err;
         })
     })
-}
+};
 
 export const searchKey = (state) => {
-    if (state.items?.searchKey.list) {
+    if (state.items?.searchKey?.list) {
         return state.items?.searchKey
     } else {
         return state.items?.viewDetailsByLocation
@@ -421,7 +421,7 @@ export const userAddMoreDetails = (data) => (dispatch) => {
             isAuth: true
 
         }).then((res) => {
-            Toast({type:"success",message:res.message})
+            Toast({ type: "success", message: res.message })
             return resolve(res)
         }).catch(err => {
             console.log(err)
@@ -449,7 +449,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
     })
 };
 
-export const userEditItemDetails = (itemId,data) => (dispatch) => {
+export const userEditItemDetails = (itemId, data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.editItemGeneralUser}/${itemId}`,
@@ -457,7 +457,7 @@ export const userEditItemDetails = (itemId,data) => (dispatch) => {
             data: data,
             isAuth: true
         }).then((res) => {
-            Toast({type:"success",message:res.message})
+            Toast({ type: "success", message: res.message })
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -510,7 +510,7 @@ export const foundItemById = (itemId) => (dispatch) => {
 };
 
 //update found item in admin
-export const adminUpdateFoundItems = (itemId,data) => (dispatch) => {
+export const adminUpdateFoundItems = (itemId, data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.updateFoundItems}?itemId=${itemId}`,

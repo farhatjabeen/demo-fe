@@ -33,7 +33,7 @@ export default function AllItems() {
             <div className='px-28'>
                 <div className='flex justify-end mb-5'>
                     <div className=' flex justify-end w-full'>
-                        <button className=' h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={() => navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
+                        <button className='cursor-pointer h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center' onClick={() => navigate('/addMoreDetails')}><HiPlus className='mr-2' /> Add Item</button>
                     </div>
                 </div>
 

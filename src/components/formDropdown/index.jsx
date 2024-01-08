@@ -16,7 +16,7 @@ export default function FormDropdown({ editButton, selection, dropdownValues }) 
         <button
           onClick={() => setSelect(!select)}
           disabled={!editButton}
-          className={`flex w-full h-12 items-center justify-between rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'} px-4 border border-solid border-[#B6B6B6]`}>
+          className={`cursor-pointer flex w-full h-12 items-center justify-between rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'} px-4 border border-solid border-[#B6B6B6]`}>
           {options || "Options"}
           {select ? <RxChevronUp className='h-6 w-6' /> : <RxChevronDown className='h-6 w-6' />}
         </button>
@@ -28,7 +28,7 @@ export default function FormDropdown({ editButton, selection, dropdownValues }) 
             return (
               <button
                 key={i}
-                className="px-4 py-2 flex w-full text-sm hover:bg-green"
+                className="cursor-pointer px-4 py-2 flex w-full text-sm hover:bg-green"
                 onClick={() => handleValues(i)}
               >
                 {items}
