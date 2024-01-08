@@ -91,12 +91,7 @@ export default function ContactUs() {
                                         autoComplete="off"
                                         required
                                     />
-                                    <div className='flex justify-end w-96'>
-                                        <button
-                                            className='cursor-pointer h-14 w-44 rounded-lg bg-primary-color sm:mb-5'
-                                            type="submit"
-                                        >Submit</button>
-                                    </div>
+                                    <div className='flex justify-end w-96'><button className='cursor-pointer h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button></div>
                                 </div>
                             </div>
                         </form>
