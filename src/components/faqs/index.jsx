@@ -24,7 +24,7 @@ export default function Faq({ questions }) {
                                 <div className='flex justify-between '>
                                     <div className='xl:text-xl md:text-base sm:text-sm font-medium text-[#101828]' key={idx}>{items.questions}</div>
                                     <div>
-                                        <button onClick={() => handlePlusMinusIcon(idx)}>
+                                        <button className='cursor-pointer' onClick={() => handlePlusMinusIcon(idx)}>
                                             {plusMinus === idx ?
                                                 <FiMinusCircle style={{ color: "#E8B810", height: "25px", width: "25px" }} />
                                                 :

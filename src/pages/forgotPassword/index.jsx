@@ -74,7 +74,7 @@ export default function ForgotPassword() {
                                     setShowPassword={() => setShowPassword(!showPassword)}
                                 />
                                 <button
-                                    className='bg-primary-color w-full h-14 rounded-md mt-8'
+                                    className='cursor-pointer bg-primary-color w-full h-14 rounded-md mt-8'
                                     type="submit"
                                 >Save Password
                                 </button>

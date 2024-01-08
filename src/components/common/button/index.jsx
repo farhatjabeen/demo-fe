@@ -15,7 +15,7 @@ export default function Button({
 }) {
     return (
         <div>
-            <button className={`w-${width} h-${height} bg-${bgColor} text-${textColor} text-${textSize} 
+            <button className={`cursor-pointer w-${width} h-${height} bg-${bgColor} text-${textColor} text-${textSize} 
             ${isBorder ? 'border' : ''} border-${borderColor} rounded-${roundedValue} font-${fontWeight} mx-${mxValue}`}>
                 {buttonTitle}
             </button>

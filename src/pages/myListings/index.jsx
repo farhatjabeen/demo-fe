@@ -90,14 +90,14 @@ export default function MyListings() {
                             <div className='flex mt-5'>
                                 <button
                                     onClick={() => handleEditItem(details._id)}
-                                    className='bg-primary-color xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm'
+                                    className='cursor-pointer bg-primary-color xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm'
                                 >
                                     Edit Content
                                 </button>
 
                                 <button
                                     onClick={() => handleListingDelete(details._id)}
-                                    className='border border-#BC0000 text-[#BC0000] xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'
+                                    className='cursor-pointer border border-#BC0000 text-[#BC0000] xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'
                                 >
                                     Remove Listing
                                 </button>

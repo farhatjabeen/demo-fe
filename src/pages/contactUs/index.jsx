@@ -92,7 +92,10 @@ export default function ContactUs() {
                                         required
                                     />
                                     <div className='flex justify-end w-96'>
-                                        <button className='h-14 w-44 rounded-lg bg-primary-color sm:mb-5' type="submit">Submit</button>
+                                        <button
+                                            className='cursor-pointer h-14 w-44 rounded-lg bg-primary-color sm:mb-5'
+                                            type="submit"
+                                        >Submit</button>
                                     </div>
                                 </div>
                             </div>

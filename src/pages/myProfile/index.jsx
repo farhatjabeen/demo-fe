@@ -72,7 +72,7 @@ export default function MyProfile() {
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
                 <div className='font-bold xl:text-4xl md:text-4xl sm:text-3xl mb-16 mr-4'>My Profile</div>
-                {editButton ? null : <div><button className='w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center cursor-grab' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
+                {editButton ? null : <div><button className='cursor-pointer w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
             </div>
 
 
@@ -192,12 +192,12 @@ export default function MyProfile() {
                             <div className='w-full flex mb-10 justify-center'>
 
                                 <div>
-                                    <button onClick={handleEditButton} className='cursor-auto w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg cursor-grab'>
+                                    <button onClick={handleEditButton} className='cursor-pointer w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg'>
                                         Cancel
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' className='cursor-auto w-44 h-14 ml-5 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg cursor-grab'>
+                                    <button type='submit' className='cursor-pointer w-44 h-14 ml-5 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg'>
                                         Save Changes
                                     </button>
                                 </div>

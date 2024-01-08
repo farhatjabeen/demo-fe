@@ -91,7 +91,7 @@ export default function FindMissingItem() {
             <div className='w-3/12 ml-7 mr-3 '>
               <button
                 type='submit'
-                className='w-full h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
+                className='cursor-pointer w-full h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
             </div>
 
           </form>

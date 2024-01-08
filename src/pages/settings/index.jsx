@@ -135,7 +135,7 @@ const Settings = () => {
                             <div className="mt-14">
                                 <button
                                     type="submit"
-                                    className="w-full bg-primary-color  text-white font-bold py-4 rounded-md "
+                                    className="cursor-pointer w-full bg-primary-color  text-white font-bold py-4 rounded-md "
                                 >
                                     Submit
                                 </button>

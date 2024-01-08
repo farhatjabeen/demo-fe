@@ -233,6 +233,8 @@ export default function BusinessSignUp() {
                                             optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
                                             dropdownValues={categories}
                                             editButton={true}
+                                            isBusinesSignUp={true}
+                                            firstOptionName="Select Category"
                                             iscleared={isCleared}
                                         />
                                     </div>
@@ -264,7 +266,7 @@ export default function BusinessSignUp() {
                                             <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                             <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                         </div>
-                                        <button type='submit' className="bg-[#FF9900] w-full py-3 mt-2 rounded-lg">Continue</button>
+                                        <button type='submit' className="cursor-pointer bg-[#FF9900] w-full py-3 mt-2 rounded-lg">Continue</button>
                                     </div>
                                 </div>
                             </div>
