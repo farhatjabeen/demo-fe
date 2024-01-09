@@ -112,23 +112,33 @@ export default function AddMoreDetails() {
 
     const submitData = async (data) => {
         try {
-            const inputString = methods.getValues().keywords;
-            methods.setValue('keywords', inputString.split(','));
+           
             console.log("from submit form");
 
             if (userDetails?.role === 'BUSINESS' && !reportDetails.id) {
+                const inputString = methods.getValues().keywords;
+            methods.setValue('keywords', inputString.split(','));
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
-
-                const addedItem = await dispatch(businessAddMoreDetails(data));
-                if (addedItem) {
-                    navigate('/allitems')
+                console.log(cloudinaryId.length,"cloudinaryId.length")
+                if (cloudinaryId.length > 0) {
+                    console.log("hi from businessAddMoreDetails")
+                    setImageLoader(true)
+                    const addedItem = await dispatch(businessAddMoreDetails(data));
+                    if (addedItem) {
+                        navigate('/allitems')
+                    }
+                } else {
+                    setImageLoader(false)
                 }
 
             } else if (userDetails?.role === 'USER' && !reportDetails.id) {
+                const inputString = methods.getValues().keywords;
+                methods.setValue('keywords', inputString.split(','));
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
+
 
                 const addItem = dispatch(userAddMoreDetails(data));
                 console.log('itemadded', addItem)
@@ -420,11 +430,11 @@ export default function AddMoreDetails() {
                                             ""}
 
                                     </div>
-                                    {/* {imageLoader && !reportDetails.id ?
+                                    {imageLoader && !reportDetails.id ?
                                         ""
                                         :
                                         <p>Images required</p>
-                                    } */}
+                                    }
                                 </div>
                             </div>
                             <div className='b order-b border-b-[#949494] mb-10'>

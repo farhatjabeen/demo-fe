@@ -75,11 +75,9 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
             console.log(res.data, 'ress')
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
-            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
-            Toast({ type: "error", message: err?.message })
             return err
         })
     })
@@ -441,6 +439,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
             tokenType: 'businessUserToken'
 
         }).then((res) => {
+            Toast({type:"success",message: res.message})
             return resolve(true)
         }).catch(err => {
             console.log(err)
