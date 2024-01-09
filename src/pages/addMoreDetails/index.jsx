@@ -209,20 +209,34 @@ export default function AddMoreDetails() {
             })
             const uploadNow = async () => {
                 
-                const imagesResponse = await dispatch(filesUploadAPI(formData));
-                imagesResponse
-                    .then((res) => {
-                        setCloudinaryId(res.data.cloudinary_id)
-                        setItemImage(res.data.itemImage)
+                const imagesResponse = await dispatch(filesUploadAPI(formData)).then((res) => {
+                    setCloudinaryId(res.data.cloudinary_id)
+                    setItemImage(res.data.itemImage)
+                    setImageLoader(false);
+                }).then(() => {
+                    setImageLoader(true); 
+                    if (itemDetailsById?.itemImage && reportDetails.id) {
+                        setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
+                        setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
                         setImageLoader(false);
-                    }).then(() => {
-                        setImageLoader(true); 
-                        if (itemDetailsById?.itemImage && reportDetails.id) {
-                            setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
-                            setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
-                            setImageLoader(false);
-                        }
-                    })
+                    }
+                });
+               
+                // if(imagesResponse){
+                // imagesResponse
+                //     .then((res) => {
+                //         setCloudinaryId(res.data.cloudinary_id)
+                //         setItemImage(res.data.itemImage)
+                //         setImageLoader(false);
+                //     }).then(() => {
+                //         setImageLoader(true); 
+                //         if (itemDetailsById?.itemImage && reportDetails.id) {
+                //             setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
+                //             setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
+                //             setImageLoader(false);
+                //         }
+                //     })
+                // }
             }
             uploadNow();
 

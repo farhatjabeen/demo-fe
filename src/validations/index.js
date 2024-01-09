@@ -108,8 +108,7 @@ export const myProfileSchema = yup.object({
         .required('Email required'),
     mobileNumber: yup
         .string()
-        .min(10)
-        // .matches(serbiaMobileNumberRegExp, 'Invalid number')
+        .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('Mobile number required'),
     name: yup
         .string()
@@ -145,7 +144,7 @@ export const companyProfile = yup.object({
         .required('Email required'),
     mobileNumber: yup
         .string()
-        .min(10)
+        .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('Mobile number required'),
     currentPassword: yup
         .string(),
@@ -206,7 +205,7 @@ export const businessSignUpSchema = yup.object({
         .required('Password required'),
     mobileNumber: yup
         .string()
-        .min(10)
+        .matches(serbiaMobileNumberRegExp, 'Invalid number')
         .required('Mobile number required'),
     name: yup
         .string()
