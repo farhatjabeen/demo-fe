@@ -8,8 +8,9 @@ import TextInput from '../../components/common/textInput';
 import SearchCards from '../../components/searchCards';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import { searchByKeywordSchema } from '../../validations';
-import { clearItemData, searchByLocation, searchItem, searchKey, resetSearchByLocation } from '../../redux/reducers/itemsSlice';
+import { clearItemData, searchByLocation, searchItem, searchKey, resetSearchByLocation, locationDropdownValues, locationDetails } from '../../redux/reducers/itemsSlice';
 import { Toast } from '../../components/toast';
+import FormDropdown from '../../components/common/formDropdown';
 
 export default function FindMissingItem() {
   const navigate = useNavigate();
@@ -19,22 +20,33 @@ export default function FindMissingItem() {
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchByKeywordSchema);
   const searchValue = useSelector(searchKey);
+  const cities = useSelector(locationDetails);
+    const citiesInSerbia = cities ? Object.values(cities) : [];
   const isLastPage = searchValue?.pageMeta?.page === searchValue?.pageMeta?.totalPages;
   const methods = useForm({
     defaultValues: {
-      keyword: ""
+      keyword: "",
+      location:""
     },
     resolver
   });
 
+  useEffect(() => {
+    dispatch(locationDropdownValues())
+}, [dispatch]);
 
   useEffect(() => {
-    if (searchParameters?.location) {
-      dispatch(searchByLocation(searchParameters.itemName, searchParameters.location, currentPage));
+    const apiCall = async() =>{
+      if (searchParameters?.location) {
+        console.log(searchParameters?.location,"searchParameters?.location")
+        dispatch(searchByLocation(searchParameters.itemName, searchParameters.location, currentPage));
+      } 
+      if (searchParameters?.itemNameAgain) {
+        console.log("hi")
+        dispatch(searchItem(searchParameters.itemNameAgain, currentPage));
+      }
     }
-    if (searchParameters?.itemNameAgain) {
-      dispatch(searchItem(searchParameters.itemNameAgain, currentPage));
-    }
+    apiCall();
   }, [searchParameters, currentPage]);
 
   const handlePageChange = (pageNumber) => {
@@ -44,8 +56,11 @@ export default function FindMissingItem() {
   const submitData = async () => {
     try {
       const productName = methods.getValues();
-      if (productName.keyword) {
+      if(productName.keyword && productName.location){
+        navigate(`/findMissingItem/${productName.keyword}/${productName.location}`)
+      } else if (productName.keyword) {
         navigate(`/findMissingItem/${productName.keyword}`)
+      
       } else {
         Toast({ type: 'error', message: 'Enter Item Name' })
       }
@@ -76,19 +91,29 @@ export default function FindMissingItem() {
           {/* <form onSubmit={(e) => submitData(e)} className='w-full flex'> */}
           <form onSubmit={methods.handleSubmit(submitData)} className='w-full flex'>
 
-            <div className='w-9/12'>
+            <div className='flex w-9/12'>
               <TextInput
                 type='text'
                 placeholder='Search...'
                 name="keyword"
-                className='ml-3 p-4 xl:h-14 sm:h-13 w-full rounded-2xl border border-solid border-[#B6B6B6]'
+                className='ml-3 p-4 xl:h-14 sm:h-13 w-96 rounded-2xl border border-solid border-[#B6B6B6]'
                 autoComplete="off"
                 isSearchReport={true}
                 errorClass="absolute xl:bottom-4 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
                 required
               />
+              <FormDropdown
+                placeholder="Location"
+                name="location"
+                editButton={true}
+                optionButtonClass={`xl:w-96 xl:h-14 py-4 pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                autoComplete="off"
+                firstOptionName="Location"
+                dropdownValues={citiesInSerbia}
+                errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
+              />
             </div>
-            <div className='w-3/12 ml-7 mr-3 '>
+            <div className='w-4/12 ml-7 mr-3 '>
               <button
                 type='submit'
                 className='cursor-pointer w-full h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>

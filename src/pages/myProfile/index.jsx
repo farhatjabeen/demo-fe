@@ -54,7 +54,8 @@ export default function MyProfile() {
             // const itemDetails = methods.getValues();
 
             if (currentPassword) {
-                dispatch(userProfileData(data));
+                const changePassword = await dispatch(userProfileData(data));
+                console.log(changePassword,"changePassword")
             } else {
                 dispatch(userProfileData({ name, emailMailId, mobileNumber }));
             }
@@ -78,7 +79,6 @@ export default function MyProfile() {
 
 
             <FormProvider {...methods}>
-                {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
                 <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
