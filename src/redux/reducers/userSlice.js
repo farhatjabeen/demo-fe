@@ -340,8 +340,8 @@ export const userProfileData = (data) => async (dispatch) => {
             console.log(res,"apiresp")
             Toast({type:"success",message:res.message})
             return resolve(true)
-        }).catch(err => {
-            console.log(err)
+        }).catch((err) => {
+            console.log(err,"errr")
             return err;
         })
     })
