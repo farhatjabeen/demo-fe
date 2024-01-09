@@ -57,7 +57,15 @@ export default function MyListings() {
             <div className='mt-14  xl:w-11/12 md:w-10/12 sm:w-8/12 '> 
                 {myReports?.list?.length ? myReports.list.map((details, i) => (
                     <div key={i} className='mb-5 w-full flex justify-center items-center'>
-                        <div className='w-1/3'><img src={details.itemImage[0]} alt='keys' className='rounded-3xl w-full xl:h-72 md:h-60 sm:h-56'></img></div>
+                        <div className='w-1/3'>
+                            {details.itemImage[0] ?
+                                <img src={details.itemImage[0]} alt='keys' className='rounded-3xl w-full xl:h-72 md:h-60 sm:h-56'></img>
+                                :
+                                <div className='flex justify-center items-center bg-white xl:h-72 md:h-60 sm:h-56 rounded-3xl xl:p-8 md:p-6 sm:p-6 border border-solid border-[#B2B2B2]'>
+                                    <p>No Image</p>
+                                </div>
+                            }
+                        </div>
                         <div className='bg-white w-2/3 xl:h-72 md:h-60 sm:h-56 rounded-3xl xl:p-8 md:p-6 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
                             <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl' >{details.itemName}</div>
                             <div className='xl:mt-6 md:mt-6 sm:mt-3'>
