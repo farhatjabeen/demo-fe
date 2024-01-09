@@ -110,7 +110,7 @@ export default function FindMissingItem() {
                 type='text'
                 placeholder='Search...'
                 name="keyword"
-                className='ml-3 p-4 xl:h-14 sm:h-13 w-96 rounded-2xl border border-solid border-[#B6B6B6]'
+                className='placeholder:text-black ml-3 p-4 xl:h-14 sm:h-13 w-96 rounded-2xl border border-solid border-[#B6B6B6]'
                 autoComplete="off"
                 isSearchReport={true}
                 errorClass="absolute xl:bottom-4 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
