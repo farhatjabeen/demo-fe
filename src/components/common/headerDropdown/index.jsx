@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa6";
-import { RxChevronDown, RxChevronUp } from "react-icons/rx";
+import { RxChevronDown } from "react-icons/rx";
 import { MdOutlineBusiness } from "react-icons/md";
 import { Menu, Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,11 +12,9 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
     const [select, setSelect] = useState(false);
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
-    // const navigate = useNavigate();
 
     return (
         <Menu as="div" className="relative text-left">
-
             <div>
                 <Menu.Button
                     onClick={() => setSelect(!select)}
