@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
 
-const emailRexExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const serbiaMobileNumberRegExp = /^6[0-9]\d{6,7}$/;
@@ -79,7 +79,8 @@ export const addMoreDetailsSchema = yup.object({
     userName: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s\-]+$/, 'Invalid characters in userName'),
+        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .required('Name required'),
     location: yup
         .string()
         .required('Location required'),
@@ -101,6 +102,44 @@ export const addMoreDetailsSchema = yup.object({
 
 });
 
+export const addMoreDetailsItemSchema = yup.object({
+    emailMailId: yup
+        .string()
+        .matches(emailRexExp, 'Invalid email address')
+        .required('Email required'),
+    mobileNumber: yup
+        .string()
+        .matches(serbiaMobileNumberRegExp, 'Invalid number')
+        .required('Mobile number required'),
+    userName: yup
+        .string()
+        .min(3)
+        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .required('Name required'),
+    location: yup
+        .string()
+        .required('Location required'),
+    locationIdentifiers: yup
+        .string()
+        .required('Landmark required'),
+    itemDescription: yup
+        .string()
+        .required('Item description required'),
+    itemCategory: yup
+        .string()
+        .required("Category required"),
+    itemName: yup
+        .string()
+        .required('Item name required'),
+    itemImage: yup
+        .mixed()
+        .required('Images required'),
+    keywords: yup
+        .mixed()
+        .required('Keywords required')
+
+});
+
 export const myProfileSchema = yup.object({
     emailMailId: yup
         .string()
@@ -113,11 +152,13 @@ export const myProfileSchema = yup.object({
     name: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s\-]+$/, 'Invalid characters in userName'),
+        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .required('Name required'),
     currentPassword: yup
         .string(),
     newPassword: yup
-        .string(),
+        .string()
+        .matches(passwordRegExp,'Strong password expected'),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords does not match"),
@@ -137,7 +178,8 @@ export const companyProfile = yup.object({
     name: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s\-]+$/, 'Invalid characters in userName'),
+        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .required('Name required'),
     emailMailId: yup
         .string()
         .matches(emailRexExp, 'Invalid email address')
@@ -210,7 +252,8 @@ export const businessSignUpSchema = yup.object({
     name: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s\-]+$/, 'Invalid characters in userName'),
+        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .required('Name required'),
     companyName: yup
         .string()
         .required('Company name required'),

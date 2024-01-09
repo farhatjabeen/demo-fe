@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { addMoreDetailsSchema } from '../../validations';
+import { addMoreDetailsItemSchema, addMoreDetailsSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
@@ -21,9 +21,9 @@ export default function AddMoreDetails() {
     const [isCancelled, setIsCancelled] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [isImageUploaded, setIsImageUploaded] = useState(true);
+    const [isImageUploaded, setIsImageUploaded] = useState(false);
     const [isLoader, setIsLoader] = useState(false);
-    const [imageLoader, setImageLoader] = useState(false);
+    const [imageLoader, setImageLoader] = useState(true);
     const items = useSelector(itemDropdown);
     const itemCategories = items ? Object.values(items) : [];
     const cities = useSelector(locationDetails);
@@ -51,6 +51,8 @@ export default function AddMoreDetails() {
         if (reportDetails.newItem) {
             methods.setValue("itemName", reportDetails.newItem)
             methods.setValue("location", reportDetails.location)
+            methods.setValue("itemImage", null)
+            methods.setValue("keywords", null)
             setIsCancelled(true);
             setIsUploaded(false)
         }
@@ -81,7 +83,7 @@ export default function AddMoreDetails() {
 
     }, [itemDetailsById])
 
-    const resolver = useValidationResolver(addMoreDetailsSchema);
+    const resolver = useValidationResolver(reportDetails?.id ? addMoreDetailsSchema : addMoreDetailsItemSchema);
 
     const methods = useForm({
         defaultValues: {
@@ -118,10 +120,12 @@ export default function AddMoreDetails() {
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
+
                 const addedItem = await dispatch(businessAddMoreDetails(data));
                 if (addedItem) {
                     navigate('/allitems')
                 }
+
             } else if (userDetails?.role === 'USER' && !reportDetails.id) {
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
@@ -131,6 +135,7 @@ export default function AddMoreDetails() {
                 addItem?.then((res) => {
                     setNewItemId(res.data._id)
                 })
+
             } else {
                 setItemImage((prevFiles) => {
                     return prevFiles || itemDetailsById?.itemImage ? [...prevFiles, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage
@@ -140,18 +145,17 @@ export default function AddMoreDetails() {
                 })
                 methods.setValue("itemImage", itemImage?.map(item => item));
                 methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
-
                 const dataNow = methods.getValues();
-                let isEdited;
                 if (itemImage.length > 0 && cloudinaryId.length > 0) {
-                    isEdited = dispatch(userEditItemDetails(reportDetails.id, dataNow))
-                    setIsImageUploaded(true)
+                    setImageLoader(true);
+                    const isEdited = dispatch(userEditItemDetails(reportDetails.id, dataNow))
+
+                    setItemImage([]);
+                    setCloudinaryId([]);
+                    isEdited && (navigate('/mylistings'))
                 } else {
-                    setIsImageUploaded(false)
+                    setImageLoader(false);
                 }
-                setItemImage([]);
-                setCloudinaryId([]);
-                isEdited && (navigate('/mylistings'))
             }
 
         } catch (error) {
@@ -197,6 +201,12 @@ export default function AddMoreDetails() {
             newFiles.splice(index, 1);
             return newFiles;
         });
+
+        !reportDetails.id && setFiles((prevFiles) => {
+            const newFiles = [...prevFiles];
+            newFiles.splice(index, 1);
+            return newFiles;
+        })
     };
 
     useEffect(() => {
@@ -207,42 +217,58 @@ export default function AddMoreDetails() {
                     formData.append("item", items)
                 );
             })
-            const uploadNow = async () => {
-                
-                const imagesResponse = await dispatch(filesUploadAPI(formData)).then((res) => {
+
+            setIsImageUploaded(true)
+            if (reportDetails.id) {
+                setImageLoader(false);
+            }
+            const imagesResponse = dispatch(filesUploadAPI(formData));
+            imagesResponse?.then((res) => {
+                if (imagesResponse) {
+                    setIsImageUploaded(false)
                     setCloudinaryId(res.data.cloudinary_id)
                     setItemImage(res.data.itemImage)
-                    setImageLoader(false);
-                }).then(() => {
-                    setImageLoader(true); 
-                    if (itemDetailsById?.itemImage && reportDetails.id) {
-                        setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
-                        setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
-                        setImageLoader(false);
+                    if (reportDetails.id) {
+                        setImageLoader(true);
                     }
-                });
-               
-                // if(imagesResponse){
-                // imagesResponse
-                //     .then((res) => {
-                //         setCloudinaryId(res.data.cloudinary_id)
-                //         setItemImage(res.data.itemImage)
-                //         setImageLoader(false);
-                //     }).then(() => {
-                //         setImageLoader(true); 
-                //         if (itemDetailsById?.itemImage && reportDetails.id) {
-                //             setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
-                //             setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
-                //             setImageLoader(false);
-                //         }
-                //     })
-                // }
-            }
-            uploadNow();
+                }
+            }).then(() => {
+
+                // setIsImageUploaded(true)
+                if (itemDetailsById?.itemImage && reportDetails.id) {
+                    setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
+                    setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
+                    // setIsImageUploaded(false)
+                    // if(itemImage.length>0 && cloudinaryId.length>0){
+                    //     setImageLoader(true);
+                    // }else{
+                    setImageLoader(true);
+                    // }
+                }
+            });
+            // }
+            // uploaded();
+
+
+            // if(imagesResponse){
+            // imagesResponse
+            //     .then((res) => {
+            //         setCloudinaryId(res.data.cloudinary_id)
+            //         setItemImage(res.data.itemImage)
+            //         setImageLoader(false);
+            //     }).then(() => {
+            //         setImageLoader(true); 
+            //         if (itemDetailsById?.itemImage && reportDetails.id) {
+            //             setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
+            //             setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
+            //             setImageLoader(false);
+            //         }
+            //     })
+            // }
 
         }
 
-        
+
 
     }, [files])
 
@@ -336,17 +362,17 @@ export default function AddMoreDetails() {
                                         <div className='flex flex-wrap w-96'>
 
                                             {isImageUploaded ? <p>Loading...</p>
-                                            :
-                                            <div>
-                                                {cloudinaryId?.map((items, i) => {
-                                                    return (
-                                                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                            <div>{items}</div>
-                                                            <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>}
+                                                :
+                                                <div>
+                                                    {cloudinaryId?.map((items, i) => {
+                                                        return (
+                                                            <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                                                                <div>{items}</div>
+                                                                <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>}
 
                                             {/* {files
                                                 ?
@@ -371,36 +397,37 @@ export default function AddMoreDetails() {
                                         null
                                     }
 
-                                    <div>
-                                        <div className="flex justify-center items-center">
-                                            <ImageUpload
-                                                name="imageUploads"
-                                                designClass={cloudinaryId?.length > 0 || isUploaded ?
-                                                    "xl:w-80 xl:mr-2 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
-                                                    :
-                                                    "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
-                                                multiple={true}
-                                                handleFileUpload={handleFileUpload}
-                                            />
-
-                                            {cloudinaryId?.length > 0 || isUploaded ?
-                                                <div>
-                                                    <button onClick={handleReset} className='cursor-pointer h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
-                                                        <IoMdRefresh className='h-6 w-6' />
-                                                    </button>
-                                                </div>
+                                    <div className="flex justify-center items-center">
+                                        <ImageUpload
+                                            name={reportDetails?.id ?
+                                                "imageUploads" : "itemImage"}
+                                            designClass={cloudinaryId?.length > 0 || isUploaded ?
+                                                "xl:w-80 xl:mr-2 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
                                                 :
-                                                ""}
+                                                "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
+                                            multiple={true}
+                                            isEdit={reportDetails.id ? true : false}
+                                            handleFileUpload={handleFileUpload}
+                                        />
 
-                                        </div>
-                                        {isImageUploaded ?
-                                            ""
+                                        {cloudinaryId?.length > 0 || isUploaded ?
+                                            <div>
+                                                <button onClick={handleReset} className='cursor-pointer h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
+                                                    <IoMdRefresh className='h-6 w-6' />
+                                                </button>
+                                            </div>
                                             :
-                                            <p>Images required</p>}
+                                            ""}
+
                                     </div>
+                                    {/* {imageLoader && !reportDetails.id ?
+                                        ""
+                                        :
+                                        <p>Images required</p>
+                                    } */}
                                 </div>
                             </div>
-                            <div className='border-b border-b-[#949494] mb-10'>
+                            <div className='b order-b border-b-[#949494] mb-10'>
                                 <div className='flex justify-between mb-9 relative location'>
                                     <div>
                                         <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>

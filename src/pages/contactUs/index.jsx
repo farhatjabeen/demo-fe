@@ -59,11 +59,11 @@ export default function ContactUs() {
                 </div>
             </div>
 
-            <div className='xl:w-11/12 sm:w-full sm:flex-col sm:justify-center sm:items-center md:flex-row flex justify-between mt-16'>
+            <div className='xl:w-11/12 bg-inherit sm:w-full sm:flex-col sm:justify-center sm:items-center md:flex-row flex justify-between mt-16'>
                 <div className='mr-40'><img className='xl:h-[500px] xl:w-[500px]' src={contactUsImage} alt='contactUsImage' /></div>
                 <div>
                     <FormProvider {...methods}>
-                        <form onSubmit={methods.handleSubmit(submitData)} className='flex w-6/12'>
+                        <form onSubmit={methods.handleSubmit(submitData)} className='flex bg-inherit w-full'>
                             <div className='w-full bg-inherit'>
                                 <div className='sm:flex sm:justify-center md:justify-start font-semibold text-3xl'>Get in Touch</div>
                                 <div className='sm:w-[500px] bg-inherit mt-7 flex flex-col sm:items-center xl:items-start'>
@@ -71,7 +71,7 @@ export default function ContactUs() {
                                         type="text"
                                         placeholder="Enter your email"
                                         name="mail"
-                                        className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
+                                        className='w-96 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
                                         autoComplete="off"
                                         required
                                     />
@@ -79,7 +79,7 @@ export default function ContactUs() {
                                         type="text"
                                         placeholder="Subject"
                                         name="subject"
-                                        className='w-96 mb-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
+                                        className='w-96 mt-4 h-14 rounded-lg border border-[#B6B6B6] bg-inherit p-4 border-opacity-50'
                                         autoComplete="off"
                                         required
                                     />
@@ -87,7 +87,7 @@ export default function ContactUs() {
                                         rows="4"
                                         placeholder="Message"
                                         name="message"
-                                        className='border border-[#B6B6B6] rounded-lg bg-inherit p-5 w-96 border-opacity-50'
+                                        className='border mt-4 border-[#B6B6B6] rounded-lg bg-inherit p-5 w-96 border-opacity-50'
                                         autoComplete="off"
                                         required
                                     />

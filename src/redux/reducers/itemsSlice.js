@@ -195,7 +195,7 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemData({ list, pageMeta }))
-            return resolve(true)
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
@@ -246,7 +246,7 @@ export const searchByLocation = (itemName, location, page = 1, limit = 10) => (d
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(viewItemDetailsByLocation({ list, pageMeta }))
-            return resolve(true)
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
