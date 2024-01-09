@@ -262,13 +262,15 @@ const EditFoundItems = () => {
                     <div className='flex flex-wrap w-96'>
                       {filesFromDb.map((url, i) => (
                         <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                          <img src={url} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
+                          {/* <img src={url} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' /> */}
+                          <p className='mr-2'>{url.fileName || `File ${i}`}</p>
                           <div className='flex items-center ml-2' onClick={() => handleRemoveApiFile(i)}><MdClose /></div>
                         </div>
                       ))}
                       {files.map((file, i) => (
                         <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                          <img src={URL.createObjectURL(file)} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
+                          {/* <img src={URL.createObjectURL(file)} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' /> */}
+                          <p className='mr-2'>{file.name || `File ${i}`}</p>
                           <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
                         </div>
                       ))}

@@ -68,6 +68,11 @@ function SignInView() {
               setShowPassword={() => setShowPassword(!showPassword)}
             />
           </div>
+          <div className="text-end mt-4">
+            <p>
+              Forgot Password?
+            </p>
+          </div>
           <div className="mt-14">
             <button
               type="submit"
