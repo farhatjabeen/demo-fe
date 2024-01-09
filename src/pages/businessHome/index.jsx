@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import businessDoodle from '../../assets/images/businessDoodle.png';
 import transportLondon from '../../assets/images/transportLondon.png';
 import quotes from '../../assets/images/quotes.png';
@@ -10,7 +10,6 @@ import bithree from '../../assets/images/businessicon3.png';
 import bifour from '../../assets/images/businessicon4.png';
 import bifive from '../../assets/images/businessicon5.png';
 import bisix from '../../assets/images/businessicon6.png';
-import { useEffect } from 'react';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 
@@ -145,11 +144,9 @@ export default function BusinessHome() {
             </div>
 
             <div className='bg-[#FFF0DA] py-16 flex justify-center text-center text-text-color font-semibold xl:text-xl md:text-lg sm:text-base'>
-
                 BTZapp is transforming lost and found management from a recurring problem into a fast<br></br>
                 and simple process for businesses. Free up valuable staff time, return more items of lost<br></br>
                 property and deliver an excellent customer experience.
-
             </div>
             <div className='flex flex-col items-center'>
                 <div className='flex justify-center xl:text-3xl md:text-2xl text-text-color font-semibold pt-10'>Explore our industry insights and customer success stories</div>
@@ -173,9 +170,6 @@ export default function BusinessHome() {
                     }
                 </div>
             </div>
-
-
-
         </div>
     )
-}
+};

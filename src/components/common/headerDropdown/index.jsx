@@ -69,7 +69,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     </Menu.Item>
                     <Menu.Item>
                         <Link
-                            to='/contactus'
+                            to='/contactUs'
                             className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
                         >
                             Need Help?
