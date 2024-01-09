@@ -24,7 +24,7 @@ const BusinessTab = ({ children, className }) => {
                     <div>
                         <li
                             key={index}
-                            className={`cursor-pointer p-2 relative font-semibold text-2xl ${activeTab === index ? "border-b-2 border-primary-color" : "text-[#B6B6B6] text-xl"
+                            className={`cursor-pointer p-2 relative font-semibold text-2xl ${activeTab === index ? "border-b-2 border-primary-color" : "text-greys text-xl"
                                 }`}
                             onClick={(e) => handleClick(e, index)}
                         >

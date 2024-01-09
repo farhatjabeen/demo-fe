@@ -261,7 +261,7 @@ export default function AddMoreDetails() {
                                     type="text"
                                     placeholder="Type Name"
                                     name="itemName"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                    className='h-14 sm:h-12 border border-greys rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -275,7 +275,7 @@ export default function AddMoreDetails() {
 
                                 <FormDropdown
                                     name='itemCategory'
-                                    optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
+                                    optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-greys`}
                                     editButton={true}
                                     firstOptionName="Select Category"
                                     valueFromDb={isCancelled ? "" : itemDetailsById?.itemCategory}
@@ -291,7 +291,7 @@ export default function AddMoreDetails() {
                                     rows="4"
                                     placeholder="Type desc"
                                     name="itemDescription"
-                                    className='border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                    className='border border-greys rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -306,7 +306,7 @@ export default function AddMoreDetails() {
                                     type="text"
                                     placeholder="Enter Keywords comma seperated"
                                     name="keywords"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                    className='h-14 sm:h-12 border border-greys rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -386,7 +386,7 @@ export default function AddMoreDetails() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='border-b border-b-[#949494] mb-10'>
+                            <div className='border-b border-b-gray58 mb-10'>
                                 <div className='flex justify-between mb-9 relative location'>
                                     <div>
                                         <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>
@@ -394,7 +394,7 @@ export default function AddMoreDetails() {
                                     </div>
                                     <FormDropdown
                                         name='location'
-                                        optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-[#B6B6B6]`}
+                                        optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-greys`}
                                         editButton={true}
                                         selection={true}
                                         firstOptionName="Select Location"
@@ -412,7 +412,7 @@ export default function AddMoreDetails() {
                                         type="text"
                                         placeholder="Landmarks of the location"
                                         name="locationIdentifiers"
-                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                         autoComplete="off"
                                         required
                                     />
@@ -428,7 +428,7 @@ export default function AddMoreDetails() {
                                     type="text"
                                     placeholder="Enter your Name"
                                     name="userName"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                     autoComplete="off"
                                 />
                             </div>
@@ -442,7 +442,7 @@ export default function AddMoreDetails() {
                                     type="text"
                                     placeholder="Enter your Number"
                                     name="mobileNumber"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                     autoComplete="off"
                                     required
                                 />
@@ -457,7 +457,7 @@ export default function AddMoreDetails() {
                                     type="text"
                                     placeholder="Enter your Email address"
                                     name="emailMailId"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                     autoComplete="off"
                                     required
                                 />
@@ -467,7 +467,7 @@ export default function AddMoreDetails() {
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                 <div>
                                     <button
-                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg'
+                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-white rounded-lg text-lg'
                                         onClick={handleCancel}
                                     >
                                         Cancel
@@ -476,7 +476,7 @@ export default function AddMoreDetails() {
                                 <div>
                                     <button
                                         type='submit'
-                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg'
+                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-primary-color rounded-lg text-lg'
                                     >
                                         {itemDetailsById && reportDetails.id ? <p>Edit form</p> : <p>Submit form</p>}
                                     </button>

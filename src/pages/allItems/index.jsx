@@ -51,7 +51,7 @@ export default function AllItems() {
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div className="flex w-fit">
                                         <div>
-                                            <p className='text-[#1B2E6B]  md:text-base'>Item Code</p>
+                                            <p className='text-navy-blue  md:text-base'>Item Code</p>
                                         </div>
                                         <div>
                                             <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
@@ -63,7 +63,7 @@ export default function AllItems() {
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div className="flex">
                                         <div>
-                                            <p className='text-[#1B2E6B]'>Item Name</p>
+                                            <p className='text-navy-blue'>Item Name</p>
                                         </div>
                                         <div>
                                             <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
@@ -75,7 +75,7 @@ export default function AllItems() {
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div className="flex">
                                         <div>
-                                            <p className='text-[#1B2E6B]'>Description</p>
+                                            <p className='text-navy-blue'>Description</p>
                                         </div>
                                         <div>
                                             <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
@@ -87,7 +87,7 @@ export default function AllItems() {
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div className="flex">
                                         <div>
-                                            <p className='text-[#1B2E6B]'>Location</p>
+                                            <p className='text-navy-blue'>Location</p>
                                         </div>
                                         <div>
                                             <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
@@ -99,7 +99,7 @@ export default function AllItems() {
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div className="flex">
                                         <div>
-                                            <p className='text-[#1B2E6B]'>Location Identifiers</p>
+                                            <p className='text-navy-blue'>Location Identifiers</p>
                                         </div>
                                         <div>
                                             <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
@@ -111,7 +111,7 @@ export default function AllItems() {
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div className="flex">
                                         <div>
-                                            <p className='text-[#1B2E6B]'>Listing Date</p>
+                                            <p className='text-navy-blue'>Listing Date</p>
                                         </div>
                                         <div>
                                             <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
@@ -121,7 +121,7 @@ export default function AllItems() {
                                 </th>
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div>
-                                        <p className='text-[#1B2E6B]'>Action</p>
+                                        <p className='text-navy-blue'>Action</p>
                                     </div>
                                 </th>
                             </tr>
@@ -130,13 +130,13 @@ export default function AllItems() {
                             {tableData?.list?.length && tableData.list.map((items, i) => {
                                 return (
                                     <tr key={i} className={`cursor-pointer ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-semibold">{items.itemCode}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemName}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.itemDescription}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.location}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.locationIdentifiers}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal">{items.foundDate}</td>
-                                        <td className="py-6 px-6 text-[#52575C] text-sm font-normal flex">
+                                        <td className="py-6 px-6 text-gray48 text-sm font-semibold">{items.itemCode}</td>
+                                        <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.itemName}</td>
+                                        <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.itemDescription}</td>
+                                        <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.location}</td>
+                                        <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.locationIdentifiers}</td>
+                                        <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.foundDate}</td>
+                                        <td className="py-6 px-6 text-gray48 text-sm font-normal flex">
                                             <AiOutlineDelete size={24} onClick={(e) => {
                                                 handleDeleteClick(items._id)
                                                 e.stopPropagation();

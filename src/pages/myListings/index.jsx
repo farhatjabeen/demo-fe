@@ -61,12 +61,12 @@ export default function MyListings() {
                             {details.itemImage[0] ?
                                 <img src={details.itemImage[0]} alt='keys' className='rounded-3xl w-full xl:h-72 md:h-60 sm:h-56'></img>
                                 :
-                                <div className='flex justify-center items-center bg-white xl:h-72 md:h-60 sm:h-56 rounded-3xl xl:p-8 md:p-6 sm:p-6 border border-solid border-[#B2B2B2]'>
+                                <div className='flex justify-center items-center bg-white xl:h-72 md:h-60 sm:h-56 rounded-3xl xl:p-8 md:p-6 sm:p-6 border border-solid border-white-grey'>
                                     <p>No Image</p>
                                 </div>
                             }
                         </div>
-                        <div className='bg-white w-2/3 xl:h-72 md:h-60 sm:h-56 rounded-3xl xl:p-8 md:p-6 sm:p-6 ml-5 border border-solid border-[#B2B2B2]'>
+                        <div className='bg-white w-2/3 xl:h-72 md:h-60 sm:h-56 rounded-3xl xl:p-8 md:p-6 sm:p-6 ml-5 border border-solid border-white-grey'>
                             <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl' >{details.itemName}</div>
                             <div className='xl:mt-6 md:mt-6 sm:mt-3'>
                                 <div className='w-64 flex'>
@@ -105,7 +105,7 @@ export default function MyListings() {
 
                                 <button
                                     onClick={() => handleListingDelete(details._id)}
-                                    className='cursor-pointer border border-#BC0000 text-[#BC0000] xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'
+                                    className='cursor-pointer border border-#BC0000 text-dark-red xl:w-40 xl:h-12 md:w-32 md:h-10 sm:w-32 sm:h-9 rounded-lg text-sm ml-2'
                                 >
                                     Remove Listing
                                 </button>

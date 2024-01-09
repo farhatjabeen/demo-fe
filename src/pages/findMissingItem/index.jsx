@@ -86,7 +86,7 @@ export default function FindMissingItem() {
         Search results
       </h1>
 
-      <div className='h-20 xl:w-9/12 md:w-8/12 sm:w-8/12 rounded-3xl bg-white border border-solid border-[#DDDDDD] flex items-center'>
+      <div className='h-20 xl:w-9/12 md:w-8/12 sm:w-8/12 rounded-3xl bg-white border border-solid border-pantone flex items-center'>
         <FormProvider {...methods}>
           {/* <form onSubmit={(e) => submitData(e)} className='w-full flex'> */}
           <form onSubmit={methods.handleSubmit(submitData)} className='w-full flex'>
@@ -96,7 +96,7 @@ export default function FindMissingItem() {
                 type='text'
                 placeholder='Search...'
                 name="keyword"
-                className='ml-3 p-4 xl:h-14 sm:h-13 w-96 rounded-2xl border border-solid border-[#B6B6B6]'
+                className='ml-3 p-4 xl:h-14 sm:h-13 w-96 rounded-2xl border border-solid border-greys'
                 autoComplete="off"
                 isSearchReport={true}
                 errorClass="absolute xl:bottom-4 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
@@ -106,7 +106,7 @@ export default function FindMissingItem() {
                 placeholder="Location"
                 name="location"
                 editButton={true}
-                optionButtonClass={`xl:w-96 xl:h-14 py-4 pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-[#B6B6B6]`}
+                optionButtonClass={`xl:w-96 xl:h-14 py-4 pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-greys`}
                 autoComplete="off"
                 firstOptionName="Location"
                 dropdownValues={citiesInSerbia}
@@ -116,7 +116,7 @@ export default function FindMissingItem() {
             <div className='w-4/12 ml-7 mr-3 '>
               <button
                 type='submit'
-                className='cursor-pointer w-full h-14 rounded-2xl border border-solid border-[#FFFFFF] text-2xl font-semibold text-white bg-primary-color' >Search</button>
+                className='cursor-pointer w-full h-14 rounded-2xl border border-solid border-white text-2xl font-semibold text-white bg-primary-color' >Search</button>
             </div>
 
           </form>
@@ -146,7 +146,7 @@ export default function FindMissingItem() {
           onPageChange={handlePageChange} />
       </div>
       {isLastPage && (
-        <div className='bg-[#FFFAE9] my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
+        <div className='bg-light-yellow my-12 xl:h-52 md:h-52 sm:h-44 xl:w-3/4 md:w-3/4 sm:w-11/12 flex flex-col justify-center'>
           <div className='flex justify-center xl:font-bold xl:text-3xl md:font-bold md:text-3xl sm:font-semibold sm:text-xl'>This is the end of the list</div>
         </div>
       )}

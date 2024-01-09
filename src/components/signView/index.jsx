@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
-import { loginAdminUser } from "../../redux/reducers/userSlice";
+import { adminForgotPassword, loginAdminUser } from "../../redux/reducers/userSlice";
 
 function SignInView() {
   const [showPassword, setShowPassword] = useState(false)
@@ -21,6 +21,20 @@ function SignInView() {
     },
     resolver
   });
+  const handleForgot = async () => {
+    try {
+      await methods.trigger('emailMailId');
+
+      if (methods.formState.errors.emailMailId) {
+        console.log('Email is not valid');
+        return;
+      }
+      const emailMailId = methods.getValues().emailMailId;
+      dispatch(adminForgotPassword({ emailMailId }));
+    } catch (error) {
+      console.log('handleForgot error', error);
+    }
+  };
   const submitData = (data) => {
     try {
       const login = dispatch(loginAdminUser(data));
@@ -44,47 +58,50 @@ function SignInView() {
           Sign in to the admin portal of Ilost
         </p>
       </div>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(submitData)}>
-          <div className="mt-6 pt-2">
-            <TextInput
-              name="emailMailId"
-              autoComplete="off"
-              placeholder="Enter email"
-              className="w-full py-4 px-3 border border-gray-300 rounded-md"
-              required
-            />
-          </div>
-          <div className="mt-2">
-            <TextInput
-              type="password"
-              name="password"
-              eyeClass='absolute top-4 left-3/4 ml-24'
-              autoComplete="off"
-              placeholder="Enter password"
-              className="w-full py-4 px-3 border border-gray-300 rounded-md"
-              required
-              showPassword={showPassword}
-              setShowPassword={() => setShowPassword(!showPassword)}
-            />
-          </div>
-          <div className="text-end mt-4">
-            <p>
-              Forgot Password?
-            </p>
-          </div>
-          <div className="mt-14">
-            <button
-              type="submit"
-              className="cursor-pointer w-full bg-primary-color  text-white font-bold py-4 rounded-md "
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
-      </FormProvider>
-    </div>
-  );
+      <div className="relative">
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(submitData)}>
+            <div className=" mt-6 pt-2">
+              <TextInput
+                name="emailMailId"
+                autoComplete="off"
+                placeholder="Enter email"
+                className="w-full py-4 px-3 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div className="mt-2">
+              <TextInput
+                type="password"
+                name="password"
+                eyeClass='absolute top-4 left-3/4 ml-24'
+                autoComplete="off"
+                placeholder="Enter password"
+                className="w-full py-4 px-3 border border-gray-300 rounded-md"
+                required
+                showPassword={showPassword}
+                setShowPassword={() => setShowPassword(!showPassword)}
+              />
+            </div>
+            <div className="mt-20">
+              <button
+                type="submit"
+                className="cursor-pointer w-full bg-primary-color  text-white font-bold py-4  rounded-md "
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+        </FormProvider>
+        <div className=" absolute bottom-24 mt-4 right-2 ">
+          <button
+            className='cursor-pointer text-base font-normal' onClick={handleForgot}>
+            Forgot Password?
+          </button>
+        </div>
+      </div>
+      </div>
+      );
 }
 
-export default SignInView;
+      export default SignInView;

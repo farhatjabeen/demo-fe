@@ -193,7 +193,7 @@ const PopoverComponent = () => {
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                                 <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-bold'>Enter Password</div>
-                                                                <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                                <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
                                                             </div>
@@ -202,12 +202,12 @@ const PopoverComponent = () => {
                                                             <FormProvider {...methodsForLogin}>
                                                             <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
                                                                     <div >
-                                                                        <div className='text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
+                                                                        <div className='text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
                                                                         <TextInput
                                                                             type='password'
                                                                             name='password'
                                                                             eyeClass='absolute top-3 left-3/4 ml-16'
-                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
+                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                                             autoComplete="off"
                                                                             showPassword={showPassword}
                                                                             required
@@ -216,7 +216,7 @@ const PopoverComponent = () => {
                                                                     </div>
                                                                     <button
                                                                         type='submit'
-                                                                        className='cursor-pointer w-full h-11 rounded-md mt-12 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                        className='cursor-pointer w-full h-11 rounded-md mt-12 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'>
                                                                         LOGIN
                                                                     </button>
                                                                 </form>
@@ -235,7 +235,7 @@ const PopoverComponent = () => {
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                                 <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-extrabold'>Enter Password</div>
-                                                                <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                                <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
                                                             </div>
@@ -244,23 +244,23 @@ const PopoverComponent = () => {
                                                             {/* <form onSubmit={(e) => registerButton(e)}> */}
                                                                 <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
                                                                 <div>
-                                                                    <div className=' text-sm font-medium text-[#757780] mb-1.5'>Enter Password</div>
+                                                                    <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
                                                                     <TextInput
                                                                         type='password'
                                                                         name="newPassword"
-                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
+                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                                         autoComplete="off"
                                                                         required
                                                                         eyeClass='absolute top-3 left-3/4 ml-16'
                                                                         showPassword={showRegisterNewPassword}
                                                                         setShowPassword={() => setShowRegisterNewPassword(!showRegisterNewPassword)}
                                                                     />
-                                                                    <div className='text-sm font-medium text-[#757780] mt-2.5'>Re-enter Password</div>
+                                                                    <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
                                                                     <TextInput
                                                                         type='password'
                                                                         name='password'
                                                                         eyeClass='absolute top-3 left-3/4 ml-16'
-                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-[#E8EDF1]'
+                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                                         autoComplete="off"
                                                                         showPassword={showRegisterPassword}
                                                                         required
@@ -273,7 +273,7 @@ const PopoverComponent = () => {
                                                                 </div>
                                                                 <button
                                                                     type='submit'
-                                                                    className='cursor-pointer w-full h-11 rounded-md mt-6 bg-[#00B8B8] text-white flex justify-center items-center text-sm font-medium border-none'
+                                                                    className='cursor-pointer w-full h-11 rounded-md mt-6 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'
                                                                 >
                                                                     REGISTER
                                                                 </button>
@@ -287,19 +287,19 @@ const PopoverComponent = () => {
                                                 <div className="xl:w-full md:w-full sm:w-full">
                                                     <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
                                                         <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-bold'>Login/Register</div>
-                                                        <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-[#757780] pt-1'>
+                                                        <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
                                                             Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <FormProvider {...methods}>
                                                     <form onSubmit={methods.handleSubmit(handleContinue)}>
-                                                        <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-[#757780] mb-1.5'>Email Address</div>
+                                                        <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-light-grey mb-1.5'>Email Address</div>
                                                         <div>
                                                             <TextInput
                                                                 type='email'
                                                                 name="emailMailId"
-                                                                className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-[#E8EDF1]'
+                                                                className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-blue-light'
                                                                 autoComplete="off"
                                                                 required
                                                                 onChange={(e) => {
@@ -309,7 +309,7 @@ const PopoverComponent = () => {
                                                         </div>
                                                         <button
                                                             type='submit'
-                                                            className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-[#00B8B8]' : 'bg-[#A7A9AC]'}  text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
+                                                            className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-cyan' : 'bg-aluminium'}  text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
                                                             CONTINUE
                                                         </button>
                                                         <div className="flex items-center mt-8">
@@ -325,7 +325,7 @@ const PopoverComponent = () => {
                                                                 </div>
                                                                 <Popover.Button
                                                                     onClick={() => navigate('/businessSignIn')}
-                                                                    className='cursor-pointer xl:text-base md:text-sm sm:text-xs font-semibold text-[#00B8B8]'>
+                                                                    className='cursor-pointer xl:text-base md:text-sm sm:text-xs font-semibold text-cyan'>
                                                                     Sign in for business
                                                                 </Popover.Button>
                                                             </div>
@@ -340,7 +340,7 @@ const PopoverComponent = () => {
                                 </div>
                                 <div className="w-full flex justify-end pr-3 xl:ml-9 md:ml-8 sm:ml-5">
                                     <Popover.Button onClick={handleClose} className='absolute top-4 border-none bg-white space-x-end'>
-                                        <AiFillCloseCircle className='cursor-pointer xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-[#00B8B8]' />
+                                        <AiFillCloseCircle className='cursor-pointer xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-cyan' />
                                     </Popover.Button>
                                 </div>
                             </Popover.Panel>

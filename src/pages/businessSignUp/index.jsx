@@ -241,7 +241,7 @@ export default function BusinessSignUp() {
                                     {/* <div className="flex ">
                                     <div className="flex items-center h-5">
                                         <input id="remember" type="checkbox" onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                        <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
+                                        <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-oranges" to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                     </div>
                                     <ImageUpload
                                         name="company"
@@ -264,9 +264,9 @@ export default function BusinessSignUp() {
                                     <div >
                                         <div className="flex items-center h-5">
                                             <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                            <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-[#FF9900]" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
+                                            <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-oranges" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
                                         </div>
-                                        <button type='submit' className="cursor-pointer bg-[#FF9900] w-full py-3 mt-2 rounded-lg">Continue</button>
+                                        <button type='submit' className="cursor-pointer bg-oranges w-full py-3 mt-2 rounded-lg">Continue</button>
                                     </div>
                                 </div>
                             </div>
