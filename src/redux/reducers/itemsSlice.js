@@ -75,11 +75,9 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
             console.log(res.data, 'ress')
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
-            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
-            Toast({ type: "error", message: err?.message })
             return err
         })
     })
@@ -195,7 +193,7 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveItemData({ list, pageMeta }))
-            return resolve(true)
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
@@ -246,7 +244,7 @@ export const searchByLocation = (itemName, location, page = 1, limit = 10) => (d
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(viewItemDetailsByLocation({ list, pageMeta }))
-            return resolve(true)
+            return resolve(res)
         }).catch(err => {
             console.log(err)
             return err;
@@ -441,6 +439,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
             tokenType: 'businessUserToken'
 
         }).then((res) => {
+            Toast({type:"success",message: res.message})
             return resolve(true)
         }).catch(err => {
             console.log(err)
