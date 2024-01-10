@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { myProfilePasswordSchema, myProfileSchema } from '../../validations';
+import { myProfileSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { generalUserData, generalUserDetails, userData, userProfileData } from '../../redux/reducers/userSlice';
