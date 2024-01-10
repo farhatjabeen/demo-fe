@@ -92,7 +92,7 @@ export default function MyProfile() {
                                     type="text"
                                     placeholder="Enter your Name"
                                     name="name"
-                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                     autoComplete="off"
                                     disable={!editButton}
 
@@ -110,7 +110,7 @@ export default function MyProfile() {
                                     type="text"
                                     placeholder="Enter your Number"
                                     name="mobileNumber"
-                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                     autoComplete="off"
                                     required
                                     disable={!editButton}
@@ -127,7 +127,7 @@ export default function MyProfile() {
                                     type="text"
                                     placeholder="Enter your Email address"
                                     name="emailMailId"
-                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                     autoComplete="off"
                                     required
                                     disable={!editButton}
@@ -147,14 +147,14 @@ export default function MyProfile() {
                                         placeholder="Current password"
                                         eyeClass='absolute bottom-3 left-80 pl-5'
                                         name="currentPassword"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         disable={!editButton}
                                         showPassword={showRegisterPassword}
                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                     />
                                     {/* <input 
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl  ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl  ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>
 
@@ -164,7 +164,7 @@ export default function MyProfile() {
                                         type="text"
                                         placeholder="New password"
                                         name="newPassword"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         disable={!editButton}
                                     />
@@ -177,7 +177,7 @@ export default function MyProfile() {
                                         placeholder="New password"
                                         eyeClass='absolute bottom-3 left-80 pl-5'
                                         name="confirmPassword"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-[#B6B6B6] rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         disable={!editButton}
                                         showPassword={showPassword}
@@ -192,7 +192,7 @@ export default function MyProfile() {
                             <div className='w-full flex mb-10 justify-center'>
 
                                 <div>
-                                    <button onClick={handleEditButton} className='cursor-pointer w-44 h-14 border border-[solid] border-[#B6B6B6] bg-white rounded-xl text-lg'>
+                                    <button onClick={handleEditButton} className='cursor-pointer w-44 h-14 border border-[solid] border-greys bg-white rounded-xl text-lg'>
                                         Cancel
                                     </button>
                                 </div>

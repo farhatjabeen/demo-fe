@@ -16,13 +16,13 @@ export default function FormDropdown({ editButton, selection, dropdownValues }) 
         <button
           onClick={() => setSelect(!select)}
           disabled={!editButton}
-          className={`cursor-pointer flex w-full h-12 items-center justify-between rounded-xl ${editButton ? 'bg-white' : 'bg-[#E0E0E0]'} px-4 border border-solid border-[#B6B6B6]`}>
+          className={`cursor-pointer flex w-full h-12 items-center justify-between rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'} px-4 border border-solid border-greys`}>
           {options || "Options"}
           {select ? <RxChevronUp className='h-6 w-6' /> : <RxChevronDown className='h-6 w-6' />}
         </button>
       </div>
 
-      <div className={`absolute right-0 z-10 mt-2 w-full h-28 overflow-y-scroll rounded-md bg-white shadow-lg border border-solid border-[#B6B6B6] ${selection && select ? '' : 'hidden'} `}>
+      <div className={`absolute right-0 z-10 mt-2 w-full h-28 overflow-y-scroll rounded-md bg-white shadow-lg border border-solid border-greys ${selection && select ? '' : 'hidden'} `}>
         <div className="py-1">
           {dropdownValues?.map((items, i) => {
             return (

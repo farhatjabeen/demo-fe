@@ -7,14 +7,12 @@ import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
 import adminPasswordimage from '../../assets/images/adminPasswordimage.png'
-import { adminResetPassword } from "../../redux/reducers/userSlice";
-import  OTPVerificationModal  from '../../components/OTPModal'
+import { adminChangePassword } from "../../redux/reducers/userSlice";
 const Settings = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [isOTPOpen, setIsOTPOpen] = useState(false);
     const dispatch = useDispatch();
     const resolver = useValidationResolver(AdminChangePasswordSchema);
     const methods = useForm({
@@ -27,24 +25,15 @@ const Settings = () => {
     });
     const submitData = async (data) => {
         try {
-            setIsOTPOpen(true);
-            // const reset = dispatch(adminResetPassword(data))
-            // if (reset) {
-            //     navigate('/admin/signin');
-            // }
-            // else {
-            //     console.log("Password reset failed");
-            // }
+            const reset = dispatch(adminChangePassword(data))
+            if (reset) {
+                navigate('/admin/signin');
+            }
+            else {
+                console.log("Password reset failed");
+            }
         } catch (error) {
             console.log("submitData errors", error)
-        }
-    };
-    const handleOTPVerification = async (otp) => {
-        try {
-            console.log("Verifying OTP:", otp);
-            setIsOTPOpen(false);
-        } catch (error) {
-            console.log("OTP verification error", error);
         }
     };
     return (
@@ -58,7 +47,7 @@ const Settings = () => {
             </div>
 
 
-            <div className='bg-[#F1FFFF] p-10 my-10 mr-10 ml-10 rounded-lg text-xl'>
+            <div className='bg-light-cyan p-10 my-10 mr-10 ml-10 rounded-lg text-xl'>
                 <div>
                     <p className='font-bold pb-6'>Passwords must contain :</p>
                     <ul className='list-disc ml-4 flex text-primary-color'>
@@ -142,13 +131,7 @@ const Settings = () => {
                             </div>
                         </form>
                     </FormProvider>
-                    <OTPVerificationModal
-                        isOpen={isOTPOpen}
-                        onCancel={() => setIsOTPOpen(false)}
-                        onVerify={handleOTPVerification}
-                    />
                 </div>
-
                 <div>
                     <img src={adminPasswordimage} className=' mt-40 ' />
                 </div>

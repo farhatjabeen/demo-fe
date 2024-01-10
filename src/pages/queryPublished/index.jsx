@@ -36,7 +36,7 @@ export default function QueryPublished() {
                         )}
 
                     </div>
-                    <div className='xl:h-72 xl:w-6/12 md:h-60 md:w-8/12 sm:h-48 sm:w-10/12 ml-7 rounded-[24px] border border-[#B2B2B2] bg-white'>
+                    <div className='xl:h-72 xl:w-6/12 md:h-60 md:w-8/12 sm:h-48 sm:w-10/12 ml-7 rounded-[24px] border border-white-grey bg-white'>
                         <div className='xl:p-7 md:px-5 md:pt-4 sm:pl-4'>
                             <div className='font-bold text-4xl pb-1' >{itemDetailsFromApi?.itemName}</div>
                             <div className='m-2'>

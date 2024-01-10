@@ -192,7 +192,7 @@ export default function EditBusinessDetails() {
                                     type="text"
                                     placeholder="Type Name"
                                     name="itemName"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                    className='h-14 sm:h-12 border border-greys rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -221,7 +221,7 @@ export default function EditBusinessDetails() {
                                     rows="4"
                                     placeholder="Type desc"
                                     name="itemDescription"
-                                    className='border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                    className='border border-greys rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -236,7 +236,7 @@ export default function EditBusinessDetails() {
                                     type="text"
                                     placeholder="Keywords"
                                     name="keywords"
-                                    className='h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
+                                    className='h-14 sm:h-12 border border-greys rounded-lg p-5 xl:w-96 md:w-96 sm:w-64'
                                     autoComplete="off"
                                     required
                                 />
@@ -291,7 +291,7 @@ export default function EditBusinessDetails() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='border-b border-b-[#949494] mb-10'>
+                            <div className='border-b border-b-gray58 mb-10'>
                                 <div className='flex justify-between h-12 mb-9 relative location'>
                                     <div>
                                         <label className='font-bold xl:text-lg md:text-lg sm:text-base'>Location</label>
@@ -316,7 +316,7 @@ export default function EditBusinessDetails() {
                                         type="text"
                                         placeholder="Landmarks of the location"
                                         name="locationIdentifiers"
-                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                        className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                         autoComplete="off"
                                         required
                                     />
@@ -332,7 +332,7 @@ export default function EditBusinessDetails() {
                                     type="text"
                                     placeholder="Enter your Name"
                                     name="userName"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                     autoComplete="off"
                                 />
                             </div>
@@ -346,7 +346,7 @@ export default function EditBusinessDetails() {
                                     type="text"
                                     placeholder="Enter your Number"
                                     name="mobileNumber"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                     autoComplete="off"
                                     required
                                 />
@@ -361,7 +361,7 @@ export default function EditBusinessDetails() {
                                     type="text"
                                     placeholder="Enter your Email address"
                                     name="emailMailId"
-                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-[#B6B6B6] rounded-lg p-5'
+                                    className='xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 border border-greys rounded-lg p-5'
                                     autoComplete="off"
                                     required
                                 />
@@ -369,8 +369,8 @@ export default function EditBusinessDetails() {
                         </div>
                         <div className='flex flex-col items-center justify-between mt-20'>
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
-                                <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-white rounded-lg text-lg cursor-pointer' onClick={() => { window.history.back() }}>Cancel</button></div>
-                                <div><button type='submit' onClick={submitData} className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-[#B6B6B6] bg-primary-color rounded-lg text-lg cursor-pointer' >Edit Form</button></div>                            </div>
+                                <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-white rounded-lg text-lg cursor-pointer' onClick={() => { window.history.back() }}>Cancel</button></div>
+                                <div><button type='submit' onClick={submitData} className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-primary-color rounded-lg text-lg cursor-pointer' >Edit Form</button></div>                            </div>
                         </div>
                     </div>
                 </form>

@@ -124,6 +124,10 @@ const routers = [
         component: "signIn",
         childPath: "/signIn",
       },
+      {
+        component: "resetPasswordAdmin",
+        childPath: "/resetPassword/:token",
+      },
     ]
   },
   {

@@ -7,8 +7,8 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { businessUserForgotSchema } from '../../validations';
 import { businessResetPassword } from '../../redux/reducers/userSlice';
 import { useParams } from 'react-router-dom';
-export default function ForgotPassword() {
 
+export default function ForgotPassword() {
     const [createShowPassword, setCreateShowPassword] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const { token } = useParams();
@@ -40,7 +40,7 @@ export default function ForgotPassword() {
 
     return (
         <div className='flex justify-center mb-28'>
-            <div className='bg-white xl:w-2/6 md:w-3/5 sm:w-4/5 border-[#878787] border rounded-lg p-8'>
+            <div className='bg-white xl:w-2/6 md:w-3/5 sm:w-4/5 border-Gray53 border rounded-lg p-8'>
                 <h2 className='font-medium text-3xl mt-5 mb-10'>Reset Password</h2>
                 <h2 className='font-medium text-xl mt-5 mb-10'>Create a strong, secure password for your account.
                 </h2>
@@ -54,7 +54,7 @@ export default function ForgotPassword() {
                                     placeholder="Enter your new Password"
                                     name="password"
                                     eyeClass='absolute top-7 left-3/4 ml-16'
-                                    className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4 my-3'
+                                    className='h-14 w-full border border-black2 rounded-md placeholder:text-sm p-4 my-3'
                                     autoComplete="off"
                                     required
                                     showPassword={createShowPassword}
@@ -67,7 +67,7 @@ export default function ForgotPassword() {
                                     placeholder="Confirm your Password"
                                     name="confirmPassword"
                                     eyeClass='absolute top-7 left-3/4 ml-16'
-                                    className='h-14 w-full border border-[#282828] rounded-md placeholder:text-sm p-4 my-3'
+                                    className='h-14 w-full border border-black2 rounded-md placeholder:text-sm p-4 my-3'
                                     autoComplete="off"
                                     showPassword={showPassword}
                                     required
