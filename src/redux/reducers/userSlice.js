@@ -98,7 +98,7 @@ export const generalUserRegister = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            Toast({type:"success",message:res.message})
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)

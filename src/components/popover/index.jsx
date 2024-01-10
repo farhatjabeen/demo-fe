@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
-import { Fragment } from 'react';
 import { IoTriangleSharp } from "react-icons/io5";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Popover, Transition } from "@headlessui/react";
@@ -8,32 +7,45 @@ import linkSymbol from '../../assets/images/linksymbol.png';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { checkGeneralUserEmail, generalForgotPassword, clearUserData, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
-import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema, loginSchema } from '../../validations';
+import { checkGeneralUserEmail, generalForgotPassword, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
+import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema } from '../../validations';
 import TextInput from '../common/textInput';
 
 const PopoverComponent = () => {
-
+    // local states
     const [passwordBox, setPasswordBox] = useState(false);
-    const navigate = useNavigate();
-    const mailIdFromApi = useSelector(mailId);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [showRegisterNewPassword, setShowRegisterNewPassword] = useState(false)
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [passwordMatch, setPasswordMatch] = useState(true);
+    
+    // Other Hooks
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { resetPassword } = useParams()
+    const mailIdFromApi = useSelector(mailId);
+
+    // validation resolvers
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForLogin = useValidationResolver(generalUserLoginSchema);
     const resolverForRegister = useValidationResolver(generalUserRegisterSchema);
-    const [isEmailValid, setIsEmailValid] = useState(false);
-    const [passwordMatch, setPasswordMatch] = useState(true);
 
     const validateEmail = (inputEmail) => {
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(inputEmail);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
+        if (resetPassword) {
+            // Open the Popover if the resetPassword route parameter is present
+            setIsPopoverOpen(true);
+            setPasswordBox(true);
+        }
+    }, [resetPassword])
+
+    useEffect(() => {
         setPasswordBox(false);
         setIsEmailValid(false);
         setPasswordMatch(true);
@@ -46,9 +58,9 @@ const PopoverComponent = () => {
             password: ""
         })
         methodsForLogin.reset({
-            password:""
+            password: ""
         })
-    },[navigate])
+    }, [navigate])
 
     const methods = useForm({
         defaultValues: {
@@ -68,25 +80,19 @@ const PopoverComponent = () => {
         defaultValues: {
             newPassword: "",
             password: ""
-        }, 
+        },
         resolverForRegister
     });
 
     const handleEmailChange = (e) => {
-        console.log("hi from email change")
         const isValid = validateEmail(e.target.value);
         setIsEmailValid(isValid);
-        console.log('Email:', mailId, 'isValid:', isValid);
     };
-
-    useEffect(()=>{
-        
-    },[methods])
 
     const handleContinue = async (data) => {
         try {
             const emailMailId = methods.getValues().emailMailId;
-            const login = await dispatch(checkGeneralUserEmail({emailMailId}));
+            const login = await dispatch(checkGeneralUserEmail({ emailMailId }));
             if (login) {
                 setPasswordBox(true);
             }
@@ -101,40 +107,36 @@ const PopoverComponent = () => {
             const newPassword = methodsForRegister.getValues().newPassword;
             const emailMailId = mailIdFromApi.emailMailId;
 
-            if(password === newPassword){
+            if (password === newPassword) {
                 setPasswordMatch(true);
                 const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
-                console.log(registerSuccessful,"regsucc")
                 if (registerSuccessful) {
-                    navigate('/');
-                    Popover.close();
+                    await handleClose();
                 }
-            }else{
+            } else {
                 setPasswordMatch(false);
             }
-            
         } catch (error) {
-            console.log("submitData errors", error)
+            console.log("submitData errors", error);
         }
-    }
+    };
 
     const handleLogin = async () => {
         try {
             const password = methodsForLogin.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
             const loginSuccessful = await dispatch(generalUserLogin({ emailMailId, password }));
-            console.log("loginSuccessful",loginSuccessful)
             if (loginSuccessful) {
+                setIsPopoverOpen(false);
                 navigate('/');
-                Popover.close();
             }
-
         } catch (error) {
             console.log("submitData errors", error)
         }
     };
 
     const handleClose = () => {
+        setIsPopoverOpen(false);
         setPasswordBox(false);
         setIsEmailValid(false);
         setPasswordMatch(true);
@@ -147,7 +149,7 @@ const PopoverComponent = () => {
             password: ""
         })
         methodsForLogin.reset({
-            password:""
+            password: ""
         })
     }
     const handleForgot = async () => {
@@ -155,7 +157,6 @@ const PopoverComponent = () => {
             await methods.trigger('emailMailId');
 
             if (methods.formState.errors.emailMailId) {
-                console.log('Email is not valid');
                 return;
             }
             const emailMailId = methods.getValues().emailMailId;
@@ -165,18 +166,29 @@ const PopoverComponent = () => {
         }
     };
 
+    const togglePopover = () => {
+        setIsPopoverOpen((prev) => !prev)
+    };
+
+    const closePopover = () => {
+        setIsPopoverOpen(false);
+    };
+
     return (
         <div>
-            <Popover open={isPopoverOpen} onClose={() => setIsPopoverOpen(false)}>
+            <Popover open={isPopoverOpen} onClose={closePopover}>
                 {({ open }) => (
                     <div>
-                        <Popover.Button>
+                        <Popover.Button onClick={togglePopover}>
                             <div className="cursor-pointer flex justify-center items-center xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold bg-primary-color text-white rounded-full xl:mx-1">
                                 Login / Register
                             </div>
                         </Popover.Button>
-                        <Popover.Overlay className="fixed inset-0 bg-black opacity-30" />
+                        {open && (<Popover.Overlay
+                            onClick={closePopover}
+                            className="fixed inset-0 bg-black opacity-30" />)}
                         <Transition
+                            show={open}
                             as={Fragment}
                             enter="transition ease-out duration-200"
                             enterFrom="opacity-0 translate-y-1"
@@ -201,7 +213,7 @@ const PopoverComponent = () => {
                                                         </div>
                                                         <div className='relative'>
                                                             <FormProvider {...methodsForLogin}>
-                                                            <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
+                                                                <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
                                                                     <div >
                                                                         <div className='text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
                                                                         <TextInput
@@ -243,7 +255,7 @@ const PopoverComponent = () => {
                                                         </div>
                                                         <FormProvider {...methodsForRegister}>
                                                             {/* <form onSubmit={(e) => registerButton(e)}> */}
-                                                                <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
+                                                            <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
                                                                 <div>
                                                                     <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
                                                                     <TextInput
@@ -268,8 +280,8 @@ const PopoverComponent = () => {
                                                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                                                     />
                                                                     {passwordMatch ? ""
-                                                                    :
-                                                                    <p className='text-sm'>Passwords does not match</p>
+                                                                        :
+                                                                        <p className='text-sm'>Passwords does not match</p>
                                                                     }
                                                                 </div>
                                                                 <button
@@ -310,7 +322,7 @@ const PopoverComponent = () => {
                                                         </div>
                                                         <button
                                                             type='submit'
-                                                            className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-cyan' : 'bg-aluminium'}  text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
+                                                            className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-cyan' : 'bg-aluminium'} text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
                                                             CONTINUE
                                                         </button>
                                                         <div className="flex items-center mt-8">
@@ -353,6 +365,5 @@ const PopoverComponent = () => {
         </div >
     )
 }
-
 
 export default PopoverComponent;
