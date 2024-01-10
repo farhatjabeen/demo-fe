@@ -14,7 +14,6 @@ export default function MyProfile() {
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [currentPasswordEntered, setCurrentPasswordEntered] = useState(false)
     const resolver = useValidationResolver( myProfileSchema);
-    const resolverForPassword = useValidationResolver(myProfilePasswordSchema);
 
     const dispatch = useDispatch();
     // const existingData = useSelector(userData);
