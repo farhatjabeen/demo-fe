@@ -10,17 +10,17 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { checkGeneralUserEmail, generalForgotPassword, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
 import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema } from '../../validations';
 import TextInput from '../common/textInput';
-
 const PopoverComponent = () => {
     // local states
     const [passwordBox, setPasswordBox] = useState(false);
+    const [restPasswordBox, setRestPasswordBox] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [showRegisterNewPassword, setShowRegisterNewPassword] = useState(false)
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(true);
-    
+
     // Other Hooks
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -38,14 +38,6 @@ const PopoverComponent = () => {
     };
 
     useEffect(() => {
-        if (resetPassword) {
-            // Open the Popover if the resetPassword route parameter is present
-            setIsPopoverOpen(true);
-            setPasswordBox(true);
-        }
-    }, [resetPassword])
-
-    useEffect(() => {
         setPasswordBox(false);
         setIsEmailValid(false);
         setPasswordMatch(true);
@@ -61,6 +53,14 @@ const PopoverComponent = () => {
             password: ""
         })
     }, [navigate])
+
+    useEffect(() => {
+        if (resetPassword) {
+            // Open the Popover if the resetPassword route parameter is present
+            setRestPasswordBox(true);
+            setIsPopoverOpen((true));
+        }
+    }, [resetPassword])
 
     const methods = useForm({
         defaultValues: {
@@ -138,6 +138,7 @@ const PopoverComponent = () => {
     const handleClose = () => {
         setIsPopoverOpen(false);
         setPasswordBox(false);
+        setRestPasswordBox(false);
         setIsEmailValid(false);
         setPasswordMatch(true);
         methods.reset({
@@ -171,7 +172,7 @@ const PopoverComponent = () => {
     };
 
     const closePopover = () => {
-        setIsPopoverOpen(false);
+        setIsPopoverOpen((prev) => !prev)
     };
 
     return (
@@ -184,11 +185,11 @@ const PopoverComponent = () => {
                                 Login / Register
                             </div>
                         </Popover.Button>
-                        {open && (<Popover.Overlay
+                        {/* {open && (<Popover.Overlay
                             onClick={closePopover}
-                            className="fixed inset-0 bg-black opacity-30" />)}
+                            className="fixed inset-0 bg-black opacity-30" />)} */}
                         <Transition
-                            show={open}
+                            show={open || isPopoverOpen}
                             as={Fragment}
                             enter="transition ease-out duration-200"
                             enterFrom="opacity-0 translate-y-1"
@@ -198,154 +199,197 @@ const PopoverComponent = () => {
                             leaveTo="opacity-0 translate-y-1">
                             <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36'>
                                 <div className='pt-7 w-96'>
-                                    {
-                                        passwordBox && mailIdFromApi?.status ?
-                                            <div>
-                                                {mailIdFromApi?.isAlreadyRegistered ?
-                                                    <div className='mb-5'>
-                                                        <div className="xl:w-full md:w-full sm:w-full">
-                                                            <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Enter Password</div>
-                                                                <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
-                                                                    Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
+                                    {restPasswordBox ? <div>
+                                        <FormProvider {...methodsForRegister}>
+                                            <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
+                                                <div>
+                                                    <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
+                                                    <TextInput
+                                                        type='password'
+                                                        name="newPassword"
+                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
+                                                        autoComplete="off"
+                                                        required
+                                                        eyeClass='absolute top-3 left-3/4 ml-16'
+                                                        showPassword={showRegisterNewPassword}
+                                                        setShowPassword={() => setShowRegisterNewPassword(!showRegisterNewPassword)}
+                                                    />
+                                                    <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
+                                                    <TextInput
+                                                        type='password'
+                                                        name='password'
+                                                        eyeClass='absolute top-3 left-3/4 ml-16'
+                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
+                                                        autoComplete="off"
+                                                        showPassword={showRegisterPassword}
+                                                        required
+                                                        setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
+                                                    />
+                                                    {passwordMatch ? ""
+                                                        :
+                                                        <p className='text-sm'>Passwords does not match</p>
+                                                    }
+                                                </div>
+                                                <button
+                                                    type='submit'
+                                                    className='cursor-pointer w-full h-11 rounded-md mt-6 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'
+                                                >
+                                                    RESET PASSWORD
+                                                </button>
+                                            </form>
+                                        </FormProvider>
+                                    </div>
+                                        :
+                                        <div>
+                                            {passwordBox && mailIdFromApi?.status ?
+                                                <div>
+                                                    {mailIdFromApi?.isAlreadyRegistered ?
+                                                        <div className='mb-5'>
+                                                            <div className="xl:w-full md:w-full sm:w-full">
+                                                                <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
+                                                                    <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Enter Password</div>
+                                                                    <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
+                                                                        Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='relative'>
+                                                                <FormProvider {...methodsForLogin}>
+                                                                    <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
+                                                                        <div >
+                                                                            <div className='text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
+                                                                            <TextInput
+                                                                                type='password'
+                                                                                name='password'
+                                                                                eyeClass='absolute top-3 left-3/4 ml-16'
+                                                                                className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
+                                                                                autoComplete="off"
+                                                                                showPassword={showPassword}
+                                                                                required
+                                                                                setShowPassword={() => setShowPassword(!showPassword)}
+                                                                            />
+                                                                        </div>
+                                                                        <button
+                                                                            type='submit'
+                                                                            className='cursor-pointer w-full h-11 rounded-md mt-12 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                            LOGIN
+                                                                        </button>
+                                                                    </form>
+                                                                </FormProvider>
+                                                                <div className='absolute top-20 right-2.5'>
+                                                                    <button
+                                                                        onClick={handleForgot}
+                                                                        className='cursor-pointer text-light-grey text-xs font-light'>
+                                                                        Forgot Password?
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className='relative'>
-                                                            <FormProvider {...methodsForLogin}>
-                                                                <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
-                                                                    <div >
-                                                                        <div className='text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
+                                                        :
+                                                        <div className='mb-5'>
+                                                            <div className="xl:w-full md:w-full sm:w-full">
+                                                                <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
+                                                                    <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-extrabold'>Enter Password</div>
+                                                                    <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
+                                                                        Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <FormProvider {...methodsForRegister}>
+                                                                {/* <form onSubmit={(e) => registerButton(e)}> */}
+                                                                <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
+                                                                    <div>
+                                                                        <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
+                                                                        <TextInput
+                                                                            type='password'
+                                                                            name="newPassword"
+                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
+                                                                            autoComplete="off"
+                                                                            required
+                                                                            eyeClass='absolute top-3 left-3/4 ml-16'
+                                                                            showPassword={showRegisterNewPassword}
+                                                                            setShowPassword={() => setShowRegisterNewPassword(!showRegisterNewPassword)}
+                                                                        />
+                                                                        <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
                                                                         <TextInput
                                                                             type='password'
                                                                             name='password'
                                                                             eyeClass='absolute top-3 left-3/4 ml-16'
                                                                             className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                                             autoComplete="off"
-                                                                            showPassword={showPassword}
+                                                                            showPassword={showRegisterPassword}
                                                                             required
-                                                                            setShowPassword={() => setShowPassword(!showPassword)}
+                                                                            setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                                                         />
+                                                                        {passwordMatch ? ""
+                                                                            :
+                                                                            <p className='text-sm'>Passwords does not match</p>
+                                                                        }
                                                                     </div>
                                                                     <button
                                                                         type='submit'
-                                                                        className='cursor-pointer w-full h-11 rounded-md mt-12 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'>
-                                                                        LOGIN
+                                                                        className='cursor-pointer w-full h-11 rounded-md mt-6 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'
+                                                                    >
+                                                                        REGISTER
                                                                     </button>
                                                                 </form>
                                                             </FormProvider>
-                                                            <div className='absolute top-20 right-2.5'>
-                                                                <button
-                                                                    onClick={handleForgot}
-                                                                    className='cursor-pointer text-light-grey text-xs font-light'>
-                                                                    Forgot Password?
-                                                                </button>
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    :
-                                                    <div className='mb-5'>
-                                                        <div className="xl:w-full md:w-full sm:w-full">
-                                                            <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-extrabold'>Enter Password</div>
-                                                                <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
-                                                                    Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <FormProvider {...methodsForRegister}>
-                                                            {/* <form onSubmit={(e) => registerButton(e)}> */}
-                                                            <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
-                                                                <div>
-                                                                    <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
-                                                                    <TextInput
-                                                                        type='password'
-                                                                        name="newPassword"
-                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
-                                                                        autoComplete="off"
-                                                                        required
-                                                                        eyeClass='absolute top-3 left-3/4 ml-16'
-                                                                        showPassword={showRegisterNewPassword}
-                                                                        setShowPassword={() => setShowRegisterNewPassword(!showRegisterNewPassword)}
-                                                                    />
-                                                                    <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
-                                                                    <TextInput
-                                                                        type='password'
-                                                                        name='password'
-                                                                        eyeClass='absolute top-3 left-3/4 ml-16'
-                                                                        className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
-                                                                        autoComplete="off"
-                                                                        showPassword={showRegisterPassword}
-                                                                        required
-                                                                        setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
-                                                                    />
-                                                                    {passwordMatch ? ""
-                                                                        :
-                                                                        <p className='text-sm'>Passwords does not match</p>
-                                                                    }
-                                                                </div>
-                                                                <button
-                                                                    type='submit'
-                                                                    className='cursor-pointer w-full h-11 rounded-md mt-6 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'
-                                                                >
-                                                                    REGISTER
-                                                                </button>
-                                                            </form>
-                                                        </FormProvider>
-                                                    </div>
-                                                }
-                                            </div>
-                                            :
-                                            <div>
-                                                <div className="xl:w-full md:w-full sm:w-full">
-                                                    <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                        <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Login/Register</div>
-                                                        <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
-                                                            Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
-                                                        </div>
-                                                    </div>
+                                                    }
                                                 </div>
-                                                <FormProvider {...methods}>
-                                                    <form onSubmit={methods.handleSubmit(handleContinue)}>
-                                                        <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-light-grey mb-1.5'>Email Address</div>
-                                                        <div>
-                                                            <TextInput
-                                                                type='email'
-                                                                name="emailMailId"
-                                                                className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-blue-light'
-                                                                autoComplete="off"
-                                                                required
-                                                                onChange={(e) => {
-                                                                    handleEmailChange(e)
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <button
-                                                            type='submit'
-                                                            className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-cyan' : 'bg-aluminium'} text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
-                                                            CONTINUE
-                                                        </button>
-                                                        <div className="flex items-center mt-8">
-                                                            <hr className="flex-1 border border-t border-light-grey" />
-                                                            <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
-                                                            <hr className="flex-1 border border-t border-light-grey" />
-                                                        </div>
-                                                        <div className='flex items-center justify-between w-full h-6 mt-2'>
-                                                            <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>
-                                                            <div className='flex items-center w-fit '>
-                                                                <div className='flex items-center xl:mr-2.5 md:mr-1.5 sm:mr-1'>
-                                                                    <img src={linkSymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' />
-                                                                </div>
-                                                                <Popover.Button
-                                                                    onClick={() => navigate('/businessSignIn')}
-                                                                    className='cursor-pointer xl:text-base md:text-sm sm:text-xs font-semibold text-cyan'>
-                                                                    Sign in for business
-                                                                </Popover.Button>
+                                                :
+                                                <div>
+                                                    <div className="xl:w-full md:w-full sm:w-full">
+                                                        <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
+                                                            <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Login/Register</div>
+                                                            <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
+                                                                Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                             </div>
                                                         </div>
-                                                    </form>
-                                                </FormProvider>
-                                            </div>
+                                                    </div>
+                                                    <FormProvider {...methods}>
+                                                        <form onSubmit={methods.handleSubmit(handleContinue)}>
+                                                            <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-light-grey mb-1.5'>Email Address</div>
+                                                            <div>
+                                                                <TextInput
+                                                                    type='email'
+                                                                    name="emailMailId"
+                                                                    className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-blue-light'
+                                                                    autoComplete="off"
+                                                                    required
+                                                                    onChange={(e) => {
+                                                                        handleEmailChange(e)
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                            <button
+                                                                type='submit'
+                                                                className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-cyan' : 'bg-aluminium'} text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
+                                                                CONTINUE
+                                                            </button>
+                                                            <div className="flex items-center mt-8">
+                                                                <hr className="flex-1 border border-t border-light-grey" />
+                                                                <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
+                                                                <hr className="flex-1 border border-t border-light-grey" />
+                                                            </div>
+                                                            <div className='flex items-center justify-between w-full h-6 mt-2'>
+                                                                <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>
+                                                                <div className='flex items-center w-fit '>
+                                                                    <div className='flex items-center xl:mr-2.5 md:mr-1.5 sm:mr-1'>
+                                                                        <img src={linkSymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' />
+                                                                    </div>
+                                                                    <Popover.Button
+                                                                        onClick={() => navigate('/businessSignIn')}
+                                                                        className='cursor-pointer xl:text-base md:text-sm sm:text-xs font-semibold text-cyan'>
+                                                                        Sign in for business
+                                                                    </Popover.Button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </FormProvider>
+                                                </div>
+                                            }
+                                        </div>
                                     }
                                 </div>
                                 <div className="w-full flex justify-end xl:pr-20 md:pr-14 sm:pr-16">
