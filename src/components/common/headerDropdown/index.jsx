@@ -20,7 +20,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     onClick={() => setSelect(!select)}
                     className=' cursor-pointer xl:w-fit  xl:px-9 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color'>
                     <div className="flex  items-center justify-between px-3">
-                        <div className="flex text-info mr-4 items-center">
+                        <div className="flex text-info text-primary-color mr-4 items-center">
                             {
                                 isBusiness
                                     ?
@@ -31,7 +31,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
 
                             {/* <h1 className="ml-2 ">Hi, there!</h1> */}
 
-                            <h1 className="ml-2 ">Hi, {userDetails?.name ? userDetails?.name.split(' ')[0] : "User"}!</h1>
+                            <h1 className="ml-2 text-primary-color">Hi, {userDetails?.name ? userDetails?.name.split(' ')[0] : "User"}!</h1>
                         </div>
                         <div>
                             <RxChevronDown className='h-6 w-6' />

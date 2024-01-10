@@ -157,13 +157,14 @@ export const myProfileSchema = yup.object({
     currentPassword: yup
         .string(),
     newPassword: yup
-        .string()
-        .matches(passwordRegExp,'Strong password expected'),
+        .string(),
+        // .matches(passwordRegExp, 'Strong password expected'),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref("newPassword")], "Passwords does not match"),
-
+        .oneOf([yup.ref("newPassword")], "Passwords do not match"),
 });
+
+
 
 export const companyProfile = yup.object({
     companyCategory: yup

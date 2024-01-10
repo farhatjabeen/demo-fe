@@ -23,11 +23,13 @@ export default function BusinessSignUp() {
     const categoryValue = useSelector(categoryDetails);
     const categories = categoryValue ? Object.values(categoryValue) : [];
     const dispatch = useDispatch();
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const navigate = useNavigate();
     const [cloudinaryId, setCloudinaryId] = useState('');
     const [companyLogo, setCompanyLogo] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
+console.log(companyLogo,"companyLogo")
+console.log(cloudinaryId,"cloudinaryId")
+console.log(imageFiles,"imageFiles")
     const methods = useForm({
         defaultValues: {
             name: "",
@@ -43,6 +45,7 @@ export default function BusinessSignUp() {
     });
 
     useEffect(() => {
+        dispatch(categoryDropdownValues())
         const values = sessionStorage.getItem("enteredData")
         if (values) {
             methods.reset(JSON.parse(values))
@@ -51,6 +54,7 @@ export default function BusinessSignUp() {
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
+        console.log(selectedFiles,"selectedFiles")
         setImageFiles(() => {
             if (selectedFiles) {
                 setIsUploaded(true);
@@ -58,16 +62,28 @@ export default function BusinessSignUp() {
             return selectedFiles
         });
     }
-
-    useEffect(() => {
-        dispatch(categoryDropdownValues())
-    }, []);
+    
 
     useEffect(() => {
         try {
-            if (imageFiles && imageFiles[0]) {
+            // if (imageFiles && imageFiles[0]) {
+            //     let formData = new FormData();
+            //     formData.append("company", imageFiles[0]);
+            //     const imageResponse = dispatch(fileUploadAPI(formData));
+
+            //     imageResponse
+            //         .then((res) => {
+            //             console.log("responseFromFile", res.data.companylogo)
+            //             setCompanyLogo(res.data.companylogo);
+            //             setCloudinaryId(res.data.cloudinary_id);
+
+            //         })
+            // }
+
+            
                 let formData = new FormData();
                 formData.append("company", imageFiles[0]);
+                console.log(formData,'formData')
                 const imageResponse = dispatch(fileUploadAPI(formData));
 
                 imageResponse
@@ -75,9 +91,8 @@ export default function BusinessSignUp() {
                         console.log("responseFromFile", res.data.companylogo)
                         setCompanyLogo(res.data.companylogo);
                         setCloudinaryId(res.data.cloudinary_id);
-
                     })
-            }
+            
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -115,6 +130,11 @@ export default function BusinessSignUp() {
             Toast({ type: "error", message: "Please accept the terms and conditions" })
         }
     };
+
+    const handleTerms = () => {
+        sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))
+        navigate('/termsOfUse')
+    }
 
     return (
         <Fragment>
@@ -213,16 +233,17 @@ export default function BusinessSignUp() {
                                             <div className='flex flex-wrap w-96'>
                                                 <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
                                                     <div>{imageFiles[0]?.name}</div>
-                                                    <div className='flex items-center ml-2'><MdClose /></div>
+                                                    <div className='flex items-center ml-2' onClick={()=>setImageFiles('')}><MdClose /></div>
                                                 </div>
                                             </div>
                                             :
                                             null
                                         }
                                         <ImageUpload
-                                            name="companylogos"
+                                            name="companylogo"
                                             designClass='flex justify-center bg-primary-color  w-full py-3 rounded-xl'
                                             multiple={false}
+                                            isEdit={true}
                                             handleFileUpload={handleFileUpload}
                                         />
                                     </div>
@@ -264,7 +285,7 @@ export default function BusinessSignUp() {
                                     <div >
                                         <div className="flex items-center h-5">
                                             <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
-                                            <p className='ml-2 text-xs'>I agree to the <Link class="underline decoration-1 text-oranges" onClick={() => sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))} to='/termsOfUse'> terms and conditions</Link>  of ilost Serbia</p>
+                                            <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-oranges" onClick={handleTerms}> terms and conditions</button>  of ilost Serbia</p>
                                         </div>
                                         <button type='submit' className="cursor-pointer bg-oranges w-full py-3 mt-2 rounded-lg">Continue</button>
                                     </div>

@@ -8,7 +8,7 @@ export const FormErrorMessage = ({ error }) => {
   if (!error) return null;
 
   return (
-    <span className="text-danger fs-14 fw-500">
+    <span className="text-danger text-red fs-14 fw-500">
       {error.message ? error.message : ''}
     </span>
   );
