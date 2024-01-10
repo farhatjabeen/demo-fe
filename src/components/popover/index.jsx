@@ -314,9 +314,9 @@ const PopoverComponent = () => {
                                                             CONTINUE
                                                         </button>
                                                         <div className="flex items-center mt-8">
-                                                            <hr className="flex-1 border border-t border-light-grey" />
+                                                            <hr className="flex-1 border border-t opacity-80 border-light-grey" />
                                                             <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
-                                                            <hr className="flex-1 border border-t border-light-grey" />
+                                                            <hr className="flex-1 border border-t opacity-80 border-light-grey" />
                                                         </div>
                                                         <div className='flex items-center justify-between w-full h-6 mt-2'>
                                                             <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>

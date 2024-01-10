@@ -29,17 +29,17 @@ function FormDropdown({ name, editButton, dropdownValues, firstOptionName, isBus
                                             ref={ref}
                                             id={name}
                                             disabled={!editButton}
-                                            className={`${optionButtonClass} ${isSearchReport ? "custom-arrow": isBusinesSignUp ? "custom-arrow-for-business" : "custom-arrow-for-companyProfile"}`}
+                                            className={`${optionButtonClass} ${isSearchReport ? "custom-arrow": isBusinesSignUp ? "custom-arrow-for-business" : "custom-arrow-for-companyProfile"} ${getFormErrorMessage(errors, name)&&isSearchReport ? 'text-red' : ""}`}
                                             onChange={onChange}
                                         >
 
-                                            <option value="" >{
+                                            <option value="" className='w-full mx-4 my-2 text-black text-sm'>{
                                                 getFormErrorMessage(errors, name)&&isSearchReport ?
-                                                    <div className="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1">
+                                                    <div className="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6  md:text-sm sm:text-xs mt-1">
                                                         <FormErrorMessage error={getFormErrorMessage(errors, name)} />
                                                     </div>
                                                     :
-                                                    `${firstOptionName}`
+                                                   `${firstOptionName}`
                                             }</option>
                                             {dropdownValues?.map((items, i) => {
                                                 return (
@@ -47,7 +47,7 @@ function FormDropdown({ name, editButton, dropdownValues, firstOptionName, isBus
                                                         key={i}
                                                         value={items}
                                                         selected={items === valueFromDb ? true : false}
-                                                        className="px-4 py-2 flex w-full text-sm hover:bg-green"
+                                                        className="px-4 py-2 text-black flex w-full text-sm "
                                                     >
                                                         {items}
                                                     </option>
