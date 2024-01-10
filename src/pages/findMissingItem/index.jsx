@@ -17,6 +17,7 @@ export default function FindMissingItem() {
   const [currentPage, setCurrentPage] = useState(1);
   const searchParameters = useParams();
   const [isLoader, setIsLoader] = useState(false);
+  const [ValueByLocation,setValueByLocation] = useState([])
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchByKeywordSchema);
   const searchValue = useSelector(searchKey);
@@ -36,17 +37,27 @@ export default function FindMissingItem() {
 }, [dispatch]);
 
   useEffect(() => {
-    const apiCall = async() =>{
+    // const apiCall = async() =>{
+
       if (searchParameters?.location) {
         console.log(searchParameters?.location,"searchParameters?.location")
-        dispatch(searchByLocation(searchParameters.itemName, searchParameters.location, currentPage));
+        setIsLoader(true)
+        const locationItem = dispatch(searchByLocation(searchParameters.itemName, searchParameters.location, currentPage));
+        locationItem.then((res)=>{
+          setIsLoader(false)
+          setValueByLocation(res?.data?.list)
+        })
       } 
       if (searchParameters?.itemNameAgain) {
-        console.log("hi")
-        dispatch(searchItem(searchParameters.itemNameAgain, currentPage));
+        setIsLoader(true)
+        const keywordItem = dispatch(searchItem(searchParameters.itemNameAgain, currentPage));
+        keywordItem.then((res)=>{
+          setIsLoader(false)
+          setValueByLocation(res?.data?.list)
+        })
       }
-    }
-    apiCall();
+    // }
+    // apiCall();
   }, [searchParameters, currentPage]);
 
   const handlePageChange = (pageNumber) => {
@@ -56,19 +67,22 @@ export default function FindMissingItem() {
   const submitData = async () => {
     try {
       const productName = methods.getValues();
+      console.log(productName,"productname")
       if(productName.keyword && productName.location){
         navigate(`/findMissingItem/${productName.keyword}/${productName.location}`)
+        console.log("hi from locate")
+        
       } else if (productName.keyword) {
         navigate(`/findMissingItem/${productName.keyword}`)
-      
+        setIsLoader(true)
+        const searchKeyword = await dispatch(searchItem(productName.keyword));
+        if (searchKeyword) {
+          setIsLoader(false)
+        }
       } else {
         Toast({ type: 'error', message: 'Enter Item Name' })
       }
-      setIsLoader(true)
-      const searchKeyword = await dispatch(searchItem(productName.keyword));
-      if (searchKeyword) {
-        setIsLoader(false)
-      }
+      
     } catch (error) {
       console.log("submitData errors", error)
     }
@@ -127,7 +141,7 @@ export default function FindMissingItem() {
         <p className='font-bold pt-24 flex justify-center ml-7 w-full text-md'>Loading...</p>
         :
         <div className='flex flex-wrap justify-center items-center w-full mr-7'>
-          {searchValue?.list?.length ? searchValue?.list?.map((items, i) => {
+          {ValueByLocation?.length ? ValueByLocation?.map((items, i) => {
             return (
               <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 mt-8 sm:flex sm:items-center'>
                 <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />

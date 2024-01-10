@@ -20,6 +20,7 @@ const PopoverComponent = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [showRegisterNewPassword, setShowRegisterNewPassword] = useState(false)
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const dispatch = useDispatch();
     const resolver = useValidationResolver(generalUserMailSchema);
     const resolverForLogin = useValidationResolver(generalUserLoginSchema);
@@ -28,7 +29,7 @@ const PopoverComponent = () => {
     const [passwordMatch, setPasswordMatch] = useState(true);
 
     const validateEmail = (inputEmail) => {
-        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
         return emailRegex.test(inputEmail);
     };
 
@@ -166,7 +167,7 @@ const PopoverComponent = () => {
 
     return (
         <div>
-            <Popover>
+            <Popover open={isPopoverOpen} onClose={() => setIsPopoverOpen(false)}>
                 {({ open }) => (
                     <div>
                         <Popover.Button>

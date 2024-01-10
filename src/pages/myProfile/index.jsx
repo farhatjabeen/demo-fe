@@ -10,6 +10,7 @@ import { generalUserData, generalUserDetails, userData, userProfileData } from '
 export default function MyProfile() {
     const [editButton, setEditButton] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
+    const [showNewPassword, setShowNewPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const dispatch = useDispatch();
     const resolver = useValidationResolver(myProfileSchema);
@@ -161,12 +162,15 @@ export default function MyProfile() {
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter New password</label>
                                     <TextInput
-                                        type="text"
+                                        type="password"
                                         placeholder="New password"
                                         name="newPassword"
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         disable={!editButton}
+                                        eyeClass='absolute bottom-3 left-80 pl-5'
+                                        showPassword={showNewPassword}
+                                        setShowPassword={() => setShowNewPassword(!showNewPassword)}
                                     />
                                 </div>
 
