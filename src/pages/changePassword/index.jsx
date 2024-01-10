@@ -5,7 +5,7 @@ const Password = () => {
     return (
         <>
             <div className='flex w-full'>
-                <div className='bg-[#F1FFFF] p-40 h-screen w-1/2 '>
+                <div className='bg-light-cyan p-40 h-screen w-1/2 '>
                     <div>
                         <p className='font-bold pb-4'>Passwords must contain :</p>
                         <ul className='list-disc ml-4 text-primary-color'>

@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
-import { adminResetPassword } from "../../redux/reducers/userSlice";
+import { adminChangePassword } from "../../redux/reducers/userSlice";
 
 
 const PasswordView = () => {
@@ -24,7 +24,7 @@ const PasswordView = () => {
   });
   const submitData = async (data) => {
     try {
-      const reset = dispatch(adminResetPassword(data))
+      const reset = dispatch(adminChangePassword(data))
       if (reset) {
         navigate('/businessSignin');
       }

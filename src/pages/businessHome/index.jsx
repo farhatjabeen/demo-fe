@@ -62,18 +62,18 @@ export default function BusinessHome() {
                 <div className='font-normal xl:text-lg md:text-lg sm:text-xs text-center mt-3 mb-8 text-text-color'>Reassure your customers, save time & money and return <br></br> more items of lost property with our lost and found software.</div>
                 <div>
                     <button
-                        className='cursor-pointer border border-[#FF9900] xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-[#834F00]'
+                        className='cursor-pointer border border-primary-color xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg text-brown'
                         onClick={() => navigate('/businessSignIn')}
                     >Sign in</button>
                     <button
-                        className='cursor-pointer xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-[#FF9900] ml-5 '
+                        className='cursor-pointer xl:w-48 md:w-48 sm:w-32 xl:h-14 md:h-14 sm:h-10 rounded-lg bg-primary-color  ml-5 '
                         onClick={() => navigate('/businessignup')}
                     >Sign Up</button>
                 </div>
             </div>
 
             <div className='relative'>
-                <img className='w-full bg-[#00B8B8] opacity-80' src={businessDoodle} alt='businessDoodle' />
+                <img className='w-full bg-cyan opacity-80' src={businessDoodle} alt='businessDoodle' />
                 <div className='absolute top-0 xl:pt-36 md:pt-16 sm:pt-14 xl:pl-32 md:pl-16 sm:pl-5 z-50'>
                     <div className='xl:text-3xl md:text-2xl sm:text-xl font-extrabold text-white'>BTZapp win contract to<br></br> replace Europe’s largest lost<br></br> property system</div>
                     <div className='xl:mt-4 md:mt-4 sm:mt-2'>
@@ -126,7 +126,7 @@ export default function BusinessHome() {
 
             <div className='xl:px-60 md:52 pt-20 pb-20 flex flex-col justify-center items-center'>
                 <div className='text-text-color font-semibold xl:text-3xl md:text-2xl sm:text-xl text-center'>How our lost and found software helps<br></br> leading Siberian brands</div>
-                <div className='text-[#4C4C4C] xl:text-lg md:text-sm sm:text-xs text-center py-10'>Lost and found management is a nuisance for staff and frustrating for customers. NotLost helps you get the<br></br>
+                <div className='text-dark-grey xl:text-lg md:text-sm sm:text-xs text-center py-10'>Lost and found management is a nuisance for staff and frustrating for customers. NotLost helps you get the<br></br>
                     job done with speed and ease, simplifying and automating the tasks you hate. This enables your team to<br></br>
                     respond quickly to customers and return more items, delivering an excellent customer experience. </div>
                 <div className=' flex flex-wrap md-justify-between justify-center  mx-auto'>
@@ -143,7 +143,7 @@ export default function BusinessHome() {
                 </div>
             </div>
 
-            <div className='bg-[#FFF0DA] py-16 flex justify-center text-center text-text-color font-semibold xl:text-xl md:text-lg sm:text-base'>
+            <div className='bg-peach py-16 flex justify-center text-center text-text-color font-semibold xl:text-xl md:text-lg sm:text-base'>
                 BTZapp is transforming lost and found management from a recurring problem into a fast<br></br>
                 and simple process for businesses. Free up valuable staff time, return more items of lost<br></br>
                 property and deliver an excellent customer experience.
@@ -154,15 +154,15 @@ export default function BusinessHome() {
                     {
                         cardValues.map((items, i) => {
                             return (
-                                <div key={i} className='w-full sm:w-1/1 lg:w-1/4 xl:w-1/4 md:w-1/4 bg-white border border-[#DDDDDD] mb-8 mx-auto'>
+                                <div key={i} className='w-full sm:w-1/1 lg:w-1/4 xl:w-1/4 md:w-1/4 bg-white border border-pantone mb-8 mx-auto'>
                                     <div><img src={items} alt='containers' /></div>
                                     <div className='pt-5 pb-10 px-4'>
                                         <div className='text-lg font-semibold'>2023 UPDATE: When it comes to software, should I buy or build?</div>
-                                        <div className='text-[#666666] text-xs py-2'>May 23, 2023 | Blog, SaaS, Transport</div>
-                                        <div className='text-[#666666] font-medium text-sm overflow-hidden'>
+                                        <div className='text-Gray40 text-xs py-2'>May 23, 2023 | Blog, SaaS, Transport</div>
+                                        <div className='text-Gray40 font-medium text-sm overflow-hidden'>
                                             Today we'll be discussing the big question in software development....To buy or to build, This puzzle has been a quandary for heads of businesses...
                                         </div>
-                                        <button className='cursor-pointer text-[#FF9900] text-xs'>read more</button>
+                                        <button className='cursor-pointer text-oranges text-xs'>read more</button>
                                     </div>
                                 </div>
                             );

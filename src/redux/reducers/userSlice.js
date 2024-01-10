@@ -245,7 +245,7 @@ export const businessUserLogout = () => (dispatch) => {
         })
     })
 }
-
+//admin login
 export const loginAdminUser = (data) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -265,7 +265,38 @@ export const loginAdminUser = (data) => (dispatch) => {
         })
     })
 }
-
+//admin forgotPassword
+export const adminForgotPassword = (data) => async () => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: endpoints.apiPath.forgotPasswordAdmin,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+        }).then(res => {
+            Toast({ type: "success", message: res.message })
+            return resolve(true);
+        }).catch(err => {
+            reject(err);
+            console.log('rejected', err)
+        })
+    })
+}
+export const adminResetPassword = (data, token) => async () => {
+    return new Promise((resolve, reject) => {
+        apiRequest({
+            url: `${endpoints.apiPath.resetPasswordAdmin}/${token}`,
+            method: endpoints.ApiMethods.POST,
+            data: data,
+            tokenType: 'adminToken',
+        }).then(res => {
+            Toast({ type: "success", message: res.message })
+            return resolve(res);
+        }).catch(err => {
+            reject(err);
+            console.log('rejected', err)
+        })
+    })
+}
 // export const changePassword = (data) => async (dispatch) => {
 //     return new Promise((resolve, reject) => {
 //         apiRequest({
@@ -280,11 +311,11 @@ export const loginAdminUser = (data) => (dispatch) => {
 //     })
 // }
 
-export const adminResetPassword = (data) => async () => {
+export const adminChangePassword = (data) => async () => {
 
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: endpoints.apiPath.resetPasswordAdmin,
+            url: endpoints.apiPath.changePasswordAdmin,
             method: endpoints.ApiMethods.PUT,
             data: data,
             isAuth: true,

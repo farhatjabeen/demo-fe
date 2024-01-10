@@ -20,11 +20,11 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     onClick={() => setSelect(!select)}
                     className=' cursor-pointer xl:w-fit  xl:px-9 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color'>
                     <div className="flex  items-center justify-between px-3">
-                        <div className="flex text-[#FFC727] mr-4 items-center">
+                        <div className="flex text-info mr-4 items-center">
                             {
                                 isBusiness
                                     ?
-                                    <MdOutlineBusiness className='text-[#FFC727] mb-1 h-7 w-7' />
+                                    <MdOutlineBusiness className='text-info mb-1 h-7 w-7' />
                                     :
                                     <FaRegUser className="mb-1 h-5 w-5" />
                             }
@@ -52,7 +52,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     <Menu.Item>
                         <Link
                             to={navigateOne}
-                            className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal '
+                            className='w-full border border-x-0 border-t-0 border-greys hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal '
                         >
                             {titleOne}
                         </Link>
@@ -60,7 +60,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     <Menu.Item>
                         <Link
                             to={navigateTwo}
-                            className='w-full border border-x-0 border-t-0 border-[#B6B6B6] hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
+                            className='w-full border border-x-0 border-t-0 border-greys hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
                         >
                             {titleTwo}
                         </Link>
@@ -68,7 +68,7 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     <Menu.Item>
                         <Link
                             to='/contactUs'
-                            className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-[#B6B6B6] flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
+                            className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-greys flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
                         >
                             Need Help?
                         </Link>

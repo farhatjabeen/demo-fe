@@ -51,7 +51,7 @@ const Header = (props) => {
 
     return (
         <div className="headerContainer" style={{ position: 'relative', zIndex: 50 }}>
-            <div className="flex justify-between items-center h-22 m-16 rounded-full bg-white shadow-lg">
+            <div className="flex justify-between items-center h-22 m-14 rounded-full bg-white shadow-lg">
                 <div className='flex justify-start grow p-5 xl:pl-12 md:pl-10 sm:pl-8'>
                     <img
                         onClick={() => navigate('/')}

@@ -71,7 +71,7 @@ export default function BusinessItemDetails() {
                     {itemTitles.map((items, i) => {
                         return (
                             <div key={i} className='flex justify-start'>
-                                <div className='xl:w-52 md:w-60 sm:w-56 text-[#455A64] xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
+                                <div className='xl:w-52 md:w-60 sm:w-56 text-light-black xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
                                 <div className={userDetails?.role === 'BUSINESS' ? 'xl:w-72 md:w-60 sm:w-56 text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1' : 'xl:w-full text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'}>{items.answer}</div>
                             </div>
                         );
@@ -84,7 +84,7 @@ export default function BusinessItemDetails() {
                         {personTitles.map((items, i) => {
                             return (
                                 <div key={i} className='flex justify-start'>
-                                    <div className='xl:w-52 md:w-60 sm:w-56 text-[#455A64] xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
+                                    <div className='xl:w-52 md:w-60 sm:w-56 text-light-black xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
                                     <div className='xl:w-96 md:w-60 sm:w-56 text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'>{items.answer}</div>
                                 </div>
                             );
