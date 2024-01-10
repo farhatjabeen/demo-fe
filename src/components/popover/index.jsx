@@ -205,7 +205,7 @@ const PopoverComponent = () => {
                                                     <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-bold'>Enter Password</div>
+                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Enter Password</div>
                                                                 <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
@@ -247,7 +247,7 @@ const PopoverComponent = () => {
                                                     <div className='mb-5'>
                                                         <div className="xl:w-full md:w-full sm:w-full">
                                                             <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-extrabold'>Enter Password</div>
+                                                                <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-extrabold'>Enter Password</div>
                                                                 <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
                                                                     Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                                 </div>
@@ -299,7 +299,7 @@ const PopoverComponent = () => {
                                             <div>
                                                 <div className="xl:w-full md:w-full sm:w-full">
                                                     <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                        <div className=' xl:text-4xl md:text-3xl sm:text-xl text-light-black font-bold'>Login/Register</div>
+                                                        <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Login/Register</div>
                                                         <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
                                                             Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
                                                         </div>

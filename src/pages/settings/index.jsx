@@ -8,6 +8,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
 import adminPasswordimage from '../../assets/images/adminPasswordimage.png'
 import { adminChangePassword } from "../../redux/reducers/userSlice";
+
 const Settings = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
@@ -133,7 +134,7 @@ const Settings = () => {
                     </FormProvider>
                 </div>
                 <div>
-                    <img src={adminPasswordimage} className=' mt-40 ' />
+                    <img src={adminPasswordimage} alt='admin' className=' mt-40 ' />
                 </div>
             </div>
         </div>
