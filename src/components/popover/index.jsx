@@ -185,9 +185,10 @@ const PopoverComponent = () => {
                                 Login / Register
                             </div>
                         </Popover.Button>
-                        {/* {open && (<Popover.Overlay
-                            onClick={closePopover}
-                            className="fixed inset-0 bg-black opacity-30" />)} */}
+                        {isPopoverOpen &&
+                            <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                                className='fixed inset-0 bg-black opacity-30'>
+                            </div>}
                         <Transition
                             show={open || isPopoverOpen}
                             as={Fragment}
