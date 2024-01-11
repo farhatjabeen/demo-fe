@@ -4,7 +4,7 @@ const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#
 
 const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-const nameRegex = /^[a-zA-Z0-9]*[a-zA-Z0-9\s][a-zA-Z0-9\s]*$/;
+const nameRegex = /^(?! +$)[a-zA-Z0-9][a-zA-Z0-9\s]*[a-zA-Z0-9]$/;
 
 const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
 
