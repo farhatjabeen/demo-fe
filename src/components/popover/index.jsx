@@ -111,7 +111,7 @@ const PopoverComponent = () => {
                 setPasswordMatch(true);
                 const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
                 if (registerSuccessful) {
-                    await handleClose();
+                    handleClose();
                 }
             } else {
                 setPasswordMatch(false);
@@ -127,9 +127,9 @@ const PopoverComponent = () => {
 
             if (password === newPassword) {
                 setPasswordMatch(true);
-                const resetSuccessful = await dispatch(generalResetPassword({password},token));
+                const resetSuccessful = await dispatch(generalResetPassword({ password }, token));
                 if (resetSuccessful) {
-                    await handleClose();
+                    handleClose();
                 }
             } else {
                 setPasswordMatch(false);
