@@ -289,13 +289,13 @@ export const viewItemById = (itemId) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
         }).then((res) => {
-            const { itemImage, itemName, itemCategory, itemDescription,
+            const { itemImage, itemName, itemCategory, itemDescription,cloudinary_id,
                 keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
             // if (Array.isArray(itemImage) && itemImage.length > 0) {
             //     dispatch(viewItemDetailsById(itemImage))
             // }
 
-            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId,cloudinary_id }))
 
             return resolve(true)
         }).catch(err => {
