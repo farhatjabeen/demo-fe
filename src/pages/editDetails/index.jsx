@@ -116,7 +116,7 @@ export default function EditBusinessDetails() {
     useEffect(() => {
         if (files && files.length > 0) {
             let formData = new FormData();
-            files.forEach((item, i) => {
+            files.forEach((item) => {
                 formData.append("item", item);
             });
 
@@ -229,7 +229,7 @@ export default function EditBusinessDetails() {
                                             {cloudinaryId?.map((file, i) => (
                                                 <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
                                                     <div>{file}</div>
-                                                    <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
+                                                    <div className='flex items-center ml-2 cursor-pointer' onClick={() => handleRemoveFile(i)}><MdClose /></div>
                                                 </div>
                                             ))}
                                         </div>
