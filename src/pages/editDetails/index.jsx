@@ -8,7 +8,7 @@ import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems, filesUploadAPI, locationDropdownValues,  locationDetails } from '../../redux/reducers/itemsSlice';
+import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUpdateItems, filesUploadAPI, locationDropdownValues, locationDetails } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
 import DropdownMenu from '../../components/common/dropdown';
@@ -21,6 +21,7 @@ export default function EditBusinessDetails() {
     const [selectedLocation, setSelectedLocation] = useState(" ");
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
+
     const navigate = useNavigate();
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -54,10 +55,11 @@ export default function EditBusinessDetails() {
     const itemDetails = useSelector(viewDetails);
 
     useEffect(() => {
-        if (itemDetails?.itemImage) {
-            setFilesFromDb(itemDetails.itemImage);
+        if (itemDetails?.cloudinary_id) {
+            setFilesFromDb(itemDetails?.cloudinary_id);
         }
-    }, [itemDetails?.itemImage]);
+    }, [itemDetails.cloudinary_id]);
+
     useEffect(() => {
         setSelectedLocation(itemDetails.location)
         dispatch(locationDropdownValues());
@@ -69,30 +71,32 @@ export default function EditBusinessDetails() {
     }, [itemDetails.itemCategory])
     useEffect(() => {
         if (itemDetails) {
+            setItemImage(itemDetails?.itemImage)
+            setCloudinaryId(itemDetails?.cloudinary_id)
+
             methods.reset({
-                itemName: itemDetails.itemName || "",
-                itemDescription: itemDetails.itemDescription || "",
-                itemCategory: itemDetails.itemCategory || "",
-                emailMailId: itemDetails.emailMailId || "",
-                mobileNumber: itemDetails.mobileNumber || "",
-                userName: itemDetails.userName || "",
-                location: itemDetails.location || "",
-                locationIdentifiers: itemDetails.locationIdentifiers || "",
-                keywords: itemDetails.keywords || "",
-                itemImage: itemDetails.itemImage || "",
-                cloudinary_id: itemDetails.cloudinary_id || ""
+                itemName: itemDetails?.itemName || "",
+                itemDescription: itemDetails?.itemDescription || "",
+                itemCategory: itemDetails?.itemCategory || "",
+                emailMailId: itemDetails?.emailMailId || "",
+                mobileNumber: itemDetails?.mobileNumber || "",
+                userName: itemDetails?.userName || "",
+                location: itemDetails?.location || "",
+                locationIdentifiers: itemDetails?.locationIdentifiers || "",
+                keywords: `${itemDetails?.keywords}` || "",
+                itemImage: itemImage || "",
+                cloudinary_id: cloudinaryId || ""
             });
         }
     }, [itemDetails]);
 
     const handleReset = (e) => {
+        e.preventDefault();
         setFiles([]);
         setIsUploaded(false);
-        setFilesFromDb([]);
+        setItemImage([]);
         setCloudinaryId([]);
     }
-
-
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
@@ -105,12 +109,10 @@ export default function EditBusinessDetails() {
         });
     }
     const handleRemoveFile = (indexToRemove) => {
-        setFiles((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+        setItemImage((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+        setCloudinaryId((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
     };
-    const handleRemoveApiFile = (indexToRemove) => {
-        setFilesFromDb((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
-    };
-    
+
     useEffect(() => {
         if (files && files.length > 0) {
             let formData = new FormData();
@@ -118,52 +120,28 @@ export default function EditBusinessDetails() {
                 formData.append("item", item);
             });
 
-            const uploadFiles = async () => {
-                try {
-                    const res = await dispatch(filesUploadAPI(formData));
-                    return res.data;
-                } catch (error) {
-                    console.error("Error uploading files:", error);
-                }
-            };
-
-            const handleUpload = async () => {
-                const uploadedData = await uploadFiles();
-
-                if (uploadedData) {
-                    setCloudinaryId((prevIds) => [...prevIds, uploadedData.cloudinary_id]);
-                    setItemImage((prevImages) => [...prevImages, uploadedData.itemImage]);
-
-                    if (itemDetails?.cloudinary_id) {
-                        setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(itemDetails.cloudinary_id) ? itemDetails.cloudinary_id : [itemDetails.cloudinary_id])]);
-                    }
-
-
-                    if (itemDetails?.itemImage) {
-                        setItemImage((prevImages) => [...prevImages, ...(Array.isArray(itemDetails.itemImage) ? itemDetails.itemImage : [itemDetails.itemImage])]);
-                    }
-                }
-            };
-
-            handleUpload();
+            const upload = dispatch(filesUploadAPI(formData));
+            upload.then((res) => {
+                setItemImage((prevFiles) => prevFiles ? [...prevFiles, ...res.data.itemImage] : res.data.itemImage)
+                setCloudinaryId((prevFiles) => prevFiles ? [...prevFiles, ...res.data.cloudinary_id] : res.data.cloudinary_id)
+            })
         } else {
             console.warn("No files to upload.");
         }
-    }, [files, itemDetails]);
-        const submitData = async (e) => {
+    }, [files]);
+
+    const submitData = async () => {
         try {
             const data = methods.getValues()
             data.keywords = data.keywords.split(',').map(keyword => keyword.trim());
-            data.mobileNumber = String(data.mobileNumber);
             const updatedData = {
                 ...data,
                 itemCategory: selectedCategory,
                 location: selectedLocation,
-                itemImage: itemImage.length > 0 ? itemImage[0] :filesFromDb.length>0 ? itemDetails.itemImage:[],
-                cloudinary_id: cloudinaryId.length>0 ? cloudinaryId[0] : itemDetails.cloudinary_id,
             };
-            e.preventDefault();
-            dispatch(businessUpdateItems(id, updatedData));
+            methods.setValue('itemImage', itemImage)
+            methods.setValue('cloudinary_id', cloudinaryId)
+            await dispatch(businessUpdateItems(id, updatedData));
             navigate('/allItems');
         } catch (error) {
             console.error('Update failed:', error);
@@ -178,9 +156,7 @@ export default function EditBusinessDetails() {
             </div>
 
             <FormProvider {...methods}>
-                {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
                 <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
-
                     <div className='w-full px-24'>
                         <div>
                             <div className='flex justify-between mb-9'>
@@ -250,15 +226,9 @@ export default function EditBusinessDetails() {
                                 <div>
                                     {isUploaded || itemDetails?.itemImage ? (
                                         <div className='flex flex-wrap w-96'>
-                                            {filesFromDb.map((url, i) => (
+                                            {cloudinaryId?.map((file, i) => (
                                                 <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                    <img src={url} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
-                                                    <div className='flex items-center ml-2' onClick={() => handleRemoveApiFile(i)}><MdClose /></div>
-                                                </div>
-                                            ))}
-                                            {files.map((file, i) => (
-                                                <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                    <img src={URL.createObjectURL(file)} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' />
+                                                    <div>{file}</div>
                                                     <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
                                                 </div>
                                             ))}
@@ -267,7 +237,7 @@ export default function EditBusinessDetails() {
 
                                     <div className="flex justify-center items-center">
                                         <ImageUpload
-                                            name="item"
+                                            name="itemImage"
                                             designClass={
                                                 `${isUploaded || itemDetails?.itemImage
                                                     ?
@@ -282,7 +252,7 @@ export default function EditBusinessDetails() {
 
                                         {itemDetails?.itemImage || isUploaded ?
                                             <div>
-                                                <button onClick={handleReset} className='cursor-pointer h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
+                                                <button onClick={(e) => handleReset(e)} className='cursor-pointer h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
                                                     <IoMdRefresh className='h-6 w-6' />
                                                 </button>
                                             </div>

@@ -18,7 +18,7 @@ const SideMenu = () => {
   };
   const settingsTabWidth = isCollapsed ? "w-12" : "w-52";
   return (
-    <div className="sidebar relative bg-grey-light shadow-slate-50 m-4">
+    <div className="sidebar relative bg-grey-light shadow-slate-50 m-4 pl-4">
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
         {isCollapsed ? (
           <div className="flex justify-between ">

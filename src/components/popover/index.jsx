@@ -7,7 +7,7 @@ import linkSymbol from '../../assets/images/linksymbol.png';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { checkGeneralUserEmail, generalForgotPassword, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
+import { checkGeneralUserEmail, generalForgotPassword, generalResetPassword, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
 import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema } from '../../validations';
 import TextInput from '../common/textInput';
 const PopoverComponent = () => {
@@ -24,7 +24,7 @@ const PopoverComponent = () => {
     // Other Hooks
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { resetPassword } = useParams()
+    const { token } = useParams()
     const mailIdFromApi = useSelector(mailId);
 
     // validation resolvers
@@ -55,12 +55,12 @@ const PopoverComponent = () => {
     }, [navigate])
 
     useEffect(() => {
-        if (resetPassword) {
+        if (token) {
             // Open the Popover if the resetPassword route parameter is present
             setRestPasswordBox(true);
             setIsPopoverOpen((true));
         }
-    }, [resetPassword])
+    }, [token])
 
     const methods = useForm({
         defaultValues: {
@@ -111,6 +111,24 @@ const PopoverComponent = () => {
                 setPasswordMatch(true);
                 const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
                 if (registerSuccessful) {
+                    await handleClose();
+                }
+            } else {
+                setPasswordMatch(false);
+            }
+        } catch (error) {
+            console.log("submitData errors", error);
+        }
+    };
+    const resetButton = async () => {
+        try {
+            const password = methodsForRegister.getValues().password;
+            const newPassword = methodsForRegister.getValues().newPassword;
+
+            if (password === newPassword) {
+                setPasswordMatch(true);
+                const resetSuccessful = await dispatch(generalResetPassword({password},token));
+                if (resetSuccessful) {
                     await handleClose();
                 }
             } else {
@@ -201,8 +219,14 @@ const PopoverComponent = () => {
                                 <div className='pt-7 w-96'>
                                     {restPasswordBox ? <div>
                                         <FormProvider {...methodsForRegister}>
-                                            <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
+                                            <form onSubmit={methodsForRegister.handleSubmit(resetButton)}>
                                                 <div>
+                                                    <div className="py-2 ">
+                                                        <h1 className="font-bold text-4xl">Reset Password</h1>
+                                                        <p className="text-grey font-bold pt-2">
+                                                            Create a strong, secure password for your account.
+                                                        </p>
+                                                    </div>
                                                     <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
                                                     <TextInput
                                                         type='password'
