@@ -9,7 +9,7 @@ const routers = [
       },
       {
         component: "home",
-        childPath: "/:id",
+        childPath: "/user/:resetPassword/:token",
       },
       {
         component: "findMissingItem",

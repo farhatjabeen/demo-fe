@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
 
-const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const serbiaMobileNumberRegExp = /^6[0-9]\d{6,7}$/;
@@ -157,13 +157,14 @@ export const myProfileSchema = yup.object({
     currentPassword: yup
         .string(),
     newPassword: yup
-        .string()
-        .matches(passwordRegExp,'Strong password expected'),
+        .string(),
+        // .matches(passwordRegExp, 'Strong password expected'),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref("newPassword")], "Passwords does not match"),
-
+        .oneOf([yup.ref("newPassword")], "Passwords do not match"),
 });
+
+
 
 export const companyProfile = yup.object({
     companyCategory: yup

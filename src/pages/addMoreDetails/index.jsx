@@ -55,15 +55,20 @@ export default function AddMoreDetails() {
             methods.setValue("keywords", null)
             setIsCancelled(true);
             setIsUploaded(false)
+            setImageLoader(true);
         }
     }, []);
 
     useEffect(() => {
 
         if (itemDetailsById && reportDetails.id) {
-
+            console.log("hi from itemid")
             setItemImage(itemDetailsById?.itemImage);
             setCloudinaryId(itemDetailsById?.cloudinary_id);
+            if(itemDetailsById?.itemImage){
+                setImageLoader(true);
+                console.log("hi from loader")
+            } 
             methods.reset({
                 emailMailId: itemDetailsById?.emailMailId || "",
                 mobileNumber: itemDetailsById?.mobileNumber != undefined ? `${itemDetailsById?.mobileNumber}` : "",
@@ -74,11 +79,9 @@ export default function AddMoreDetails() {
                 itemCategory: itemDetailsById?.itemCategory || "",
                 itemName: itemDetailsById?.itemName || "",
                 keywords: `${itemDetailsById?.keywords}` || "",
-                itemImage: itemDetailsById?.itemImage || "",
-                cloudinary_id: itemDetailsById?.cloudinary_id || ""
+                itemImage: itemImage || "",
+                cloudinary_id: cloudinaryId || ""
             });
-
-
         }
 
     }, [itemDetailsById])
@@ -122,24 +125,19 @@ export default function AddMoreDetails() {
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
                 console.log(cloudinaryId.length,"cloudinaryId.length")
-                if (cloudinaryId.length > 0) {
+                
                     console.log("hi from businessAddMoreDetails")
-                    setImageLoader(true)
                     const addedItem = await dispatch(businessAddMoreDetails(data));
                     if (addedItem) {
                         navigate('/allitems')
                     }
-                } else {
-                    setImageLoader(false)
-                }
+               
 
             } else if (userDetails?.role === 'USER' && !reportDetails.id) {
                 const inputString = methods.getValues().keywords;
                 methods.setValue('keywords', inputString.split(','));
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
-
-
                 const addItem = dispatch(userAddMoreDetails(data));
                 console.log('itemadded', addItem)
                 addItem?.then((res) => {
@@ -147,25 +145,38 @@ export default function AddMoreDetails() {
                 })
 
             } else {
-                setItemImage((prevFiles) => {
-                    return prevFiles || itemDetailsById?.itemImage ? [...prevFiles, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage
-                })
-                setCloudinaryId((prevFiles) => {
-                    return prevFiles || itemDetailsById?.cloudinary_id ? [...prevFiles, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id
-                })
-                methods.setValue("itemImage", itemImage?.map(item => item));
-                methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
+                const inputString = methods.getValues().keywords;
+                console.log(JSON.stringify(inputString),"inputString")
+                
+                methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(',')); 
+                console.log(methods.getValues().keywords,"keywords")
+                // setItemImage((prevFiles) => {
+                //     return prevFiles || itemDetailsById?.itemImage ? [...prevFiles, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage
+                // })
+                // setCloudinaryId((prevFiles) => {
+                //     return prevFiles || itemDetailsById?.cloudinary_id ? [...prevFiles, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id
+                // })
+                // methods.setValue("itemImage", itemImage?.map(item => item));
+                // methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
+                methods.setValue("itemImage", itemImage);
+                methods.setValue("cloudinary_id", cloudinaryId);
                 const dataNow = methods.getValues();
-                if (itemImage.length > 0 && cloudinaryId.length > 0) {
-                    setImageLoader(true);
-                    const isEdited = dispatch(userEditItemDetails(reportDetails.id, dataNow))
+                console.log(dataNow,"datanow")
+                console.log(itemImage,"itemImage")
+                console.log(cloudinaryId,"cloudinaryId")
+                
+                if(itemImage.length>0 && cloudinaryId.length>0){
+                    setImageLoader(true)
+                    const isEdited = await dispatch(userEditItemDetails(reportDetails.id, dataNow))
 
-                    setItemImage([]);
-                    setCloudinaryId([]);
+                    isEdited && setItemImage([]);
+                    isEdited && setCloudinaryId([]);
                     isEdited && (navigate('/mylistings'))
-                } else {
-                    setImageLoader(false);
+                }else{
+                    setImageLoader(false)
                 }
+                    
+                
             }
 
         } catch (error) {
@@ -182,6 +193,7 @@ export default function AddMoreDetails() {
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
+        console.log(selectedFiles,"selectedFiles")
         setFiles((prevFiles) => {
             const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
             if (newFiles) {
@@ -227,6 +239,7 @@ export default function AddMoreDetails() {
                     formData.append("item", items)
                 );
             })
+            console.log(formData,'formData')
 
             setIsImageUploaded(true)
             if (reportDetails.id) {
@@ -245,9 +258,9 @@ export default function AddMoreDetails() {
             }).then(() => {
 
                 // setIsImageUploaded(true)
-                if (itemDetailsById?.itemImage && reportDetails.id) {
-                    setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
-                    setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
+                if (itemImage && reportDetails.id) {
+                    setItemImage((filesInside) => filesInside ? [...filesInside, ...itemImage] : itemImage)
+                    setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...cloudinaryId] : cloudinaryId)
                     // setIsImageUploaded(false)
                     // if(itemImage.length>0 && cloudinaryId.length>0){
                     //     setImageLoader(true);
@@ -368,7 +381,7 @@ export default function AddMoreDetails() {
                                     <p className='font-medium xl:text-sm md:text-sm sm:text-xs'>Upload Images</p>
                                 </div>
                                 <div>
-                                    {isUploaded || itemDetailsById?.itemImage ?
+                                    {isUploaded || itemImage ?
                                         <div className='flex flex-wrap w-96'>
 
                                             {isImageUploaded ? <p>Loading...</p>
@@ -430,7 +443,7 @@ export default function AddMoreDetails() {
                                             ""}
 
                                     </div>
-                                    {imageLoader && !reportDetails.id ?
+                                    {imageLoader ?
                                         ""
                                         :
                                         <p>Images required</p>
