@@ -1,34 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom'
+import { useLocation ,useNavigate } from 'react-router-dom'
 
 
 const Tabs = ({ children, className }) => {
   const location = useLocation();
+  const navigate =useNavigate();
+
+  const tabs = React.Children.map(children, (child) => ({
+    label: child.props.label,
+    route: child.props.route,
+  }));
+
   useEffect(() => {
-    if (location.pathname === '/admin/user/businessUser') {
-      setActiveTab(1);
-    } else {
-      setActiveTab(0);
-    }
-  }, [location]);
+    const activeTab = tabs.findIndex((tab) => location.pathname.includes(tab.route));
+    setActiveTab(activeTab >= 0 ? activeTab : 0);
+  }, [location.pathname, tabs]);
+
+
   const [activeTab, setActiveTab] = useState(0);
-  const handleClick = (e, newActiveTab) => {
+  const handleClick = (e, newActiveTab,route) => {
     e.preventDefault();
     setActiveTab(newActiveTab);
+    navigate(route)
   };
 
   return (
     <div className={className}>
       <ul className="flex  border-b border-gray-300 mx-2">
-        {children.map((child, index) => (
-          <div>
+        {tabs.map((tab, index) => (
+          <div key={index}>
             <li
-              key={index}
               className={`cursor-pointer p-2 relative ${activeTab === index ? "border-b-2 border-black" : ""
                 }`}
-              onClick={(e) => handleClick(e, index)}
+              onClick={(e) => handleClick(e, index, tab.route)}
             >
-              {child.props.label}
+              {tab.label}
             </li>
           </div>
         ))}

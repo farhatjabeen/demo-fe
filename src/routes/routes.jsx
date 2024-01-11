@@ -8,6 +8,10 @@ const routers = [
         childPath: "/",
       },
       {
+        component: "home",
+        childPath: "/:id",
+      },
+      {
         component: "findMissingItem",
         childPath: "/findmissingitem/:itemName/:location",
       },

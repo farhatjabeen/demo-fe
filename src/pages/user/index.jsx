@@ -72,8 +72,8 @@ function User() {
     <>
       <div className="m-4">
         <h1 className="text-black font-bold mb-4 text-4xl mt-10">User Management</h1>
-        <Tabs className="my-8">
-          <div label="General ">
+        <Tabs className="my-8"  >
+          <div label="General " route="/admin/user/users">
             <div className="flex my-8">
               <input
                 type="text"
@@ -109,7 +109,7 @@ function User() {
               onPageChange={handlePageChange1}
             />
           </div>
-          <div label="Business">
+          <div label="Business" route="/admin/user/businessUser">
             <div className="flex my-8">
               <input
                 type="text"

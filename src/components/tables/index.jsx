@@ -5,20 +5,24 @@ import DeleteModal from "../deleteModal";
 import { useNavigate } from "react-router-dom";
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 import { useDispatch } from "react-redux";
+
 const Table = ({ headers, data, showEdit = false, context }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleDeleteClick = (id) => {
     setSelectedItemId(id);
     setDeleteModalOpen(true);
   };
-  const handleSelect=(item)=>{
+
+  const handleSelect = (item) => {
     if (window.location.pathname === "/admin/user/foundItems") {
       navigate(`/admin/user/foundItems/itemDetails/${item._id}`);
     }
-  }
+  };
+
   return (
     <div className="my-5">
       <table className="w-full">
@@ -36,29 +40,56 @@ const Table = ({ headers, data, showEdit = false, context }) => {
             ))}
           </tr>
         </thead>
-        <tbody className="cursor-pointer ">
-          {data?.map((item, index) => (
-            <tr key={item._id} className={index % 2 === 0 ? "bg-gray" : "bg-white"}>
-              {
-                headers.map((header) => (
-                  header.key === 'action' ? (
-                    <td className="py-6 px-6 flex cursor-pointer text-grey hover:text-black">
+        <tbody className="cursor-pointer">
+          {data?.length > 0 ? (
+            data.map((item, index) => (
+              <tr
+                key={item._id}
+                className={index % 2 === 0 ? "bg-gray" : "bg-white"}
+              >
+                {headers.map((header) =>
+                  header.key === "action" ? (
+                    <td
+                      className="py-6 px-6 flex cursor-pointer text-grey hover:text-black"
+                      key={header.key}
+                    >
                       <AiOutlineDelete
                         size={26}
                         onClick={() => handleDeleteClick(item._id)}
                       />
                       {showEdit && (
-                        <FiEdit size={24} onClick={() => navigate(`/admin/user/foundItems/editfoundItems/${item._id}`)} />
+                        <FiEdit
+                          size={24}
+                          onClick={() =>
+                            navigate(
+                              `/admin/user/foundItems/editfoundItems/${item._id}`
+                            )
+                          }
+                        />
                       )}
                     </td>
                   ) : (
-                    <td key={header.key} className="py-4 px-6" onClick={() => handleSelect(item)}>{item[header.key]}</td>
+                    <td
+                      key={header.key}
+                      className="py-4 px-6"
+                      onClick={() => handleSelect(item)}
+                    >
+                      {item[header.key]}
+                    </td>
                   )
-                ))}
+                )}
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={headers.length} className="text-center">
+                <p className="font-bold p-10 flex justify-center w-full text-md">
+                  No Data Found
+                </p>
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
-
       </table>
       <DeleteModal
         isOpen={deleteModalOpen}

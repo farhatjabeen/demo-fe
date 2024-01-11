@@ -35,9 +35,9 @@ function SignInView() {
       console.log('handleForgot error', error);
     }
   };
-  const submitData = (data) => {
+  const submitData =async(data) => {
     try {
-      const login = dispatch(loginAdminUser(data));
+      const login = await dispatch(loginAdminUser(data));
       if (login) {
         navigate('/admin/user/foundItems')
       }
