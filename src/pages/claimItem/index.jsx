@@ -27,7 +27,7 @@ export default function ClaimItem() {
     return (
         <div>
             <div className='relative flex flex-col items-center'>
-                <button className='cursor-pointer absolute left-20 text-2xl top-0' onClick={() => window.history.back()}><IoMdArrowBack /></button>
+                <button className='cursor-pointer absolute left-20 text-2xl top-2' onClick={() => window.history.back()}><IoMdArrowBack /></button>
                 <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl'>Contact iLost</div>
 
                 <div className='mt-10 px-16 w-full flex justify-center items-center'>

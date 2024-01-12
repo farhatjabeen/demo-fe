@@ -52,7 +52,7 @@ export default function BusinessItemDetails() {
 
     return (
         <div className='flex relative flex-col justify-center items-center'>
-            <button className='cursor-pointer absolute left-20 text-2xl top-0' onClick={()=> window.history.back()}><IoMdArrowBack /></button>
+            <button className='cursor-pointer absolute left-20 text-2xl top-2' onClick={()=> window.history.back()}><IoMdArrowBack /></button>
             <div className='font-semibold text-3xl '>Item details</div>
             <div className='w-3/12 mt-20 '>
                 <Slider {...settings}>
