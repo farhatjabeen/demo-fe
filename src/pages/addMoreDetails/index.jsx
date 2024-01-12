@@ -18,7 +18,6 @@ export default function AddMoreDetails() {
     const [newItemId, setNewItemId] = useState('');
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
-    const [isCancelled, setIsCancelled] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isImageUploaded, setIsImageUploaded] = useState(false);
@@ -33,12 +32,15 @@ export default function AddMoreDetails() {
     const userDetails = useSelector(userData);
     const itemDetailsById = useSelector(searchDetailsById);
     const reportDetails = useParams();
+    console.log(reportDetails,"reportDetails");
 
     useEffect(() => {
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
         setIsLoader(true)
         const addData = async () => {
+        console.log(reportDetails.id,"reportDetails.id")
+
             if (reportDetails.id) {
                 const getDetails = await dispatch(searchItemById(reportDetails.id))
                 if (getDetails) {
@@ -48,15 +50,15 @@ export default function AddMoreDetails() {
         }
         addData();
 
-        if (reportDetails.newItem) {
-            methods.setValue("itemName", reportDetails.newItem)
-            methods.setValue("location", reportDetails.location)
+        // if (reportDetails.newItem || reportDetails==={}) {
+            methods.setValue("itemName", reportDetails?.newItem)
+            methods.setValue("location", reportDetails?.location)
             methods.setValue("itemImage", null)
+            methods.setValue("cloudinary_id", null)
             methods.setValue("keywords", null)
-            setIsCancelled(true);
             setIsUploaded(false)
             setImageLoader(true);
-        }
+        // }
     }, []);
 
     useEffect(() => {
@@ -150,12 +152,7 @@ export default function AddMoreDetails() {
                 
                 methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(',')); 
                 console.log(methods.getValues().keywords,"keywords")
-                // setItemImage((prevFiles) => {
-                //     return prevFiles || itemDetailsById?.itemImage ? [...prevFiles, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage
-                // })
-                // setCloudinaryId((prevFiles) => {
-                //     return prevFiles || itemDetailsById?.cloudinary_id ? [...prevFiles, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id
-                // })
+                
                 // methods.setValue("itemImage", itemImage?.map(item => item));
                 // methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
                 methods.setValue("itemImage", itemImage);
@@ -229,6 +226,7 @@ console.log(itemImage?.length,"itemImage.length>1")
             console.log("hi last delete")
             setItemImage(null);
             setCloudinaryId(null);
+            setFiles(null)
             setIsUploaded(false)
         }
         console.log(itemImage?.length,"itemImage.length>1")
@@ -240,7 +238,9 @@ console.log(itemImage?.length,"itemImage.length>1")
     };
 
     useEffect(() => {
-        if (files && files?.length > 0) {
+        console.log(files?.length,"files?.length")
+        if (files && files?.length > 0 ) {
+            console.log("hi file")
             let formData = new FormData();
             files?.map((items, i) => {
                 return (
@@ -348,8 +348,9 @@ console.log(itemImage?.length,"itemImage.length>1")
                                     name='itemCategory'
                                     optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-greys`}
                                     editButton={true}
+                                    selection={true}
                                     firstOptionName="Select Category"
-                                    valueFromDb={isCancelled ? "" : itemDetailsById?.itemCategory}
+                                    valueFromDb={itemDetailsById?.itemCategory}
                                     dropdownValues={itemCategories} />
                             </div>
 

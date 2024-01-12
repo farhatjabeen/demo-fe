@@ -20,6 +20,7 @@ const PopoverComponent = () => {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(true);
+    const [isPasswordEntered, setIsPasswordEntered] = useState(true);
 
     // Other Hooks
     const dispatch = useDispatch();
@@ -54,6 +55,8 @@ const PopoverComponent = () => {
         })
     }, [navigate])
 
+    
+
     useEffect(() => {
         if (token) {
             // Open the Popover if the resetPassword route parameter is present
@@ -61,6 +64,8 @@ const PopoverComponent = () => {
             setIsPopoverOpen((true));
         }
     }, [token])
+
+
 
     const methods = useForm({
         defaultValues: {
@@ -83,6 +88,13 @@ const PopoverComponent = () => {
         },
         resolverForRegister
     });
+
+    useEffect(()=>{
+        const newPassword = methodsForRegister.getValues().newPassword;
+        if(newPassword){
+            setIsPasswordEntered(true)
+        }
+    },[methodsForRegister])
 
     const handleEmailChange = (e) => {
         const isValid = validateEmail(e.target.value);
@@ -107,15 +119,22 @@ const PopoverComponent = () => {
             const newPassword = methodsForRegister.getValues().newPassword;
             const emailMailId = mailIdFromApi.emailMailId;
 
-            if (password === newPassword) {
-                setPasswordMatch(true);
-                const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
-                if (registerSuccessful) {
-                    handleClose();
+            if (password) {
+                setIsPasswordEntered(true)
+                newPassword ? setPasswordMatch(true) : setPasswordMatch(false);
+                if (password === newPassword) {
+                    setPasswordMatch(true);
+                    const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
+                    if (registerSuccessful) {
+                        handleClose();
+                    }
+                } else {
+                    setPasswordMatch(false);
                 }
             } else {
-                setPasswordMatch(false);
+                setIsPasswordEntered(false)
             }
+
         } catch (error) {
             console.log("submitData errors", error);
         }
@@ -125,14 +144,19 @@ const PopoverComponent = () => {
             const password = methodsForRegister.getValues().password;
             const newPassword = methodsForRegister.getValues().newPassword;
 
-            if (password === newPassword) {
-                setPasswordMatch(true);
-                const resetSuccessful = await dispatch(generalResetPassword({ password }, token));
-                if (resetSuccessful) {
-                    handleClose();
+            if (password) {
+                setIsPasswordEntered(true)
+                if (password === newPassword) {
+                    setPasswordMatch(true);
+                    const resetSuccessful = await dispatch(generalResetPassword({ password }, token));
+                    if (resetSuccessful) {
+                        handleClose();
+                    }
+                } else {
+                    setPasswordMatch(false);
                 }
             } else {
-                setPasswordMatch(false);
+                setIsPasswordEntered(false)
             }
         } catch (error) {
             console.log("submitData errors", error);
@@ -143,11 +167,18 @@ const PopoverComponent = () => {
         try {
             const password = methodsForLogin.getValues().password;
             const emailMailId = mailIdFromApi.emailMailId;
-            const loginSuccessful = await dispatch(generalUserLogin({ emailMailId, password }));
-            if (loginSuccessful) {
-                setIsPopoverOpen(false);
-                navigate('/');
+            if (password) {
+                setIsPasswordEntered(true)
+                const loginSuccessful = await dispatch(generalUserLogin({ emailMailId, password }));
+                if (loginSuccessful) {
+                    setIsPopoverOpen(false);
+                    navigate('/');
+                }
+            } else {
+                setIsPasswordEntered(false)
             }
+
+
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -239,6 +270,11 @@ const PopoverComponent = () => {
                                                         showPassword={showRegisterNewPassword}
                                                         setShowPassword={() => setShowRegisterNewPassword(!showRegisterNewPassword)}
                                                     />
+                                                    {isPasswordEntered ?
+                                                        ""
+                                                        :
+                                                        <p className='text-red'>Password required</p>
+                                                    }
                                                     <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
                                                     <TextInput
                                                         type='password'
@@ -252,7 +288,7 @@ const PopoverComponent = () => {
                                                     />
                                                     {passwordMatch ? ""
                                                         :
-                                                        <p className='text-sm'>Passwords does not match</p>
+                                                        <p className='text-red'>Passwords does not match</p>
                                                     }
                                                 </div>
                                                 <button
@@ -293,6 +329,11 @@ const PopoverComponent = () => {
                                                                                 required
                                                                                 setShowPassword={() => setShowPassword(!showPassword)}
                                                                             />
+                                                                            {isPasswordEntered ?
+                                                                                ""
+                                                                                :
+                                                                                <p className='text-red'>Password required</p>
+                                                                            }
                                                                         </div>
                                                                         <button
                                                                             type='submit'
@@ -335,6 +376,11 @@ const PopoverComponent = () => {
                                                                             showPassword={showRegisterNewPassword}
                                                                             setShowPassword={() => setShowRegisterNewPassword(!showRegisterNewPassword)}
                                                                         />
+                                                                        {isPasswordEntered ?
+                                                                            ""
+                                                                            :
+                                                                            <p className='text-red'>Password required</p>
+                                                                        }
                                                                         <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
                                                                         <TextInput
                                                                             type='password'
@@ -348,7 +394,7 @@ const PopoverComponent = () => {
                                                                         />
                                                                         {passwordMatch ? ""
                                                                             :
-                                                                            <p className='text-sm'>Passwords does not match</p>
+                                                                            <p className='text-red'>Passwords does not match</p>
                                                                         }
                                                                     </div>
                                                                     <button

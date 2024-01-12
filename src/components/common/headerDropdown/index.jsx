@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa6";
 import { RxChevronDown } from "react-icons/rx";
@@ -13,6 +13,20 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
 
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+          handleLogout();
+          dispatch(clearItemData());
+          dispatch(clearUserData());
+        };
+    
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+      }, [dispatch, handleLogout]);
+
     return (
         <Menu as="div" className="relative text-left">
             <div>
@@ -20,16 +34,14 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                     onClick={() => setSelect(!select)}
                     className=' cursor-pointer xl:w-fit  xl:px-9 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color'>
                     <div className="flex  items-center justify-between px-3">
-                        <div className="flex text-info text-primary-color mr-4 items-center">
+                        <div className="flex text-info  mr-4 items-center">
                             {
                                 isBusiness
                                     ?
-                                    <MdOutlineBusiness className='text-info mb-1 h-7 w-7' />
+                                    <MdOutlineBusiness className='text-primary-color text-info mb-1 h-7 w-7' />
                                     :
-                                    <FaRegUser className="mb-1 h-5 w-5" />
+                                    <FaRegUser className="text-primary-color mb-1 h-5 w-5" />
                             }
-
-                            {/* <h1 className="ml-2 ">Hi, there!</h1> */}
 
                             <h1 className="ml-2 text-primary-color">Hi, {userDetails?.name ? userDetails?.name.split(' ')[0] : "User"}!</h1>
                         </div>

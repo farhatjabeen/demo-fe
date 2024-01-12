@@ -4,6 +4,7 @@ import { HiMail } from "react-icons/hi";
 import { useParams } from 'react-router';
 import { searchDetailsById, searchItemById } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { IoMdArrowBack } from "react-icons/io";
 
 export default function ClaimItem() {
     const dispatch = useDispatch();
@@ -25,10 +26,10 @@ export default function ClaimItem() {
 
     return (
         <div>
-            <div className='flex flex-col items-center'>
-                <div >
-                    <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl'>Prove your authenticity to claim the item</div>
-                </div>
+            <div className='relative flex flex-col items-center'>
+                <button className='cursor-pointer absolute left-20 text-2xl top-0' onClick={() => window.history.back()}><IoMdArrowBack /></button>
+                <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl'>Contact iLost</div>
+
                 <div className='mt-10 px-16 w-full flex justify-center items-center'>
                     <div>
                         {productDetails?.itemImage && productDetails.itemImage[0] ? (
@@ -62,7 +63,7 @@ export default function ClaimItem() {
                 </div>
             </div>
 
-            <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl mt-10 xl:ml-36 md:ml-12 sm:ml-8'>Contact iLost to claim the item</div>
+            <div className='font-bold xl:text-4xl md:text-3xl sm:text-2xl mt-10 xl:ml-16 md:ml-12 sm:ml-8'>Contact iLost to claim the item</div>
             <div className='flex justify-center items-center mt-10 mb-16'>
                 <div className='bg-white rounded-3xl xl:h-48 xl:w-96 md:h-44 md:w-80 sm:h-40 sm:w-60 shadow-lg flex flex-col items-center justify-center'>
                     <div className='xl:mb-5 md:mb-5 sm:mb-4'><FaPhoneAlt className='xl:h-10 xl:w-10 md:h-9 md:w-9 sm:h-7 sm:w-7' style={{ color: "#E3A903" }} /></div>
