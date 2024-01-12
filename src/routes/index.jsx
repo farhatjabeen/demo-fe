@@ -32,12 +32,12 @@ const AppRoutes = () => {
                     path={`${path}${childPath}`}
                     exact={exact}
                     element={
-                      <Fragment>
+                      <div className='mainContainer'>
                         <LayoutComponent>
                           <Component />
                         </LayoutComponent>
                         <Loader />
-                      </Fragment>
+                      </div>
                     }
                   />
                 );
