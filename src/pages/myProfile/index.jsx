@@ -13,7 +13,7 @@ export default function MyProfile() {
     const [showNewPassword, setShowNewPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [currentPasswordEntered, setCurrentPasswordEntered] = useState(false)
-    const resolver = useValidationResolver( myProfileSchema);
+    const resolver = useValidationResolver(myProfileSchema);
 
     const dispatch = useDispatch();
     // const existingData = useSelector(userData);
@@ -61,13 +61,13 @@ export default function MyProfile() {
 
     }, [])
 
-    useEffect(()=>{
-if(methods.getValues().currentPassword){
-    setCurrentPasswordEntered(true)
-}else{
-    setCurrentPasswordEntered(false)
-}
-    },[methods])
+    useEffect(() => {
+        if (methods.getValues().currentPassword) {
+            setCurrentPasswordEntered(true)
+        } else {
+            setCurrentPasswordEntered(false)
+        }
+    }, [methods])
 
     const submitData = async (data) => {
         try {
@@ -81,14 +81,14 @@ if(methods.getValues().currentPassword){
             // const itemDetails = methods.getValues();
 
             if (currentPassword) {
-                if(newPassword&&retypePassword){
+                if (newPassword && retypePassword) {
                     const changePassword = await dispatch(userProfileData(data));
                     console.log(changePassword, "changePassword")
                 }
-                else{
+                else {
                     setCurrentPasswordEntered(true)
                 }
-                
+
             } else {
                 setCurrentPasswordEntered(false)
                 dispatch(userProfileData({ name, emailMailId, mobileNumber }));
@@ -184,9 +184,6 @@ if(methods.getValues().currentPassword){
                                         showPassword={showRegisterPassword}
                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                     />
-                                    {/* <input 
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl  ${editButton ? 'bg-white' : 'bg-grey88'}`}
-                                        type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>
 
                                 <div className='relative'>
@@ -204,10 +201,10 @@ if(methods.getValues().currentPassword){
                                             setShowPassword={() => setShowNewPassword(!showNewPassword)}
                                         />
                                     </div>
-                                    {currentPasswordEntered ? 
-                                    <p className='flex justify-end pr-52'>New Password required</p>
-                                :
-                                ""}
+                                    {currentPasswordEntered ?
+                                        <p className='flex justify-end pr-52 text-red'>New Password required</p>
+                                        :
+                                        ""}
                                 </div>
 
                                 <div>
@@ -225,10 +222,10 @@ if(methods.getValues().currentPassword){
                                             setShowPassword={() => setShowPassword(!showPassword)}
                                         />
                                     </div>
-                                    {currentPasswordEntered ? 
-                                    <p className='flex justify-end pr-36 mr-2'>Password confirmation required</p>
-                                :
-                                ""}
+                                    {currentPasswordEntered ?
+                                        <p className='flex justify-end pr-36 mr-2 text-red'>Password confirmation required</p>
+                                        :
+                                        ""}
                                 </div>
                             </div>
 

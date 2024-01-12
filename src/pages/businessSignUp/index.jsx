@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClose } from "react-icons/md";
 import OurBrands from '../../components/ourBrands';
@@ -9,16 +9,15 @@ import { businessSignUpSchema } from '../../validations';
 import FormDropdown from '../../components/common/formDropdown';
 import { categoryDetails, categoryDropdownValues, fileUploadAPI } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import ImageUpload from '../../components/common/imageUpload';
-import { businessUserRegister, clearUserData } from '../../redux/reducers/userSlice';
 import { Toast } from '../../components/toast';
-import { data } from 'autoprefixer';
+import { businessUserRegister } from '../../redux/reducers/userSlice';
 
 export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [isCleared, setIsCleared] = useState(false);
+    const [isImage,setIsImage] = useState(true);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
     const categories = categoryValue ? Object.values(categoryValue) : [];
@@ -50,14 +49,25 @@ console.log(imageFiles,"imageFiles")
         if (values) {
             methods.reset(JSON.parse(values))
         }
+        setIsImage(true)
     }, [])
+
+    // useEffect(()=>{
+    //     const logo = methods.getValues().companylogo;
+    //     if(logo){
+    //         setIsImage(true)
+    //     }else{
+    //         setIsImage(false)
+    //     }
+    // },[methods,imageFiles])
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
-        console.log(selectedFiles,"selectedFiles")
+        console.log(selectedFiles,"selectedFiles")  
         setImageFiles(() => {
             if (selectedFiles) {
                 setIsUploaded(true);
+                setIsImage(true)
             }
             return selectedFiles
         });
@@ -66,33 +76,23 @@ console.log(imageFiles,"imageFiles")
 
     useEffect(() => {
         try {
-            // if (imageFiles && imageFiles[0]) {
-            //     let formData = new FormData();
-            //     formData.append("company", imageFiles[0]);
-            //     const imageResponse = dispatch(fileUploadAPI(formData));
-
-            //     imageResponse
-            //         .then((res) => {
-            //             console.log("responseFromFile", res.data.companylogo)
-            //             setCompanyLogo(res.data.companylogo);
-            //             setCloudinaryId(res.data.cloudinary_id);
-
-            //         })
-            // }
-
-            
+            if (imageFiles && imageFiles[0]) {
+                setIsImage(true)
                 let formData = new FormData();
                 formData.append("company", imageFiles[0]);
-                console.log(formData,'formData')
-                const imageResponse = dispatch(fileUploadAPI(formData));
+                if(imageFiles && imageFiles[0]){
+                    const imageResponse = dispatch(fileUploadAPI(formData));
 
-                imageResponse
-                    .then((res) => {
-                        console.log("responseFromFile", res.data.companylogo)
-                        setCompanyLogo(res.data.companylogo);
-                        setCloudinaryId(res.data.cloudinary_id);
-                    })
-            
+                    imageResponse
+                        .then((res) => {
+                            console.log("responseFromFile", res.data.companylogo)
+                            setCompanyLogo(res.data.companylogo);
+                            setCloudinaryId(res.data.cloudinary_id);
+    
+                        })
+                }
+                
+            }
         } catch (error) {
             console.log("submitData errors", error)
         }
@@ -100,18 +100,11 @@ console.log(imageFiles,"imageFiles")
 
 
     const submitData = async(data) => {
-        const name = methods.getValues().name;
-        const mobileNumber = methods.getValues().mobileNumber;
-        const emailMailId = methods.getValues().emailMailId;
-        const password = methods.getValues().password;
-        const companyName = methods.getValues().companyName;
-        const companyCategory = methods.getValues().companyCategory;
-        const companylogo = `${companyLogo}` || "";
-        const cloudinary_id = `${cloudinaryId}` || "";
         methods.setValue("companylogo", companyLogo);
         methods.setValue("cloudinary_id", cloudinaryId);
-        if (isChecked) {
+        if (isChecked && isImage) {
             // const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
+
             const registered = await dispatch(businessUserRegister(data))
             if (registered) {
                 setImageFiles('');
@@ -127,6 +120,7 @@ console.log(imageFiles,"imageFiles")
                 })
             }
         } else {
+            setIsImage(false)
             Toast({ type: "error", message: "Please accept the terms and conditions" })
         }
     };
@@ -156,7 +150,6 @@ console.log(imageFiles,"imageFiles")
                 </div>
                 <div className='xl:w-5/12 md:12/12'>
                     <FormProvider {...methods}>
-                        {/* <form onSubmit={(e) => submitData(e)}> */}
                         <form onSubmit={methods.handleSubmit(submitData)}>
                             <div className="p-8 m-6 bg-white rounded-xl">
                                 <div className="mb-2">
@@ -239,13 +232,25 @@ console.log(imageFiles,"imageFiles")
                                             :
                                             null
                                         }
-                                        <ImageUpload
-                                            name="companylogo"
-                                            designClass='flex justify-center bg-primary-color  w-full py-3 rounded-xl'
+                                        <label
+                                        htmlFor="companylogo"
+                                        className='flex justify-center bg-primary-color w-full py-3 rounded-xl'
+                                    >
+                                        Upload Image
+                                    </label>
+                                        <input
+                                            id="companylogo"
+                                            type='file'
+                                            accept=".jpg, .jpeg, .png"
                                             multiple={false}
-                                            isEdit={true}
-                                            handleFileUpload={handleFileUpload}
+                                            className='hidden '
+                                            onChange={handleFileUpload}
                                         />
+                                        {isImage ?
+                                        ""
+                                    :
+                                    <p className='text-red'>Company logo required</p>
+                                    }
                                     </div>
                                     <div className="mb-2 mt-4">
                                         <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
@@ -287,7 +292,7 @@ console.log(imageFiles,"imageFiles")
                                             <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                             <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-oranges" onClick={handleTerms}> terms and conditions</button>  of ilost Serbia</p>
                                         </div>
-                                        <button type='submit' className="cursor-pointer bg-oranges w-full py-3 mt-2 rounded-lg">Continue</button>
+                                        <button type='submit' onClick={()=> imageFiles ? setIsImage(true) : setIsImage(false)} className="cursor-pointer bg-oranges w-full py-3 mt-2 rounded-lg">Continue</button>
                                     </div>
                                 </div>
                             </div>
