@@ -24,7 +24,7 @@ const PopoverComponent = () => {
     // Other Hooks
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { token } = useParams()
+    const { tokens } = useParams()
     const mailIdFromApi = useSelector(mailId);
 
     // validation resolvers
@@ -55,12 +55,12 @@ const PopoverComponent = () => {
     }, [navigate])
 
     useEffect(() => {
-        if (token) {
+        if (tokens) {
             // Open the Popover if the resetPassword route parameter is present
             setRestPasswordBox(true);
             setIsPopoverOpen((true));
         }
-    }, [token])
+    }, [tokens])
 
     const methods = useForm({
         defaultValues: {
@@ -127,7 +127,7 @@ const PopoverComponent = () => {
 
             if (password === newPassword) {
                 setPasswordMatch(true);
-                const resetSuccessful = await dispatch(generalResetPassword({ password }, token));
+                const resetSuccessful = await dispatch(generalResetPassword({ password }, tokens));
                 if (resetSuccessful) {
                     handleClose();
                 }
