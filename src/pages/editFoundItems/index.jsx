@@ -49,14 +49,16 @@ const EditFoundItems = () => {
   const { userName, mobileNumber, emailMailId, foundDate, foundTime, location, itemCategory } = foundItemDetails || {};
   useEffect(() => {
     if (foundItemDetails) {
+      setItemImage(foundItemDetails?.itemImage)
+      setCloudinaryId(foundItemDetails?.cloudinary_id)
       methods.reset({
-        itemName: foundItemDetails.itemName,
-        keywords: foundItemDetails.keywords,
-        itemDescription: foundItemDetails.itemDescription,
-        locationIdentifiers: foundItemDetails.locationIdentifiers,
-        itemCategory: foundItemDetails.itemCategory,
-        itemImage: foundItemDetails.itemImage,
-        cloudinary_id: foundItemDetails.cloudinary_id
+        itemName: foundItemDetails?.itemName,
+        keywords: `${foundItemDetails?.keywords}`,
+        itemDescription: foundItemDetails?.itemDescription,
+        locationIdentifiers: foundItemDetails?.locationIdentifiers,
+        itemCategory: foundItemDetails?.itemCategory,
+        itemImage: itemImage||"",
+        cloudinary_id: cloudinaryId||""
       });
     }
   }, [foundItemDetails]);
@@ -70,10 +72,10 @@ const EditFoundItems = () => {
     navigate(-1);
   };
   useEffect(() => {
-    if (foundItemDetails?.itemImage) {
-      setFilesFromDb(foundItemDetails.itemImage);
+    if (foundItemDetails?.cloudinary_id) {
+      setFilesFromDb(foundItemDetails.cloudinary_id);
     }
-  }, [foundItemDetails?.itemImage]);
+  }, [foundItemDetails?.cloudinary_id]);
   const handleFileUpload = (e) => {
     const selectedFiles = e.target.files;
     setFiles((prevFiles) => {
@@ -85,68 +87,46 @@ const EditFoundItems = () => {
     });
   }
   const handleRemoveFile = (indexToRemove) => {
-    setFiles((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
-  };
-  const handleRemoveApiFile = (indexToRemove) => {
-    setFilesFromDb((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
-  };
+    setItemImage((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+    setCloudinaryId((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
+};
+  
   const handleReset = (e) => {
+    e.preventDefault();
     setFiles([]);
     setIsUploaded(false);
-    setFilesFromDb([]);
+    setItemImage([]);
     setCloudinaryId([]);
   }
   useEffect(() => {
     if (files && files.length > 0) {
       let formData = new FormData();
-      files.forEach((item, i) => {
+      files.forEach((item) => {
         formData.append("item", item);
       });
-
-      const uploadFiles = async () => {
-        try {
-          const res = await dispatch(filesUploadAPI(formData));
-          return res.data;
-        } catch (error) {
-          console.error("Error uploading files:", error);
-        }
-      };
-
-      const handleUpload = async () => {
-        const uploadedData = await uploadFiles();
-
-        if (uploadedData) {
-          setCloudinaryId((prevIds) => [...prevIds, uploadedData.cloudinary_id]);
-          setItemImage((prevImages) => [...prevImages, uploadedData.itemImage]);
-
-          if (foundItemDetails?.cloudinary_id) {
-            setCloudinaryId((prevIds) => [...prevIds, ...(Array.isArray(foundItemDetails.cloudinary_id) ? foundItemDetails.cloudinary_id : [foundItemDetails.cloudinary_id])]);
-          }
-
-
-          if (foundItemDetails?.itemImage) {
-            setItemImage((prevImages) => [...prevImages, ...(Array.isArray(foundItemDetails.itemImage) ? foundItemDetails.itemImage : [foundItemDetails.itemImage])]);
-          }
-        }
-      };
-
-      handleUpload();
+      const upload = dispatch(filesUploadAPI(formData));
+      upload.then((res) => {
+        setItemImage((prevFiles) => prevFiles ? [...prevFiles, ...res.data.itemImage] : res.data.itemImage)
+        setCloudinaryId((prevFiles) => prevFiles ? [...prevFiles, ...res.data.cloudinary_id] : res.data.cloudinary_id)
+      })
     } else {
       console.warn("No files to upload.");
     }
-  }, [files, foundItemDetails]);
+  }, [files]);
+  
   const submitData = async () => {
     try {
       const data = methods.getValues()
+      data.keywords = data.keywords.split(',').map(keyword => keyword.trim());
       const updatedData = {
         ...data,
         itemCategory: selectedCategory,
-        keywords: Array.isArray(data.keywords) ? data.keywords : (data.keywords ? data.keywords.split(',').map(keyword => keyword.trim()) : []),
-        itemImage: itemImage.length > 0 ? itemImage[0] : filesFromDb.length > 0 ? foundItemDetails.itemImage : [],
-        cloudinary_id: cloudinaryId.length > 0 ? cloudinaryId[0] : foundItemDetails.cloudinary_id,
       };
+      methods.setValue('itemImage', itemImage)
+      methods.setValue('cloudinary_id', cloudinaryId)
       await dispatch(adminUpdateFoundItems(id, updatedData));
       navigate('/admin/user/foundItems');
+
     } catch (error) {
       console.error('Update failed:', error);
     }
@@ -257,28 +237,11 @@ const EditFoundItems = () => {
               </div>
               <div className='xl:w-1/3 xs:w-full md:w-1/2'>
                 <label className='text-base font-normal' >Upload Images</label>
+                
                 <div>
-                  {isUploaded || foundItemDetails?.itemImage ? (
-                    <div className='flex flex-wrap w-96'>
-                      {filesFromDb.map((url, i) => (
-                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                          {/* <img src={url} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' /> */}
-                          <p className='mr-2'>{url.fileName || `File ${i}`}</p>
-                          <div className='flex items-center ml-2' onClick={() => handleRemoveApiFile(i)}><MdClose /></div>
-                        </div>
-                      ))}
-                      {files.map((file, i) => (
-                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                          {/* <img src={URL.createObjectURL(file)} alt={`Uploaded File ${i}`} className='w-20 h-20 object-cover' /> */}
-                          <p className='mr-2'>{file.name || `File ${i}`}</p>
-                          <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                  <div className="flex">
+                <div className="flex">
                     <ImageUpload
-                      name="item"
+                      name="itemImage"
                       designClass="xl:w-88 md:w-96 sm:w-80 h-14 sm:h-12 rounded-xl bg-primary-color flex items-center justify-center cursor-pointer"
                       multiple={true}
                       handleFileUpload={handleFileUpload}
@@ -286,13 +249,24 @@ const EditFoundItems = () => {
 
                     {foundItemDetails?.itemImage || isUploaded ?
                       <div>
-                        <button onClick={handleReset} className='h-12 w-11 bg-primary-color ml-2 rounded-xl flex justify-center items-center'>
+                        <button onClick={(e) => handleReset(e)} className='h-12 w-11 bg-primary-color ml-2 rounded-xl flex justify-center items-center'>
                           <IoMdRefresh className='h-6 w-6' />
                         </button>
                       </div>
                       :
                       ""}
                   </div>
+                  {isUploaded || foundItemDetails?.itemImage ? (
+                    <div className='flex flex-wrap w-96'>
+                      {cloudinaryId?.map((file, i) => (
+                        <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
+                          <div>{file}</div>
+                          <div className='flex items-center ml-2 cursor-pointer' onClick={() => handleRemoveFile(i)}><MdClose /></div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                  
                 </div>
               </div>
             </div>

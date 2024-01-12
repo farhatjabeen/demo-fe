@@ -99,12 +99,11 @@ function ItemDetails() {
         <div className="p-4">
           <p className="font-bold mb-2">Images</p>
           <div className="flex">
-            {foundItemDetails.itemImage && (
-              <>
-                <img src={foundItemDetails.itemImage} alt="key" />
-                <img src={foundItemDetails.itemImage} alt="key" className="ml-2" />
-              </>
-            )}
+            {foundItemDetails?.itemImage.map((items, i) => {
+              return (
+                <img src={items} alt="key" />
+              );
+            })}
           </div>
         </div>
       </div>

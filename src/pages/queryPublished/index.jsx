@@ -44,16 +44,16 @@ export default function QueryPublished() {
                                     <div className='flex items-center'>
                                         <FaMap style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
                                     </div>
-                                    <p className='font-semibold text-lg ml-2'>{itemDetailsFromApi?.location}</p>
+                                    <p className='font-medium text-xl ml-2'>{itemDetailsFromApi?.location}</p>
                                 </div>
                                 <div className='w-[250px] mt-2 flex'><div className='flex items-center'>
                                     <FaCalendar style={{ color: "#00b8b8", height: "17px", width: "20px" }} />
                                 </div>
-                                    <p className='font-semibold text-lg ml-2'>{itemDetailsFromApi?.foundDate}</p>
+                                    <p className='font-medium text-xl ml-2'>{itemDetailsFromApi?.foundDate}</p>
                                 </div>
                                 <div className='w-[250px] mt-2 flex'><div className='flex items-center'>
                                     <FaClock style={{ color: "#00b8b8", height: "17px", width: "20px" }} /></div>
-                                    <p className='font-semibold text-lg ml-2'>{itemDetailsFromApi?.foundTime}</p>
+                                    <p className='font-medium text-xl ml-2'>{itemDetailsFromApi?.foundTime}</p>
                                 </div>
                             </div>
                             <div className='flex justify-between xl:w-80 xl:mt-8 md:w-80 md:mt-7 sm:w-72 sm:mt-5'>
