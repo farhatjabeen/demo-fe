@@ -165,9 +165,9 @@ export default function AddMoreDetails() {
                 console.log(itemImage,"itemImage")
                 console.log(cloudinaryId,"cloudinaryId")
                 
-                if(itemImage.length>0 && cloudinaryId.length>0){
+                if(itemImage?.length>0 && cloudinaryId?.length>0){
                     setImageLoader(true)
-                    const isEdited = await dispatch(userEditItemDetails(reportDetails.id, dataNow))
+                    const isEdited = await dispatch(userEditItemDetails(reportDetails.id, data))
 
                     isEdited && setItemImage([]);
                     isEdited && setCloudinaryId([]);
@@ -213,17 +213,25 @@ export default function AddMoreDetails() {
 
     const handleDbFileDelete = (index) => {
         console.log(index, "hi from delete")
-        setItemImage((prevFiles) => {
-            const newFiles = [...prevFiles];
-            newFiles.splice(index, 1);
-            return newFiles;
-        });
-        setCloudinaryId((prevFiles) => {
-            const newFiles = [...prevFiles];
-            newFiles.splice(index, 1);
-            return newFiles;
-        });
-
+console.log(itemImage?.length,"itemImage.length>1")
+        if(itemImage?.length>1 && cloudinaryId?.length>1){
+            setItemImage((prevFiles) => {
+                const newFiles = [...prevFiles];
+                newFiles.splice(index, 1);
+                return newFiles;
+            });
+            setCloudinaryId((prevFiles) => {
+                const newFiles = [...prevFiles];
+                newFiles.splice(index, 1);
+                return newFiles;
+            });
+        }else {
+            console.log("hi last delete")
+            setItemImage(null);
+            setCloudinaryId(null);
+            setIsUploaded(false)
+        }
+        console.log(itemImage?.length,"itemImage.length>1")
         !reportDetails.id && setFiles((prevFiles) => {
             const newFiles = [...prevFiles];
             newFiles.splice(index, 1);
@@ -242,9 +250,9 @@ export default function AddMoreDetails() {
             console.log(formData,'formData')
 
             setIsImageUploaded(true)
-            if (reportDetails.id) {
-                setImageLoader(false);
-            }
+            // if (reportDetails.id) {
+            //     setImageLoader(false);
+            // }
             const imagesResponse = dispatch(filesUploadAPI(formData));
             imagesResponse?.then((res) => {
                 if (imagesResponse) {

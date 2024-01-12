@@ -3,7 +3,10 @@ import * as yup from 'yup';
 const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
 
 const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+const nameRegex = /^(?! +$)[a-zA-Z0-9][a-zA-Z0-9\s]*[a-zA-Z0-9]$/;
+
+const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
 
 const serbiaMobileNumberRegExp = /^6[0-9]\d{6,7}$/;
 
@@ -86,18 +89,22 @@ export const addMoreDetailsSchema = yup.object({
         .required('Location required'),
     locationIdentifiers: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Landmark required'),
     itemDescription: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Item description required'),
     itemCategory: yup
         .string()
         .required("Category required"),
     itemName: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Item name required'),
     keywords: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Keywords required')
 
 });
@@ -114,13 +121,14 @@ export const addMoreDetailsItemSchema = yup.object({
     userName: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     location: yup
         .string()
         .required('Location required'),
     locationIdentifiers: yup
         .string()
+        .matches(nameRegex, 'Invalid characters used')
         .required('Landmark required'),
     itemDescription: yup
         .string()
@@ -152,7 +160,7 @@ export const myProfileSchema = yup.object({
     name: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     currentPassword: yup
         .string(),
@@ -172,6 +180,7 @@ export const companyProfile = yup.object({
         .required("Company category required"),
     companyName: yup
         .string()
+        .matches(spaceRegex, 'Enter a valid name')
         .required('Company name required'),
     companyLocation: yup
         .string()
@@ -179,7 +188,7 @@ export const companyProfile = yup.object({
     name: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     emailMailId: yup
         .string()
@@ -253,17 +262,15 @@ export const businessSignUpSchema = yup.object({
     name: yup
         .string()
         .min(3)
-        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     companyName: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Company name required'),
     companyCategory: yup
         .string()
-        .required("Company category required"),
-    checkboxField: yup
-        .boolean()
-        .oneOf([true], 'Checkbox must be checked')
+        .required("Company category required")
 });
 
 export const searchSchema = yup.object({
