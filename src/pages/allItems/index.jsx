@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
-import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
 import { deleteBusinessItem, fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
@@ -27,7 +26,13 @@ export default function AllItems() {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
+    const itemsDescription = (description) => {
+        const words = description.split(' ');
+        if (words.length > 10) {
+            return words.slice(0, 10).join(' ') + '...';
+        }
+        return description;
+    };
     return (
         <>
             <div className='px-28'>
@@ -38,7 +43,7 @@ export default function AllItems() {
                 </div>
 
                 <div className='h-32 mb-10 p-5 flex flex-col space-y-10 rounded-lg w-full bg-gradient-to-r from-dark-yellow to-yellow'>
-                    <div className='text-xs font-medium text-white'>TOTAL FOUND ITEMS</div>
+                    <div className='text-base font-medium text-white'>TOTAL FOUND ITEMS</div>
                     <div className='text-4xl font-bold text-white'>{tableData?.list?.length}</div>
                 </div>
 
@@ -49,90 +54,48 @@ export default function AllItems() {
                         <thead>
                             <tr >
                                 <th className="px-6 py-6 text-left cursor-pointer">
-                                    <div className="flex w-fit">
-                                        <div>
-                                            <p className='text-navy-blue  md:text-base'>Item Code</p>
-                                        </div>
-                                        <div>
-                                            <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                                            <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                                        </div>
+                                    <div className=" w-fit">
+                                        <p className='text-navy-blue  md:text-base'>Item Code</p>
                                     </div>
                                 </th>
 
-                                <th className="px-6 py-6 text-left cursor-pointer">
-                                    <div className="flex">
-                                        <div>
-                                            <p className='text-navy-blue'>Item Name</p>
-                                        </div>
-                                        <div>
-                                            <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                                            <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                                        </div>
-                                    </div>
-                                </th>
-
-                                <th className="px-6 py-6 text-left cursor-pointer">
-                                    <div className="flex">
-                                        <div>
-                                            <p className='text-navy-blue'>Description</p>
-                                        </div>
-                                        <div>
-                                            <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                                            <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                                        </div>
-                                    </div>
-                                </th>
-
-                                <th className="px-6 py-6 text-left cursor-pointer">
-                                    <div className="flex">
-                                        <div>
-                                            <p className='text-navy-blue'>Location</p>
-                                        </div>
-                                        <div>
-                                            <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                                            <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                                        </div>
-                                    </div>
-                                </th>
-
-                                <th className="px-6 py-6 text-left cursor-pointer">
-                                    <div className="flex">
-                                        <div>
-                                            <p className='text-navy-blue'>Location Identifiers</p>
-                                        </div>
-                                        <div>
-                                            <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                                            <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                                        </div>
-                                    </div>
-                                </th>
-
-                                <th className="px-6 py-6 text-left cursor-pointer">
-                                    <div className="flex">
-                                        <div>
-                                            <p className='text-navy-blue'>Listing Date</p>
-                                        </div>
-                                        <div>
-                                            <TiArrowSortedUp size={12} className="text-grey hover:text-black" />
-                                            <TiArrowSortedDown size={12} className="text-grey hover:text-black" />
-                                        </div>
-                                    </div>
-                                </th>
                                 <th className="px-6 py-6 text-left cursor-pointer">
                                     <div>
-                                        <p className='text-navy-blue'>Action</p>
+                                        <p className='text-navy-blue'>Item Name</p>
                                     </div>
+                                </th>
+
+                                <th className="px-6 py-6 text-left cursor-pointer">
+                                    <div>
+                                        <p className='text-navy-blue'>Description</p>
+                                    </div>
+                                </th>
+
+                                <th className="px-6 py-6 text-left cursor-pointer">
+                                    <p className='text-navy-blue'>Location</p>
+                                </th>
+
+                                <th className="px-6 py-6 text-left cursor-pointer">
+                                    <p className='text-navy-blue'>Location Identifiers</p>
+                                </th>
+
+                                <th className="px-6 py-6 text-left cursor-pointer">
+                                    <p className='text-navy-blue'>Listing Date</p>
+                                </th>
+                                <th className="px-6 py-6 text-left cursor-pointer">
+                                    <p className='text-navy-blue'>Action</p>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             {tableData?.list?.length && tableData.list.map((items, i) => {
                                 return (
-                                    <tr key={i} className={`cursor-pointer ${i % 2 === 0 ? "bg-gray" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
+                                    <tr key={i} className={`cursor-pointer ${i % 2 === 0 ? "bg-gray12 bg-opacity-30" : "bg-inherit"}`} onClick={() => navigate(`/businessitemdetails/${items._id}`)}>
                                         <td className="py-6 px-6 text-gray48 text-sm font-semibold">{items.itemCode}</td>
                                         <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.itemName}</td>
-                                        <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.itemDescription}</td>
+                                        <td className="py-6 px-6 text-gray48 text-sm font-normal">
+                                            {itemsDescription(items.itemDescription)}
+                                        </td>
                                         <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.location}</td>
                                         <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.locationIdentifiers}</td>
                                         <td className="py-6 px-6 text-gray48 text-sm font-normal">{items.foundDate}</td>
@@ -142,7 +105,7 @@ export default function AllItems() {
                                                 e.stopPropagation();
                                             }} className="text-gray-500 hover:text-black cursor-pointer"
                                             />
-                                            <FiEdit size={24} className="text-gray-500 hover:text-black mr-4 cursor-pointer" onClick={(e) => {
+                                            <FiEdit size={24} className="text-gray-500 hover:text-black ml-1 cursor-pointer" onClick={(e) => {
                                                 navigate(`/editdetails/${items._id}`)
                                                 e.stopPropagation();
                                             }} />

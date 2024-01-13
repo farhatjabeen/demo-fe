@@ -4,7 +4,7 @@ const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#
 
 const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-const nameRegex = /^(?! +$)[a-zA-Z0-9][a-zA-Z0-9\s]*[a-zA-Z0-9]$/;
+const nameRegex = /^(?!.*\d)(?!.*\s{2,})[a-zA-Z]([a-zA-Z0-9\s]*[a-zA-Z])?$/;
 
 const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
 
@@ -17,6 +17,7 @@ export const loginSchema = yup.object({
         .required('Email required'),
     password: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .matches(
             passwordRegExp,
             'Password must be 8-20 characters with at least one letter, one number, and one special character')
@@ -38,16 +39,14 @@ export const generalUserLoginSchema = yup.object({
 });
 
 export const generalUserRegisterSchema = yup.object({
-    emailMailId: yup
-        .string()
-        .matches(emailRexExp, 'Invalid email address')
-        .required('Email required'),
+    
     password: yup
         .string()
         .required("Please re-type your password")
         .oneOf([yup.ref('newPassword')], "Passwords does not match"),
     newPassword: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .matches
         (
             passwordRegExp,
@@ -81,8 +80,8 @@ export const addMoreDetailsSchema = yup.object({
         .required('Mobile number required'),
     userName: yup
         .string()
-        .min(3)
-        .matches(/^[a-zA-Z0-9\s]+$/, 'Invalid characters used')
+        .min(3,'Name must be atleast 3 characters')
+        .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     location: yup
         .string()
@@ -109,7 +108,7 @@ export const addMoreDetailsSchema = yup.object({
 
 });
 
-export const addMoreDetailsItemSchema = yup.object({
+export const addMoreDetailsItemSchema = yup.object().shape({
     emailMailId: yup
         .string()
         .matches(emailRexExp, 'Invalid email address')
@@ -120,7 +119,7 @@ export const addMoreDetailsItemSchema = yup.object({
         .required('Mobile number required'),
     userName: yup
         .string()
-        .min(3)
+        .min(3,'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     location: yup
@@ -128,22 +127,26 @@ export const addMoreDetailsItemSchema = yup.object({
         .required('Location required'),
     locationIdentifiers: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .matches(nameRegex, 'Invalid characters used')
         .required('Landmark required'),
     itemDescription: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Item description required'),
     itemCategory: yup
         .string()
         .required("Category required"),
     itemName: yup
         .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Item name required'),
     itemImage: yup
         .mixed()
         .required('Images required'),
     keywords: yup
-        .mixed()
+        .string()
+        .matches(spaceRegex, 'Invalid characters found')
         .required('Keywords required')
 
 });
@@ -151,7 +154,8 @@ export const addMoreDetailsItemSchema = yup.object({
 export const myProfileSchema = yup.object({
     emailMailId: yup
         .string()
-        .matches(emailRexExp, 'Invalid email address')
+        .email()
+        // .matches(emailRexExp, 'Invalid email address')
         .required('Email required'),
     mobileNumber: yup
         .string()
@@ -159,7 +163,7 @@ export const myProfileSchema = yup.object({
         .required('Mobile number required'),
     name: yup
         .string()
-        .min(3)
+        .min(3,'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     currentPassword: yup
@@ -187,7 +191,7 @@ export const companyProfile = yup.object({
         .required('Company location required'),
     name: yup
         .string()
-        .min(3)
+        .min(3,'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     emailMailId: yup
@@ -230,7 +234,7 @@ export const contactUsSchema = yup.object({
         .required('Email required'),
     subject: yup
         .string()
-        .min(3)
+        .min(3,'Name must be atleast 3 characters')
         .required('Subject required'),
     message: yup
         .string()
@@ -261,7 +265,7 @@ export const businessSignUpSchema = yup.object({
         .required('Mobile number required'),
     name: yup
         .string()
-        .min(3)
+        .min(3,'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     companyName: yup

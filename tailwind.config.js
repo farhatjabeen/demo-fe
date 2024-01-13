@@ -61,7 +61,9 @@ module.exports = {
       'light-yellow': '#FFFAE9',
       'dark-red': '#BC0000',
       'blue-light': '#E8EDF1',
-      'aluminium':'#A7A9AC',
+      'aluminium': '#A7A9AC',
+      'gray12': '#D9D9D9',
+      'gray2': '#6C757D'
     },
     extend: {}
   },

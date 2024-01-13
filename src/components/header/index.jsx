@@ -80,7 +80,6 @@ const Header = (props) => {
                             >
                                 Ilost for Business
                             </button>
-
                             <PopoverComponent />
                         </div>
                     }
