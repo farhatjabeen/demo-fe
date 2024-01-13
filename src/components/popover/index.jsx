@@ -25,7 +25,7 @@ const PopoverComponent = () => {
     // Other Hooks
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { token } = useParams()
+    const { tokens } = useParams()
     const mailIdFromApi = useSelector(mailId);
 
     // validation resolvers
@@ -58,12 +58,12 @@ const PopoverComponent = () => {
     
 
     useEffect(() => {
-        if (token) {
+        if (tokens) {
             // Open the Popover if the resetPassword route parameter is present
             setRestPasswordBox(true);
             setIsPopoverOpen((true));
         }
-    }, [token])
+    }, [tokens])
 
 
 
@@ -148,7 +148,7 @@ const PopoverComponent = () => {
                 setIsPasswordEntered(true)
                 if (password === newPassword) {
                     setPasswordMatch(true);
-                    const resetSuccessful = await dispatch(generalResetPassword({ password }, token));
+                    const resetSuccessful = await dispatch(generalResetPassword({ password }, tokens));
                     if (resetSuccessful) {
                         handleClose();
                     }

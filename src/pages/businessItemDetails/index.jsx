@@ -7,7 +7,7 @@ import { userData } from '../../redux/reducers/userSlice';
 import { IoMdArrowBack } from "react-icons/io";
 
 export default function BusinessItemDetails() {
-
+    const [activeIndex, setActiveIndex] = useState(0);
     const dispatch = useDispatch();
     const itemId = useParams();
     const itemDetails = useSelector(viewDetails);
@@ -33,20 +33,20 @@ export default function BusinessItemDetails() {
     { query: "Location", answer: itemDetails.location }];
 
     useEffect(() => {
-        const interval = setInterval((prevIndex) => (prevIndex + 1) % itemDetails?.itemImage?.length);
-
+        const interval = setInterval(() => {
+            setActiveIndex((prevIndex) => (prevIndex + 1) % itemDetails?.itemImage?.length);
+        }, 2000);
         return () => clearInterval(interval);
     }, []);
 
     const settings = {
-        dots: true,
         infinite: true,
         arrows: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000
+        autoplaySpeed: 2000,
     };
 
 
@@ -59,11 +59,19 @@ export default function BusinessItemDetails() {
                     {itemDetails?.itemImage?.map((items, i) => {
                         return (
                             // <div key={i} className='w-1/2 flex justify-end'>
-                                <img className='h-96 w-fit' src={items} alt='keys' />
+                            <img className='h-96 w-fit' src={items} alt='keys' />
                             // </div>
                         );
                     })}
                 </Slider>
+            </div>
+            <div className='flex justify-center mt-4'>
+                {itemDetails?.itemImage?.map((_, i) => (
+                    <button
+                        className={`cursor-pointer rounded h-2 w-2 mx-1 ${i === activeIndex ? "bg-info" : "bg-gray2"
+                            }`}
+                    ></button>
+                ))}
             </div>
 
 
@@ -73,8 +81,14 @@ export default function BusinessItemDetails() {
                     {itemTitles.map((items, i) => {
                         return (
                             <div key={i} className='flex justify-start'>
-                                <div className='xl:w-52 md:w-60 sm:w-56 text-light-black xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
-                                <div className='xl:w-full text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'>{items.answer}</div>
+                                <div
+                                    className='xl:w-52 md:w-60 sm:w-56 text-light-black xl:text-xl md:text-lg sm:text-xs py-1 font-bold'>
+                                    {items.query}
+                                </div>
+                                <div
+                                    className={userDetails?.role === 'BUSINESS' ? 'xl:w-72 md:w-60 sm:w-56 text-left xl:text-xl md:text-base sm:text-xs font-bold py-1' : 'xl:w-full text-left xl:text-xl md:text-base sm:text-xs font-bold py-1'}>
+                                    {items.answer}
+                                </div>
                             </div>
                         );
                     })}
@@ -86,8 +100,8 @@ export default function BusinessItemDetails() {
                         {personTitles.map((items, i) => {
                             return (
                                 <div key={i} className='flex justify-start'>
-                                    <div className='xl:w-52 md:w-60 sm:w-56 text-light-black xl:text-lg md:text-base sm:text-xs py-1'>{items.query}</div>
-                                    <div className='xl:w-96 md:w-60 sm:w-56 text-left xl:text-lg md:text-base sm:text-xs font-semibold py-1'>{items.answer}</div>
+                                    <div className='xl:w-52 md:w-60 sm:w-56 text-light-black xl:text-xl md:text-base sm:text-xs py-1 font-bold'>{items.query}</div>
+                                    <div className='xl:w-96 md:w-60 sm:w-56 text-left xl:text-xl md:text-base sm:text-xs font-bold py-1'>{items.answer}</div>
                                 </div>
                             );
                         })}
