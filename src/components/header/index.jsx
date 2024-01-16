@@ -54,7 +54,7 @@ const Header = (props) => {
             <div className="flex justify-between items-center h-22 m-14 rounded-full bg-white shadow-lg">
                 <div className='flex justify-start grow p-5 xl:pl-12 md:pl-10 sm:pl-8'>
                     <img
-                        onClick={() => navigate('/user/resetpassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzZkMDJmYmQ4ZTY0YjYwODNjMDNjMSIsInNraXBTZXNzaW9uIjp0cnVlLCJpYXQiOjE3MDQ4ODM2MjMsImV4cCI6MTcwNDg4NDUyM30.mm44qR_19qf-Cp9o-1B1Yr9vSEAucB1rPI-t5IWY9t8')}
+                        onClick={() => navigate('/')}
                         className="cursor-pointer xl:h-14 xl:w-32 md:h-12 md:w-28 sm:h-10 sm:w-20"
                         src={Logo} alt="logo" />
                 </div>

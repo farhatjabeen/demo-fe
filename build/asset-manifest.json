@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.47425b5e.css",
-    "main.js": "/static/js/main.73e83f4a.js",
+    "main.js": "/static/js/main.52815fbc.js",
     "static/js/27.64a9e9e7.chunk.js": "/static/js/27.64a9e9e7.chunk.js",
     "static/media/Rectangle.png": "/static/media/Rectangle.e024e606a8723e6aee43.png",
     "static/media/containers.jpg": "/static/media/containers.39af777cf51250c3e9a4.jpg",
@@ -34,6 +34,6 @@
   },
   "entrypoints": [
     "static/css/main.47425b5e.css",
-    "static/js/main.73e83f4a.js"
+    "static/js/main.52815fbc.js"
   ]
 }
