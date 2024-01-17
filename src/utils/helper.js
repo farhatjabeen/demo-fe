@@ -30,6 +30,10 @@ export const axiosInstance = axios.create({
     }
 });
 
+export const history = require('history').createBrowserHistory({
+    basename: ''
+});
+
 export const logout = () => {
     axiosInstance.defaults.headers.common.Authorization = '';
     localStorage.clear();
@@ -73,4 +77,12 @@ export const setEncryptedLocalStorageData = (key, value) => {
     return Promise.resolve().then(function () {
         localStorage.setItem(storageKeyMapper[key], data);
     });
+};
+
+//SCROLL TOP FUNCTION
+export const goToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
 };

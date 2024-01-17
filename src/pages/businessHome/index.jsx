@@ -157,12 +157,12 @@ export default function BusinessHome() {
                                 <div key={i} className='w-full sm:w-1/1 lg:w-1/4 xl:w-1/4 md:w-1/4 bg-white border border-pantone mb-8 mx-auto'>
                                     <div><img src={items} alt='containers' /></div>
                                     <div className='pt-5 pb-10 px-4'>
-                                        <div className='text-lg font-semibold'>2023 UPDATE: When it comes to software, should I buy or build?</div>
-                                        <div className='text-Gray40 text-xs py-2'>May 23, 2023 | Blog, SaaS, Transport</div>
-                                        <div className='text-Gray40 font-medium text-sm overflow-hidden'>
+                                        <div className='text-xl font-semibold text-text-color'>2023 UPDATE: When it comes to software, should I buy or build?</div>
+                                        <div className='text-Gray40 text-sm font-medium py-4'>May 23, 2023 | Blog, SaaS, Transport</div>
+                                        <div className='text-Gray40 font-medium text-lg overflow-hidden'>
                                             Today we'll be discussing the big question in software development....To buy or to build, This puzzle has been a quandary for heads of businesses...
                                         </div>
-                                        <button className='cursor-pointer text-oranges text-xs'>read more</button>
+                                        <button className='cursor-pointer text-oranges font-medium text-lg'>read more</button>
                                     </div>
                                 </div>
                             );

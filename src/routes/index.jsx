@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,11 +9,13 @@ import 'react-notifications/lib/notifications.css';
 
 import routes from "./routes";
 import Page404 from "../pages/page404";
+import AccessDenied from "../pages/accessDenied";
 import * as Layout from "../layout";
 import { NotificationContainer } from "react-notifications";
 import Loader from "../components/loader";
-
 const AppRoutes = () => {
+  const [isAllow, setAllow] = useState(true);
+
   return (
     <div>
       <Router>
@@ -33,9 +35,11 @@ const AppRoutes = () => {
                     exact={exact}
                     element={
                       <div className='mainContainer'>
-                        <LayoutComponent>
+                        {isAllow || layout === "AuthLayout" || layout === "AdminAuthLayout" ? (<LayoutComponent>
                           <Component />
-                        </LayoutComponent>
+                        </LayoutComponent>)
+                          : <AccessDenied />
+                        }
                         <Loader />
                       </div>
                     }

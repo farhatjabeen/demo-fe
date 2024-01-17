@@ -55,7 +55,7 @@ function SignInView() {
       <div className="pt-20 ">
         <h1 className="font-bold text-4xl">Sign In</h1>
         <p className="text-grey font-bold pt-2">
-          Sign in to the admin portal of Ilost
+          Sign in to the admin portal of ilost
         </p>
       </div>
       <div className="relative">

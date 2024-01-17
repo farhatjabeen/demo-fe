@@ -5,7 +5,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { myProfileSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
-import { generalUserData, generalUserDetails, userData, userProfileData } from '../../redux/reducers/userSlice';
+import { generalUserData, generalUserDetails, userProfileData } from '../../redux/reducers/userSlice';
 
 export default function MyProfile() {
     const [editButton, setEditButton] = useState(false);
@@ -19,8 +19,6 @@ export default function MyProfile() {
     // const existingData = useSelector(userData);
     // console.log(existingData,'existingdata')
     const fetchUserDetails = useSelector(generalUserData);
-
-
 
     const methods = useForm({
         defaultValues: {

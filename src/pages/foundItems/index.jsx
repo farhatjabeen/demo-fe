@@ -79,7 +79,7 @@ function FoundItems() {
         <div className="flex ">
           <input
             type="text"
-            placeholder="Search by item id or name"
+            placeholder="Search using item id or name"
             className=" border text-grey pl-2 basis-5/12 rounded-md mr-4 py-2 "
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
