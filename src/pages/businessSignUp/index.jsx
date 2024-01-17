@@ -11,6 +11,7 @@ import { categoryDetails, categoryDropdownValues, fileUploadAPI } from '../../re
 import { useDispatch, useSelector } from 'react-redux';
 import { Toast } from '../../components/toast';
 import { businessUserRegister } from '../../redux/reducers/userSlice';
+import { goToTop } from '../../utils/helper';
 
 export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
@@ -26,9 +27,9 @@ export default function BusinessSignUp() {
     const [cloudinaryId, setCloudinaryId] = useState('');
     const [companyLogo, setCompanyLogo] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-console.log(companyLogo,"companyLogo")
-console.log(cloudinaryId,"cloudinaryId")
-console.log(imageFiles,"imageFiles")
+    console.log(companyLogo,"companyLogo")
+    console.log(cloudinaryId,"cloudinaryId")
+    console.log(imageFiles,"imageFiles")
     const methods = useForm({
         defaultValues: {
             name: "",
@@ -63,7 +64,7 @@ console.log(imageFiles,"imageFiles")
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
-        console.log(selectedFiles,"selectedFiles")  
+        console.log(selectedFiles,"selectedFiles")
         setImageFiles(() => {
             if (selectedFiles) {
                 setIsUploaded(true);
@@ -72,7 +73,7 @@ console.log(imageFiles,"imageFiles")
             return selectedFiles
         });
     }
-    
+
 
     useEffect(() => {
         try {
@@ -88,10 +89,10 @@ console.log(imageFiles,"imageFiles")
                             console.log("responseFromFile", res.data.companylogo)
                             setCompanyLogo(res.data.companylogo);
                             setCloudinaryId(res.data.cloudinary_id);
-    
+
                         })
                 }
-                
+
             }
         } catch (error) {
             console.log("submitData errors", error)
@@ -226,18 +227,18 @@ console.log(imageFiles,"imageFiles")
                                             <div className='flex flex-wrap w-96'>
                                                 <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
                                                     <div>{imageFiles[0]?.name}</div>
-                                                    <div className='flex items-center ml-2' onClick={()=>setImageFiles('')}><MdClose /></div>
+                                                    <div className='flex items-center ml-2' onClick={() => setImageFiles('')}><MdClose /></div>
                                                 </div>
                                             </div>
                                             :
                                             null
                                         }
                                         <label
-                                        htmlFor="companylogo"
-                                        className='flex justify-center bg-primary-color w-full py-3 rounded-xl'
-                                    >
-                                        Upload Image
-                                    </label>
+                                            htmlFor="companylogo"
+                                            className='flex justify-center bg-primary-color w-full py-3 rounded-xl'
+                                        >
+                                            Upload Image
+                                        </label>
                                         <input
                                             id="companylogo"
                                             type='file'
@@ -247,10 +248,10 @@ console.log(imageFiles,"imageFiles")
                                             onChange={handleFileUpload}
                                         />
                                         {isImage ?
-                                        ""
-                                    :
-                                    <p className='text-red'>Company logo required</p>
-                                    }
+                                            ""
+                                            :
+                                            <p className='text-red'>Company logo required</p>
+                                        }
                                     </div>
                                     <div className="mb-2 mt-4">
                                         <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>

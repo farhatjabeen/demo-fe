@@ -65,7 +65,7 @@ export default function QueryPublished() {
                                     </button>
                                 </div>
                                 <div >
-                                    <button className='cursor-pointer xl:h-14 xl:ml-3 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
+                                    <button className='cursor-pointer xl:h-14 xl:ml-3 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'onClick={()=>navigate('/contactus')}>
                                         Contact Us
                                     </button>
                                 </div>

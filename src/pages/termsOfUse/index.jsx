@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { IoMdArrowBack } from "react-icons/io";
+import { goToTop } from '../../utils/helper';
 
 const TermsOfUSe = () => {
+    useEffect(()=>{
+       goToTop(); 
+    }, [])
     return (
         <>
-            <h1 className='text-3xl font-bold text-center'>Terms of use</h1>
+            <div className='flex justify-center'>
+                <button className='cursor-pointer text-2xl ' onClick={() => window.history.back()}><IoMdArrowBack /></button>
+                <h1 className='text-3xl font-bold text-center'>Terms of use</h1>
+            </div>
             <div className='px-20 lg:px-40 lg:pt-20 pt-10'>
                 <div>
                     <h1 className='text-2xl text-primary-color font-bold mb-4'>
@@ -20,17 +28,17 @@ const TermsOfUSe = () => {
                     <p className='text-xl mb-4 text-light-black'>
                         You agree to use the Service only for lawful purposes and in accordance with these Terms of Use. You are prohibited from violating or attempting to violate the security of the Service, including, but not limited to:
                     </p>
-                        <ul className='text-xl  text-light-black list-disc ml-6 mb-4'>
-                            <li>
-                                Accessing data not intended for you or logging into a server or account that you are not authorized to access.
-                            </li>
-                            <li>
-                                Attempting to probe, scan, or test the vulnerability of the Service or any associated system or network.
-                            </li>
-                            <li>
-                                Interfering with, disrupting, or attempting to gain unauthorized access to any computer network.
-                            </li>
-                        </ul>
+                    <ul className='text-xl  text-light-black list-disc ml-6 mb-4'>
+                        <li>
+                            Accessing data not intended for you or logging into a server or account that you are not authorized to access.
+                        </li>
+                        <li>
+                            Attempting to probe, scan, or test the vulnerability of the Service or any associated system or network.
+                        </li>
+                        <li>
+                            Interfering with, disrupting, or attempting to gain unauthorized access to any computer network.
+                        </li>
+                    </ul>
                 </div>
                 <div>
                     <h1 className='text-2xl text-primary-color font-bold mb-4'>
