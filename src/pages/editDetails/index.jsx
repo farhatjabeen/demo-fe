@@ -12,6 +12,7 @@ import { itemDropdown, itemDropdownValues, viewDetails, viewItemById, businessUp
 import { useDispatch, useSelector } from 'react-redux';
 import ImageUpload from '../../components/common/imageUpload';
 import DropdownMenu from '../../components/common/dropdown';
+import { goToTop } from '../../utils/helper';
 
 export default function EditBusinessDetails() {
     const [filesFromDb, setFilesFromDb] = useState([]);
@@ -51,14 +52,11 @@ export default function EditBusinessDetails() {
         resolver
     });
     useEffect(() => {
+        goToTop (); 
         setIsLoader(true);
         dispatch(viewItemById(id)).then(() => {
             setIsLoader(false); 
         });
-    }, [id]);
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
     }, [id]);
 
     const itemDetails = useSelector(viewDetails);

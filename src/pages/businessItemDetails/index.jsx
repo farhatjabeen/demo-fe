@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { viewDetails, viewItemById, viewUserItemById } from '../../redux/reducers/itemsSlice';
 import { userData } from '../../redux/reducers/userSlice';
 import { IoMdArrowBack } from "react-icons/io";
-
+import { goToTop } from '../../utils/helper';
 export default function BusinessItemDetails() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isLoader, setIsLoader] = useState(true);
@@ -14,6 +14,7 @@ export default function BusinessItemDetails() {
     const itemDetails = useSelector(viewDetails);
     const userDetails = useSelector(userData);
     useEffect(() => {
+        goToTop (); 
         const fetchData = async () => {
             setIsLoader(true);
             try {
@@ -31,12 +32,6 @@ export default function BusinessItemDetails() {
 
         fetchData();
     }, [dispatch, itemId, userDetails]);
-
-    
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [itemId]);
 
     const itemTitles = [{ query: "Item name", answer: itemDetails.itemName }, { query: "Item Category", answer: itemDetails.itemCategory },
     { query: "Item description", answer: itemDetails.itemDescription },

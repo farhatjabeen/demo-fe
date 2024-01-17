@@ -1,14 +1,11 @@
 import * as yup from 'yup';
 
 const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
-
 const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
 const nameRegex = /^(?!.*\d)(?!.*\s{2,})[a-zA-Z]([a-zA-Z0-9\s]*[a-zA-Z])?$/;
-
 const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
-
-const serbiaMobileNumberRegExp = /^6[0-9]\d{6,7}$/;
+const specialCharacterRegex = /^[a-zA-Z0-9\s]+$/;
+const serbiaMobileNumberRegExp = /^6[0-9]\d{7,8}$/;
 
 export const loginSchema = yup.object({
     emailMailId: yup
@@ -39,7 +36,7 @@ export const generalUserLoginSchema = yup.object({
 });
 
 export const generalUserRegisterSchema = yup.object({
-    
+
     password: yup
         .string()
         .required("Please re-type your password")
@@ -99,7 +96,7 @@ export const addMoreDetailsSchema = yup.object({
         .required("Category required"),
     itemName: yup
         .string()
-        .matches(spaceRegex, 'Invalid characters found')
+        .matches(specialCharacterRegex, 'Invalid characters found')
         .required('Item name required'),
     keywords: yup
         .string()
@@ -170,7 +167,7 @@ export const myProfileSchema = yup.object({
         .string(),
     newPassword: yup
         .string(),
-        // .matches(passwordRegExp, 'Strong password expected'),
+    // .matches(passwordRegExp, 'Strong password expected'),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords do not match"),
@@ -184,7 +181,7 @@ export const companyProfile = yup.object({
         .required("Company category required"),
     companyName: yup
         .string()
-        .matches(spaceRegex, 'Enter a valid name')
+        .matches(specialCharacterRegex, 'Invalid characters used')
         .required('Company name required'),
     companyLocation: yup
         .string()

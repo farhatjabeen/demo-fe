@@ -7,6 +7,7 @@ import { HiPlus } from "react-icons/hi";
 import Pagination from '../../components/common/pagination';
 import { deleteBusinessItem, fetchItems, itemDetails } from '../../redux/reducers/itemsSlice';
 import DeleteModal from '../../components/deleteModal';
+import { goToTop } from '../../utils/helper';
 
 export default function AllItems() {
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -20,9 +21,10 @@ export default function AllItems() {
         setDeleteModalOpen(true);
     };
     useEffect(() => {
+        goToTop (); 
         dispatch(fetchItems(currentPage))
     }, [currentPage]);
-
+    
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
