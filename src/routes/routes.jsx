@@ -116,7 +116,7 @@ const routers = [
     childrens: [
       {
         component: "MyProfile",
-        childPath: "/myprofile",
+        childPath: "/myProfile"
       },
     ]
   },
