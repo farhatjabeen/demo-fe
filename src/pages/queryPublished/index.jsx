@@ -24,19 +24,19 @@ export default function QueryPublished() {
                 <div className='flex justify-center'>
                     <div className='h-11 font-bold text-4xl'>Your query has been published!</div>
                 </div>
-                <div className='flex justify-center xl:my-12 sm:mt-12 px-4'>
-                    <div>
+                <div className='flex justify-center xl:my-12 sm:mt-12 mx-16'>
+                    <div className='w-1/3'>
 
                         {itemDetailsFromApi?.itemImage && itemDetailsFromApi?.itemImage[0] && (
                             <img
                                 src={itemDetailsFromApi?.itemImage[0]}
                                 alt='keys'
-                                className='xl:w-96 xl:h-72 md:w-72 md:h-60 sm:w-48 sm:h-48 rounded-[24px]'>
+                                className='xl:w-full xl:h-72 md:w-72 md:h-60 sm:w-48 sm:h-48 rounded-[24px]'>
                             </img>
                         )}
 
                     </div>
-                    <div className='xl:h-72 xl:w-6/12 md:h-60 md:w-8/12 sm:h-48 sm:w-10/12 ml-7 rounded-[24px] border border-white-grey bg-white'>
+                    <div className='xl:h-72 xl:w-2/3 md:h-60 md:w-8/12 sm:h-48 sm:w-10/12 ml-7 rounded-[24px] border border-white-grey bg-white'>
                         <div className='xl:p-7 md:px-5 md:pt-4 sm:pl-4'>
                             <div className='font-bold text-4xl pb-1' >{itemDetailsFromApi?.itemName}</div>
                             <div className='m-2'>
@@ -60,12 +60,12 @@ export default function QueryPublished() {
                                 <div >
                                     <button 
                                     onClick={() => handleEditItem(itemId.id)}
-                                    className='cursor-pointer xl:h-14 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-primary-color border-none font-normal sm:text-base text-lg'>
+                                    className='cursor-pointer xl:h-14 xl:w-48 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-primary-color border-none font-normal sm:text-base text-lg'>
                                         Edit Content
                                     </button>
                                 </div>
                                 <div >
-                                    <button className='cursor-pointer xl:h-14 xl:ml-3 xl:w-44 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'onClick={()=>navigate('/contactus')}>
+                                    <button onClick={()=>navigate('/contactus')} className='cursor-pointer xl:h-14 xl:ml-4 xl:w-48 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
                                         Contact Us
                                     </button>
                                 </div>

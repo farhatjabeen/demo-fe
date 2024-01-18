@@ -6,26 +6,25 @@ import { MdOutlineBusiness } from "react-icons/md";
 import { Menu, Transition } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearItemData } from '../../../redux/reducers/itemsSlice';
-import { clearUserData, userData } from '../../../redux/reducers/userSlice';
+import { clearUserData, generalUserDetails, getUserDetails, userData } from '../../../redux/reducers/userSlice';
 
-export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleOne, navigateTwo, titleTwo, handleLogout }) {
+export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, userName, titleOne, navigateTwo, titleTwo, handleLogout }) {
     const [select, setSelect] = useState(false);
+    const [loader,setLoader] = useState(true);
+    const [user, setUser] = useState('');
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
-
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-          handleLogout();
-          dispatch(clearItemData());
-          dispatch(clearUserData());
-        };
-    
-        window.addEventListener('beforeunload', handleBeforeUnload);
-    
-        return () => {
-          window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-      }, [dispatch, handleLogout]);
+console.log(userDetails,"userDetails")
+    // useEffect(()=>{
+    //     setLoader(false);
+    //     if(!userDetails?.name){
+    //         setLoader(true);
+    //     }else
+    //     if(userName){
+    //         setLoader(true);
+    //     }
+        
+    // },[user])
 
     return (
         <Menu as="div" className="relative text-left">
@@ -43,7 +42,14 @@ export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, titleO
                                     <FaRegUser className="text-primary-color mb-1 h-5 w-5" />
                             }
 
-                            <h1 className="ml-2 text-primary-color">Hi, {userDetails?.name ? userDetails?.name.split(' ')[0] : "User"}!</h1>
+                            {/* {loader ? */}
+                            <h1
+                                className="ml-2 text-primary-color ">
+                                Hi, {userName ? userName?.split(' ')[0] : "User"}!
+                            </h1>
+                            {/* :
+                            <h1 className="ml-2 text-primary-color ">Loading...</h1>
+                            }  */}
                         </div>
                         <div>
                             <RxChevronDown className='h-6 w-6' />

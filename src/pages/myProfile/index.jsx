@@ -23,7 +23,7 @@ export default function MyProfile() {
     const methods = useForm({
         defaultValues: {
             emailMailId: fetchUserDetails?.emailMailId || "",
-            mobileNumber: `${fetchUserDetails?.mobileNumber}` || "",
+            mobileNumber: fetchUserDetails?.mobileNumber || "",
             name: fetchUserDetails?.name || "",
             currentPassword: "",
             newPassword: "",
@@ -50,9 +50,9 @@ export default function MyProfile() {
         getUser?.then((res) => {
             console.log(res, "respi")
             methods.reset({
-                emailMailId: res?.data?.emailMailId || "",
-                mobileNumber: `${res?.data?.mobileNumber}` || "",
-                name: res?.data?.name || ""
+                emailMailId: res?.emailMailId || "",
+                mobileNumber: res?.mobileNumber || "",
+                name: res?.name || ""
             })
         })
 
@@ -82,6 +82,9 @@ export default function MyProfile() {
                 if (newPassword && retypePassword) {
                     const changePassword = await dispatch(userProfileData(data));
                     console.log(changePassword, "changePassword")
+                    if(changePassword){
+                        dispatch(generalUserDetails());
+                    }
                 }
                 else {
                     setCurrentPasswordEntered(true)
@@ -89,7 +92,10 @@ export default function MyProfile() {
 
             } else {
                 setCurrentPasswordEntered(false)
-                dispatch(userProfileData({ name, emailMailId, mobileNumber }));
+                const changeDetails = await dispatch(userProfileData({ name, emailMailId, mobileNumber }));
+                if(changeDetails){
+                    dispatch(generalUserDetails());
+                }
             }
 
         } catch (error) {
@@ -99,6 +105,14 @@ export default function MyProfile() {
 
     const handleEditButton = () => {
         setEditButton(!editButton);
+        methods.reset({
+            emailMailId: fetchUserDetails?.emailMailId || "",
+            mobileNumber: fetchUserDetails?.mobileNumber || "",
+            name: fetchUserDetails?.name || "",
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+        })
     }
 
     return (
@@ -156,10 +170,10 @@ export default function MyProfile() {
                                     type="text"
                                     placeholder="Enter your Email address"
                                     name="emailMailId"
-                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                    className='xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl bg-grey88'
                                     autoComplete="off"
                                     required
-                                    disable={!editButton}
+                                    disable={true}
                                 />
 
                             </div>

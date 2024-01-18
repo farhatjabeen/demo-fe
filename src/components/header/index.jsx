@@ -3,7 +3,7 @@ import Logo from "../../assets/images/logo.svg"
 import { useNavigate } from "react-router-dom";
 import PopoverComponent from "../popover";
 import { useDispatch, useSelector } from "react-redux";
-import { userData, clearUserData, generalUserLogout, businessUserLogout, generalUserDetails, companyProfileData } from '../../redux/reducers/userSlice';
+import { userData, clearUserData, generalUserLogout, businessUserLogout, generalUserDetails, companyProfileData, generalUserData, userProfile } from '../../redux/reducers/userSlice';
 import { clearItemData } from "../../redux/reducers/itemsSlice";
 import HeaderDropdown from "../common/headerDropdown";
 
@@ -13,18 +13,26 @@ const Header = (props) => {
     const [isBusiness, setIsBusiness] = useState(false);
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);
+    const generalUserInformation = useSelector(generalUserData);
+    const businessUserInformation = useSelector(userProfile);
+
+    console.log(businessUserInformation, 'userName')
 
 
     useEffect(() => {
-        if (userDetails?.role === 'USER') {
-            setLogin(true);
-            setIsBusiness(false);
-            dispatch(generalUserDetails())
-        }
-        if (userDetails?.role === 'BUSINESS') {
-            setLogin(true);
-            setIsBusiness(true);
-            dispatch(companyProfileData())
+        try {
+            if (userDetails?.role === 'USER') {
+                setLogin(true);
+                setIsBusiness(false);
+                dispatch(generalUserDetails())
+            }
+            if (userDetails?.role === 'BUSINESS') {
+                setLogin(true);
+                setIsBusiness(true);
+                dispatch(companyProfileData())
+            }
+        } catch (error) {
+            console.log(error, 'submitted errors')
         }
     }, [userDetails])
 
@@ -65,10 +73,10 @@ const Header = (props) => {
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
+                                    <HeaderDropdown userName={businessUserInformation?.name} linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
                                         titleTwo='My Profile' navigateTwo='/companyprofile' handleLogout={handleLogout} />
                                     :
-                                    <HeaderDropdown linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'
+                                    <HeaderDropdown userName={generalUserInformation?.name} linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'
                                         titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />
                             }
                         </div>
