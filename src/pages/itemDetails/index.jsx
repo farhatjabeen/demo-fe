@@ -85,7 +85,7 @@ function ItemDetails() {
           </div>
         </div>
         <div className="px-4">
-          <p className="font-bold mb-2">LandMark</p>
+          <p className="font-bold mb-2">Landmark</p>
           <p>
             {locationIdentifiers}
           </p>

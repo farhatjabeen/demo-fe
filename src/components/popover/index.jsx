@@ -16,6 +16,7 @@ const PopoverComponent = () => {
     const [restPasswordBox, setRestPasswordBox] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
+    const [validatePassword, setValidatePassword] = useState(false)
     const [showRegisterNewPassword, setShowRegisterNewPassword] = useState(false)
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [isEmailValid, setIsEmailValid] = useState(false);
@@ -38,6 +39,9 @@ const PopoverComponent = () => {
         return emailRegex.test(inputEmail);
     };
 
+    const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
+
+
     useEffect(() => {
         setPasswordBox(false);
         setIsEmailValid(false);
@@ -55,7 +59,7 @@ const PopoverComponent = () => {
         })
     }, [navigate])
 
-    
+
 
     useEffect(() => {
         if (tokens) {
@@ -89,12 +93,12 @@ const PopoverComponent = () => {
         resolverForRegister
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         const newPassword = methodsForRegister.getValues().newPassword;
-        if(newPassword){
+        if (newPassword) {
             setIsPasswordEntered(true)
         }
-    },[methodsForRegister])
+    }, [methodsForRegister])
 
     const handleEmailChange = (e) => {
         const isValid = validateEmail(e.target.value);
@@ -124,10 +128,16 @@ const PopoverComponent = () => {
                 newPassword ? setPasswordMatch(true) : setPasswordMatch(false);
                 if (password === newPassword) {
                     setPasswordMatch(true);
-                    const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
-                    if (registerSuccessful) {
-                        handleClose();
+                    if (passwordRegExp.test(password) && passwordRegExp.test(newPassword)) {
+                        setValidatePassword(false);
+                        const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
+                        if (registerSuccessful) {
+                            handleClose();
+                        }
+                    } else {
+                        setValidatePassword(true)
                     }
+
                 } else {
                     setPasswordMatch(false);
                 }
@@ -148,9 +158,14 @@ const PopoverComponent = () => {
                 setIsPasswordEntered(true)
                 if (password === newPassword) {
                     setPasswordMatch(true);
-                    const resetSuccessful = await dispatch(generalResetPassword({ password }, tokens));
-                    if (resetSuccessful) {
-                        handleClose();
+                    if (passwordRegExp.test(password) && passwordRegExp.test(newPassword)) {
+                        setValidatePassword(false);
+                        const resetSuccessful = await dispatch(generalResetPassword({ password }, tokens));
+                        if (resetSuccessful) {
+                            handleClose();
+                        }
+                    } else {
+                        setValidatePassword(true)
                     }
                 } else {
                     setPasswordMatch(false);
@@ -290,6 +305,12 @@ const PopoverComponent = () => {
                                                         :
                                                         <p className='text-red'>Passwords does not match</p>
                                                     }
+                                                    {
+                                                        validatePassword ?
+                                                            <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
+                                                            :
+                                                            ""
+                                                    }
                                                 </div>
                                                 <button
                                                     type='submit'
@@ -395,6 +416,12 @@ const PopoverComponent = () => {
                                                                         {passwordMatch ? ""
                                                                             :
                                                                             <p className='text-red'>Passwords does not match</p>
+                                                                        }
+                                                                        {
+                                                                            validatePassword ?
+                                                                                <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
+                                                                                :
+                                                                                ""
                                                                         }
                                                                     </div>
                                                                     <button

@@ -77,7 +77,7 @@ export const addMoreDetailsSchema = yup.object({
         .required('Mobile number required'),
     userName: yup
         .string()
-        .min(3,'Name must be atleast 3 characters')
+        .min(3, 'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     location: yup
@@ -116,7 +116,7 @@ export const addMoreDetailsItemSchema = yup.object().shape({
         .required('Mobile number required'),
     userName: yup
         .string()
-        .min(3,'Name must be atleast 3 characters')
+        .min(3, 'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     location: yup
@@ -160,7 +160,7 @@ export const myProfileSchema = yup.object({
         .required('Mobile number required'),
     name: yup
         .string()
-        .min(3,'Name must be atleast 3 characters')
+        .min(3, 'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     currentPassword: yup
@@ -188,7 +188,7 @@ export const companyProfile = yup.object({
         .required('Company location required'),
     name: yup
         .string()
-        .min(3,'Name must be atleast 3 characters')
+        .min(3, 'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     emailMailId: yup
@@ -231,7 +231,7 @@ export const contactUsSchema = yup.object({
         .required('Email required'),
     subject: yup
         .string()
-        .min(3,'Name must be atleast 3 characters')
+        .min(3, 'Name must be atleast 3 characters')
         .required('Subject required'),
     message: yup
         .string()
@@ -262,7 +262,7 @@ export const businessSignUpSchema = yup.object({
         .required('Mobile number required'),
     name: yup
         .string()
-        .min(3,'Name must be atleast 3 characters')
+        .min(3, 'Name must be atleast 3 characters')
         .matches(nameRegex, 'Invalid characters used')
         .required('Name required'),
     companyName: yup
@@ -322,7 +322,11 @@ export const editFoundItemsSchema = yup.object({
             const words = value.trim().split(/\s+/);
             return words.length >= 5;
         })
-        .required('Description required')
+        .required('Description required'),
+    keywords: yup
+        .string()
+        .matches(spaceRegex, 'Invalid characters found')
+        .required('Keywords required')
 
 })
 

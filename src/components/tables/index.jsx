@@ -50,12 +50,13 @@ const Table = ({ headers, data, showEdit = false, context }) => {
                 {headers.map((header) =>
                   header.key === "action" ? (
                     <td
-                      className="py-6 px-6 flex cursor-pointer text-grey hover:text-black"
+                      className={`py-6 px-6 flex cursor-pointer text-gray48 hover:text-black `}
                       key={header.key}
                     >
                       <AiOutlineDelete
                         size={26}
                         onClick={() => handleDeleteClick(item._id)}
+                        className="mr-3"
                       />
                       {showEdit && (
                         <FiEdit
@@ -71,10 +72,10 @@ const Table = ({ headers, data, showEdit = false, context }) => {
                   ) : (
                     <td
                       key={header.key}
-                      className="py-4 px-6"
+                      className={`py-4 px-6 text-sm text-gray48 ${header.key === 'userCode' ? "font-bold":""} ${header.key === 'itemCode' ? "font-bold":""}`}
                       onClick={() => handleSelect(item)}
                     >
-                      {item[header.key]}
+                      {`${header.key === 'userCode' ? "#":""}`}{`${header.key === 'itemCode' ? "#":""}`}{item[header.key]}
                     </td>
                   )
                 )}

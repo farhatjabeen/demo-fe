@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { AiOutlineArrowUp } from "react-icons/ai";
-import { BsSearch } from "react-icons/bs";
-import { MdOutlineRefresh } from "react-icons/md";
+import { IoSearchSharp } from "react-icons/io5";
+import { FaRotateLeft } from "react-icons/fa6";
 import DropdownMenu from "../../components/common/dropdown";
 import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
@@ -80,7 +80,7 @@ function FoundItems() {
           <input
             type="text"
             placeholder="Search using item id or name"
-            className=" border text-grey pl-2 basis-5/12 rounded-md mr-4 py-2 "
+            className=" border border-gray3 placeholder:text-gray3 pl-2 basis-5/12 rounded-md mr-4 py-2 "
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
@@ -95,19 +95,21 @@ function FoundItems() {
           <div className="basis-1/12">
             <CustomCombinedButton
               text="Reset"
-              icon={<MdOutlineRefresh size={20} className="mr-2" />}
+              icon={<FaRotateLeft size={18} className="mr-3 text-gray4" />}
               onClick={handleReset}
               isReset={true}
               buttonColor="blue"
+              additionalClasses="py-3"
             />
           </div>
           <div className="basis-1/12">
             <CustomCombinedButton
               text="Search"
-              icon={<BsSearch size={20} className="mr-2" />}
+              icon={<IoSearchSharp size={20} className="mr-3" />}
               onClick={handleSearch}
               isReset={true}
               buttonColor="other"
+              additionalClasses="py-3"
             />
           </div>
         </div>

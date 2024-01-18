@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BsSearch } from "react-icons/bs";
-import { MdOutlineRefresh } from "react-icons/md";
+import { IoSearchSharp } from "react-icons/io5";
+import { FaRotateLeft } from "react-icons/fa6";
 import CustomCombinedButton from "../../components/common/adminButton";
 import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
@@ -13,30 +13,53 @@ function User() {
   // Local states
   const [currentPage, setCurrentPage] = useState(1);
   const [searchUserTerm, setSearchUserTerm] = useState("");
+  const [resetHandle, setResetHandle] = useState(false);
+  const [isId, setIsId] = useState(true);
   const [searchBusinessTerm, setSearchBusinessTerm] = useState("");
   const PageLimit = 10;
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
   const dispatch = useDispatch();
 
+  const searchRegex = /^[0-9]+$/;
+
   useEffect(() => {
     dispatch(adminFetchUser(currentPage, PageLimit))
     dispatch(adminFetchBusinessUser(currentPage, PageLimit))
   }, [dispatch, currentPage, PageLimit]);
 
-  const handleReset = (tab) => {
+  const handleReset = async (tab) => {
+    setResetHandle(true)
     if (tab === 1) {
       setSearchUserTerm("");
+      const values = await dispatch(adminFetchUser(currentPage, PageLimit))
+      if (values) {
+        setResetHandle(false)
+      }
     } else if (tab === 2) {
       setSearchBusinessTerm("");
+      const values = await dispatch(adminFetchBusinessUser(currentPage, PageLimit))
+      if (values) {
+        setResetHandle(false)
+      }
     }
   };
 
   const handleSearch = (tab) => {
     if (tab === 1) {
-      dispatch(adminFetchUser(currentPage, PageLimit, searchUserTerm));
+      if (searchRegex.test(searchUserTerm)) {
+        setIsId(true)
+        dispatch(adminFetchUser(currentPage, PageLimit, searchUserTerm));
+      } else {
+        setIsId(false)
+      }
     } else if (tab === 2) {
-      dispatch(adminFetchBusinessUser(currentPage, PageLimit, searchBusinessTerm));
+      if (searchRegex.test(searchBusinessTerm)) {
+        setIsId(true)
+        dispatch(adminFetchBusinessUser(currentPage, PageLimit, searchBusinessTerm));
+      } else {
+        setIsId(false)
+      }
     }
   };
 
@@ -60,7 +83,7 @@ function User() {
   const businessHeaders = [
     { key: "userCode", label: "Business ID" },
     { key: "companyName", label: "Company Name" },
-    { key: "companyCategory", label: "Category" },
+    { key: "companyCategory", label: "Company Category" },
     { key: "name", label: "Contact Name" },
     { key: "emailMailId", label: "Mail ID" },
     { key: "mobileNumber", label: "Contact Phone" },
@@ -73,8 +96,9 @@ function User() {
       <div className="m-4">
         <h1 className="text-black font-bold mb-4 text-4xl mt-10">User Management</h1>
         <Tabs className="my-8"  >
-          <div label="General " route="/admin/user/users">
-            <div className="flex my-8">
+          <div label="General" route="/admin/user/users">
+            <div className={`flex  ${isId ? "my-8" : "mt-8 mb-0"}`}>
+              {/* <div className="my-8"> */}
               <input
                 type="text"
                 placeholder="Search"
@@ -82,10 +106,12 @@ function User() {
                 value={searchUserTerm}
                 onChange={(event) => setSearchUserTerm(event.target.value)}
               />
+              {/* </div> */}
+
               <div className="basis-1/12">
                 <CustomCombinedButton
                   text="Reset"
-                  icon={<MdOutlineRefresh size={20} className="mr-2" />}
+                  icon={<FaRotateLeft size={18} className="mr-2 text-gray4" />}
                   onClick={() => handleReset(1)}
                   isReset={true}
                   buttonColor="blue"
@@ -94,14 +120,24 @@ function User() {
               <div className="basis-1/12">
                 <CustomCombinedButton
                   text="Search"
-                  icon={<BsSearch size={20} className="mr-2" />}
+                  icon={<IoSearchSharp size={18} className="mr-2" />}
                   onClick={() => handleSearch(1)}
                   isReset={true}
                   buttonColor="other"
                 />
               </div>
             </div>
-            <Table headers={userHeaders} data={tableData?.list} context="user" />
+            {isId
+              ?
+              ""
+              :
+              <p className="text-sm text-red">Valid ID required</p>
+            }
+            {resetHandle ?
+              <p>Loading...</p>
+              :
+              <Table headers={userHeaders} data={tableData?.list} context="user" />
+            }
             <Pagination
               isBlueBackground={true}
               currentPage={tableData?.pageMeta?.page}
@@ -110,7 +146,7 @@ function User() {
             />
           </div>
           <div label="Business" route="/admin/user/businessUser">
-            <div className="flex my-8">
+            <div className={`flex  ${isId ? "my-8" : "mt-8 mb-0"}`}>
               <input
                 type="text"
                 placeholder="Search"
@@ -121,7 +157,7 @@ function User() {
               <div className="basis-1/12">
                 <CustomCombinedButton
                   text="Reset"
-                  icon={<MdOutlineRefresh size={20} className="mr-2" />}
+                  icon={<FaRotateLeft size={18} className="mr-2 text-gray4" />}
                   onClick={() => handleReset(2)}
                   isReset={true}
                   buttonColor="blue"
@@ -130,13 +166,19 @@ function User() {
               <div className="basis-1/12">
                 <CustomCombinedButton
                   text="Search"
-                  icon={<BsSearch size={20} className="mr-2" />}
+                  icon={<IoSearchSharp size={20} className="mr-2" />}
                   onClick={() => handleSearch(2)}
                   isReset={true}
                   buttonColor="other"
                 />
               </div>
             </div>
+            {isId
+              ?
+              ""
+              :
+              <p className="text-sm text-red">Valid ID required</p>
+            }
             <Table headers={businessHeaders} data={tableBusinessData?.list} context="businessUser" />
             <Pagination
               isBlueBackground={true}
