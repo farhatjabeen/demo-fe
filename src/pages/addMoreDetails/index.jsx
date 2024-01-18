@@ -32,14 +32,14 @@ export default function AddMoreDetails() {
     const userDetails = useSelector(userData);
     const itemDetailsById = useSelector(searchDetailsById);
     const reportDetails = useParams();
-    console.log(reportDetails,"reportDetails");
+    console.log(reportDetails, "reportDetails");
 
     useEffect(() => {
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
         setIsLoader(true)
         const addData = async () => {
-        console.log(reportDetails.id,"reportDetails.id")
+            console.log(reportDetails.id, "reportDetails.id")
 
             if (reportDetails.id) {
                 const getDetails = await dispatch(searchItemById(reportDetails.id))
@@ -51,13 +51,13 @@ export default function AddMoreDetails() {
         addData();
 
         // if (reportDetails.newItem || reportDetails==={}) {
-            methods.setValue("itemName", reportDetails?.newItem)
-            methods.setValue("location", reportDetails?.location)
-            methods.setValue("itemImage", null)
-            methods.setValue("cloudinary_id", null)
-            methods.setValue("keywords", null)
-            setIsUploaded(false)
-            setImageLoader(true);
+        methods.setValue("itemName", reportDetails?.newItem)
+        methods.setValue("location", reportDetails?.location)
+        methods.setValue("itemImage", null)
+        methods.setValue("cloudinary_id", null)
+        methods.setValue("keywords", null)
+        setIsUploaded(false)
+        setImageLoader(true);
         // }
     }, []);
 
@@ -67,10 +67,10 @@ export default function AddMoreDetails() {
             console.log("hi from itemid")
             setItemImage(itemDetailsById?.itemImage);
             setCloudinaryId(itemDetailsById?.cloudinary_id);
-            if(itemDetailsById?.itemImage){
+            if (itemDetailsById?.itemImage) {
                 setImageLoader(true);
                 console.log("hi from loader")
-            } 
+            }
             methods.reset({
                 emailMailId: itemDetailsById?.emailMailId || "",
                 mobileNumber: itemDetailsById?.mobileNumber != undefined ? `${itemDetailsById?.mobileNumber}` : "",
@@ -117,23 +117,23 @@ export default function AddMoreDetails() {
 
     const submitData = async (data) => {
         try {
-           
+
             console.log("from submit form");
 
             if (userDetails?.role === 'BUSINESS' && !reportDetails.id) {
                 const inputString = methods.getValues().keywords;
-            methods.setValue('keywords', inputString.split(','));
+                methods.setValue('keywords', inputString.split(','));
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
-                console.log(cloudinaryId.length,"cloudinaryId.length")
-                
-                    console.log("hi from businessAddMoreDetails")
-                    const addedItem = await dispatch(businessAddMoreDetails(data));
-                    if (addedItem) {
-                        navigate('/allitems')
-                    }
-               
+                console.log(cloudinaryId.length, "cloudinaryId.length")
+
+                console.log("hi from businessAddMoreDetails")
+                const addedItem = await dispatch(businessAddMoreDetails(data));
+                if (addedItem) {
+                    navigate('/allitems')
+                }
+
 
             } else if (userDetails?.role === 'USER' && !reportDetails.id) {
                 const inputString = methods.getValues().keywords;
@@ -148,32 +148,32 @@ export default function AddMoreDetails() {
 
             } else {
                 const inputString = methods.getValues().keywords;
-                console.log(JSON.stringify(inputString),"inputString")
-                
-                methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(',')); 
-                console.log(methods.getValues().keywords,"keywords")
-                
+                console.log(JSON.stringify(inputString), "inputString")
+
+                methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
+                console.log(methods.getValues().keywords, "keywords")
+
                 // methods.setValue("itemImage", itemImage?.map(item => item));
                 // methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                 const dataNow = methods.getValues();
-                console.log(dataNow,"datanow")
-                console.log(itemImage,"itemImage")
-                console.log(cloudinaryId,"cloudinaryId")
-                
-                if(itemImage?.length>0 && cloudinaryId?.length>0){
+                console.log(dataNow, "datanow")
+                console.log(itemImage, "itemImage")
+                console.log(cloudinaryId, "cloudinaryId")
+
+                if (itemImage?.length > 0 && cloudinaryId?.length > 0) {
                     setImageLoader(true)
                     const isEdited = await dispatch(userEditItemDetails(reportDetails.id, data))
 
                     isEdited && setItemImage([]);
                     isEdited && setCloudinaryId([]);
-                    isEdited && (navigate('/mylistings'))
-                }else{
+                    isEdited && (navigate(window.history.back()))
+                } else {
                     setImageLoader(false)
                 }
-                    
-                
+
+
             }
 
         } catch (error) {
@@ -190,7 +190,7 @@ export default function AddMoreDetails() {
 
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
-        console.log(selectedFiles,"selectedFiles")
+        console.log(selectedFiles, "selectedFiles")
         setFiles((prevFiles) => {
             const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
             if (newFiles) {
@@ -210,36 +210,37 @@ export default function AddMoreDetails() {
 
     const handleDbFileDelete = (index) => {
         console.log(index, "hi from delete")
-console.log(itemImage?.length,"itemImage.length>1")
-        if(itemImage?.length>1 && cloudinaryId?.length>1){
+        console.log(itemImage?.length, "itemImage.length>1")
+        if (itemImage?.length > 1 && cloudinaryId?.length > 1) {
             setItemImage((prevFiles) => {
                 const newFiles = [...prevFiles];
                 newFiles.splice(index, 1);
                 return newFiles;
             });
             setCloudinaryId((prevFiles) => {
+                const newIds = [...prevFiles];
+                newIds.splice(index, 1);
+                return newIds;
+            });
+            console.log(itemImage?.length, "itemImage.length>1")
+            !reportDetails.id && setFiles((prevFiles) => {
                 const newFiles = [...prevFiles];
                 newFiles.splice(index, 1);
                 return newFiles;
-            });
-        }else {
+            })
+        } else {
             console.log("hi last delete")
             setItemImage(null);
             setCloudinaryId(null);
             setFiles(null)
             setIsUploaded(false)
         }
-        console.log(itemImage?.length,"itemImage.length>1")
-        !reportDetails.id && setFiles((prevFiles) => {
-            const newFiles = [...prevFiles];
-            newFiles.splice(index, 1);
-            return newFiles;
-        })
+
     };
 
     useEffect(() => {
-        console.log(files?.length,"files?.length")
-        if (files && files?.length > 0 ) {
+        console.log(files?.length, "files?.length")
+        if (files && files?.length > 0) {
             console.log("hi file")
             let formData = new FormData();
             files?.map((items, i) => {
@@ -247,7 +248,7 @@ console.log(itemImage?.length,"itemImage.length>1")
                     formData.append("item", items)
                 );
             })
-            console.log(formData,'formData')
+            console.log(formData, 'formData')
 
             setIsImageUploaded(true)
             // if (reportDetails.id) {
@@ -455,7 +456,7 @@ console.log(itemImage?.length,"itemImage.length>1")
                                     {imageLoader ?
                                         ""
                                         :
-                                        <p>Images required</p>
+                                        <p className='text-red'>Images required</p>
                                     }
                                 </div>
                             </div>

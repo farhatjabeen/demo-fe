@@ -125,7 +125,7 @@ export const addMoreDetailsItemSchema = yup.object().shape({
     locationIdentifiers: yup
         .string()
         .matches(spaceRegex, 'Invalid characters found')
-        .matches(nameRegex, 'Invalid characters used')
+        // .matches(nameRegex, 'Invalid characters used')
         .required('Landmark required'),
     itemDescription: yup
         .string()
