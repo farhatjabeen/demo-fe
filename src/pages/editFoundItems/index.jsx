@@ -29,6 +29,7 @@ const EditFoundItems = () => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [cloudinaryId, setCloudinaryId] = useState([]);
   const [itemImage, setItemImage] = useState([]);
+  const [isLoader, setIsLoader] = useState(true);
 
   const methods = useForm({
     defaultValues: {
@@ -43,7 +44,10 @@ const EditFoundItems = () => {
     resolver
   });
   useEffect(() => {
-    dispatch(foundItemById(id))
+    setIsLoader(true);
+    dispatch(foundItemById(id)).then(() => {
+      setIsLoader(false); 
+  });
   }, [id])
   const foundItemDetails = useSelector(getItemId);
   const { userName, mobileNumber, emailMailId, foundDate, foundTime, location, itemCategory } = foundItemDetails || {};
@@ -143,7 +147,8 @@ const EditFoundItems = () => {
           ]}
         />
       </div>
-
+      {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
+      :
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(submitData)}>
           <div className="bg-blueback  mt-10 rounded-lg p-4 ">
@@ -287,6 +292,7 @@ const EditFoundItems = () => {
           </div>
         </form>
       </FormProvider>
+}
     </div >
   )
 }
