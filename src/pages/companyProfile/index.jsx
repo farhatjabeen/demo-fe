@@ -64,7 +64,7 @@ export default function CompanyProfile() {
         resolver
     });
 
-    const submitData = (data) => {
+    const submitData = async(data) => {
         try {
             const name = methods.getValues().name;
             const emailMailId = methods.getValues().emailMailId;
@@ -75,14 +75,20 @@ export default function CompanyProfile() {
 
             const currentPassword = methods.getValues().currentPassword;
             if (currentPassword) {
-                dispatch(editCompanyProfileData(data));
+                const changeDetails = await dispatch(editCompanyProfileData(data));
                 methods.reset({
                     currentPassword: "",
                     newPassword: "",
                     confirmPassword: ""
                 })
+                if(changeDetails){
+                    dispatch(companyProfileData());
+                }
             } else {
-                dispatch(editCompanyProfileData({ name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }))
+                const changeDetails = await dispatch(editCompanyProfileData({ name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }))
+                if(changeDetails){
+                    dispatch(companyProfileData());
+                }
             }
 
         } catch (error) {

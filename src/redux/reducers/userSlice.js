@@ -388,7 +388,7 @@ export const generalUserDetails = () => (dispatch) => {
         }).then((res) => {
             const { emailMailId, name, mobileNumber } = res.data
             dispatch(getUserDetails({ emailMailId, name, mobileNumber }))
-            return resolve(res)
+            return resolve(res.data)
         }).catch(err => {
             console.log(err)
             return err;
