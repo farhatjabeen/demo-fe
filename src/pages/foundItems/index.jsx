@@ -13,7 +13,9 @@ function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const PageLimit = 10;
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [itemCode, setItemCode] = useState('');
+  const [itemName, setItemName] = useState('');
   const dispatch = useDispatch();
   const tableData = useSelector(foundItemDetails);
   const items = useSelector(itemDropdown)
@@ -26,21 +28,39 @@ function FoundItems() {
   useEffect(() => {
     dispatch(itemDropdownValues());
   }, []);
+
   useEffect(() => {
     dispatch(itemDropdownValues());
   }, []);
-
 
   const handleExport = () => {
     dispatch(adminExportItems())
   };
 
+  const handleTermChange = (e) =>{
+    const valueNow = e.target.value;
+    setSearchTerm(e.target.value)
+    console.log(searchTerm,"searchTerm")
+    console.log(isNaN(+searchTerm),"isNaN(+searchTerm")
+    if(isNaN(+valueNow)){
+      setItemName(searchTerm);
+      setItemCode("");
+    }else{
+      setItemCode(searchTerm);
+      setItemName("");
+    }
+  }
+
   const handleReset = () => {
     setSearchTerm("");
     setSelectedCategory("");
+    dispatch(adminFetchItems(currentPage, PageLimit))
   };
-  const handleSearch = () => {
-    dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, searchTerm));
+  const handleSearch = async() => {
+    
+    if(itemCode || itemName){
+      dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
+    }
   };
 
 
@@ -82,7 +102,7 @@ function FoundItems() {
             placeholder="Search using item id or name"
             className=" border border-gray3 placeholder:text-gray3 pl-2 basis-5/12 rounded-md mr-4 py-2 "
             value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
+            onChange={handleTermChange}
           />
           <div className="basis-5/12">
             <DropdownMenu

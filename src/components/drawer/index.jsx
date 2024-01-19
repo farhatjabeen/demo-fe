@@ -18,7 +18,7 @@ const SideMenu = () => {
   };
   const settingsTabWidth = isCollapsed ? "w-12" : "w-52";
   return (
-    <div className={`sidebar relative ${isCollapsed ? "" : "w-72"} bg-grey-light shadow-slate-50 m-4 pl-4`}>
+    <div className={`sidebar relative bg-grey-light shadow-slate-50 m-4 pl-4`}>
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
         {isCollapsed ? (
           <div className="flex justify-between ">
@@ -39,21 +39,22 @@ const SideMenu = () => {
       <ul>
         <div className="mb-4 mt-14" >
           <li className={`${window.location.pathname.includes("/admin/user/foundItems")
-            ? " bg-light-blue text-blue font-bold  py-2 rounded-lg "
+            ? " bg-light-blue text-blue font-bold py-2 rounded-lg" 
             : " "
-            }`}
+            } ${!isCollapsed ? '': 'w-10'}`}
            >
             <Link to="/admin/user/foundItems"  >
               <span className="pl-2 flex">
                 <FiCheckCircle size={24} />
-                <div className="pl-4 ">
+                <div className={!isCollapsed ? 'pl-4': ''}>
                   <p className={!isCollapsed ? '' : 'hidden'}> Found Items</p>
                 </div>
               </span>
             </Link>
           </li>
         </div>
-        <li className={`mb-4  ${window.location.pathname.includes("/admin/user/users") || window.location.pathname.includes("/admin/user/businessUser") ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`} onClick={() => setShowSubUSer(!showSubUser)}>
+
+        <li className={`mb-4`} onClick={() => setShowSubUSer(!showSubUser)}>
           <div className="cursor-pointer">
             <span className="pl-2 flex">
               <FiUsers size={24}  onClick={handleToggleCollapse} />
@@ -65,7 +66,7 @@ const SideMenu = () => {
         </li>
         {!isCollapsed && showSubUser && (
           <>
-            <li className={`mb-4 pl-2 ${window.location.pathname === "/admin/user/users" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
+            <li className={`mb-4 w-64 pl-2 ${window.location.pathname === "/admin/user/users" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
               <Link to="/admin/user/users">
                 <span className="pl-8 flex" >
                   <FiUser size={24}  />
@@ -73,7 +74,7 @@ const SideMenu = () => {
               </Link>
             </li>
 
-            <li className={`mb-4  pl-2 ${window.location.pathname === "/admin/user/businessUser" ? "bg-light-blue text-blue font-bold py-3 rounded-lg" : ""}`}>
+            <li className={`mb-4 w-64 pl-2 ${window.location.pathname === "/admin/user/businessUser" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
               <Link to="/admin/user/businessUser" >
                 <span className="pl-8 flex" >
                   <PiSuitcaseBold size={24}  />

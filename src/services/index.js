@@ -2,11 +2,24 @@ import Loader from "../components/loader";
 import { clearUserData } from '../redux/reducers/userSlice'
 import { Toast } from '../components/toast';
 import { axiosInstance, getAuthToken, logout } from "../utils/helper"
+import axios from "axios";
 
 let store;
 
 export const injectStore = _store => {
     store = _store
+};
+
+export const getExportFileStream = async ({ url, isAuth, tokenType = "adminToken",apiVersion = 'v1' }) => {
+    try {
+        return await axios.get(
+            `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`, {
+            accept: 'application/json',
+            Authorization: isAuth ? await getAuthToken(tokenType) : "",
+        })
+    } catch (error) {
+        console.log("getExportFileStream API error", error)
+    }
 };
 
 const apiRequest = async ({

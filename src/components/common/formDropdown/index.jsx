@@ -7,7 +7,7 @@ import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function FormDropdown({ name, editButton, dropdownValues, firstOptionName, isBusinesSignUp=false, isSearchReport=false, valueFromDb, optionButtonClass}) {
+function FormDropdown({ name, editButton, iscleared, dropdownValues, firstOptionName, isBusinesSignUp = false, isSearchReport = false, valueFromDb, optionButtonClass }) {
 
     return (
         <ConnectForm>
@@ -29,18 +29,23 @@ function FormDropdown({ name, editButton, dropdownValues, firstOptionName, isBus
                                             ref={ref}
                                             id={name}
                                             disabled={!editButton}
-                                            className={`${optionButtonClass} ${isSearchReport ? "custom-arrow": isBusinesSignUp ? "custom-arrow-for-business" : "custom-arrow-for-companyProfile"} ${getFormErrorMessage(errors, name)&&isSearchReport ? 'text-red' : ""}`}
+                                            className={`${optionButtonClass} ${isSearchReport ? "custom-arrow" : isBusinesSignUp ? "custom-arrow-for-business" : "custom-arrow-for-companyProfile"} ${getFormErrorMessage(errors, name) && isSearchReport ? 'text-red' : ""}`}
                                             onChange={onChange}
                                         >
 
-                                            <option value="" className='w-full mx-4 my-2 text-black text-sm'>{
-                                                getFormErrorMessage(errors, name)&&isSearchReport ?
-                                                    <div className="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6  md:text-sm sm:text-xs mt-1">
-                                                        <FormErrorMessage error={getFormErrorMessage(errors, name)} />
-                                                    </div>
-                                                    :
-                                                   `${firstOptionName}`
-                                            }</option>
+                                            <option
+                                                value=""
+                                                selected={iscleared}
+                                                className='w-full mx-4 my-2 text-black text-sm'
+                                            >
+                                                {
+                                                    getFormErrorMessage(errors, name) && isSearchReport ?
+                                                        <div className="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6  md:text-sm sm:text-xs mt-1">
+                                                            <FormErrorMessage error={getFormErrorMessage(errors, name)} />
+                                                        </div>
+                                                        :
+                                                        `${firstOptionName}`
+                                                }</option>
                                             {dropdownValues?.map((items, i) => {
                                                 return (
                                                     <option
