@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import apiRequest from '../../services'
+import apiRequest, { getExportFileStream } from '../../services'
 import endpoints from "../../services/endpoints";
 import { Toast } from "../../components/toast";
 
@@ -112,7 +112,7 @@ export const businessUpdateItems = (itemId, data) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
-            Toast({type:"success",message:res.message})
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err);
@@ -285,13 +285,34 @@ export const viewItemById = (itemId) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
         }).then((res) => {
-            const { itemImage, itemName, itemCategory, itemDescription,cloudinary_id,
-                keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId } = res.data
-            // if (Array.isArray(itemImage) && itemImage.length > 0) {
-            //     dispatch(viewItemDetailsById(itemImage))
-            // }
+            const {
+                itemImage,
+                itemName,
+                itemCategory,
+                itemDescription,
+                cloudinary_id,
+                keywords,
+                location,
+                locationIdentifiers,
+                userName,
+                mobileNumber,
+                emailMailId
+            } = res.data
 
-            dispatch(viewItemDetailsById({ itemImage, itemName, itemCategory, itemDescription, keywords, location, locationIdentifiers, userName, mobileNumber, emailMailId,cloudinary_id }))
+
+            dispatch(viewItemDetailsById({
+                itemImage,
+                itemName,
+                itemCategory,
+                itemDescription,
+                keywords,
+                location,
+                locationIdentifiers,
+                userName,
+                mobileNumber,
+                emailMailId,
+                cloudinary_id
+            }))
 
             return resolve(true)
         }).catch(err => {
@@ -435,7 +456,7 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
             tokenType: 'businessUserToken'
 
         }).then((res) => {
-            Toast({type:"success",message: res.message})
+            Toast({ type: "success", message: res.message })
             return resolve(true)
         }).catch(err => {
             console.log(err)
@@ -514,7 +535,7 @@ export const adminUpdateFoundItems = (itemId, data) => (dispatch) => {
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            Toast({type:"success",message:res.message})
+            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err);
@@ -532,7 +553,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 method: endpoints.ApiMethods.DELETE,
                 isAuth: true,
                 tokenType: 'adminToken',
-            }).then((res)=>{
+            }).then((res) => {
                 Toast({ type: "success", message: "Item deleted successfully." });
             });
             dispatch(adminFetchItems());
@@ -543,7 +564,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 method: endpoints.ApiMethods.DELETE,
                 isAuth: true,
                 tokenType: 'adminToken',
-            }).then((res)=>{
+            }).then((res) => {
                 Toast({ type: "success", message: "Item deleted successfully." });
             });
             dispatch(adminFetchUser());
@@ -555,13 +576,12 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 method: endpoints.ApiMethods.DELETE,
                 isAuth: true,
                 tokenType: 'adminToken',
-            }).then((res)=>{
+            }).then((res) => {
                 Toast({ type: "success", message: "Item deleted successfully." });
             });
             dispatch(adminFetchBusinessUser());
         }
 
-        
     } catch (error) {
         console.error(error);
         if (error?.status === 400 && error?.data === "Item not found") {
@@ -573,28 +593,37 @@ export const deleteItem = (itemId, context) => (dispatch) => {
 };
 
 //admin export file 
-export const adminExportItems = () => (dispatch) => {
-    return new Promise((resolve, reject) => {
-        apiRequest({
+export const adminExportItems = () => async (dispatch) => {
+    try {
+        const response = await getExportFileStream({
             url: endpoints.apiPath.items.itemReport,
-            method: endpoints.ApiMethods.GET,
             isAuth: true,
-            tokenType: 'adminToken'
-        }).then((res) => {
-            debugger;
-            const blob = new Blob([res], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "data.csv";
-            a.click();
-            window.URL.revokeObjectURL(a);
-            resolve(true);
-        }).catch(err => {
-            console.error(err);
-            reject(err);
+            tokenType: "adminToken"
         });
-    });
+        const data = response?.data
+        if (data) {
+            let a = window.document.createElement('a')
+            let blob = new Blob([data], {
+                type: 'text/csv;charset=utf-8;'
+            })
+            if (navigator.msSaveOrOpenBlob) {
+                navigator.msSaveOrOpenBlob(blob, 'found items.csv')
+            } else {
+                a.href = window.URL.createObjectURL(blob)
+                // supply your own fileName here...
+                a.download = 'found items.csv'
+                document.body.appendChild(a)
+                a.click()
+                document.body.removeChild(a)
+            }
+        } else {
+            Toast({ type: "error", message: "There is no item available in found items" });
+        }
+    } catch (error) {
+        Toast({ type: "error", message: error });
+        console.error(error);
+        return error;
+    }
 };
 
 
