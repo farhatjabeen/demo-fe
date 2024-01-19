@@ -1,11 +1,12 @@
 import * as yup from 'yup';
 
 const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
-const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{1,3}$/;
 const nameRegex = /^(?!.*\d)(?!.*\s{2,})[a-zA-Z]([a-zA-Z0-9\s]*[a-zA-Z])?$/;
 const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
 const specialCharacterRegex = /^[a-zA-Z0-9\s]+$/;
 const serbiaMobileNumberRegExp = /^6[0-9]\d{7,8}$/;
+const landMark = /^[A-Za-z#\-]+(?:\s[A-Za-z#\-]+)*$/;
 
 export const loginSchema = yup.object({
     emailMailId: yup
@@ -85,10 +86,18 @@ export const addMoreDetailsSchema = yup.object({
         .required('Location required'),
     locationIdentifiers: yup
         .string()
-        .matches(spaceRegex, 'Invalid characters found')
+        // .matches(spaceRegex, 'Invalid characters found')
+        .matches(landMark, 'Invalid characters found')
         .required('Landmark required'),
     itemDescription: yup
         .string()
+        .test('wordCount', 'Description must have at least 5 words', (value) => {
+            if (!value) {
+                return false;
+            }
+            const words = value.trim().split(/\s+/);
+            return words.length >= 5;
+        })
         .matches(spaceRegex, 'Invalid characters found')
         .required('Item description required'),
     itemCategory: yup
@@ -124,11 +133,19 @@ export const addMoreDetailsItemSchema = yup.object().shape({
         .required('Location required'),
     locationIdentifiers: yup
         .string()
-        .matches(spaceRegex, 'Invalid characters found')
+        .matches(landMark, 'Invalid characters found')
+        // .matches(spaceRegex, 'Invalid characters found')
         // .matches(nameRegex, 'Invalid characters used')
         .required('Landmark required'),
     itemDescription: yup
         .string()
+        .test('wordCount', 'Description must have at least 5 words', (value) => {
+            if (!value) {
+                return false;
+            }
+            const words = value.trim().split(/\s+/);
+            return words.length >= 5;
+        })
         .matches(spaceRegex, 'Invalid characters found')
         .required('Item description required'),
     itemCategory: yup
@@ -327,6 +344,7 @@ export const editFoundItemsSchema = yup.object({
         .string()
         .matches(spaceRegex, 'Invalid characters found')
         .required('Keywords required')
+
 
 })
 

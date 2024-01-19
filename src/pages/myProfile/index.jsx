@@ -14,6 +14,7 @@ export default function MyProfile() {
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [currentPasswordEntered, setCurrentPasswordEntered] = useState(false)
     const resolver = useValidationResolver(myProfileSchema);
+    const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
 
     const dispatch = useDispatch();
     // const existingData = useSelector(userData);
@@ -82,7 +83,7 @@ export default function MyProfile() {
                 if (newPassword && retypePassword) {
                     const changePassword = await dispatch(userProfileData(data));
                     console.log(changePassword, "changePassword")
-                    if(changePassword){
+                    if (changePassword) {
                         dispatch(generalUserDetails());
                     }
                 }
@@ -90,10 +91,14 @@ export default function MyProfile() {
                     setCurrentPasswordEntered(true)
                 }
 
-            } else {
+            } else if (newPassword || retypePassword) {
+                setCheckCurrentPassword(false)
+            }
+            else {
+                setCheckCurrentPassword(true)
                 setCurrentPasswordEntered(false)
                 const changeDetails = await dispatch(userProfileData({ name, emailMailId, mobileNumber }));
-                if(changeDetails){
+                if (changeDetails) {
                     dispatch(generalUserDetails());
                 }
             }
@@ -105,6 +110,7 @@ export default function MyProfile() {
 
     const handleEditButton = () => {
         setEditButton(!editButton);
+        setCheckCurrentPassword(true)
         methods.reset({
             emailMailId: fetchUserDetails?.emailMailId || "",
             mobileNumber: fetchUserDetails?.mobileNumber || "",
@@ -177,26 +183,35 @@ export default function MyProfile() {
                                 />
 
                             </div>
-
+                            <hr className='w-full mt-8 text-gray58 opacity-50'></hr>
                             <div>
-                                <div className='font-bold text-2xl pt-[30px] pb-[60px]'>
+                                <div className='font-bold text-2xl mt-8 mb-12'>
                                     Change Password
                                 </div>
                                 <div className='flex justify-between mt-9'>
 
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter Current password</label>
-                                    <TextInput
-                                        type="password"
-                                        placeholder="Current password"
-                                        eyeClass='absolute bottom-3 left-80 pl-5'
-                                        name="currentPassword"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
-                                        autoComplete="off"
-                                        disable={!editButton}
-                                        showPassword={showRegisterPassword}
-                                        setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
-                                    />
+                                    <div>
+                                        <TextInput
+                                            type="password"
+                                            placeholder="Current password"
+                                            eyeClass='absolute bottom-3 left-80 pl-5'
+                                            name="currentPassword"
+                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                            autoComplete="off"
+                                            disable={!editButton}
+                                            showPassword={showRegisterPassword}
+                                            setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
+                                        />
+                                        {
+                                            checkCurrentPassword ?
+                                                ""
+                                                :
+                                                <p className='flex justify-start text-red'>Current password required</p>
+                                        }
+                                    </div>
                                 </div>
+
 
                                 <div className='relative'>
                                     <div className='flex justify-between mt-9'>

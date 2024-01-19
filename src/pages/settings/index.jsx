@@ -26,7 +26,7 @@ const Settings = () => {
     });
     const submitData = async (data) => {
         try {
-            const reset = dispatch(adminChangePassword(data))
+            const reset = await dispatch(adminChangePassword(data))
             if (reset) {
                 navigate('/admin/signin');
             }
@@ -53,7 +53,7 @@ const Settings = () => {
                     <p className='font-bold pb-6'>Passwords must contain :</p>
                     <ul className='list-disc ml-4 flex text-primary-color'>
                         <li className='w-4/12'>
-                            <p className='text-black'> At least 6 characters</p>
+                            <p className='text-black'> At least 8 characters</p>
                         </li>
                         <li className='w-4/12 pb-4'>
                             <p className='text-black'> At least 1 Upper case letter (A-Z)</p>
@@ -85,7 +85,7 @@ const Settings = () => {
                                     name="currentPassword"
                                     eyeClass='absolute top-4 left-3/4 ml-24'
                                     autoComplete="off"
-                                    placeholder="currentPassword"
+                                    placeholder="Enter Current Password"
                                     className="w-full py-4 px-3 border border-gray-300 rounded-md"
                                     required
                                     showPassword={showPassword}
@@ -99,7 +99,7 @@ const Settings = () => {
                                     name="newPassword"
                                     eyeClass='absolute top-4 left-3/4 ml-24'
                                     autoComplete="off"
-                                    placeholder="newPassword"
+                                    placeholder="Enter New Password"
                                     className="w-full py-4 px-3 border border-gray-300 rounded-md"
                                     required
                                     showPassword={showNewPassword}
@@ -113,7 +113,7 @@ const Settings = () => {
                                     type="password"
                                     name="confirmPassword"
                                     eyeClass='absolute top-4 left-3/4 ml-24'
-                                    placeholder="confirmPassword"
+                                    placeholder="Enter Confirm Password"
                                     autoComplete="off"
                                     className="w-full py-4 px-3 border border-gray-300 rounded-md"
                                     required
