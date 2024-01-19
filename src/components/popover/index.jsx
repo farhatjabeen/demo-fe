@@ -94,8 +94,8 @@ const PopoverComponent = () => {
     });
 
     useEffect(() => {
-        const newPassword = methodsForRegister.getValues().newPassword;
-        if (newPassword) {
+        const password = methodsForRegister.getValues().password;
+        if (password) {
             setIsPasswordEntered(true)
         }
     }, [methodsForRegister])
@@ -126,20 +126,21 @@ const PopoverComponent = () => {
             if (password) {
                 setIsPasswordEntered(true)
                 newPassword ? setPasswordMatch(true) : setPasswordMatch(false);
-                if (password === newPassword) {
+                if (passwordRegExp.test(password)) {
+                    setValidatePassword(false);
+                    if (password === newPassword) {
                     setPasswordMatch(true);
-                    if (passwordRegExp.test(password) && passwordRegExp.test(newPassword)) {
-                        setValidatePassword(false);
                         const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
                         if (registerSuccessful) {
                             handleClose();
                         }
                     } else {
-                        setValidatePassword(true)
+                        setPasswordMatch(false);
                     }
 
                 } else {
-                    setPasswordMatch(false);
+                    setValidatePassword(true)
+                    
                 }
             } else {
                 setIsPasswordEntered(false)
@@ -153,22 +154,25 @@ const PopoverComponent = () => {
         try {
             const password = methodsForRegister.getValues().password;
             const newPassword = methodsForRegister.getValues().newPassword;
-
+           
             if (password) {
                 setIsPasswordEntered(true)
-                if (password === newPassword) {
+                newPassword ? setPasswordMatch(true) : setPasswordMatch(false);
+                if (passwordRegExp.test(password)) {
+                    setValidatePassword(false);
+                    if (password === newPassword) {
                     setPasswordMatch(true);
-                    if (passwordRegExp.test(password) && passwordRegExp.test(newPassword)) {
-                        setValidatePassword(false);
                         const resetSuccessful = await dispatch(generalResetPassword({ password }, tokens));
                         if (resetSuccessful) {
                             handleClose();
                         }
                     } else {
-                        setValidatePassword(true)
+                        setPasswordMatch(false);
                     }
+
                 } else {
-                    setPasswordMatch(false);
+                    setValidatePassword(true)
+                    
                 }
             } else {
                 setIsPasswordEntered(false)
@@ -202,6 +206,11 @@ const PopoverComponent = () => {
     const handleClose = () => {
         setIsPopoverOpen(false);
         setPasswordBox(false);
+        setShowPassword(false);
+        setShowRegisterNewPassword(false);
+        setShowRegisterPassword(false);
+        setValidatePassword(false);
+        setIsPasswordEntered(true);
         setRestPasswordBox(false);
         setIsEmailValid(false);
         setPasswordMatch(true);
@@ -277,7 +286,7 @@ const PopoverComponent = () => {
                                                     <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
                                                     <TextInput
                                                         type='password'
-                                                        name="newPassword"
+                                                        name="password"
                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                         autoComplete="off"
                                                         required
@@ -290,10 +299,16 @@ const PopoverComponent = () => {
                                                         :
                                                         <p className='text-red'>Password required</p>
                                                     }
+                                                    {
+                                                        validatePassword ?
+                                                            <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
+                                                            :
+                                                            ""
+                                                    }
                                                     <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
                                                     <TextInput
                                                         type='password'
-                                                        name='password'
+                                                        name='newPassword'
                                                         eyeClass='absolute top-3 left-3/4 ml-16'
                                                         className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                         autoComplete="off"
@@ -305,12 +320,7 @@ const PopoverComponent = () => {
                                                         :
                                                         <p className='text-red'>Passwords does not match</p>
                                                     }
-                                                    {
-                                                        validatePassword ?
-                                                            <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
-                                                            :
-                                                            ""
-                                                    }
+                                                    
                                                 </div>
                                                 <button
                                                     type='submit'
@@ -389,7 +399,7 @@ const PopoverComponent = () => {
                                                                         <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
                                                                         <TextInput
                                                                             type='password'
-                                                                            name="newPassword"
+                                                                            name="password"
                                                                             className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                                             autoComplete="off"
                                                                             required
@@ -402,10 +412,16 @@ const PopoverComponent = () => {
                                                                             :
                                                                             <p className='text-red'>Password required</p>
                                                                         }
+                                                                        {
+                                                                            validatePassword ?
+                                                                                <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
+                                                                                :
+                                                                                ""
+                                                                        }
                                                                         <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
                                                                         <TextInput
                                                                             type='password'
-                                                                            name='password'
+                                                                            name='newPassword'
                                                                             eyeClass='absolute top-3 left-3/4 ml-16'
                                                                             className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
                                                                             autoComplete="off"
@@ -417,12 +433,7 @@ const PopoverComponent = () => {
                                                                             :
                                                                             <p className='text-red'>Passwords does not match</p>
                                                                         }
-                                                                        {
-                                                                            validatePassword ?
-                                                                                <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
-                                                                                :
-                                                                                ""
-                                                                        }
+                                                                        
                                                                     </div>
                                                                     <button
                                                                         type='submit'
