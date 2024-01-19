@@ -11,7 +11,8 @@ import { adminFetchUser, userDetails, adminFetchBusinessUser, businessUserDetail
 
 function User() {
   // Local states
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageForUser, setCurrentPageForUser] = useState(1);
+  const [currentPageForBusiness, setCurrentPageForBusiness] = useState(1);
   const [searchUserTerm, setSearchUserTerm] = useState("");
   const [resetHandle, setResetHandle] = useState(false);
   const [isId, setIsId] = useState(true);
@@ -24,21 +25,21 @@ function User() {
   const searchRegex = /^[0-9]+$/;
 
   useEffect(() => {
-    dispatch(adminFetchUser(currentPage, PageLimit))
-    dispatch(adminFetchBusinessUser(currentPage, PageLimit))
-  }, [dispatch, currentPage, PageLimit]);
+    dispatch(adminFetchUser(currentPageForUser, PageLimit))
+    dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit))
+  }, [dispatch, currentPageForUser, currentPageForBusiness, PageLimit]);
 
   const handleReset = async (tab) => {
     setResetHandle(true)
     if (tab === 1) {
       setSearchUserTerm("");
-      const values = await dispatch(adminFetchUser(currentPage, PageLimit))
+      const values = await dispatch(adminFetchUser(currentPageForUser, PageLimit))
       if (values) {
         setResetHandle(false)
       }
     } else if (tab === 2) {
       setSearchBusinessTerm("");
-      const values = await dispatch(adminFetchBusinessUser(currentPage, PageLimit))
+      const values = await dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit))
       if (values) {
         setResetHandle(false)
       }
@@ -49,14 +50,14 @@ function User() {
     if (tab === 1) {
       if (searchRegex.test(searchUserTerm)) {
         setIsId(true)
-        dispatch(adminFetchUser(currentPage, PageLimit, searchUserTerm));
+        dispatch(adminFetchUser(currentPageForUser, PageLimit, searchUserTerm));
       } else {
         setIsId(false)
       }
     } else if (tab === 2) {
       if (searchRegex.test(searchBusinessTerm)) {
         setIsId(true)
-        dispatch(adminFetchBusinessUser(currentPage, PageLimit, searchBusinessTerm));
+        dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit, searchBusinessTerm));
       } else {
         setIsId(false)
       }
@@ -65,10 +66,10 @@ function User() {
 
 
   const handlePageChange1 = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    setCurrentPageForUser(pageNumber);
   };
   const handlePageChange2 = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    setCurrentPageForBusiness(pageNumber);
   };
   const userHeaders = [
     { key: "userCode", label: "User ID" },

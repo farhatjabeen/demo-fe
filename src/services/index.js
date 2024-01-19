@@ -10,7 +10,7 @@ export const injectStore = _store => {
     store = _store
 };
 
-export const getExportFileStream = async ({ url, isAuth, tokenType = "adminToken",apiVersion = 'v1' }) => {
+export const getExportFileStream = async ({ url, isAuth, tokenType = "adminToken", apiVersion = 'v1' }) => {
     try {
         return await axios.get(
             `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`, {
@@ -57,9 +57,10 @@ const apiRequest = async ({
 
         axiosInstance(config).then(response => {
             showLoader(false)
-            resolve(statusHandler(response));
+            resolve(statusHandler(response, tokenType));
         }).catch(error => {
             showLoader(false);
+            resolve(statusHandler(error.response, tokenType));
             if (error?.code === "ERR_NETWORK") {
                 Toast({ type: "error", message: "Server is under maintenance. Please try again later." });
             } else {
@@ -80,12 +81,12 @@ const showLoader = (status) => {
     }
 }
 
-export const statusHandler = (response, exposeHeaders = true) => {
+export const statusHandler = (response, tokenType, exposeHeaders = true) => {
     const headers = {};
 
     if (response.status === 401 || response.status === 403) {
         Toast({ type: 'error', message: response.statusText });
-        setTimeout(() => logout(), 1000);
+        setTimeout(() => logout(tokenType), 1000);
     }
 
     if (exposeHeaders) {

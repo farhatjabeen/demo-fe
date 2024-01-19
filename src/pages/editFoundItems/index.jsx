@@ -30,6 +30,7 @@ const EditFoundItems = () => {
   const [cloudinaryId, setCloudinaryId] = useState([]);
   const [itemImage, setItemImage] = useState([]);
   const [isLoader, setIsLoader] = useState(true);
+  const [isImage, setIsImage] = useState(true);
 
   const methods = useForm({
     defaultValues: {
@@ -70,6 +71,12 @@ const EditFoundItems = () => {
     setSelectedCategory(itemCategory)
     dispatch(itemDropdownValues());
   }, [itemCategory]);
+
+  useEffect(()=>{
+    if(itemImage.length){
+      setIsImage(true)
+    }
+  },[itemImage])
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -112,6 +119,7 @@ const EditFoundItems = () => {
       upload.then((res) => {
         setItemImage((prevFiles) => prevFiles ? [...prevFiles, ...res.data.itemImage] : res.data.itemImage)
         setCloudinaryId((prevFiles) => prevFiles ? [...prevFiles, ...res.data.cloudinary_id] : res.data.cloudinary_id)
+        setFiles([])
       })
     } else {
       console.warn("No files to upload.");
@@ -128,9 +136,20 @@ const EditFoundItems = () => {
       };
       methods.setValue('itemImage', itemImage)
       methods.setValue('cloudinary_id', cloudinaryId)
-      await dispatch(adminUpdateFoundItems(id, updatedData));
-      navigate('/admin/user/foundItems');
-
+      methods.setValue('itemCategory', selectedCategory)
+      const inputString = methods.getValues().keywords;
+      methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
+      const dataNow = methods.getValues();
+      console.log(itemImage,"itemImage")
+      if(itemImage.length){
+        setIsImage(true)
+        const updateNow = await dispatch(adminUpdateFoundItems(id, dataNow));
+        if(updateNow){
+          navigate('/admin/user/foundItems');
+        }
+      }else{
+        setIsImage(false)
+      }
     } catch (error) {
       console.error('Update failed:', error);
     }
@@ -242,7 +261,7 @@ const EditFoundItems = () => {
                 ></TextAreaInput>
               </div>
               <div className='xl:w-1/3 xs:w-full md:w-1/2'>
-                <label className='text-base font-normal' >Upload Images</label>
+                <label className='ml-1 text-base font-normal' >Upload Images</label>
                 
                 <div>
                 <div className="flex">
@@ -263,7 +282,7 @@ const EditFoundItems = () => {
                       ""}
                   </div>
                   {isUploaded || foundItemDetails?.itemImage ? (
-                    <div className='flex flex-wrap w-96'>
+                    <div className='flex ml-1 flex-wrap w-96'>
                       {cloudinaryId?.map((file, i) => (
                         <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
                           <div>{file}</div>
@@ -272,6 +291,12 @@ const EditFoundItems = () => {
                       ))}
                     </div>
                   ) : null}
+                  {
+                    isImage ?
+                    ""
+                    :
+                    <p className='ml-1 text-red'>Images required</p>
+                  }
                   
                 </div>
               </div>

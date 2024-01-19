@@ -8,8 +8,8 @@ const TermsOfUSe = () => {
     }, [])
     return (
         <>
-            <div className='flex justify-center'>
-                <button className='cursor-pointer text-2xl ' onClick={() => window.history.back()}><IoMdArrowBack /></button>
+            <div className='relative flex justify-center'>
+                <button className='cursor-pointer text-2xl absolute left-20 top-2' onClick={() => window.history.back()}><IoMdArrowBack /></button>
                 <h1 className='text-3xl font-bold text-center'>Terms of use</h1>
             </div>
             <div className='px-20 lg:px-40 lg:pt-20 pt-10'>

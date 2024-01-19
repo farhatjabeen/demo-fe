@@ -34,11 +34,15 @@ export const history = require('history').createBrowserHistory({
     basename: ''
 });
 
-export const logout = () => {
+export const logout = (userType = "userToken") => {
     axiosInstance.defaults.headers.common.Authorization = '';
     localStorage.clear();
     setTimeout(() => {
-        window.location.pathname = '/';
+        if (userType === "adminToken") {
+            window.location.pathname = '/admin/signIn';
+        } else {
+            window.location.pathname = '/';
+        }
     }, 200);
 };
 
