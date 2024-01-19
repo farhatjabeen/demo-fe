@@ -21,10 +21,28 @@ export default function CompanyProfile() {
     const categories = useSelector(categoryDetails);
     const companyCategories = categories ? Object.values(categories) : [];
     const userProfileData = useSelector(userProfile);
+    const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
 
     const handleEditButton = () => {
         setEditButton(!editButton);
         setSelect(!select);
+        setCheckCurrentPassword(true)
+        setShowPassword(false);
+        setShowNewPassword(false);
+        setShowRegisterPassword(false);
+
+        methods.reset({
+            companyName: userProfileData?.companyName || "",
+            companyCategory: userProfileData?.companyCategory || "",
+            companyLocation: userProfileData?.location || "",
+            name: userProfileData?.name || "",
+            mobileNumber: userProfileData?.mobileNumber || "",
+            emailMailId: userProfileData?.emailMailId || "",
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+        })
+
     }
 
     const dispatch = useDispatch();
@@ -64,7 +82,7 @@ export default function CompanyProfile() {
         resolver
     });
 
-    const submitData = async(data) => {
+    const submitData = async (data) => {
         try {
             const name = methods.getValues().name;
             const emailMailId = methods.getValues().emailMailId;
@@ -72,6 +90,8 @@ export default function CompanyProfile() {
             const companyName = methods.getValues().companyName;
             const companyCategory = methods.getValues().companyCategory;
             const companyLocation = methods.getValues().companyLocation;
+            const newPassword = methods.getValues().newPassword;
+            const retypePassword = methods.getValues().confirmPassword;
 
             const currentPassword = methods.getValues().currentPassword;
             if (currentPassword) {
@@ -81,12 +101,15 @@ export default function CompanyProfile() {
                     newPassword: "",
                     confirmPassword: ""
                 })
-                if(changeDetails){
+                if (changeDetails) {
                     dispatch(companyProfileData());
                 }
-            } else {
+            } else if (newPassword || retypePassword) {
+                setCheckCurrentPassword(false)
+            }
+            else {
                 const changeDetails = await dispatch(editCompanyProfileData({ name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }))
-                if(changeDetails){
+                if (changeDetails) {
                     dispatch(companyProfileData());
                 }
             }
@@ -150,13 +173,15 @@ export default function CompanyProfile() {
                                     selection={select}
                                     firstOptionName="Select Location"
                                     isBusinesSignUp={false}
-                                    
+
                                     valueFromDb={userProfileData?.companyLocation}
                                     dropdownValues={citiesInSerbia}
                                 />
                             </div>
 
-                            <div className='border-b border-b-solid border-b-gray58 mt-12'>
+                            <hr className='w-full mt-8 mb-8 text-gray58 opacity-50'></hr>
+
+                            <div>
                                 <div className='flex justify-between mb-9'>
                                     <div>
                                         <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Name</label>
@@ -204,24 +229,32 @@ export default function CompanyProfile() {
                                     />
                                 </div>
                             </div>
-
+                            <hr className='w-full mt-8 text-gray58 opacity-50'></hr>
                             <div>
                                 <div className='font-bold text-2xl mt-12 mb-12'>
                                     Change Password
                                 </div>
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter Current password</label>
-                                    <TextInput
-                                        type="password"
-                                        placeholder="Current password"
-                                        eyeClass='absolute bottom-3 left-80 pl-5'
-                                        name="currentPassword"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
-                                        autoComplete="off"
-                                        disable={!editButton}
-                                        showPassword={showRegisterPassword}
-                                        setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
-                                    />
+                                    <div>
+                                        <TextInput
+                                            type="password"
+                                            placeholder="Current password"
+                                            eyeClass='absolute bottom-3 left-80 pl-5'
+                                            name="currentPassword"
+                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                            autoComplete="off"
+                                            disable={!editButton}
+                                            showPassword={showRegisterPassword}
+                                            setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
+                                        />
+                                        {
+                                            checkCurrentPassword ?
+                                                ""
+                                                :
+                                                <p className='flex justify-start text-red'>Current password required</p>
+                                        }
+                                    </div>
                                     {/* <input className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl  ${editButton ? 'bg-white' : 'bg-grey88'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>
                                 <div className='flex justify-between mb-9'>

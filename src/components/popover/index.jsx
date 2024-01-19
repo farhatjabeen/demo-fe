@@ -22,6 +22,7 @@ const PopoverComponent = () => {
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [isPasswordEntered, setIsPasswordEntered] = useState(true);
+    const [isPasswordRetyped, setIsPasswordRetyped] = useState(true);
 
     // Other Hooks
     const dispatch = useDispatch();
@@ -95,8 +96,12 @@ const PopoverComponent = () => {
 
     useEffect(() => {
         const password = methodsForRegister.getValues().password;
+        const newPassword = methodsForRegister.getValues().newPassword;
         if (password) {
             setIsPasswordEntered(true)
+        }
+        if (newPassword) {
+            setIsPasswordRetyped(true)
         }
     }, [methodsForRegister])
 
@@ -111,6 +116,7 @@ const PopoverComponent = () => {
             const login = await dispatch(checkGeneralUserEmail({ emailMailId }));
             if (login) {
                 setPasswordBox(true);
+                setIsPasswordRetyped(true)
             }
         } catch (error) {
             console.log("submitData errors", error)
@@ -126,21 +132,28 @@ const PopoverComponent = () => {
             if (password) {
                 setIsPasswordEntered(true)
                 newPassword ? setPasswordMatch(true) : setPasswordMatch(false);
-                if (passwordRegExp.test(password)) {
-                    setValidatePassword(false);
-                    if (password === newPassword) {
-                    setPasswordMatch(true);
-                        const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
-                        if (registerSuccessful) {
-                            handleClose();
-                        }
-                    } else {
-                        setPasswordMatch(false);
-                    }
+                if (newPassword) {
+                    setIsPasswordRetyped(true)
 
-                } else {
-                    setValidatePassword(true)
-                    
+                    if (passwordRegExp.test(password)) {
+                        setValidatePassword(false);
+                        if (password === newPassword) {
+                            setPasswordMatch(true);
+                            const registerSuccessful = await dispatch(generalUserRegister({ emailMailId, password }));
+                            if (registerSuccessful) {
+                                handleClose();
+                            }
+                        } else {
+                            setPasswordMatch(false);
+                        }
+
+                    } else {
+                        setValidatePassword(true)
+
+                    }
+                }
+                else {
+                    setIsPasswordRetyped(false)
                 }
             } else {
                 setIsPasswordEntered(false)
@@ -154,14 +167,14 @@ const PopoverComponent = () => {
         try {
             const password = methodsForRegister.getValues().password;
             const newPassword = methodsForRegister.getValues().newPassword;
-           
+
             if (password) {
                 setIsPasswordEntered(true)
                 newPassword ? setPasswordMatch(true) : setPasswordMatch(false);
                 if (passwordRegExp.test(password)) {
                     setValidatePassword(false);
                     if (password === newPassword) {
-                    setPasswordMatch(true);
+                        setPasswordMatch(true);
                         const resetSuccessful = await dispatch(generalResetPassword({ password }, tokens));
                         if (resetSuccessful) {
                             handleClose();
@@ -172,7 +185,7 @@ const PopoverComponent = () => {
 
                 } else {
                     setValidatePassword(true)
-                    
+
                 }
             } else {
                 setIsPasswordEntered(false)
@@ -211,6 +224,7 @@ const PopoverComponent = () => {
         setShowRegisterPassword(false);
         setValidatePassword(false);
         setIsPasswordEntered(true);
+        setIsPasswordRetyped(true);
         setRestPasswordBox(false);
         setIsEmailValid(false);
         setPasswordMatch(true);
@@ -316,11 +330,16 @@ const PopoverComponent = () => {
                                                         required
                                                         setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                                     />
+                                                    {isPasswordRetyped ?
+                                                        ""
+                                                        :
+                                                        <p className='text-red'>Password confirmation required</p>
+                                                    }
                                                     {passwordMatch ? ""
                                                         :
                                                         <p className='text-red'>Passwords does not match</p>
                                                     }
-                                                    
+
                                                 </div>
                                                 <button
                                                     type='submit'
@@ -429,14 +448,20 @@ const PopoverComponent = () => {
                                                                             required
                                                                             setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                                                         />
+                                                                        {isPasswordRetyped ?
+                                                                            ""
+                                                                            :
+                                                                            <p className='text-red'>Password confirmation required</p>
+                                                                        }
                                                                         {passwordMatch ? ""
                                                                             :
                                                                             <p className='text-red'>Passwords does not match</p>
                                                                         }
-                                                                        
+
                                                                     </div>
                                                                     <button
                                                                         type='submit'
+                                                                        onClick={()=>methodsForRegister.getValues().newPassword === "" && methodsForRegister.getValues().password === ""? setIsPasswordRetyped(false) : setIsPasswordRetyped(true)}
                                                                         className='cursor-pointer w-full h-11 rounded-md mt-6 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'
                                                                     >
                                                                         REGISTER
