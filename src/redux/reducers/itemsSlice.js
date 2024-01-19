@@ -121,10 +121,10 @@ export const businessUpdateItems = (itemId, data) => (dispatch) => {
     });
 };
 //get items in admin
-export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, searchTerm, itemcode) => (dispatch) => {
+export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, itemName, itemcode) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}&category=${selectedCategory || ''}&itemName=${searchTerm || ''}&itemcode=${itemcode}`,
+            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}&category=${selectedCategory || ''}&itemName=${itemName || ''}&itemcode=${itemcode}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'

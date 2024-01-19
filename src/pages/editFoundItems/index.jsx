@@ -208,6 +208,7 @@ const EditFoundItems = () => {
                   dropdownValues={dropdownValues}
                   value={selectedCategory}
                   onChange={setSelectedCategory}
+                  additionalClass='h-10 py-0'
                 />
               </div>
               <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-2 xl:ml-6 md:ml-4">
@@ -225,7 +226,7 @@ const EditFoundItems = () => {
                 <TextAreaInput
                   name='itemDescription'
                   autoComplete="off"
-                  className="w-11/12 py-2 px-3 border border-light-gray rounded-md"
+                  className="w-80 py-2 px-3 border border-light-gray rounded-md"
                   rows="4"
                   required
                 ></TextAreaInput>
@@ -247,7 +248,7 @@ const EditFoundItems = () => {
                 <div className="flex">
                     <ImageUpload
                       name="itemImage"
-                      designClass="xl:w-88 md:w-96 sm:w-80 h-14 sm:h-12 rounded-xl bg-primary-color flex items-center justify-center cursor-pointer"
+                      designClass="xl:ml-1 xl:w-80 md:w-96 sm:w-80 h-14 sm:h-12 rounded-xl bg-primary-color flex items-center justify-center cursor-pointer"
                       multiple={true}
                       handleFileUpload={handleFileUpload}
                     />
