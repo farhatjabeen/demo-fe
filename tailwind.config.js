@@ -63,7 +63,11 @@ module.exports = {
       'blue-light': '#E8EDF1',
       'aluminium': '#A7A9AC',
       'gray12': '#D9D9D9',
-      'gray2': '#6C757D'
+      'gray2': '#6C757D',
+      'gray3': '#CACCCF',
+      'gray4': '#5B6871',
+      'gray5' : '#252C32',
+      'gray6' : '#E5E9EB'
     },
     extend: {}
   },

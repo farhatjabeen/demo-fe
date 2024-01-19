@@ -131,11 +131,9 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategor
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveFoundItemDetails({ list, pageMeta }))
-            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
-            Toast({ type: "error", message: err.message })
             return err
         })
     })
@@ -152,7 +150,6 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm =
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveUserDetails({ list, pageMeta }))
-            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -173,7 +170,6 @@ export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBu
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveBusinessUserDetails({ list, pageMeta }))
-            Toast({ type: "success", message: res.message })
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -536,6 +532,8 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 method: endpoints.ApiMethods.DELETE,
                 isAuth: true,
                 tokenType: 'adminToken',
+            }).then((res)=>{
+                Toast({ type: "success", message: "Item deleted successfully." });
             });
             dispatch(adminFetchItems());
 
@@ -545,6 +543,8 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 method: endpoints.ApiMethods.DELETE,
                 isAuth: true,
                 tokenType: 'adminToken',
+            }).then((res)=>{
+                Toast({ type: "success", message: "Item deleted successfully." });
             });
             dispatch(adminFetchUser());
 
@@ -555,11 +555,13 @@ export const deleteItem = (itemId, context) => (dispatch) => {
                 method: endpoints.ApiMethods.DELETE,
                 isAuth: true,
                 tokenType: 'adminToken',
+            }).then((res)=>{
+                Toast({ type: "success", message: "Item deleted successfully." });
             });
             dispatch(adminFetchBusinessUser());
         }
 
-        Toast({ type: "success", message: "Item deleted successfully." });
+        
     } catch (error) {
         console.error(error);
         if (error?.status === 400 && error?.data === "Item not found") {

@@ -26,7 +26,7 @@ const Tabs = ({ children, className }) => {
 
   return (
     <div className={className}>
-      <ul className="flex  border-b border-gray-300 mx-2">
+      <ul className="flex  border-b border-gray6 mx-2">
         {tabs.map((tab, index) => (
           <div key={index}>
             <li
