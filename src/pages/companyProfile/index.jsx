@@ -21,6 +21,7 @@ export default function CompanyProfile() {
     const categories = useSelector(categoryDetails);
     const companyCategories = categories ? Object.values(categories) : [];
     const userProfileData = useSelector(userProfile);
+    console.log(userProfileData.companyLocation,"userProfileData.location")
     const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
 
     const handleEditButton = () => {
@@ -34,7 +35,7 @@ export default function CompanyProfile() {
         methods.reset({
             companyName: userProfileData?.companyName || "",
             companyCategory: userProfileData?.companyCategory || "",
-            companyLocation: userProfileData?.location || "",
+            companyLocation: userProfileData?.companyLocation || "",
             name: userProfileData?.name || "",
             mobileNumber: userProfileData?.mobileNumber || "",
             emailMailId: userProfileData?.emailMailId || "",
@@ -54,7 +55,7 @@ export default function CompanyProfile() {
         dispatch(categoryDropdownValues())
 
         getUser?.then((res) => {
-            console.log(res.data.name, "respi")
+            console.log(res?.data?.companyLocation, "respi")
             methods.reset({
                 companyName: res?.data?.companyName || "",
                 companyCategory: res?.data?.companyCategory || "",
@@ -154,7 +155,6 @@ export default function CompanyProfile() {
                                     name='companyCategory'
                                     optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88 opacity-100'}`}
                                     editButton={editButton}
-                                    selection={select}
                                     firstOptionName="Select Category"
                                     valueFromDb={userProfileData?.companyCategory}
                                     dropdownValues={companyCategories}
@@ -170,10 +170,8 @@ export default function CompanyProfile() {
                                     name='companyLocation'
                                     optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88 opacity-100'}`}
                                     editButton={editButton}
-                                    selection={select}
                                     firstOptionName="Select Location"
-                                    isBusinesSignUp={false}
-
+                                    // isBusinesSignUp={false}
                                     valueFromDb={userProfileData?.companyLocation}
                                     dropdownValues={citiesInSerbia}
                                 />
@@ -298,7 +296,7 @@ export default function CompanyProfile() {
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base'>
+                                    <button type='submit' onClick={()=> methods.getValues().newPassword || methods.getValues().confirmPassword ? setCheckCurrentPassword(false) : setCheckCurrentPassword(true)} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base'>
                                         Save Changes
                                     </button>
                                 </div>

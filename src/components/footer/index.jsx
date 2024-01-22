@@ -3,8 +3,11 @@ import Logo from "../../assets/images/footer_logo.png"
 
 import './index.css'
 import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux'
+import { userData } from '../../redux/reducers/userSlice'
 
 const Footer = () => {
+    const userDetails = useSelector(userData);
     const navigate = useNavigate();
     return (
         <div>
@@ -21,10 +24,15 @@ const Footer = () => {
                             <li className='px-8 text-white'><a href='/privacyPolicy'>Privacy Policy</a></li>
                         </ul>
                     </div>
-                    <div className='flex justify-center py-5'>
-                        <button className='cursor-pointer text-white text-lg px-5 py-1 bg-trans-white rounded-xl font-semibold curs' onClick={()=>navigate('/businessSignIn')}>Are you a business user? Sign in here</button>
+                    <div className={`flex justify-center py-5 ${userDetails?.role === 'BUSINESS' ? 'hidden' : ""}`}>
+                        <button
+                            className='cursor-pointer text-white text-lg px-5 py-1 bg-trans-white rounded-xl font-semibold curs'
+                            onClick={() => navigate('/businessSignIn')}
+                        >
+                            Are you a business user? Sign in here
+                        </button>
                     </div>
-                    
+
 
                 </div>
             </div>

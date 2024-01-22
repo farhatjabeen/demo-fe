@@ -102,7 +102,6 @@ export default function FindMissingItem() {
 
       <div className='h-20 xl:w-9/12 md:w-8/12 sm:w-8/12 rounded-3xl bg-white border border-solid border-pantone flex items-center'>
         <FormProvider {...methods}>
-          {/* <form onSubmit={(e) => submitData(e)} className='w-full flex'> */}
           <form onSubmit={methods.handleSubmit(submitData)} className='w-full flex'>
 
             <div className='flex w-9/12'>
