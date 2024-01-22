@@ -262,14 +262,8 @@ export default function EditBusinessDetails() {
                                         <div className="flex justify-center items-center">
                                             <ImageUpload
                                                 name="itemImage"
-                                                designClass={
-                                                    `${isUploaded || itemDetails?.itemImage
-                                                        ?
-                                                        "xl:w-80 md:w-80 sm:64 xl:mr-2 h-14 sm:h-12 bg-white rounded-lg border border-primary-color text-sm flex items-center justify-center cursor-pointer"
-                                                        :
-                                                        "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
-                                                    }`
-                                                }
+                                                designClass=
+                                                        "xl:w-80 md:w-96 sm:w-64 h-14 sm:h-12 xl:mr-2 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
                                                 multiple={true}
                                                 handleFileUpload={handleFileUpload}
                                             />

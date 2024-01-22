@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaPenToSquare } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { myProfileSchema } from '../../validations';
+import { myProfilePasswordSchema, myProfileSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { generalUserData, generalUserDetails, userProfileData } from '../../redux/reducers/userSlice';
@@ -13,9 +13,10 @@ export default function MyProfile() {
     const [showNewPassword, setShowNewPassword] = useState(false)
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [currentPasswordEntered, setCurrentPasswordEntered] = useState(false)
-    const resolver = useValidationResolver(myProfileSchema);
     const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
-
+    const [passwords, setPasswords] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState(false);
+    const resolver = useValidationResolver(myProfileSchema);
     const dispatch = useDispatch();
     // const existingData = useSelector(userData);
     // console.log(existingData,'existingdata')
@@ -32,6 +33,16 @@ export default function MyProfile() {
         },
         resolver,
     });
+
+    useEffect(()=>{
+        const currentPassword = methods.getValues().currentPassword;
+            const newPassword = methods.getValues().newPassword;
+            const retypePassword = methods.getValues().confirmPassword;
+        if(currentPassword || newPassword || retypePassword){
+            setPasswords(true);
+        }
+    },[methods.getValues()])
+
 
     // const methodsForPassword = useForm({
     //     defaultValues: {
@@ -60,13 +71,14 @@ export default function MyProfile() {
 
     }, [])
 
-    useEffect(() => {
-        if (methods.getValues().currentPassword) {
-            setCurrentPasswordEntered(true)
-        } else {
-            setCurrentPasswordEntered(false)
-        }
-    }, [methods])
+    // useEffect(() => {
+        
+    //     if (methods.getValues().currentPassword) {
+    //         setCurrentPasswordEntered(true)
+    //     } else {
+    //         setCurrentPasswordEntered(false)
+    //     }
+    // }, [methods])
 
     const submitData = async (data) => {
         try {
@@ -81,13 +93,14 @@ export default function MyProfile() {
 
             if (currentPassword) {
                 if (newPassword && retypePassword) {
+                    setCurrentPasswordEntered(false)
                     const changePassword = await dispatch(userProfileData(data));
                     console.log(changePassword, "changePassword")
                     if (changePassword) {
                         dispatch(generalUserDetails());
                     }
                 }
-                else {
+                else if(newPassword) {
                     setCurrentPasswordEntered(true)
                 }
 
@@ -203,12 +216,12 @@ export default function MyProfile() {
                                             showPassword={showRegisterPassword}
                                             setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                         />
-                                        {
+                                        {/* {
                                             checkCurrentPassword ?
                                                 ""
                                                 :
                                                 <p className='flex justify-start text-red'>Current password required</p>
-                                        }
+                                        } */}
                                     </div>
                                 </div>
 
@@ -228,10 +241,10 @@ export default function MyProfile() {
                                             setShowPassword={() => setShowNewPassword(!showNewPassword)}
                                         />
                                     </div>
-                                    {currentPasswordEntered ?
+                                    {/* {currentPasswordEntered ?
                                         <p className='flex justify-end pr-52 text-red'>New Password required</p>
                                         :
-                                        ""}
+                                        ""} */}
                                 </div>
 
                                 <div>
@@ -249,10 +262,10 @@ export default function MyProfile() {
                                             setShowPassword={() => setShowPassword(!showPassword)}
                                         />
                                     </div>
-                                    {currentPasswordEntered ?
+                                    {/* {currentPasswordEntered || !methods.getValues().password ?
                                         <p className='flex justify-end pr-36 mr-2 text-red'>Password confirmation required</p>
                                         :
-                                        ""}
+                                        ""} */}
                                 </div>
                             </div>
 

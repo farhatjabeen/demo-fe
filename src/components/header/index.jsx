@@ -18,7 +18,11 @@ const Header = (props) => {
 
     console.log(businessUserInformation, 'userName')
 
-
+    useEffect(()=>{
+        if(window.location.pathname !='/businessignup' && window.location.pathname !='/termsOfUse'){
+            sessionStorage.setItem("enteredData",null);
+        }
+    })
     useEffect(() => {
         try {
             if (userDetails?.role === 'USER') {

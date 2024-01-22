@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
-const DropdownMenu = ({ dropdownValues, value, onChange, placeholder, additionalClass }) => {
+const DropdownMenu = ({ dropdownValues, value, onChange, placeholder, additionalClass, valueFromLink}) => {
   const [selectedOption, setSelectedOption] = useState('');
 
   useEffect(() => {
@@ -18,13 +18,14 @@ const DropdownMenu = ({ dropdownValues, value, onChange, placeholder, additional
       <select
         onChange={handleChange}
         value={value}
-        className={`custom-arrow w-full px-2 py-3 border text-gray3 border-gray3 rounded ${additionalClass}`}
+        
+        className={`custom-arrow w-full px-5 py-3 border rounded-lg border-gray3 rounded ${additionalClass}`}
       >
         <option className='text-black' value="" disabled>
           {placeholder}
         </option>
         {dropdownValues?.map((item, i) => (
-          <option className='text-black' key={i} value={item}>
+          <option selected={item === valueFromLink} className='text-black' key={i} value={item}>
             {item}
           </option>
         ))}

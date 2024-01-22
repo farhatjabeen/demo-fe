@@ -27,7 +27,7 @@ function User() {
   useEffect(() => {
     dispatch(adminFetchUser(currentPageForUser, PageLimit))
     dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit))
-  }, [dispatch, currentPageForUser, currentPageForBusiness, PageLimit]);
+  }, [currentPageForUser, currentPageForBusiness, PageLimit]);
 
   const handleReset = async (tab) => {
     setResetHandle(true)
