@@ -184,20 +184,20 @@ export const myProfileSchema = yup.object({
         .string(),
     newPassword: yup
         .string()
-        .when("currentPassword", {
-            is: true,
-            then: yup.string().required("Must enter password")
+        .when(["currentPassword"], {
+            is: (value) => {return value.length>0 ? true : false},
+            then: (schema)=>schema.required("New password required"),
+            otherwise: (schema)=>schema.notRequired()
           }),
-    // .matches(passwordRegExp, 'Strong password expected'),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords do not match")
-        .when("currentPassword", {
-            is: true,
-            then: yup.string().required("Must enter password")
+        .when(["currentPassword","newPassword"], {
+            is: (value) => {return value.length>0 ? true : false},
+            then: (schema)=>schema.required("Password confirmation required"),
+            otherwise: (schema)=>schema.notRequired()
           }),
 });
-
 
 
 export const companyProfile = yup.object({
@@ -227,13 +227,23 @@ export const companyProfile = yup.object({
     currentPassword: yup
         .string(),
     newPassword: yup
-        .string(),
-    // .matches(
-    //     passwordRegExp,
-    //     'Password must be 8-20 characters with at least one letter, one number, and one special character'),
+        .string()
+    .matches(
+        passwordRegExp,
+        'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .when("currentPassword", {
+            is: (value) => {return value.length>0 ? true : false},
+            then: (schema)=>schema.required("New password required"),
+            otherwise: (schema)=>schema.notRequired()
+          }),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
+        .when("currentPassword", {
+            is: (value) => {return value.length>0 ? true : false},
+            then: (schema)=>schema.required("New password required"),
+            otherwise: (schema)=>schema.notRequired()
+          })
 });
 
 export const AdminSignInSchema = yup.object({
