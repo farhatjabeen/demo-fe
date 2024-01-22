@@ -136,7 +136,6 @@ export const generalUserLogout = () => (dispatch) => {
             isAuth: true,
         }).then((res) => {
             Toast({type:"success",message: res.message})
-            setEncryptedLocalStorageData("userToken", "");
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -238,7 +237,6 @@ export const businessUserLogout = () => (dispatch) => {
             tokenType: 'businessUserToken',
         }).then((res) => {
             Toast({type:"success",message: res.message})
-            setEncryptedLocalStorageData("businessUserToken", "");
             return resolve(true);
         }).catch(err => {
             console.log(err)
