@@ -8,44 +8,104 @@ import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import { useDispatch, useSelector } from 'react-redux';
 import { adminExportItems, adminFetchItems, foundItemDetails, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
+import { useNavigate, useParams } from "react-router-dom";
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const PageLimit = 10;
-  const [searchTerm, setSearchTerm] = useState('');
   const [itemCode, setItemCode] = useState('');
   const [itemName, setItemName] = useState('');
+  const [data, setData] = useState([])
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const searcItem = useParams();
+  const [searchTerm, setSearchTerm] = useState(searcItem.item ? searcItem.item : '');
   const tableData = useSelector(foundItemDetails);
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
-  }, [dispatch, currentPage, PageLimit]);
+  }, [currentPage, PageLimit]);
 
   useEffect(() => {
     dispatch(itemDropdownValues());
+    if (searcItem.item || searcItem.category || selectedCategory) {
+      setSearchTerm(searcItem.item)
+      if (isNaN(+searcItem.item)) {
+        setItemName(searcItem.item);
+        setItemCode("");
+        const searcNow = dispatch(adminFetchItems(currentPage, PageLimit, searcItem.category ? searcItem.category : selectedCategory, searcItem.item, itemCode));
+        searcNow.then((res) => {
+          setData(res?.data)
+        })
+
+      } else {
+        setItemCode(searcItem.item);
+        setItemName("");
+        const searcNow = dispatch(adminFetchItems(currentPage, PageLimit, searcItem.category ? searcItem.category : selectedCategory, itemName, searcItem.item));
+        console.log(searcNow,"seachnow")
+        searcNow.then((res) => {
+          setData(res?.data)
+        })
+      }
+      console.log(searcItem.item, "st")
+
+    }
+
+
   }, []);
 
+  // useEffect(()=>{
+  //   searchItems();
+  // const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
+  // searchNow.then((res)=>{
+  //   console.log(res,"res")
+  //   setData(res?.data?.list)
+  // })
+  // },[searchTerm])
+
+  // const searchItems = async()=>{
+  //   const searchTermNow = searcItem.item;
+  //     console.log(searchTermNow,"searcItem.item")
+  //     if(isNaN(+searchTerm)){
+  //       setItemName(searchTermNow);
+  //       setItemCode("");
+  //       console.log(itemName,"itemName")
+  //     }else{
+  //       setItemCode(searcItem.item);
+  //       setItemName("");
+  //       console.log(itemCode,"itemCode")
+  //     }
+  // }
+
   useEffect(() => {
-    dispatch(itemDropdownValues());
-  }, []);
+    console.log(searchTerm, "searchTerm")
+    console.log(isNaN(+searchTerm), "isNaN(+searchTerm")
+    if (isNaN(+searchTerm)) {
+      setItemName(searchTerm);
+      setItemCode("");
+    } else {
+      setItemCode(searchTerm);
+      setItemName("");
+    }
+
+  }, [searchTerm,searcItem.category]);
 
   const handleExport = () => {
     dispatch(adminExportItems())
   };
 
-  const handleTermChange = (e) =>{
+  const handleTermChange = (e) => {
     const valueNow = e.target.value;
-    setSearchTerm(e.target.value)
-    console.log(searchTerm,"searchTerm")
-    console.log(isNaN(+searchTerm),"isNaN(+searchTerm")
-    if(isNaN(+valueNow)){
+    setSearchTerm(valueNow)
+    console.log(searchTerm, "searchTerm")
+    console.log(isNaN(+searchTerm), "isNaN(+searchTerm")
+    if (isNaN(+valueNow)) {
       setItemName(searchTerm);
       setItemCode("");
-    }else{
+    } else {
       setItemCode(searchTerm);
       setItemName("");
     }
@@ -56,11 +116,16 @@ function FoundItems() {
     setSelectedCategory("");
     dispatch(adminFetchItems(currentPage, PageLimit))
   };
-  const handleSearch = async() => {
-    
-    if(itemCode || itemName){
-      dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
+  const handleSearch = async () => {
+    if(selectedCategory){
+      navigate(`/admin/user/foundItems/${searchTerm}/${selectedCategory}`)
+    }else{
+    navigate(`/admin/user/foundItems/${searchTerm}`)
     }
+    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
+    searchNow.then((res) => {
+      setData(res?.data)
+    })
   };
 
 
@@ -102,13 +167,14 @@ function FoundItems() {
             placeholder="Search using item id or name"
             className=" border border-gray3 placeholder:text-gray3 pl-2 basis-5/12 rounded-md mr-4 py-2 "
             value={searchTerm}
-            onChange={handleTermChange}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="basis-5/12">
             <DropdownMenu
               dropdownValues={dropdownValues}
               value={selectedCategory}
               onChange={setSelectedCategory}
+              valueFromLink={searcItem.category ? searcItem.category : ""}
               placeholder="Filter by Category"
             />
           </div>
@@ -134,12 +200,12 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      <Table headers={tableHeaders} data={tableData?.list} showEdit={true} context="foundItems" />
+      <Table headers={tableHeaders} category={searcItem.category ? searcItem.category : selectedCategory} searchTerm={searchTerm} data={searcItem.item ? data?.list : tableData?.list} showEdit={true} context="foundItems" />
 
       <Pagination
         isBlueBackground={true}
-        currentPage={tableData?.pageMeta?.page}
-        totalPages={tableData?.pageMeta?.totalPages}
+        currentPage={searcItem.item ? data?.page : tableData?.pageMeta?.page}
+        totalPages={searcItem.item ? data?.totalPages : tableData?.pageMeta?.totalPages}
         onPageChange={handlePageChange}
       />
     </div>

@@ -11,13 +11,13 @@ import { categoryDetails, categoryDropdownValues, fileUploadAPI } from '../../re
 import { useDispatch, useSelector } from 'react-redux';
 import { Toast } from '../../components/toast';
 import { businessUserRegister } from '../../redux/reducers/userSlice';
-import { goToTop } from '../../utils/helper';
 
 export default function BusinessSignUp() {
     const [imageFiles, setImageFiles] = useState();
     const [isUploaded, setIsUploaded] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [isCleared, setIsCleared] = useState(false);
+    const [isTerms, setIsTerms] = useState(false)
     const [isImage, setIsImage] = useState(true);
     const resolver = useValidationResolver(businessSignUpSchema);
     const categoryValue = useSelector(categoryDetails);
@@ -43,14 +43,23 @@ export default function BusinessSignUp() {
         },
         resolver
     });
-
+    // window.onbeforeunload = sessionStorage.setItem("enteredData",null);
     useEffect(() => {
         dispatch(categoryDropdownValues())
         const values = sessionStorage.getItem("enteredData")
-        if (values) {
+        
+        console.log(values,'values')
+        if (values ) {
             methods.reset(JSON.parse(values))
+            if(methods.getValues().companylogo?.length>0){
+                setIsUploaded(true)
+                setIsTerms(true);
+            }
+            console.log(methods.getValues(),'methodss')
         }
-        setIsImage(true)
+        if(methods.getValues().companylogo){
+            setIsImage(true)
+        }
     }, [])
 
 
@@ -92,17 +101,18 @@ export default function BusinessSignUp() {
     }, [imageFiles]);
 
 
-    const submitData = async (data) => {
-        methods.setValue("companylogo", companyLogo);
-        methods.setValue("cloudinary_id", cloudinaryId);
+    const submitData = async () => {
+        methods.setValue("companylogo", methods.getValues().companylogo ? methods.getValues().companylogo : companyLogo);
+        methods.setValue("cloudinary_id", methods.getValues().cloudinary_id ? methods.getValues().cloudinary_id : cloudinaryId);
         const companylogo = methods.getValues("companylogo");
         console.log(companylogo,"companylogo2")
-        if (companylogo&&imageFiles) {
+        const dataNow = methods.getValues();
+        if (companyLogo || methods.getValues().companylogo) {
             setIsImage(true)
             if (isChecked) {
                 // const registering = dispatch(businessUserRegister({ name, mobileNumber, emailMailId, password, companyName, companyCategory, companylogo, cloudinary_id }))
 
-                const registered = await dispatch(businessUserRegister(data))
+                const registered = await dispatch(businessUserRegister(dataNow))
                 if (registered) {
                     setImageFiles('');
                     setIsImage(true)
@@ -128,11 +138,15 @@ export default function BusinessSignUp() {
 
         const handleImageDelete = () =>{
             setImageFiles('');
+            setCloudinaryId("")
+            setCompanyLogo("")
             methods.setValue("companylogo", null);
         methods.setValue("cloudinary_id", null);
+        
         }
 
         const handleTerms = () => {
+            methods.setValue('companylogo',companyLogo)
             sessionStorage.setItem("enteredData", JSON.stringify(methods.getValues()))
             navigate('/termsOfUse')
         }
@@ -215,7 +229,7 @@ export default function BusinessSignUp() {
                                         <TextInput
                                             type="text"
                                             placeholder="Glorpus Galaxies"
-                                            name="companyName"
+                                            name= "companyName"
                                             id="fullName"
                                             className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
                                             autoComplete="off"
@@ -229,18 +243,20 @@ export default function BusinessSignUp() {
 
                                         <div className="mb-2 w-full">
 
-                                            {isUploaded && imageFiles[0] ?
+                                            {isUploaded ?
+                                            methods.getValues().companylogo || companyLogo ?
                                                 <div className='flex flex-wrap w-96'>
                                                     <div className='flex w-fit p-2 bg-white rounded-lg border border-primary-color mx-2 mb-2'>
-                                                        <div>{imageFiles[0]?.name}</div>
+                                                        <div>{isTerms ? methods.getValues().companylogo : companyLogo}</div>
                                                         <div className='flex items-center ml-2' onClick={handleImageDelete}><MdClose /></div>
                                                     </div>
                                                 </div>
+                                                :""
                                                 :
                                                 null
                                             }
                                             <label
-                                                htmlFor="companylogo"
+                                                htmlFor={methods.getValues().companylogo ? "company" : "companylogo"}
                                                 className='flex justify-center bg-primary-color w-full py-3 rounded-xl'
                                             >
                                                 Upload Image
@@ -250,7 +266,7 @@ export default function BusinessSignUp() {
                                                 type='file'
                                                 accept=".jpg, .jpeg, .png"
                                                 multiple={false}
-                                                className='hidden '
+                                                className='hidden'
                                                 onChange={handleFileUpload}
                                             />
                                             {isImage ?
@@ -269,6 +285,7 @@ export default function BusinessSignUp() {
                                                 isBusinesSignUp={true}
                                                 firstOptionName="Select Category"
                                                 iscleared={isCleared}
+                                                valueFromDb={methods.getValues().companyCategory ? methods.getValues().companyCategory : ""}
                                             />
                                         </div>
                                         {/* <div className="flex ">
@@ -299,7 +316,7 @@ export default function BusinessSignUp() {
                                                 <input id="remember" type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} className="w-4 h-4" style={{ accentColor: '#FF9900' }} />
                                                 <p className='ml-2 text-xs'>I agree to the <button class="underline decoration-1 text-oranges" onClick={handleTerms}> terms and conditions</button>  of ilost Serbia</p>
                                             </div>
-                                            <button type='submit' onClick={() => imageFiles ? setIsImage(true) : setIsImage(false)} className="cursor-pointer bg-oranges w-full py-3 mt-2 rounded-lg">Continue</button>
+                                            <button type='submit' onClick={() => imageFiles || methods.getValues().companylogo ? setIsImage(true) : setIsImage(false)} className="cursor-pointer bg-oranges w-full py-3 mt-2 rounded-lg">Continue</button>
                                         </div>
                                     </div>
                                 </div>

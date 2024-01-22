@@ -1,8 +1,21 @@
-.authLayout,
-.mainLayout {
+.layout-image {
     background: url("../../assets/images/header-bg.png") top center no-repeat;
-    background-size: 100% 50%;
     background-position: 0px 0px;
+}
+
+.authLayout-missing-screen,
+.mainLayout-missing-screen {
+    background-size: 100% 40%;
+}
+
+.authLayout-my-listing,
+.mainLayout-my-listing {
+    background-size: 100% 15%;
+}
+
+.authLayout-default,
+.mainLayout-default {
+    background-size: 100% 50%;
 }
 
 .btn-primary {

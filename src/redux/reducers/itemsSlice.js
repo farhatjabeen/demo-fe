@@ -131,7 +131,7 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategor
         }).then((res) => {
             const { list, pageMeta } = res.data
             dispatch(saveFoundItemDetails({ list, pageMeta }))
-            return resolve(true);
+            return resolve(res);
         }).catch(err => {
             console.log(err)
             return err
@@ -397,6 +397,7 @@ export const fileUploadAPI = (data) => (dispatch) => {
             url: endpoints.apiPath.fileUpload,
             method: endpoints.ApiMethods.POST,
             data: data,
+            apiVersion: 'v2',
             isFile: true
         }).then((res) => {
             // No need to store in redux can handle from local state
@@ -415,6 +416,7 @@ export const filesUploadAPI = (data) => (dispatch) => {
             url: endpoints.apiPath.filesUpload,
             method: endpoints.ApiMethods.POST,
             data: data,
+            apiVersion: 'v2',
             isFile: true
         }).then((res) => {
             // No need to store in redux can handle from local state

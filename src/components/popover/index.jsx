@@ -110,7 +110,7 @@ const PopoverComponent = () => {
         setIsEmailValid(isValid);
     };
 
-    const handleContinue = async (data) => {
+    const handleContinue = async () => {
         try {
             const emailMailId = methods.getValues().emailMailId;
             const login = await dispatch(checkGeneralUserEmail({ emailMailId }));
@@ -412,7 +412,6 @@ const PopoverComponent = () => {
                                                                 </div>
                                                             </div>
                                                             <FormProvider {...methodsForRegister}>
-                                                                {/* <form onSubmit={(e) => registerButton(e)}> */}
                                                                 <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
                                                                     <div>
                                                                         <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>

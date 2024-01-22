@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import addressMan from '../../assets/images/location.png';
 import useValidationResolver from '../../hooks/useValidationResolver';
-import { searchSchema } from '../../validations';
+import { reportSchema, searchSchema } from '../../validations';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../common/textInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,12 +20,13 @@ export default function SearchReport() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const resolver = useValidationResolver(searchSchema);
+    const resolver = useValidationResolver(buttonActive ? searchSchema : reportSchema);
     const isUser = useSelector(userData)
     const methods = useForm({
         defaultValues: {
             itemName: "",
-            location: ""
+            location: "",
+            locations:""
         },
         resolver
     });
@@ -41,7 +42,7 @@ export default function SearchReport() {
                 navigate(`/findMissingItem/${itemName}/${methods.getValues().location}`);
             } else {
                 if (isUser) {
-                    navigate(`/addMoreDetails/${itemName}/${methods.getValues().location}`);
+                    navigate(`/addMoreDetails/${itemName}/${methods.getValues().locations}`);
                 } else {
                     Toast({ type: "error", message: "Login Required" })
                 }
@@ -146,7 +147,7 @@ export default function SearchReport() {
                                         />
                                         <FormDropdown
                                             placeholder="Location"
-                                            name="location"
+                                            name="locations"
                                             editButton={true}
                                             optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-greys`}
                                             autoComplete="off"

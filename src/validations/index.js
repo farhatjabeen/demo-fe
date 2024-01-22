@@ -5,7 +5,7 @@ const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{1,3}$/;
 const nameRegex = /^(?!.*\d)(?!.*\s{2,})[a-zA-Z]([a-zA-Z0-9\s]*[a-zA-Z])?$/;
 const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
 const specialCharacterRegex = /^[a-zA-Z0-9\s]+$/;
-const serbiaMobileNumberRegExp = /^6[0-9]\d{7,8}$/;
+const serbiaMobileNumberRegExp = /^6[0-9]\d{7}$/;
 const landMark = /^[A-Za-z#\-]+(?:\s[A-Za-z#\-]+)*$/;
 
 export const loginSchema = yup.object({
@@ -183,11 +183,19 @@ export const myProfileSchema = yup.object({
     currentPassword: yup
         .string(),
     newPassword: yup
-        .string(),
+        .string()
+        .when("currentPassword", {
+            is: true,
+            then: yup.string().required("Must enter password")
+          }),
     // .matches(passwordRegExp, 'Strong password expected'),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref("newPassword")], "Passwords do not match"),
+        .oneOf([yup.ref("newPassword")], "Passwords do not match")
+        .when("currentPassword", {
+            is: true,
+            then: yup.string().required("Must enter password")
+          }),
 });
 
 
@@ -297,6 +305,14 @@ export const searchSchema = yup.object({
         .required('Item name required'),
     location: yup
         .string()
+});
+
+export const reportSchema = yup.object({
+    itemName: yup
+        .string()
+        .required('Item name required'),
+    locations: yup
+        .string()
         .required('Location required')
 });
 
@@ -323,7 +339,10 @@ export const AdminChangePasswordSchema = yup.object({
         .required(' New Password required'),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .required('Confirm Password is required'),
 });
 export const editFoundItemsSchema = yup.object({
