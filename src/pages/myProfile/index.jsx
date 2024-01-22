@@ -14,7 +14,7 @@ export default function MyProfile() {
     const [showRegisterPassword, setShowRegisterPassword] = useState(false)
     const [currentPasswordEntered, setCurrentPasswordEntered] = useState(false)
     const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
-    const [passwords, setPasswords] = useState(false);
+    const [passwords, setPasswords] = useState(true);
     const [confirmPassword, setConfirmPassword] = useState(false);
     const resolver = useValidationResolver(myProfileSchema);
     const dispatch = useDispatch();
@@ -34,14 +34,41 @@ export default function MyProfile() {
         resolver,
     });
 
-    useEffect(()=>{
+    useEffect(() => {
+        
+        // if (retypePassword) {
+        //     if (currentPassword && newPassword) {
+        //         setPasswords(false);
+        //     }
+        //     else {
+        //         setPasswords(true);
+        //     }
+        // }023
+
+        // if (newPassword) {
+        //     if(currentPassword){
+        //         setPasswords(false);
+        //     }else {
+        //         setPasswords(true);
+        //     }
+        // } 
+
+        
+        
+    }, [methods.getValues()])
+
+    const handlePasswords = () =>{
         const currentPassword = methods.getValues().currentPassword;
-            const newPassword = methods.getValues().newPassword;
-            const retypePassword = methods.getValues().confirmPassword;
-        if(currentPassword || newPassword || retypePassword){
-            setPasswords(true);
+        const newPassword = methods.getValues().newPassword;
+        const retypePassword = methods.getValues().confirmPassword;
+        if (!currentPassword) {
+            if (newPassword || retypePassword) {
+                setPasswords(false);
+            } else {
+                setPasswords(true);
+            }
         }
-    },[methods.getValues()])
+    }
 
 
     // const methodsForPassword = useForm({
@@ -72,7 +99,7 @@ export default function MyProfile() {
     }, [])
 
     // useEffect(() => {
-        
+
     //     if (methods.getValues().currentPassword) {
     //         setCurrentPasswordEntered(true)
     //     } else {
@@ -92,7 +119,7 @@ export default function MyProfile() {
             // const itemDetails = methods.getValues();
 
             if (currentPassword) {
-                if (newPassword && retypePassword) {
+                if (passwords) {
                     setCurrentPasswordEntered(false)
                     const changePassword = await dispatch(userProfileData(data));
                     console.log(changePassword, "changePassword")
@@ -100,12 +127,10 @@ export default function MyProfile() {
                         dispatch(generalUserDetails());
                     }
                 }
-                else if(newPassword) {
+                else if (newPassword) {
                     setCurrentPasswordEntered(true)
                 }
 
-            } else if (newPassword || retypePassword) {
-                setCheckCurrentPassword(false)
             }
             else {
                 setCheckCurrentPassword(true)
@@ -124,6 +149,7 @@ export default function MyProfile() {
     const handleEditButton = () => {
         setEditButton(!editButton);
         setCheckCurrentPassword(true)
+        setPasswords(true)
         methods.reset({
             emailMailId: fetchUserDetails?.emailMailId || "",
             mobileNumber: fetchUserDetails?.mobileNumber || "",
@@ -216,12 +242,12 @@ export default function MyProfile() {
                                             showPassword={showRegisterPassword}
                                             setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                         />
-                                        {/* {
-                                            checkCurrentPassword ?
+                                        {
+                                            passwords ?
                                                 ""
                                                 :
                                                 <p className='flex justify-start text-red'>Current password required</p>
-                                        } */}
+                                        }
                                     </div>
                                 </div>
 
@@ -229,22 +255,27 @@ export default function MyProfile() {
                                 <div className='relative'>
                                     <div className='flex justify-between mt-9'>
                                         <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter New password</label>
-                                        <TextInput
-                                            type="password"
-                                            placeholder="New password"
-                                            name="newPassword"
-                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
-                                            autoComplete="off"
-                                            disable={!editButton}
-                                            eyeClass='absolute bottom-3 left-80 pl-5'
-                                            showPassword={showNewPassword}
-                                            setShowPassword={() => setShowNewPassword(!showNewPassword)}
-                                        />
+                                        <div>
+                                            <TextInput
+                                                type="password"
+                                                placeholder="New password"
+                                                name="newPassword"
+                                                className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                                autoComplete="off"
+                                                disable={!editButton}
+                                                eyeClass='absolute bottom-3 left-80 pl-5'
+                                                showPassword={showNewPassword}
+                                                setShowPassword={() => setShowNewPassword(!showNewPassword)}
+                                            />
+                                            {/* {
+                                                passwords ?
+                                                    <p className='flex justify-start text-red'>New password required</p>
+                                                    :
+                                                    ""
+                                            } */}
+                                        </div>
                                     </div>
-                                    {/* {currentPasswordEntered ?
-                                        <p className='flex justify-end pr-52 text-red'>New Password required</p>
-                                        :
-                                        ""} */}
+
                                 </div>
 
                                 <div>
@@ -280,7 +311,8 @@ export default function MyProfile() {
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' className='cursor-pointer w-44 h-14 ml-5 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg'>
+                                    <button type='submit' onClick={()=>!methods.getValues().currentPassword ? 
+                                    methods.getValues().newPassword || methods.getValues().confirmPassword ? setPasswords(false) : setPasswords(true) : setPasswords(true)} className='cursor-pointer w-44 h-14 ml-5 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg'>
                                         Save Changes
                                     </button>
                                 </div>
