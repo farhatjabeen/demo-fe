@@ -115,7 +115,7 @@ export const generalUserLogin = (data) => (dispatch) => {
             data: data
         }).then((res) => {
             const { role, emailMailId, mobileNumber, name, _id, token } = res.data
-            dispatch(saveUserData({ role, emailMailId, mobileNumber, name, _id, token }))
+            dispatch(saveUserData({ role, emailMailId, mobileNumber, name, _id }))
             setEncryptedLocalStorageData("userToken", token);
             Toast({type:"success",message: res.message})
             return resolve(true);
@@ -136,6 +136,7 @@ export const generalUserLogout = () => (dispatch) => {
             isAuth: true,
         }).then((res) => {
             Toast({type:"success",message: res.message})
+            setEncryptedLocalStorageData("userToken", "");
             return resolve(true);
         }).catch(err => {
             console.log(err)
@@ -237,6 +238,7 @@ export const businessUserLogout = () => (dispatch) => {
             tokenType: 'businessUserToken',
         }).then((res) => {
             Toast({type:"success",message: res.message})
+            setEncryptedLocalStorageData("businessUserToken", "");
             return resolve(true);
         }).catch(err => {
             console.log(err)

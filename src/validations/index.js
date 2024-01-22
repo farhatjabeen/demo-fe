@@ -183,11 +183,19 @@ export const myProfileSchema = yup.object({
     currentPassword: yup
         .string(),
     newPassword: yup
-        .string(),
+        .string()
+        .when("currentPassword", {
+            is: true,
+            then: yup.string().required("Must enter password")
+          }),
     // .matches(passwordRegExp, 'Strong password expected'),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref("newPassword")], "Passwords do not match"),
+        .oneOf([yup.ref("newPassword")], "Passwords do not match")
+        .when("currentPassword", {
+            is: true,
+            then: yup.string().required("Must enter password")
+          }),
 });
 
 
