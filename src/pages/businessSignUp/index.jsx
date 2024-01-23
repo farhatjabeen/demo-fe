@@ -180,7 +180,7 @@ export default function BusinessSignUp() {
                                             placeholder="Full name"
                                             name="name"
                                             id="fullName"
-                                            className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                            className='border border-greys rounded-lg pl-2 w-full placeholder:text-sm py-2'
                                             autoComplete="off"
                                             required
                                         />
@@ -192,7 +192,7 @@ export default function BusinessSignUp() {
                                             placeholder="1234567890"
                                             name="mobileNumber"
                                             id="fullName"
-                                            className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                            className='border border-greys pl-2 w-full rounded-lg placeholder:text-sm py-2'
                                             autoComplete="off"
                                             required
                                         />
@@ -204,7 +204,7 @@ export default function BusinessSignUp() {
                                             placeholder="abc@xyz.com"
                                             name="emailMailId"
                                             id="fullName"
-                                            className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                            className='border border-greys pl-2 w-full rounded-lg placeholder:text-sm py-2'
                                             autoComplete="off"
                                             required
                                         />
@@ -216,7 +216,7 @@ export default function BusinessSignUp() {
                                             placeholder="Glorpus Galaxies"
                                             name="password"
                                             id="fullName"
-                                            className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                            className='border border-greys pl-2 w-full rounded-lg placeholder:text-sm py-2'
                                             autoComplete="off"
                                             eyeClass='absolute bottom-2 right-8 ml-16'
                                             required
@@ -231,7 +231,7 @@ export default function BusinessSignUp() {
                                             placeholder="Glorpus Galaxies"
                                             name= "companyName"
                                             id="fullName"
-                                            className='border pl-2 w-full rounded-xl placeholder:text-sm py-2'
+                                            className='border border-greys pl-2 w-full rounded-lg placeholder:text-sm py-2'
                                             autoComplete="off"
                                             required
                                         />
@@ -257,7 +257,7 @@ export default function BusinessSignUp() {
                                             }
                                             <label
                                                 htmlFor={methods.getValues().companylogo ? "company" : "companylogo"}
-                                                className='flex justify-center bg-primary-color w-full py-3 rounded-xl'
+                                                className='flex justify-center bg-primary-color w-full py-3 rounded-lg'
                                             >
                                                 Upload Image
                                             </label>
@@ -279,11 +279,11 @@ export default function BusinessSignUp() {
                                             <label htmlFor="companyCategory" className="block text-sm font-bold mb-2">Company Category</label>
                                             <FormDropdown
                                                 name='companyCategory'
-                                                optionButtonClass='border border-grey pl-2 w-full rounded-xl placeholder:text-sm py-3'
+                                                optionButtonClass='border border-greys text-gray7 pl-2 w-full rounded-lg placeholder:text-sm py-3'
                                                 dropdownValues={categories}
                                                 editButton={true}
                                                 isBusinesSignUp={true}
-                                                firstOptionName="Select Category"
+                                                firstOptionName="Select"
                                                 iscleared={isCleared}
                                                 valueFromDb={methods.getValues().companyCategory ? methods.getValues().companyCategory : ""}
                                             />

@@ -10,6 +10,8 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { checkGeneralUserEmail, generalForgotPassword, generalResetPassword, generalUserLogin, generalUserRegister, mailId } from '../../redux/reducers/userSlice';
 import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema } from '../../validations';
 import TextInput from '../common/textInput';
+import { Toast } from '../toast';
+import { type } from '@testing-library/user-event/dist/type';
 const PopoverComponent = () => {
     // local states
     const [passwordBox, setPasswordBox] = useState(false);
@@ -23,6 +25,7 @@ const PopoverComponent = () => {
     const [passwordMatch, setPasswordMatch] = useState(true);
     const [isPasswordEntered, setIsPasswordEntered] = useState(true);
     const [isPasswordRetyped, setIsPasswordRetyped] = useState(true);
+    const [disablePopover, setDisablePopover] = useState(false);
 
     // Other Hooks
     const dispatch = useDispatch();
@@ -58,6 +61,15 @@ const PopoverComponent = () => {
         methodsForLogin.reset({
             password: ""
         })
+
+        if(window.location.pathname === '/businessSignIn' || 
+        window.location.pathname === '/businessignup' || 
+        window.location.pathname === '/businessHome'){
+            setDisablePopover(true)
+
+        }else{
+            setDisablePopover(false)
+        }
     }, [navigate])
 
 
@@ -256,6 +268,9 @@ const PopoverComponent = () => {
 
     const togglePopover = () => {
         setIsPopoverOpen((prev) => !prev)
+        if(disablePopover){
+            Toast({type:"error",message:"General users will not be allowed to log in here"})
+        }
     };
 
     const closePopover = () => {
@@ -267,14 +282,16 @@ const PopoverComponent = () => {
             <Popover open={isPopoverOpen} onClose={closePopover}>
                 {({ open }) => (
                     <div>
+                        {/* <button onClick={disablePopover ? Toast({type:"error",message:"General users will not be allowed to login here"}) : ""}> */}
                         <Popover.Button onClick={togglePopover}>
                             <div className="cursor-pointer flex justify-center items-center xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold bg-primary-color text-white rounded-full xl:mx-1">
                                 Login / Register
-                            </div>
+                            </div> 
                         </Popover.Button>
+                        {/* </button> */}
                         {isPopoverOpen &&
                             <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                                className='fixed inset-0 bg-black opacity-30'>
+                                className={disablePopover ? "" : "fixed inset-0 bg-black opacity-30"}>
                             </div>}
                         <Transition
                             show={open || isPopoverOpen}
@@ -285,7 +302,7 @@ const PopoverComponent = () => {
                             leave="transition ease-in duration-150"
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-1">
-                            <Popover.Panel className='fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36'>
+                            <Popover.Panel className={`fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36 ${disablePopover ? "hidden" : ""}`}>
                                 <div className='pt-7 w-96'>
                                     {restPasswordBox ? <div>
                                         <FormProvider {...methodsForRegister}>
@@ -512,7 +529,7 @@ const PopoverComponent = () => {
                                                                         <img src={linkSymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' />
                                                                     </div>
                                                                     <Popover.Button
-                                                                        onClick={() => navigate('/businessSignIn')}
+                                                                        onClick={() => {setIsPopoverOpen(false); navigate('/businessSignIn'); }}
                                                                         className='cursor-pointer xl:text-base md:text-sm sm:text-xs font-semibold text-cyan'>
                                                                         Sign in for business
                                                                     </Popover.Button>

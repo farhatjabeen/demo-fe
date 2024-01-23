@@ -12,6 +12,7 @@ import bifive from '../../assets/images/businessicon5.png';
 import bisix from '../../assets/images/businessicon6.png';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
+import { IoMdArrowBack } from "react-icons/io";
 
 export default function BusinessHome() {
     const [readMore, setReadMore] = useState(false);
@@ -150,16 +151,16 @@ export default function BusinessHome() {
             </div>
             <div className='flex flex-col items-center'>
                 <div className='flex justify-center xl:text-3xl md:text-2xl text-text-color font-semibold pt-10'>Explore our industry insights and customer success stories</div>
-                <div className='flex flex-wrap justify-between py-16 xl:w-3/4 md:w-full sm:w-full md:px-8 sm:px-5 '>
+                <div className='flex flex-wrap justify-center py-16 w-full md:px-8 sm:px-5 '>
                     {
                         cardValues.map((items, i) => {
                             return (
-                                <div key={i} className='w-full sm:w-1/1 lg:w-1/4 xl:w-1/4 md:w-1/4 bg-white border border-pantone mb-8 mx-auto'>
+                                <div key={i} className='w-full sm:w-1/1 lg:w-1/4 xl:w-3/12 md:w-1/4 xl:mr-14 bg-white border border-pantone mb-8'>
                                     <div><img src={items} alt='containers' /></div>
                                     <div className='pt-5 pb-10 px-4'>
-                                        <div className='text-xl font-semibold text-text-color'>2023 UPDATE: When it comes to software, should I buy or build?</div>
-                                        <div className='text-Gray40 text-sm font-medium py-4'>May 23, 2023 | Blog, SaaS, Transport</div>
-                                        <div className='text-Gray40 font-medium text-lg overflow-hidden'>
+                                        <div className='text-xl font-semibold text-text-color opacity-95 w-64'>2023 UPDATE: When it comes to software, should I buy or build?</div>
+                                        <div className='text-Gray40 text-sm font-medium py-4 opacity-95'>May 23, 2023 | Blog, SaaS, Transport</div>
+                                        <div className='text-Gray40 w-68 pr-10 font-medium text-lg overflow-hidden opacity-95'>
                                             Today we'll be discussing the big question in software development....To buy or to build, This puzzle has been a quandary for heads of businesses...
                                         </div>
                                         <button className='cursor-pointer text-oranges font-medium text-lg'>read more</button>
