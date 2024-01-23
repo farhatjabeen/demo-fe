@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import './theme/variables.scss';
-import './assets/scss/common.scss'
+import './assets/css/common.css'
 import AppRoutes from './routes';
 import { Provider } from 'react-redux';
 import { store, persister } from './redux/store';

@@ -67,7 +67,8 @@ module.exports = {
       'gray3': '#CACCCF',
       'gray4': '#5B6871',
       'gray5' : '#252C32',
-      'gray6' : '#E5E9EB'
+      'gray6' : '#E5E9EB',
+      "gray7": '#90929A'
     },
     extend: {}
   },

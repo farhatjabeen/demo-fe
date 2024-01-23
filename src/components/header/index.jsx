@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userData, clearUserData, generalUserLogout, businessUserLogout, generalUserDetails, companyProfileData, generalUserData, userProfile } from '../../redux/reducers/userSlice';
 import { clearItemData } from "../../redux/reducers/itemsSlice";
 import HeaderDropdown from "../common/headerDropdown";
+import { IoMdArrowBack } from "react-icons/io";
 
 const Header = (props) => {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Header = (props) => {
     const userDetails = useSelector(userData);
     const generalUserInformation = useSelector(generalUserData);
     const businessUserInformation = useSelector(userProfile);
+    const [backButton, setBackButton] = useState(false);
 
     console.log(businessUserInformation, 'userName')
 
@@ -22,7 +24,13 @@ const Header = (props) => {
         if(window.location.pathname !='/businessignup' && window.location.pathname !='/termsOfUse'){
             sessionStorage.setItem("enteredData",null);
         }
-    })
+        if(window.location.pathname === "/businesshome/detailpage"){
+            setBackButton(true)
+        }else{
+            setBackButton(false)
+        }
+    },[navigate])
+
     useEffect(() => {
         try {
             if (userDetails?.role === 'USER') {
@@ -63,6 +71,8 @@ const Header = (props) => {
 
     return (
         <div className="headerContainer" style={{ position: 'relative', zIndex: 50 }}>
+                
+            {backButton && <button className='cursor-pointer absolute left-5 text-2xl top-20 xl:mt-2' onClick={() => window.history.back()}><IoMdArrowBack /></button>}
             <div className="flex justify-between items-center h-22 m-14 rounded-full bg-white shadow-lg">
                 <div className='flex justify-start grow p-5 xl:pl-12 md:pl-10 sm:pl-8'>
                     <img

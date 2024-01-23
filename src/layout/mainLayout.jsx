@@ -14,6 +14,8 @@ export function MainLayout(props) {
       setCustomClassName("missing-screen")
     } else if (location.pathname.split("/").includes("mylistings")) {
       setCustomClassName("my-listing")
+    }else if(location.pathname.split("/").includes("businessSignIn")){
+      setCustomClassName("business-screen")
     }
   }, [location, customClassName])
   return (
