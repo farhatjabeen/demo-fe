@@ -227,7 +227,7 @@ const EditFoundItems = () => {
                   dropdownValues={dropdownValues}
                   value={selectedCategory}
                   onChange={setSelectedCategory}
-                  additionalClass='h-10 py-0'
+                  additionalClass='h-10 pt-1 pb-1'
                 />
               </div>
               <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-2 xl:ml-6 md:ml-4">

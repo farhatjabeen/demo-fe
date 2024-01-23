@@ -166,7 +166,10 @@ const routers = [
         component: "settings",
         childPath: "/settings",
       },
-      
+      {
+        component: "user",
+        childPath: "/logout",
+      },      
       {
         component: "itemDetails",
         childPath: "/foundItems/itemDetails/:id",

@@ -10,7 +10,7 @@ import { clearUserData, generalUserDetails, getUserDetails, userData } from '../
 
 export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, userName, titleOne, navigateTwo, titleTwo, handleLogout }) {
     const [select, setSelect] = useState(false);
-    const [loader,setLoader] = useState(true);
+    
     const [user, setUser] = useState('');
     const dispatch = useDispatch();
     const userDetails = useSelector(userData);

@@ -595,13 +595,14 @@ export const deleteItem = (itemId, context) => (dispatch) => {
 };
 
 //admin export file 
-export const adminExportItems = () => async (dispatch) => {
+export const adminExportItems = (itemCategory,itemName) => async (dispatch) => {
     try {
         const response = await getExportFileStream({
-            url: endpoints.apiPath.items.itemReport,
+            url: `${endpoints.apiPath.items.itemReport}?itemCategory=${itemCategory}&itemName=${itemName}`,
             isAuth: true,
             tokenType: "adminToken"
         });
+        console.log(response,"responseexport")
         const data = response?.data
         if (data) {
             let a = window.document.createElement('a')

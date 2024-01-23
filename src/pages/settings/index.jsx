@@ -8,8 +8,6 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import TextInput from "../../components/common/textInput";
 import adminPasswordimage from '../../assets/images/adminPasswordimage.png'
 import { adminChangePassword } from "../../redux/reducers/userSlice";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
 
 const Settings = () => {
     const navigate = useNavigate();
@@ -61,7 +59,7 @@ const Settings = () => {
                 </div>
             </div>
 
-            <div  className={`${show ? "" : "hidden"}`}>
+            <div>
                 <div className="bg-light-cyan p-10 my-10 mr-10 ml-10 rounded-lg text-xl">
                     <div>
                         <p className='font-bold pb-6'>Passwords must contain :</p>

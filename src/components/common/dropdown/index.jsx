@@ -19,7 +19,7 @@ const DropdownMenu = ({ dropdownValues, value, onChange, placeholder, additional
         onChange={handleChange}
         value={value}
         
-        className={`custom-arrow w-full px-5 py-3 border rounded-lg border-gray3 rounded ${additionalClass}`}
+        className={`custom-arrow w-full px-5 border rounded-lg border-gray3 rounded ${additionalClass}`}
       >
         <option className='text-black' value="" disabled>
           {placeholder}

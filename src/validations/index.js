@@ -225,12 +225,12 @@ export const companyProfile = yup.object({
         .string(),
     newPassword: yup
         .string()
-        .matches(
-            passwordRegExp,
-            'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        
         .when("currentPassword", {
             is: (value) => { return value.length > 0 ? true : false },
-            then: (schema) => schema.required("New password required"),
+            then: (schema) => schema.required("New password required").matches(
+                passwordRegExp,
+                'Password must be 8-20 characters with at least one letter, one number, and one special character'),
             otherwise: (schema) => schema.notRequired()
         }),
     confirmPassword: yup
@@ -238,7 +238,7 @@ export const companyProfile = yup.object({
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .when("currentPassword", {
             is: (value) => { return value.length > 0 ? true : false },
-            then: (schema) => schema.required("New password required"),
+            then: (schema) => schema.required("Confirm password required"),
             otherwise: (schema) => schema.notRequired()
         })
 });

@@ -129,7 +129,7 @@ export default function EditBusinessDetails() {
     };
 
     useEffect(() => {
-        if (files && files.length > 0) {
+        if (files && files?.length > 0) {
             let formData = new FormData();
             files.forEach((item) => {
                 formData.append("item", item);

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiRequest from '../../services'
 import endpoints from "../../services/endpoints";
-import { setEncryptedLocalStorageData } from "../../utils/helper";
+import { removeLocalStorageItem, setEncryptedLocalStorageData } from "../../utils/helper";
 import { Toast } from "../../components/toast";
 
 const initialState = {
@@ -57,6 +57,7 @@ export const loginUser = (data) => (dispatch) => {
             data: data
         }).then((res) => {
             const { role, name, emailMailId, _id, token } = res.data
+            removeLocalStorageItem("userToken");
             dispatch(saveUserData({ role, name, emailMailId, _id }))
             setEncryptedLocalStorageData("businessUserToken", token);
             Toast({type:"success",message:res.message})
@@ -114,6 +115,7 @@ export const generalUserLogin = (data) => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
+            removeLocalStorageItem("businessUserToken");
             const { role, emailMailId, mobileNumber, name, _id, token } = res.data
             dispatch(saveUserData({ role, emailMailId, mobileNumber, name, _id }))
             setEncryptedLocalStorageData("userToken", token);
@@ -135,6 +137,7 @@ export const generalUserLogout = () => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             isAuth: true,
         }).then((res) => {
+            removeLocalStorageItem("userToken");
             Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
@@ -236,6 +239,7 @@ export const businessUserLogout = () => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
         }).then((res) => {
+            removeLocalStorageItem("businessUserToken");
             Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
@@ -265,6 +269,15 @@ export const loginAdminUser = (data) => (dispatch) => {
         })
     })
 }
+
+//logout admin
+export const adminLogout = () => (dispatch) => {
+    return new Promise((resolve) => {
+        removeLocalStorageItem("adminToken");
+        return resolve(true);
+    })
+}
+
 //admin forgotPassword
 export const adminForgotPassword = (data) => async () => {
     return new Promise((resolve, reject) => {
