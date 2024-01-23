@@ -50,7 +50,6 @@ export const generalUserRegisterSchema = yup.object({
             passwordRegExp,
             'Password must be 8-20 characters with at least one letter, one number, and one special character'
         )
-
         .required('Password required')
 
 });
@@ -111,7 +110,6 @@ export const addMoreDetailsSchema = yup.object({
         .string()
         .matches(spaceRegex, 'Invalid characters found')
         .required('Keywords required')
-
 });
 
 export const addMoreDetailsItemSchema = yup.object().shape({
@@ -162,7 +160,6 @@ export const addMoreDetailsItemSchema = yup.object().shape({
         .string()
         .matches(spaceRegex, 'Invalid characters found')
         .required('Keywords required')
-
 });
 
 export const myProfileSchema = yup.object({
@@ -185,18 +182,18 @@ export const myProfileSchema = yup.object({
     newPassword: yup
         .string()
         .when(["currentPassword"], {
-            is: (value) => {return value.length>0 ? true : false},
-            then: (schema)=>schema.required("New password required"),
-            otherwise: (schema)=>schema.notRequired()
-          }),
+            is: (value) => { return value.length > 0 ? true : false },
+            then: (schema) => schema.required("New password required"),
+            otherwise: (schema) => schema.notRequired()
+        }),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords do not match")
-        .when(["currentPassword","newPassword"], {
-            is: (value) => {return value.length>0 ? true : false},
-            then: (schema)=>schema.required("Password confirmation required"),
-            otherwise: (schema)=>schema.notRequired()
-          }),
+        .when(["currentPassword", "newPassword"], {
+            is: (value) => { return value.length > 0 ? true : false },
+            then: (schema) => schema.required("Password confirmation required"),
+            otherwise: (schema) => schema.notRequired()
+        })
 });
 
 
@@ -228,22 +225,22 @@ export const companyProfile = yup.object({
         .string(),
     newPassword: yup
         .string()
-    .matches(
-        passwordRegExp,
-        'Password must be 8-20 characters with at least one letter, one number, and one special character')
+        .matches(
+            passwordRegExp,
+            'Password must be 8-20 characters with at least one letter, one number, and one special character')
         .when("currentPassword", {
-            is: (value) => {return value.length>0 ? true : false},
-            then: (schema)=>schema.required("New password required"),
-            otherwise: (schema)=>schema.notRequired()
-          }),
+            is: (value) => { return value.length > 0 ? true : false },
+            then: (schema) => schema.required("New password required"),
+            otherwise: (schema) => schema.notRequired()
+        }),
     confirmPassword: yup
         .string()
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .when("currentPassword", {
-            is: (value) => {return value.length>0 ? true : false},
-            then: (schema)=>schema.required("New password required"),
-            otherwise: (schema)=>schema.notRequired()
-          })
+            is: (value) => { return value.length > 0 ? true : false },
+            then: (schema) => schema.required("New password required"),
+            otherwise: (schema) => schema.notRequired()
+        })
 });
 
 export const AdminSignInSchema = yup.object({
@@ -355,6 +352,7 @@ export const AdminChangePasswordSchema = yup.object({
         .oneOf([yup.ref("newPassword")], "Passwords does not match")
         .required('Confirm Password is required'),
 });
+
 export const editFoundItemsSchema = yup.object({
     itemName: yup
         .string()
@@ -373,7 +371,4 @@ export const editFoundItemsSchema = yup.object({
         .string()
         .matches(spaceRegex, 'Invalid characters found')
         .required('Keywords required')
-
-
-})
-
+});
