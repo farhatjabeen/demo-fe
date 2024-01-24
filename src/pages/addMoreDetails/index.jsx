@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import FormDropdown from '../../components/common/formDropdown';
 import ImageUpload from '../../components/common/imageUpload';
 import { userData } from '../../redux/reducers/userSlice';
+import { Toast } from '../../components/toast';
 
 export default function AddMoreDetails() {
     const [newItemId, setNewItemId] = useState('');
@@ -31,8 +32,11 @@ export default function AddMoreDetails() {
     const [itemImage, setItemImage] = useState([]);
     const userDetails = useSelector(userData);
     const itemDetailsById = useSelector(searchDetailsById);
+    const [imageDisable, setImageDisable] = useState(false);
     const reportDetails = useParams();
     console.log(reportDetails, "reportDetails");
+
+    const imageTitle= ["User Item image of missing", "Item", "Business User Item image of missing things"]
 
     useEffect(() => {
         dispatch(locationDropdownValues())
@@ -113,11 +117,16 @@ export default function AddMoreDetails() {
         }
     }, [newItemId])
 
-    useEffect(()=>{
-        if(itemImage?.length === 0){
+    useEffect(() => {
+        if (itemImage?.length === 0) {
             setIsUploaded(false)
         }
-    },[itemImage])
+        if (itemImage?.length === 3) {
+            setImageDisable(true);
+        }else{
+            setImageDisable(false);
+        }
+    }, [itemImage])
 
     const submitData = async (data) => {
         try {
@@ -206,7 +215,7 @@ export default function AddMoreDetails() {
 
         setItemImage((prevFiles) => prevFiles.filter((_, i) => i !== index));
         setCloudinaryId((prevFiles) => prevFiles.filter((_, i) => i !== index));
-        if(!reportDetails.id){
+        if (!reportDetails.id) {
             setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
         }
 
@@ -348,40 +357,25 @@ export default function AddMoreDetails() {
 
                                             {isImageUploaded ? <p>Loading...</p>
                                                 :
-                                                <div>
-                                                    {cloudinaryId?.map((items, i) => {
+                                                <div className='w-fit  flex justify-between'>
+                                                    {itemImage?.map((items, i) => {
                                                         return (
-                                                            <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                                <div>{items}</div>
-                                                                <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
+                                                            <div>
+                                                                <div key={i} className=' mb-2 mr-2 w-32 h-fit px-2 pt-2 pb-1 bg-white rounded-lg border border-primary-color'>
+                                                                    <div className='flex w-20'>
+                                                                        <img className='w-20 h-20' src={items} alt={i}></img>
+                                                                        <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
+                                                                    </div>
+                                                                    <div className='flex justify-center text-sm'>{imageTitle[i]} {i + 1}</div>
+                                                                </div>
                                                             </div>
                                                         );
                                                     })}
                                                 </div>}
-
-                                            {/* {files
-                                                ?
-                                                <div>
-                                                    {
-                                                        files?.map((items, i) => {
-                                                            return (
-                                                                <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                                    <div>{items.name}</div>
-                                                                    <div className='flex items-center ml-2' onClick={() => handleFileDelete(i)}><MdClose /></div>
-                                                                </div>
-                                                            );
-                                                        })
-                                                    }
-                                                </div>
-                                                :
-                                                ""
-                                            } */}
-
                                         </div>
                                         :
                                         null
                                     }
-
                                     <div className="flex justify-center items-center">
                                         <ImageUpload
                                             name={reportDetails?.id ?
@@ -391,6 +385,7 @@ export default function AddMoreDetails() {
                                                 :
                                                 "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
                                             multiple={true}
+                                            type = {imageDisable ? "text" : "file"}
                                             isEdit={reportDetails.id ? true : false}
                                             handleFileUpload={handleFileUpload}
                                         />

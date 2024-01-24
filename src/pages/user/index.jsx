@@ -48,19 +48,19 @@ function User() {
 
   const handleSearch = (tab) => {
     if (tab === 1) {
-      if (searchRegex.test(searchUserTerm)) {
-        setIsId(true)
+      // if (searchRegex.test(searchUserTerm)) {
+        // setIsId(true)
         dispatch(adminFetchUser(currentPageForUser, PageLimit, searchUserTerm));
-      } else {
-        setIsId(false)
-      }
+      // } else {
+      //   setIsId(false)
+      // }
     } else if (tab === 2) {
-      if (searchRegex.test(searchBusinessTerm)) {
-        setIsId(true)
+      // if (searchRegex.test(searchBusinessTerm)) {
+        // setIsId(true)
         dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit, searchBusinessTerm));
-      } else {
-        setIsId(false)
-      }
+      // } else {
+      //   setIsId(false)
+      // }
     }
   };
 

@@ -12,10 +12,12 @@ export const injectStore = _store => {
 
 export const getExportFileStream = async ({ url, isAuth, tokenType = "adminToken", apiVersion = 'v1' }) => {
     try {
+        let headers = {}
+        headers["Authorization"] = isAuth ? await getAuthToken(tokenType) : ""
         return await axios.get(
             `${process.env.REACT_APP_BACKEND_CORE_SERVICE_BASE_URL}${apiVersion}${url}`, {
-            accept: 'application/json',
-            Authorization: isAuth ? await getAuthToken(tokenType) : "",
+            headers,
+            accept: 'application/json'
         })
     } catch (error) {
         console.log("getExportFileStream API error", error)
