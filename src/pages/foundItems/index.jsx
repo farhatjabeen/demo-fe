@@ -8,53 +8,60 @@ import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import { useDispatch, useSelector } from 'react-redux';
 import { adminExportItems, adminFetchItems, foundItemDetails, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageChange, setPageChange] = useState();
   const PageLimit = 10;
   const [itemCode, setItemCode] = useState('');
   const [itemName, setItemName] = useState('');
   const [data, setData] = useState([])
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const searcItem = useParams();
-  const [searchTerm, setSearchTerm] = useState(searcItem.item ? searcItem.item : '');
+  const searchItem = useParams();
+  const [searchTerm, setSearchTerm] = useState(searchItem.item ? searchItem.item : '');
   const tableData = useSelector(foundItemDetails);
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
+    if(!searchItem.item){
+      navigate('/admin/user/foundItems')
+    }
   }, [currentPage, PageLimit]);
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page");
+    if (page) {
+      setPageChange(parseInt(page, 10)) ;
+    }
+  }, [location.search]);
+
+  useEffect(() => {
     dispatch(itemDropdownValues());
-    if (searcItem.item || searcItem.category || selectedCategory) {
-      setSearchTerm(searcItem.item)
-      if (isNaN(+searcItem.item)) {
-        setItemName(searcItem.item);
+    if (searchItem.item || searchItem.category || selectedCategory) {
+      setSearchTerm(searchItem.item)
+      if (isNaN(+searchItem.item)) {
+        setItemName(searchItem.item);
         setItemCode("");
-        const searcNow = dispatch(adminFetchItems(currentPage, PageLimit, searcItem.category ? searcItem.category : selectedCategory, searcItem.item, itemCode));
-        searcNow.then((res) => {
+        const searchNow = dispatch(adminFetchItems(pageChange, PageLimit, searchItem.category ? searchItem.category : selectedCategory, searchItem.item, itemCode));
+        searchNow.then((res) => {
           setData(res?.data)
         })
-
       } else {
-        setItemCode(searcItem.item);
+        setItemCode(searchItem.item);
         setItemName("");
-        const searcNow = dispatch(adminFetchItems(currentPage, PageLimit, searcItem.category ? searcItem.category : selectedCategory, itemName, searcItem.item));
-        console.log(searcNow,"seachnow")
-        searcNow.then((res) => {
+        const searchNow = dispatch(adminFetchItems(pageChange, PageLimit, searchItem.category ? searchItem.category : selectedCategory, itemName, searchItem.item));
+        searchNow.then((res) => {
           setData(res?.data)
         })
       }
-      console.log(searcItem.item, "st")
-
     }
-
-
   }, []);
 
   // useEffect(()=>{
@@ -91,43 +98,29 @@ function FoundItems() {
       setItemName("");
     }
 
-  }, [searchTerm,searcItem.category]);
+  }, [searchTerm,searchItem.category]);
 
   const handleExport = () => {
-    dispatch(adminExportItems())
+    dispatch(adminExportItems(searchTerm,selectedCategory))
   };
-
-  const handleTermChange = (e) => {
-    const valueNow = e.target.value;
-    setSearchTerm(valueNow)
-    console.log(searchTerm, "searchTerm")
-    console.log(isNaN(+searchTerm), "isNaN(+searchTerm")
-    if (isNaN(+valueNow)) {
-      setItemName(searchTerm);
-      setItemCode("");
-    } else {
-      setItemCode(searchTerm);
-      setItemName("");
-    }
-  }
 
   const handleReset = () => {
     setSearchTerm("");
     setSelectedCategory("");
     dispatch(adminFetchItems(currentPage, PageLimit))
   };
+
   const handleSearch = async () => {
     if(selectedCategory){
       navigate(`/admin/user/foundItems/${searchTerm}/${selectedCategory}`)
     }else{
     navigate(`/admin/user/foundItems/${searchTerm}`)
     }
-    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
+    const searchNow = dispatch(adminFetchItems(PageLimit, selectedCategory, itemName, itemCode));
     searchNow.then((res) => {
       setData(res?.data)
     })
   };
-
 
   const tableHeaders = [
     { key: "itemCode", label: "Item ID" },
@@ -174,8 +167,9 @@ function FoundItems() {
               dropdownValues={dropdownValues}
               value={selectedCategory}
               onChange={setSelectedCategory}
-              valueFromLink={searcItem.category ? searcItem.category : ""}
+              valueFromLink={searchItem.category ? searchItem.category : ""}
               placeholder="Filter by Category"
+              additionalClass="h-14"
             />
           </div>
           <div className="basis-1/12">
@@ -200,12 +194,19 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      <Table headers={tableHeaders} category={searcItem.category ? searcItem.category : selectedCategory} searchTerm={searchTerm} data={searcItem.item ? data?.list : tableData?.list} showEdit={true} context="foundItems" />
+      <Table 
+      headers={tableHeaders} 
+      category={searchItem.category ? searchItem.category : selectedCategory} 
+      searchTerm={searchTerm} 
+      data={searchItem.item ? data?.list : tableData?.list} 
+      showEdit={true} 
+      context="foundItems" 
+      currentPage={pageChange}/>
 
       <Pagination
         isBlueBackground={true}
-        currentPage={searcItem.item ? data?.page : tableData?.pageMeta?.page}
-        totalPages={searcItem.item ? data?.totalPages : tableData?.pageMeta?.totalPages}
+        currentPage={searchItem.item ? data?.page : tableData?.pageMeta?.page}
+        totalPages={searchItem.item ? data?.totalPages : tableData?.pageMeta?.totalPages}
         onPageChange={handlePageChange}
       />
     </div>

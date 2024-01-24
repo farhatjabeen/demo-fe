@@ -18,7 +18,7 @@ export default function SearchCards(props) {
             </div>
             <div className='absolute bg-white xl:w-80 xl:h-60 md:h-48 md:w-56 sm:h-44 sm:w-52 border border-baby-blue xl:top-52 md:top-40 sm:top-36 rounded-2xl flex justify-center items-center'>
                 <div className='xl:h-44 xl:w-60 md:w-48 md:h-40 sm:w-44 sm:h-36  xl:mt-5' key={props.idx}>
-                    <div className='font-bold xl:text-2xl md:text-xl sm:text-xl'>{props.itemName}</div>
+                    <div className='font-bold w-64 xl:text-2xl md:text-xl sm:text-xl'>{props.itemName}</div>
                     <div className='h-16 mt-3'>
                         <div className='flex sm:items-center'>
                             <FaMap style={{ color: "#00b8b8", margin: '3px' }} />

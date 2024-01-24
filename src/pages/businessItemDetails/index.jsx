@@ -6,6 +6,8 @@ import { viewDetails, viewItemById, viewUserItemById } from '../../redux/reducer
 import { userData } from '../../redux/reducers/userSlice';
 import { IoMdArrowBack } from "react-icons/io";
 import { goToTop } from '../../utils/helper';
+import './index.css';
+
 export default function BusinessItemDetails() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isLoader, setIsLoader] = useState(true);
@@ -53,14 +55,17 @@ export default function BusinessItemDetails() {
 
     const settings = {
         infinite: true,
+        dots: true,
         arrows: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
+        customPaging: () => (
+            <button className="slick-dot"></button>
+          ),
     };
-
 
     return (
         <div className='flex relative flex-col justify-center items-center'>
@@ -81,14 +86,14 @@ export default function BusinessItemDetails() {
                             })}
                         </Slider>
                     </div>
-                    <div className='flex justify-center mt-4'>
+                    {/* <div className='flex justify-center mt-4'>
                         {itemDetails?.itemImage?.map((_, i) => (
                             <button
                                 className={`cursor-pointer rounded h-2 w-2 mx-1 ${i === activeIndex ? "bg-info" : "bg-gray2"
                                     }`}
                             ></button>
                         ))}
-                    </div>
+                    </div> */}
 
 
                     <div className='my-20 w-full flex justify-center'>

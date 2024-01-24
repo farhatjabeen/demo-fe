@@ -83,6 +83,13 @@ export const setEncryptedLocalStorageData = (key, value) => {
     });
 };
 
+export const removeLocalStorageItem = (key) => {
+    if (!key || !storageKeyMapper[key]) return null;
+    return Promise.resolve().then(function () {
+        return localStorage.removeItem(storageKeyMapper[key])
+    });
+}
+
 //SCROLL TOP FUNCTION
 export const goToTop = () => {
     window.scrollTo({

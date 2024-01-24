@@ -12,6 +12,9 @@ const settings = {
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 2000,
+  customPaging: () => (
+    <button className="slick-dots"></button>
+  ),
 };
 
 const contentData = [
@@ -71,7 +74,7 @@ const Carousel = () => {
             <li key={index} className="mx-1">
               <button
                 className={`cursor-pointer h-2 w-2 rounded-full ${
-                  index === activeIndex? "bg-primary-color"   :"bg-grey"
+                  index === activeIndex? "bg-admin-slider"   :"bg-grey"
                 }`}
               ></button>
             </li>
@@ -85,6 +88,7 @@ const Carousel = () => {
         <p className="mb-4">{contentData[activeIndex].role}</p>
         <p className="text-sm">{contentData[activeIndex].description}</p>
       </div>
+      
     </div>
   );
 };

@@ -21,8 +21,9 @@ export default function CompanyProfile() {
     const categories = useSelector(categoryDetails);
     const companyCategories = categories ? Object.values(categories) : [];
     const userProfileData = useSelector(userProfile);
-    console.log(userProfileData.companyLocation,"userProfileData.location")
+    console.log(userProfileData.companyLocation, "userProfileData.location")
     const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
+    const [checkRetypePassword, setCheckRetypePassword] = useState(true);
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -93,8 +94,8 @@ export default function CompanyProfile() {
             const companyLocation = methods.getValues().companyLocation;
             const newPassword = methods.getValues().newPassword;
             const retypePassword = methods.getValues().confirmPassword;
-
             const currentPassword = methods.getValues().currentPassword;
+
             if (currentPassword) {
                 const changeDetails = await dispatch(editCompanyProfileData(data));
                 methods.reset({
@@ -107,8 +108,15 @@ export default function CompanyProfile() {
                 }
             } else if (newPassword || retypePassword) {
                 setCheckCurrentPassword(false)
+                if (retypePassword) {
+                    setCheckRetypePassword(false)
+                } else {
+                    setCheckRetypePassword(true)
+                }
             }
             else {
+                 setCheckCurrentPassword(true)
+                 setCheckRetypePassword(true)
                 const changeDetails = await dispatch(editCompanyProfileData({ name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }))
                 if (changeDetails) {
                     dispatch(companyProfileData());
@@ -119,6 +127,28 @@ export default function CompanyProfile() {
             console.log("submitData errors", error)
         }
     };
+
+    const handleClick = () => {
+        const newPassword = methods.getValues().newPassword;
+        const retypePassword = methods.getValues().confirmPassword;
+        const currentPassword = methods.getValues().currentPassword;
+        if (!currentPassword) {
+            if (newPassword || retypePassword) {
+                setCheckCurrentPassword(false)
+                if (retypePassword&&!newPassword) {
+                    setCheckRetypePassword(false)
+                } else {
+                    setCheckRetypePassword(true)
+                }
+            }else{
+                setCheckCurrentPassword(true)
+                setCheckRetypePassword(true)
+            }
+        }else{
+            setCheckCurrentPassword(true)
+            setCheckRetypePassword(true)
+        }
+    }
 
     return (
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
@@ -223,7 +253,7 @@ export default function CompanyProfile() {
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         required
-                                        disable={!editButton}
+                                        disable={true}
                                     />
                                 </div>
                             </div>
@@ -257,18 +287,26 @@ export default function CompanyProfile() {
                                 </div>
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter New password</label>
-                                    <TextInput
-                                        type="password"
-                                        placeholder="New password"
-                                        name="newPassword"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
-                                        autoComplete="off"
-                                        required
-                                        disable={!editButton}
-                                        eyeClass='absolute bottom-3 left-80 pl-5'
-                                        showPassword={showNewPassword}
-                                        setShowPassword={() => setShowNewPassword(!showNewPassword)}
-                                    />
+                                    <div>
+                                        <TextInput
+                                            type="password"
+                                            placeholder="New password"
+                                            name="newPassword"
+                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                            autoComplete="off"
+                                            required
+                                            disable={!editButton}
+                                            eyeClass='absolute bottom-3 left-80 pl-5'
+                                            showPassword={showNewPassword}
+                                            setShowPassword={() => setShowNewPassword(!showNewPassword)}
+                                        />
+                                        {
+                                            checkRetypePassword ?
+                                                ""
+                                                :
+                                                <p className='flex justify-start text-red'>New password required</p>
+                                        }
+                                    </div>
                                 </div>
                                 <div className='flex justify-between'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Re - Enter New password</label>
@@ -296,7 +334,7 @@ export default function CompanyProfile() {
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' onClick={()=> methods.getValues().newPassword || methods.getValues().confirmPassword ? setCheckCurrentPassword(false) : setCheckCurrentPassword(true)} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base'>
+                                    <button type='submit' onClick={handleClick} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base'>
                                         Save Changes
                                     </button>
                                 </div>

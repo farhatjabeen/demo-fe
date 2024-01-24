@@ -15,6 +15,7 @@ export default function MyProfile() {
     const [currentPasswordEntered, setCurrentPasswordEntered] = useState(false)
     const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
     const [passwords, setPasswords] = useState(true);
+    const [checkRetypePassword, setCheckRetypePassword] = useState(true);
     const [confirmPassword, setConfirmPassword] = useState(false);
     const resolver = useValidationResolver(myProfileSchema);
     const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export default function MyProfile() {
     });
 
     useEffect(() => {
-        
+
         // if (retypePassword) {
         //     if (currentPassword && newPassword) {
         //         setPasswords(false);
@@ -53,11 +54,11 @@ export default function MyProfile() {
         //     }
         // } 
 
-        
-        
+
+
     }, [methods.getValues()])
 
-    const handlePasswords = () =>{
+    const handlePasswords = () => {
         const currentPassword = methods.getValues().currentPassword;
         const newPassword = methods.getValues().newPassword;
         const retypePassword = methods.getValues().confirmPassword;
@@ -116,25 +117,23 @@ export default function MyProfile() {
             const newPassword = methods.getValues().newPassword;
             const retypePassword = methods.getValues().confirmPassword;
 
-            // const itemDetails = methods.getValues();
-
             if (currentPassword) {
-                if (passwords) {
-                    setCurrentPasswordEntered(false)
-                    const changePassword = await dispatch(userProfileData(data));
-                    console.log(changePassword, "changePassword")
-                    if (changePassword) {
-                        dispatch(generalUserDetails());
-                    }
-                }
-                else if (newPassword) {
-                    setCurrentPasswordEntered(true)
-                }
-
-            }
-            else {
-                setCheckCurrentPassword(true)
                 setCurrentPasswordEntered(false)
+                const changePassword = await dispatch(userProfileData(data));
+                console.log(changePassword, "changePassword")
+                if (changePassword) {
+                    dispatch(generalUserDetails());
+                }
+            } else if (newPassword || retypePassword) {
+                setCheckCurrentPassword(false)
+                if (retypePassword&&!newPassword) {
+                    setCheckRetypePassword(false)
+                } else {
+                    setCheckRetypePassword(true)
+                }
+            } else {
+                setCheckCurrentPassword(true)
+                setCheckRetypePassword(true)
                 const changeDetails = await dispatch(userProfileData({ name, emailMailId, mobileNumber }));
                 if (changeDetails) {
                     dispatch(generalUserDetails());
@@ -158,6 +157,27 @@ export default function MyProfile() {
             newPassword: "",
             confirmPassword: ""
         })
+    }
+
+    const handleClick = () => {
+        const newPassword = methods.getValues().newPassword;
+        const retypePassword = methods.getValues().confirmPassword;
+        const currentPassword = methods.getValues().currentPassword;
+        if (!currentPassword) {
+            if (newPassword || retypePassword) {
+                setCheckCurrentPassword(false)
+                if (retypePassword && !newPassword) {
+                    setCheckRetypePassword(false)
+                } else {
+                    setCheckRetypePassword(true)
+                }
+            } else {
+                setCheckCurrentPassword(true)
+            }
+        } else {
+            setCheckCurrentPassword(true)
+            setCheckRetypePassword(true)
+        }
     }
 
     return (
@@ -243,7 +263,7 @@ export default function MyProfile() {
                                             setShowPassword={() => setShowRegisterPassword(!showRegisterPassword)}
                                         />
                                         {
-                                            passwords ?
+                                            checkCurrentPassword ?
                                                 ""
                                                 :
                                                 <p className='flex justify-start text-red'>Current password required</p>
@@ -267,12 +287,12 @@ export default function MyProfile() {
                                                 showPassword={showNewPassword}
                                                 setShowPassword={() => setShowNewPassword(!showNewPassword)}
                                             />
-                                            {/* {
-                                                passwords ?
-                                                    <p className='flex justify-start text-red'>New password required</p>
-                                                    :
+                                            {
+                                                checkRetypePassword ?
                                                     ""
-                                            } */}
+                                                    :
+                                                    <p className='flex justify-start text-red'>New password required</p>
+                                            }
                                         </div>
                                     </div>
 
@@ -311,8 +331,7 @@ export default function MyProfile() {
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' onClick={()=>!methods.getValues().currentPassword ? 
-                                    methods.getValues().newPassword || methods.getValues().confirmPassword ? setPasswords(false) : setPasswords(true) : setPasswords(true)} className='cursor-pointer w-44 h-14 ml-5 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg'>
+                                    <button type='submit' onClick={handleClick} className='cursor-pointer w-44 h-14 ml-5 border border-[solid] border-primary-color bg-primary-color rounded-xl text-lg'>
                                         Save Changes
                                     </button>
                                 </div>

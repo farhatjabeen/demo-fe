@@ -113,7 +113,11 @@ export default function AddMoreDetails() {
         }
     }, [newItemId])
 
-
+    useEffect(()=>{
+        if(itemImage?.length === 0){
+            setIsUploaded(false)
+        }
+    },[itemImage])
 
     const submitData = async (data) => {
         try {
@@ -126,7 +130,7 @@ export default function AddMoreDetails() {
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
-                console.log(cloudinaryId.length, "cloudinaryId.length")
+                console.log(cloudinaryId?.length, "cloudinaryId.length")
 
                 console.log("hi from businessAddMoreDetails")
                 const addedItem = await dispatch(businessAddMoreDetails(data));
@@ -172,8 +176,6 @@ export default function AddMoreDetails() {
                 } else {
                     setImageLoader(false)
                 }
-
-
             }
 
         } catch (error) {
@@ -200,40 +202,12 @@ export default function AddMoreDetails() {
         });
     }
 
-    const handleFileDelete = (index) => {
-        setFiles((prevFiles) => {
-            const newFiles = [...prevFiles];
-            newFiles.splice(index, 1);
-            return newFiles;
-        });
-    };
-
     const handleDbFileDelete = (index) => {
-        console.log(index, "hi from delete")
-        console.log(itemImage?.length, "itemImage.length>1")
-        if (itemImage?.length > 1 && cloudinaryId?.length > 1) {
-            setItemImage((prevFiles) => {
-                const newFiles = [...prevFiles];
-                newFiles.splice(index, 1);
-                return newFiles;
-            });
-            setCloudinaryId((prevFiles) => {
-                const newIds = [...prevFiles];
-                newIds.splice(index, 1);
-                return newIds;
-            });
-            console.log(itemImage?.length, "itemImage.length>1")
-            !reportDetails.id && setFiles((prevFiles) => {
-                const newFiles = [...prevFiles];
-                newFiles.splice(index, 1);
-                return newFiles;
-            })
-        } else {
-            console.log("hi last delete")
-            setItemImage(null);
-            setCloudinaryId(null);
-            setFiles(null)
-            setIsUploaded(false)
+
+        setItemImage((prevFiles) => prevFiles.filter((_, i) => i !== index));
+        setCloudinaryId((prevFiles) => prevFiles.filter((_, i) => i !== index));
+        if(!reportDetails.id){
+            setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
         }
 
     };
@@ -258,8 +232,8 @@ export default function AddMoreDetails() {
             imagesResponse?.then((res) => {
                 if (imagesResponse) {
                     setIsImageUploaded(false)
-                    setCloudinaryId(res.data.cloudinary_id)
-                    setItemImage(res.data.itemImage)
+                    setCloudinaryId(res?.data?.cloudinary_id)
+                    setItemImage(res?.data?.itemImage)
                     if (reportDetails.id) {
                         setImageLoader(true);
                     }
@@ -275,33 +249,11 @@ export default function AddMoreDetails() {
                     //     setImageLoader(true);
                     // }else{
                     setImageLoader(true);
+                    setFiles([])
                     // }
                 }
             });
-            // }
-            // uploaded();
-
-
-            // if(imagesResponse){
-            // imagesResponse
-            //     .then((res) => {
-            //         setCloudinaryId(res.data.cloudinary_id)
-            //         setItemImage(res.data.itemImage)
-            //         setImageLoader(false);
-            //     }).then(() => {
-            //         setImageLoader(true); 
-            //         if (itemDetailsById?.itemImage && reportDetails.id) {
-            //             setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
-            //             setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
-            //             setImageLoader(false);
-            //         }
-            //     })
-            // }
-
         }
-
-
-
     }, [files])
 
     const handleCancel = () => {
