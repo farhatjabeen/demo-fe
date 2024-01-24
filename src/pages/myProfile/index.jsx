@@ -126,7 +126,7 @@ export default function MyProfile() {
                 }
             } else if (newPassword || retypePassword) {
                 setCheckCurrentPassword(false)
-                if (retypePassword) {
+                if (retypePassword&&!newPassword) {
                     setCheckRetypePassword(false)
                 } else {
                     setCheckRetypePassword(true)

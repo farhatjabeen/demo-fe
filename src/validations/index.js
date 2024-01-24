@@ -7,6 +7,7 @@ const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
 const specialCharacterRegex = /^[a-zA-Z0-9\s]+$/;
 const serbiaMobileNumberRegExp = /^6[0-9]\d{7}$/;
 const landMark = /^[A-Za-z#\-]+(?:\s[A-Za-z#\-]+)*$/;
+const descriptionRegex = /^(?!^[^\w\s\d\-.,&()]+$)(?!.*[ ]$)(?!.*(?:[^\w\s\d\-.,&()]+[ ]|[ ]{2,}))[^\s].*$/
 
 export const loginSchema = yup.object({
     emailMailId: yup
@@ -86,10 +87,11 @@ export const addMoreDetailsSchema = yup.object({
     locationIdentifiers: yup
         .string()
         // .matches(spaceRegex, 'Invalid characters found')
-        .matches(landMark, 'Invalid characters found')
+        .matches(descriptionRegex, 'Invalid characters found')
         .required('Landmark required'),
     itemDescription: yup
         .string()
+        .matches(descriptionRegex, 'Invalid characters found')
         .test('wordCount', 'Description must have at least 5 words', (value) => {
             if (!value) {
                 return false;
@@ -97,7 +99,6 @@ export const addMoreDetailsSchema = yup.object({
             const words = value.trim().split(/\s+/);
             return words.length >= 5;
         })
-        .matches(spaceRegex, 'Invalid characters found')
         .required('Item description required'),
     itemCategory: yup
         .string()
@@ -131,7 +132,7 @@ export const addMoreDetailsItemSchema = yup.object().shape({
         .required('Location required'),
     locationIdentifiers: yup
         .string()
-        .matches(landMark, 'Invalid characters found')
+        .matches(descriptionRegex, 'Invalid characters found')
         // .matches(spaceRegex, 'Invalid characters found')
         // .matches(nameRegex, 'Invalid characters used')
         .required('Landmark required'),
@@ -144,7 +145,7 @@ export const addMoreDetailsItemSchema = yup.object().shape({
             const words = value.trim().split(/\s+/);
             return words.length >= 5;
         })
-        .matches(spaceRegex, 'Invalid characters found')
+        .matches(descriptionRegex, 'Invalid characters found')
         .required('Item description required'),
     itemCategory: yup
         .string()

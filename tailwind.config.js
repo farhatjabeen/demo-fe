@@ -68,7 +68,8 @@ module.exports = {
       'gray4': '#5B6871',
       'gray5' : '#252C32',
       'gray6' : '#E5E9EB',
-      "gray7": '#90929A'
+      "gray7": '#90929A',
+      "admin-slider": "#26B096",
     },
     extend: {}
   },

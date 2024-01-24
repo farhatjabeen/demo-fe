@@ -253,7 +253,7 @@ export default function CompanyProfile() {
                                         className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         required
-                                        disable={!editButton}
+                                        disable={true}
                                     />
                                 </div>
                             </div>

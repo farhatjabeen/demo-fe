@@ -101,7 +101,7 @@ function FoundItems() {
   }, [searchTerm,searchItem.category]);
 
   const handleExport = () => {
-    dispatch(adminExportItems(searchItem.item,searchItem.category))
+    dispatch(adminExportItems(searchTerm,selectedCategory))
   };
 
   const handleReset = () => {

@@ -115,6 +115,7 @@ export default function BusinessSignUp() {
                 const registered = await dispatch(businessUserRegister(dataNow))
                 if (registered) {
                     setImageFiles('');
+                    setCompanyLogo("")
                     setIsImage(true)
                     setIsCleared(true);
                     setIsChecked(false);

@@ -84,7 +84,7 @@ const showLoader = (status) => {
 export const statusHandler = (response, tokenType, exposeHeaders = true) => {
     const headers = {};
 
-    if (response.status === 401 || response.status === 403) {
+    if (response?.status === 401 || response?.status === 403) {
         Toast({ type: 'error', message: response.statusText });
         setTimeout(() => logout(tokenType), 1000);
     }

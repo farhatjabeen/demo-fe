@@ -114,7 +114,7 @@ export default function AddMoreDetails() {
     }, [newItemId])
 
     useEffect(()=>{
-        if(itemImage.length === 0){
+        if(itemImage?.length === 0){
             setIsUploaded(false)
         }
     },[itemImage])
@@ -130,7 +130,7 @@ export default function AddMoreDetails() {
                 methods.setValue("itemImage", itemImage);
                 methods.setValue("cloudinary_id", cloudinaryId);
                 // const datas = methods.getValues()
-                console.log(cloudinaryId.length, "cloudinaryId.length")
+                console.log(cloudinaryId?.length, "cloudinaryId.length")
 
                 console.log("hi from businessAddMoreDetails")
                 const addedItem = await dispatch(businessAddMoreDetails(data));
@@ -253,30 +253,7 @@ export default function AddMoreDetails() {
                     // }
                 }
             });
-            // }
-            // uploaded();
-
-
-            // if(imagesResponse){
-            // imagesResponse
-            //     .then((res) => {
-            //         setCloudinaryId(res.data.cloudinary_id)
-            //         setItemImage(res.data.itemImage)
-            //         setImageLoader(false);
-            //     }).then(() => {
-            //         setImageLoader(true); 
-            //         if (itemDetailsById?.itemImage && reportDetails.id) {
-            //             setItemImage((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.itemImage] : itemDetailsById?.itemImage)
-            //             setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...itemDetailsById?.cloudinary_id] : itemDetailsById?.cloudinary_id)
-            //             setImageLoader(false);
-            //         }
-            //     })
-            // }
-
         }
-
-
-
     }, [files])
 
     const handleCancel = () => {
