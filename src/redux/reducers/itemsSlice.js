@@ -143,7 +143,7 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategor
 export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm = '') => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchUserTerm || ''}`,
+            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&name=${searchUserTerm}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'

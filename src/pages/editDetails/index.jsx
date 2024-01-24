@@ -149,13 +149,13 @@ export default function EditBusinessDetails() {
     const submitData = async () => {
         try {
             const inputString = methods.getValues().keywords;
-                console.log(JSON.stringify(inputString), "inputString")
+            console.log(JSON.stringify(inputString), "inputString")
 
-                methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
+            methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
             methods.setValue('itemImage', itemImage)
             methods.setValue('cloudinary_id', cloudinaryId)
-            methods.setValue('itemCategory',selectedCategory)
-            methods.setValue('location',selectedLocation)
+            methods.setValue('itemCategory', selectedCategory)
+            methods.setValue('location', selectedLocation)
             const dataNow = methods.getValues();
             if (itemImage?.length) {
                 setIsImage(true)
@@ -208,6 +208,7 @@ export default function EditBusinessDetails() {
                                             dropdownValues={itemCategories}
                                             value={selectedCategory}
                                             onChange={setSelectedCategory}
+                                            additionalClass='h-12 pt-1 pb-1'
                                         />
                                     </div>
                                 </div>
@@ -250,10 +251,15 @@ export default function EditBusinessDetails() {
                                     <div>
                                         {isUploaded || itemDetails?.itemImage ? (
                                             <div className='flex flex-wrap w-96'>
-                                                {cloudinaryId?.map((file, i) => (
-                                                    <div key={i} className='flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2'>
-                                                        <div>{file}</div>
-                                                        <div className='flex items-center ml-2 cursor-pointer' onClick={() => handleRemoveFile(i)}><MdClose /></div>
+                                                {itemImage?.map((items, i) => (
+                                                    <div>
+                                                        <div key={i} className=' mb-2 mr-2 w-fit px-2 pt-2 pb-1 bg-white rounded-lg border border-primary-color'>
+                                                            <div className='flex'>
+                                                                <img className='w-20 h-20' src={items} alt={i}></img>
+                                                                <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
+                                                            </div>
+                                                            <div className='flex justify-center'>{i + 1}</div>
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </div>
@@ -263,7 +269,7 @@ export default function EditBusinessDetails() {
                                             <ImageUpload
                                                 name="itemImage"
                                                 designClass=
-                                                        "xl:w-80 md:w-96 sm:w-64 h-14 sm:h-12 xl:mr-2 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
+                                                "xl:w-80 md:w-96 sm:w-64 h-14 sm:h-12 xl:mr-2 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"
                                                 multiple={true}
                                                 handleFileUpload={handleFileUpload}
                                             />
@@ -297,6 +303,7 @@ export default function EditBusinessDetails() {
                                                 dropdownValues={locationCategory}
                                                 value={selectedLocation}
                                                 onChange={setSelectedLocation}
+                                                additionalClass='h-12 pt-1 pb-1'
                                             />
                                         </div>
                                     </div>
@@ -367,7 +374,7 @@ export default function EditBusinessDetails() {
                                         window.history.back()
                                         e.preventDefault()
                                     }}>Cancel</button></div>
-                                    <div><button type='submit' onClick={()=>itemImage?.length ? setIsImage(true) : setIsImage(false)} className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-primary-color rounded-lg text-lg cursor-pointer' >Edit Form</button></div>                            </div>
+                                    <div><button type='submit' onClick={() => itemImage?.length ? setIsImage(true) : setIsImage(false)} className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-primary-color rounded-lg text-lg cursor-pointer' >Edit Form</button></div>                            </div>
                             </div>
                         </div>
                     </form>

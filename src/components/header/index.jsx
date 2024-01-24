@@ -17,7 +17,7 @@ const Header = (props) => {
     const generalUserInformation = useSelector(generalUserData);
     const businessUserInformation = useSelector(userProfile);
     const [backButton, setBackButton] = useState(false);
-    const [loader,setLoader] = useState(true);
+    const [loader,setLoader] = useState(false);
 
     console.log(businessUserInformation, 'userName')
 
@@ -41,6 +41,7 @@ const Header = (props) => {
             if (userDetails?.role === 'USER') {
                 setLogin(true);
                 setIsBusiness(false);
+                setLoader(true)
                 const user = await dispatch(generalUserDetails())
                 if(user){
                     setLoader(false)
@@ -49,6 +50,7 @@ const Header = (props) => {
             if (userDetails?.role === 'BUSINESS') {
                 setLogin(true);
                 setIsBusiness(true);
+                setLoader(true)
                 const user = await dispatch(companyProfileData())
                 if(user){
                     setLoader(false)
@@ -80,6 +82,7 @@ const Header = (props) => {
 
     }
 
+    console.log(generalUserInformation?.name?.length,"generalUserInformation?.name?.length")
     return (
         <div className="headerContainer" style={{ position: 'relative', zIndex: 50 }}>
                 
@@ -98,10 +101,10 @@ const Header = (props) => {
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown userName={businessUserInformation?.name ? businessUserInformation?.name : "Loading..."} linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
+                                    <HeaderDropdown userName={loader ? "Loading..." : businessUserInformation?.name} linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
                                         titleTwo='My Profile' navigateTwo='/companyprofile' handleLogout={handleLogout} />
                                     :
-                                    <HeaderDropdown userName={generalUserInformation?.name ? generalUserInformation?.name : "Loading..."} linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'
+                                    <HeaderDropdown userName={loader ? "Loading..." : generalUserInformation?.name} linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'
                                         titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />
                             }
                         </div>

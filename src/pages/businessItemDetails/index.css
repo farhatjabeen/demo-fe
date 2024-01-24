@@ -19,3 +19,9 @@
         text-align: center;
         margin-top: 40px;
     }
+    .slick-prev:before{
+        color: gray;
+    }
+.slick-next:before {
+  color: gray ;
+}

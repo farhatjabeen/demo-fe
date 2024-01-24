@@ -29,7 +29,7 @@ function FoundItems() {
 
   useEffect(() => {
     dispatch(adminFetchItems(currentPage, PageLimit))
-    if(!searchItem.item){
+    if (!searchItem.item) {
       navigate('/admin/user/foundItems')
     }
   }, [currentPage, PageLimit]);
@@ -38,7 +38,7 @@ function FoundItems() {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page");
     if (page) {
-      setPageChange(parseInt(page, 10)) ;
+      setPageChange(parseInt(page, 10));
     }
   }, [location.search]);
 
@@ -98,25 +98,26 @@ function FoundItems() {
       setItemName("");
     }
 
-  }, [searchTerm,searchItem.category]);
+  }, [searchTerm, searchItem.category]);
 
   const handleExport = () => {
-    dispatch(adminExportItems(searchTerm,selectedCategory))
+    dispatch(adminExportItems(selectedCategory,searchTerm))
   };
 
   const handleReset = () => {
     setSearchTerm("");
     setSelectedCategory("");
+    navigate(`/admin/user/foundItems`)
     dispatch(adminFetchItems(currentPage, PageLimit))
   };
 
   const handleSearch = async () => {
-    if(selectedCategory){
+    if (selectedCategory) {
       navigate(`/admin/user/foundItems/${searchTerm}/${selectedCategory}`)
-    }else{
-    navigate(`/admin/user/foundItems/${searchTerm}`)
+    } else {
+      navigate(`/admin/user/foundItems/${searchTerm}`)
     }
-    const searchNow = dispatch(adminFetchItems(PageLimit, selectedCategory, itemName, itemCode));
+    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
     searchNow.then((res) => {
       setData(res?.data)
     })
@@ -194,14 +195,14 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      <Table 
-      headers={tableHeaders} 
-      category={searchItem.category ? searchItem.category : selectedCategory} 
-      searchTerm={searchTerm} 
-      data={searchItem.item ? data?.list : tableData?.list} 
-      showEdit={true} 
-      context="foundItems" 
-      currentPage={pageChange}/>
+      <Table
+        headers={tableHeaders}
+        category={searchItem.category ? searchItem.category : selectedCategory}
+        searchTerm={searchTerm}
+        data={searchItem.item ? data?.list : tableData?.list}
+        showEdit={true}
+        context="foundItems"
+        currentPage={pageChange} />
 
       <Pagination
         isBlueBackground={true}
