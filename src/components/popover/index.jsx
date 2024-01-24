@@ -267,7 +267,7 @@ const PopoverComponent = () => {
     };
 
     const togglePopover = () => {
-        setIsPopoverOpen((prev) => !prev)
+        !disablePopover&&setIsPopoverOpen((prev) => !prev)
         if(disablePopover){
             Toast({type:"error",message:"General users will not be allowed to log in here"})
         }
@@ -291,7 +291,7 @@ const PopoverComponent = () => {
                         {/* </button> */}
                         {isPopoverOpen &&
                             <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                                className={disablePopover ? "" : "fixed inset-0 bg-black opacity-30"}>
+                                className={isPopoverOpen ?"fixed inset-0 bg-black opacity-30" : ""}>
                             </div>}
                         <Transition
                             show={open || isPopoverOpen}

@@ -50,8 +50,8 @@ const SideMenu = () => {
           </div>
         )}
       </div>
-      <ul>
-        <div className="mb-4 mt-14" >
+      <ul className="w-full">
+        <div className="mb-4 mt-14 w-60 " >
           <li className={`${window.location.pathname.includes("/admin/user/foundItems")
             ? " bg-light-blue text-blue font-bold py-2 rounded-lg"
             : " "
@@ -97,7 +97,7 @@ const SideMenu = () => {
             </li>
           </>
         )}
-        <li className={`fixed bottom-16 mb-2 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold py-3 rounded-lg " : ""}${settingsTabWidth}`}>
+        <li className={`fixed bottom-12 w-60 h-10 flex items-center mb-3 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold rounded-lg " : ""}${settingsTabWidth}`}>
           <Link to="/admin/user/settings" >
             <span className="pl-2 flex">
               <FiSettings size={26} />
@@ -107,7 +107,7 @@ const SideMenu = () => {
             </span>
           </Link>
         </li>
-        <li onClick={() => { setOpenModal(!openModal); }} className={`cursor-pointer pl-2 fixed bottom-4 ${openModal ? "bg-light-blue text-blue font-bold py-3 rounded-lg " : ""}${settingsTabWidth}`}>
+        <li onClick={() => { setOpenModal(!openModal); }} className={`cursor-pointer pl-2 w-60 h-10 flex items-center fixed bottom-4 ${openModal ? "bg-light-blue text-blue font-bold rounded-lg " : ""}${settingsTabWidth}`}>
           <Link className="flex" to="/admin/user/logout" >
             <RiLogoutBoxLine size={26} />
             <p className={`pl-4 ${!isCollapsed ? '' : 'hidden'}`}>Logout</p>
