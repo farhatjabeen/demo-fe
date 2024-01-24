@@ -287,7 +287,7 @@ export default function CompanyProfile() {
                                 </div>
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter New password</label>
-                                    <div>
+                                    <div className='xl:w-96 md:w-72 sm:w-60'>
                                         <TextInput
                                             type="password"
                                             placeholder="New password"
