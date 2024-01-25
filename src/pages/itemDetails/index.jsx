@@ -108,7 +108,7 @@ function ItemDetails() {
               <div className="flex gap-2">
                 {foundItemDetails?.itemImage.map((items, i) => {
                   return (
-                    <img src={items} alt="key" />
+                    <img src={items} alt="key" className="h-40 w-40" />
                   );
                 })}
               </div>

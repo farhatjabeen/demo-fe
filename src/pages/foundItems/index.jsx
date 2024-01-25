@@ -12,7 +12,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+    
   const [pageChange, setPageChange] = useState();
   const PageLimit = 10;
   const [itemCode, setItemCode] = useState('');
@@ -21,13 +21,15 @@ function FoundItems() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const searchItem = useParams();
-  const [searchTerm, setSearchTerm] = useState(searchItem.item ? searchItem.item : '');
+  const [searchTerm, setSearchTerm] = useState('');
   const tableData = useSelector(foundItemDetails);
+  const [currentPage, setCurrentPage] = useState(tableData?.pageMeta?.page);
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
   const location = useLocation();
-
+localStorage.setItem("firstpage",true);
   useEffect(() => {
+    const pageNow = localStorage.getItem("firstpage")
     dispatch(adminFetchItems(currentPage, PageLimit))
     if (!searchItem.item) {
       navigate('/admin/user/foundItems')
@@ -45,24 +47,12 @@ function FoundItems() {
   useEffect(() => {
     dispatch(itemDropdownValues());
     if (searchItem.item || searchItem.category || selectedCategory) {
-      setSearchTerm(searchItem.item)
-      if (isNaN(+searchItem.item)) {
-        setItemName(searchItem.item);
-        setItemCode("");
-        const searchNow = dispatch(adminFetchItems(pageChange, PageLimit, searchItem.category ? searchItem.category : selectedCategory, searchItem.item, itemCode));
+        const searchNow = dispatch(adminFetchItems(pageChange, PageLimit, searchItem.category ? searchItem.category : selectedCategory, !searchTerm ? "" : searchItem.item, ));
         searchNow.then((res) => {
           setData(res?.data)
         })
-      } else {
-        setItemCode(searchItem.item);
-        setItemName("");
-        const searchNow = dispatch(adminFetchItems(pageChange, PageLimit, searchItem.category ? searchItem.category : selectedCategory, itemName, searchItem.item));
-        searchNow.then((res) => {
-          setData(res?.data)
-        })
-      }
     }
-  }, []);
+  }, [searchItem]);
 
   // useEffect(()=>{
   //   searchItems();
@@ -87,19 +77,6 @@ function FoundItems() {
   //     }
   // }
 
-  useEffect(() => {
-    console.log(searchTerm, "searchTerm")
-    console.log(isNaN(+searchTerm), "isNaN(+searchTerm")
-    if (isNaN(+searchTerm)) {
-      setItemName(searchTerm);
-      setItemCode("");
-    } else {
-      setItemCode(searchTerm);
-      setItemName("");
-    }
-
-  }, [searchTerm, searchItem.category]);
-
   const handleExport = () => {
     dispatch(adminExportItems(selectedCategory,searchTerm))
   };
@@ -112,12 +89,14 @@ function FoundItems() {
   };
 
   const handleSearch = async () => {
-    if (selectedCategory) {
+    if (selectedCategory&&!searchTerm) {
+      navigate(`/admin/user/foundItems/${selectedCategory}`)
+    } else if(selectedCategory&&searchTerm){
       navigate(`/admin/user/foundItems/${searchTerm}/${selectedCategory}`)
-    } else {
+    } else if(searchTerm&&!selectedCategory){
       navigate(`/admin/user/foundItems/${searchTerm}`)
     }
-    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
+    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, searchTerm));
     searchNow.then((res) => {
       setData(res?.data)
     })
@@ -202,7 +181,7 @@ function FoundItems() {
         data={searchItem.item ? data?.list : tableData?.list}
         showEdit={true}
         context="foundItems"
-        currentPage={pageChange} />
+        currentPage={currentPage} />
 
       <Pagination
         isBlueBackground={true}

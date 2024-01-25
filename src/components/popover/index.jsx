@@ -62,7 +62,12 @@ const PopoverComponent = () => {
             password: ""
         })
 
+    }, [navigate])
+
+    useEffect(()=>{
+        console.log(window.location.pathname,"window.location.pathname")
         if(window.location.pathname === '/businessSignIn' || 
+        window.location.pathname === '/businesssignin' ||
         window.location.pathname === '/businessignup' || 
         window.location.pathname === '/businessHome'){
             setDisablePopover(true)
@@ -71,8 +76,6 @@ const PopoverComponent = () => {
             setDisablePopover(false)
         }
     }, [navigate])
-
-
 
     useEffect(() => {
         if (tokens) {

@@ -17,6 +17,17 @@
     background-size: 100% 25%;
 }
 
+.authLayout-missing-items-page{
+    background-size: 100% 30%;
+}
+
+.authLayout-missing-items{
+    background-size: 100% 40%;
+}
+.authLayout-missing-items-eight{
+    background-size: 100% 40%;
+}
+
 .authLayout-default,
 .mainLayout-default {
     background-size: 100% 50%;
