@@ -217,7 +217,7 @@ const EditFoundItems = () => {
                 <label className='text-base font-normal' >Item Name</label>
                 <TextInput
                   name='itemName'
-                  className="w-11/12 py-2 px-3  border border-light-gray rounded-md"
+                  className="w-11/12 h-10 px-5 py-1 border border-light-gray rounded-md"
                   required
                 />
               </div>
@@ -227,14 +227,14 @@ const EditFoundItems = () => {
                   dropdownValues={dropdownValues}
                   value={selectedCategory}
                   onChange={setSelectedCategory}
-                  additionalClass='h-10 pt-1 pb-1'
+                  additionalClass='h-10 py-1'
                 />
               </div>
               <div className="xl:w-1/3 xs:w-full md:w-1/2 mb-2 xl:ml-6 md:ml-4">
                 <label className='text-base font-normal' >Keywords</label>
                 <TextInput
                   name='keywords'
-                  className="w-11/12 py-2 px-3  border border-light-gray rounded-md"
+                  className="w-11/12 h-10 px-5 py-1 border border-light-gray rounded-md"
                   required
                 />
               </div>
@@ -245,7 +245,7 @@ const EditFoundItems = () => {
                 <TextAreaInput
                   name='itemDescription'
                   autoComplete="off"
-                  className="w-80 py-2 px-3 border border-light-gray rounded-md"
+                  className="w-80 h-10 px-5 py-1 border border-light-gray rounded-md"
                   rows="4"
                   required
                 ></TextAreaInput>
@@ -255,7 +255,7 @@ const EditFoundItems = () => {
                 <TextAreaInput
                   name='locationIdentifiers'
                   autoComplete="off"
-                  className="w-11/12 py-2 px-3 border border-light-gray rounded-md"
+                  className="w-11/12 h-10 px-5 py-1 border border-light-gray rounded-md"
                   rows="4"
                   required
                 ></TextAreaInput>

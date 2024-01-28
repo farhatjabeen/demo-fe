@@ -121,10 +121,10 @@ export const businessUpdateItems = (itemId, data) => (dispatch) => {
     });
 };
 //get items in admin
-export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, itemName, itemcode) => (dispatch) => {
+export const adminFetchItems = (currentPage=1, PageLimit = 10, selectedCategory, itemName) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}&category=${selectedCategory || ''}&itemName=${itemName || ''}&itemcode=${itemcode}`,
+            url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}&category=${selectedCategory || ''}&itemName=${itemName || ''}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -143,7 +143,7 @@ export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategor
 export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm = '') => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&name=${searchUserTerm}`,
+            url: `${endpoints.apiPath.items.fetchUserItems}?page=${currentPage}&limit=${PageLimit}&username=${searchUserTerm}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -163,7 +163,7 @@ export const adminFetchUser = (currentPage = 1, PageLimit = 10, searchUserTerm =
 export const adminFetchBusinessUser = (currentPage = 1, PageLimit = 10, searchBusinessTerm = '') => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}&usercode=${searchBusinessTerm || ''}`,
+            url: `${endpoints.apiPath.items.fetchBusinessUserItems}?page=${currentPage}&limit=${PageLimit}&username=${searchBusinessTerm}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'adminToken'
@@ -547,7 +547,7 @@ export const adminUpdateFoundItems = (itemId, data) => (dispatch) => {
 };
 
 //delete in admin
-export const deleteItem = (itemId, context) => (dispatch) => {
+export const deleteItem = (itemId, context, currentPage) => (dispatch) => {
     try {
         if (context === "foundItems") {
             apiRequest({
@@ -558,7 +558,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
             }).then((res) => {
                 Toast({ type: "success", message: "Item deleted successfully." });
             });
-            dispatch(adminFetchItems());
+            dispatch(adminFetchItems(currentPage));
 
         } else if (context === "user") {
             apiRequest({
@@ -569,7 +569,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
             }).then((res) => {
                 Toast({ type: "success", message: "Item deleted successfully." });
             });
-            dispatch(adminFetchUser());
+            dispatch(adminFetchUser(currentPage));
 
         }
         else if (context === "businessUser") {
@@ -581,7 +581,7 @@ export const deleteItem = (itemId, context) => (dispatch) => {
             }).then((res) => {
                 Toast({ type: "success", message: "Item deleted successfully." });
             });
-            dispatch(adminFetchBusinessUser());
+            dispatch(adminFetchBusinessUser(currentPage));
         }
 
     } catch (error) {

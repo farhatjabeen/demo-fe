@@ -11,8 +11,6 @@ import { adminFetchUser, userDetails, adminFetchBusinessUser, businessUserDetail
 
 function User() {
   // Local states
-  const [currentPageForUser, setCurrentPageForUser] = useState(1);
-  const [currentPageForBusiness, setCurrentPageForBusiness] = useState(1);
   const [searchUserTerm, setSearchUserTerm] = useState("");
   const [resetHandle, setResetHandle] = useState(false);
   const [isId, setIsId] = useState(true);
@@ -20,6 +18,8 @@ function User() {
   const PageLimit = 10;
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
+  const [currentPageForUser, setCurrentPageForUser] = useState(tableData?.pageMeta?.page);
+  const [currentPageForBusiness, setCurrentPageForBusiness] = useState(tableBusinessData?.pageMeta?.page);
   const dispatch = useDispatch();
 
   const searchRegex = /^[0-9]+$/;
@@ -137,7 +137,7 @@ function User() {
             {resetHandle ?
               <p>Loading...</p>
               :
-              <Table headers={userHeaders} data={tableData?.list} context="user" />
+              <Table currentPage={currentPageForUser} headers={userHeaders} data={tableData?.list} context="user" />
             }
             <Pagination
               isBlueBackground={true}
@@ -180,7 +180,7 @@ function User() {
               :
               <p className="text-sm text-red">Valid ID required</p>
             }
-            <Table headers={businessHeaders} data={tableBusinessData?.list} context="businessUser" />
+            <Table currentPage={currentPageForBusiness} headers={businessHeaders} data={tableBusinessData?.list} context="businessUser" />
             <Pagination
               isBlueBackground={true}
               currentPage={tableBusinessData?.pageMeta?.page}

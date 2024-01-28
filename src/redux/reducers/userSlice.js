@@ -240,6 +240,7 @@ export const businessUserLogout = () => (dispatch) => {
             tokenType: 'businessUserToken',
         }).then((res) => {
             removeLocalStorageItem("businessUserToken");
+
             Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
@@ -381,7 +382,6 @@ export const userProfileData = (data) => async (dispatch) => {
             isAuth: true,
             data: data
         }).then((res) => {
-            console.log(res,"apiresp")
             Toast({type:"success",message:res.message})
             return resolve(true)
         }).catch((err) => {

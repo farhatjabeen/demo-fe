@@ -17,6 +17,8 @@ const SideMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  
+
   const handleToggleCollapse = () => {
     setCollapsed(!isCollapsed);
     if (isCollapsed) {
@@ -119,7 +121,7 @@ const SideMenu = () => {
         description="Are you sure" 
         confirmText="Logout" 
         onConfirm={handleLogout}
-        additionalContent='Do you really want to logout?'>
+        additionalContent='you want to logout?'>
 
       </CommonModal>
     </div>

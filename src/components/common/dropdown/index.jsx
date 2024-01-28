@@ -21,7 +21,7 @@ const DropdownMenu = ({ dropdownValues, value, onChange, placeholder, additional
         
         className={`custom-arrow w-full px-5 border rounded-lg border-gray3 rounded ${additionalClass}`}
       >
-        <option className='text-black' value="" disabled>
+        <option className='text-black' value="">
           {placeholder}
         </option>
         {dropdownValues?.map((item, i) => (

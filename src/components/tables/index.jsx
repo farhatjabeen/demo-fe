@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 import { useDispatch } from "react-redux";
 
-const Table = ({ headers, data, showEdit = false, context, searchTerm,category }) => {
+const Table = ({ headers, data, showEdit = false, context, searchTerm,category, currentPage }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const navigate = useNavigate();
@@ -19,7 +19,9 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm,category }
 
   const handleSelect = (item) => {
     if (window.location.pathname === "/admin/user/foundItems" || 
-    window.location.pathname === `/admin/user/foundItems/${searchTerm}/${category}` || window.location.pathname === `/admin/user/foundItems/${searchTerm}`) {
+    window.location.pathname === `/admin/user/foundItems/${searchTerm}/${category}` || 
+    window.location.pathname === `/admin/user/foundItems/${searchTerm}` ||
+    window.location.pathname === `/admin/user/foundItems/${category}`) {
       navigate(`/admin/user/foundItems/itemDetails/${item._id}`);
     }
   };
@@ -107,6 +109,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm,category }
         }}
         selectedItemId={selectedItemId}
         context={context}
+        currentPage ={currentPage}
       />
     </div>
   );

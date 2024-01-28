@@ -17,6 +17,7 @@ import { Toast } from '../../components/toast';
 
 export default function AddMoreDetails() {
     const [newItemId, setNewItemId] = useState('');
+    const [fileName, setFileName] = useState('');
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const dispatch = useDispatch();
@@ -43,7 +44,6 @@ export default function AddMoreDetails() {
         dispatch(itemDropdownValues())
         setIsLoader(true)
         const addData = async () => {
-            console.log(reportDetails.id, "reportDetails.id")
 
             if (reportDetails.id) {
                 const getDetails = await dispatch(searchItemById(reportDetails.id))
@@ -65,15 +65,17 @@ export default function AddMoreDetails() {
         // }
     }, []);
 
+    useEffect(()=>{
+
+    },[fileName])
+
     useEffect(() => {
 
         if (itemDetailsById && reportDetails.id) {
-            console.log("hi from itemid")
             setItemImage(itemDetailsById?.itemImage);
             setCloudinaryId(itemDetailsById?.cloudinary_id);
             if (itemDetailsById?.itemImage) {
                 setImageLoader(true);
-                console.log("hi from loader")
             }
             methods.reset({
                 emailMailId: itemDetailsById?.emailMailId || "",
@@ -202,6 +204,7 @@ export default function AddMoreDetails() {
     const handleFileUpload = (e) => {
         const selectedFiles = e.target.files;
         console.log(selectedFiles, "selectedFiles")
+        console.log(selectedFiles?.name, "selectedFiles?.name")
         setFiles((prevFiles) => {
             const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles;
             if (newFiles) {
@@ -366,7 +369,7 @@ export default function AddMoreDetails() {
                                                                         <img className='w-20 h-20' src={items} alt={i}></img>
                                                                         <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
                                                                     </div>
-                                                                    <div className='flex justify-center text-sm'>{imageTitle[i]} {i + 1}</div>
+                                                                    <div className='flex justify-center text-sm'>{files?.name}</div>
                                                                 </div>
                                                             </div>
                                                         );
