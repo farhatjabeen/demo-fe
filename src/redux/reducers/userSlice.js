@@ -302,9 +302,9 @@ export const adminResetPassword = (data, token) => async () => {
             method: endpoints.ApiMethods.POST,
             data: data,
             tokenType: 'adminToken',
-        }).then(res => {
+        }).then((res) => {
             Toast({ type: "success", message: res.message })
-            return resolve(res);
+            return resolve(true);
         }).catch(err => {
             reject(err);
             console.log('rejected', err)
@@ -334,7 +334,7 @@ export const adminChangePassword = (data) => async () => {
             data: data,
             isAuth: true,
             tokenType: 'adminToken',
-        }).then(res => {
+        }).then((res) => {
             Toast({type:"success",message: res.message})
             return resolve(true);
         }).catch(err => {
