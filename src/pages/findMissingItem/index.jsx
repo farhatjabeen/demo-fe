@@ -22,8 +22,11 @@ export default function FindMissingItem() {
   const resolver = useValidationResolver(searchByKeywordSchema);
   const searchValue = useSelector(searchKey);
   const cities = useSelector(locationDetails);
-    const citiesInSerbia = cities ? Object.values(cities) : [];
+  
+  const citiesInSerbia = cities ? Object.values(cities) : [];
+
   const isLastPage = searchValue?.pageMeta?.page === searchValue?.pageMeta?.totalPages;
+
   const methods = useForm({
     defaultValues: {
       keyword: "",
