@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaRegMap, FaRegCalendar, FaRegClock } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteMyListingItems, itemDetails, myListingItems } from '../../redux/reducers/itemsSlice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Pagination from '../../components/common/pagination';
 
 export default function MyListings() {
@@ -12,11 +12,16 @@ export default function MyListings() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoader, setIsLoader] = useState(false);
     const tableData = useSelector(itemDetails);
+    const location = useLocation();
+const [searchParams] = useSearchParams();
+const pageNow = searchParams.get('page');
 
     useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page");
         const fetchData = async () => {
         setIsLoader(true)
-        const listingItems =  await dispatch(myListingItems(currentPage));
+        const listingItems = await dispatch(myListingItems(page));
         if(listingItems){
             setIsLoader(false)
         }
@@ -25,7 +30,7 @@ export default function MyListings() {
         }
         }
         fetchData();
-    }, [currentPage]);
+    }, [location.search]);
 
 
     const handleEditItem = (itemId) => {
@@ -35,14 +40,14 @@ export default function MyListings() {
     const handleListingDelete = (itemId) => {
         try {
             dispatch(deleteMyListingItems({ itemId }));
-            dispatch(myListingItems(currentPage));
+            dispatch(myListingItems(pageNow));
         } catch (error) {
             console.error("submitData errors", error);
         }
     };
 
     const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+        navigate(`/mylistings?page=${pageNumber}`)
     };
 
 
@@ -118,7 +123,7 @@ export default function MyListings() {
             }
             </div>}
             <Pagination
-                currentPage={currentPage}
+                currentPage={tableData?.pageMeta?.page}
                 totalPages={tableData?.pageMeta?.totalPages}
                 isBlueBackground={false}
                 onPageChange={handlePageChange}

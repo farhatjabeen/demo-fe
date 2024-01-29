@@ -38,8 +38,13 @@ export default function SearchReport() {
     const submitData = async () => {
         try {
             const itemName = methods.getValues().itemName;
+            const locations = methods.getValues().location;
             if (buttonActive) {
-                navigate(`/findMissingItem/${itemName}/${methods.getValues().location}`);
+                if (locations && locations.length > 0) {
+                    navigate(`/findMissingItem/${itemName}/${locations}?page=1`);
+                  } else {
+                    navigate(`/findMissingItem/${itemName}?page=1`);
+                  }
             } else {
                 if (isUser) {
                     navigate(`/addMoreDetails/${itemName}/${methods.getValues().locations}`);

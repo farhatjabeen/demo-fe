@@ -59,7 +59,7 @@ const SideMenu = () => {
             : " "
             } ${!isCollapsed ? '' : 'w-10'}`}
           >
-            <Link to="/admin/user/foundItems"  >
+            <Link to="/admin/user/foundItems?page=1"  >
               <span className="pl-2 flex">
                 <FiCheckCircle size={24} />
                 <div className={!isCollapsed ? 'pl-4' : ''}>
@@ -83,7 +83,7 @@ const SideMenu = () => {
         {!isCollapsed && showSubUser && (
           <>
             <li className={`mb-4 w-64 pl-2 ${window.location.pathname === "/admin/user/users" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
-              <Link to="/admin/user/users">
+              <Link to="/admin/user/users?page=1">
                 <span className="pl-8 flex" >
                   <FiUser size={24} />
                   <p className="pl-2">General Users</p></span>
@@ -91,7 +91,7 @@ const SideMenu = () => {
             </li>
 
             <li className={`mb-4 w-64 pl-2 ${window.location.pathname === "/admin/user/businessUser" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
-              <Link to="/admin/user/businessUser" >
+              <Link to="/admin/user/businessUser?page=1" >
                 <span className="pl-8 flex" >
                   <PiSuitcaseBold size={24} />
                   <p className="pl-2">Business Users</p></span>

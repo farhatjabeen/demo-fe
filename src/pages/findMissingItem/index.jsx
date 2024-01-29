@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router';
+import { useParams, useLocation } from 'react-router';
 import Pagination from '../../components/common/pagination'
 import TextInput from '../../components/common/textInput';
 import SearchCards from '../../components/searchCards';
@@ -17,12 +17,16 @@ export default function FindMissingItem() {
   const [currentPage, setCurrentPage] = useState(1);
   const searchParameters = useParams();
   const [isLoader, setIsLoader] = useState(false);
-  const [ValueByLocation,setValueByLocation] = useState([])
+  const [ValueByLocation, setValueByLocation] = useState([])
+  const [pageByLocation,setPageByLocation] = useState([])
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchByKeywordSchema);
   const searchValue = useSelector(searchKey);
   const cities = useSelector(locationDetails);
-  
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const pageNow = searchParams.get('page');
+
   const citiesInSerbia = cities ? Object.values(cities) : [];
 
   const isLastPage = searchValue?.pageMeta?.page === searchValue?.pageMeta?.totalPages;
@@ -30,53 +34,58 @@ export default function FindMissingItem() {
   const methods = useForm({
     defaultValues: {
       keyword: "",
-      location:""
+      location: ""
     },
     resolver
   });
 
   useEffect(() => {
     dispatch(locationDropdownValues())
-}, [dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
-    // const apiCall = async() =>{
-
-      if (searchParameters?.location) {
-        console.log(searchParameters?.location,"searchParameters?.location")
-        setIsLoader(true)
-        const locationItem = dispatch(searchByLocation(searchParameters.itemName, searchParameters.location, currentPage));
-        locationItem.then((res)=>{
-          setIsLoader(false)
-          setValueByLocation(res?.data?.list)
-        })
-      } 
-      if (searchParameters?.itemNameAgain) {
-        setIsLoader(true)
-        const keywordItem = dispatch(searchItem(searchParameters.itemNameAgain, currentPage));
-        keywordItem.then((res)=>{
-          setIsLoader(false)
-          setValueByLocation(res?.data?.list)
-        })
-      }
-    // }
-    // apiCall();
-  }, [searchParameters, currentPage]);
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page");
+    console.log(page,"page")
+    if (searchParameters?.location && searchParameters?.location?.length > 0) {
+      console.log(searchParameters?.location, "searchParameters?.location")
+      setIsLoader(true)
+      const locationItem = dispatch(searchByLocation(searchParameters?.itemName, searchParameters?.location, page));
+      locationItem.then((res) => {
+        setIsLoader(false)
+        setValueByLocation(res?.data?.list)
+        setPageByLocation(res?.data?.pageMeta)
+      })
+    }
+    if (searchParameters?.itemNameAgain) {
+      setIsLoader(true)
+      const keywordItem = dispatch(searchItem(searchParameters?.itemNameAgain, page));
+      keywordItem.then((res) => {
+        setIsLoader(false)
+        setValueByLocation(res?.data?.list)
+        setPageByLocation(res?.data)
+      })
+    }
+  }, [searchParameters, location.search, searchValue]);
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    if (searchParameters?.location && searchParameters?.location?.length > 0) {
+      navigate(`/findMissingItem/${searchParameters?.itemName}/${searchParameters?.location}?page=${pageNumber}`);
+    } else {
+      navigate(`/findMissingItem/${searchParameters?.itemNameAgain}?page=${pageNumber}`);
+    }
   };
 
   const submitData = async () => {
     try {
       const productName = methods.getValues();
-      console.log(productName,"productname")
-      if(productName.keyword && productName.location){
-        navigate(`/findMissingItem/${productName.keyword}/${productName.location}`)
+      console.log(productName, "productname")
+      if (productName.keyword && productName.location) {
+        navigate(`/findMissingItem/${productName.keyword}/${productName.location}?page=1`)
         console.log("hi from locate")
-        
+
       } else if (productName.keyword) {
-        navigate(`/findMissingItem/${productName.keyword}`)
+        navigate(`/findMissingItem/${productName.keyword}?page=1`)
         setIsLoader(true)
         const searchKeyword = await dispatch(searchItem(productName.keyword));
         if (searchKeyword) {
@@ -85,7 +94,7 @@ export default function FindMissingItem() {
       } else {
         Toast({ type: 'error', message: 'Enter Item Name' })
       }
-      
+
     } catch (error) {
       console.log("submitData errors", error)
     }
@@ -157,8 +166,8 @@ export default function FindMissingItem() {
       <div className='mb-10 mt-32'>
         <Pagination
           isBlueBackground={false}
-          currentPage={searchValue?.pageMeta?.page}
-          totalPages={searchValue?.pageMeta?.totalPages}
+          currentPage={pageByLocation.length>0 ? pageByLocation?.page : searchValue?.pageMeta?.page}
+          totalPages={pageByLocation.length>0 ? pageByLocation?.totalPages : searchValue?.pageMeta?.totalPages}
           onPageChange={handlePageChange} />
       </div>
       {isLastPage && (
