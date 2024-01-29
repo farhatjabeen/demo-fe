@@ -9,32 +9,49 @@ export function AuthLayout(props) {
   const [customClassName, setCustomClassName] = useState("default")
   const location = useLocation();
   const searchValue = useSelector(searchKey);
-console.log(searchValue?.list?.length,"searchValue")
+  console.log(searchValue?.list?.length, "searchValue")
 
   useEffect(() => {
     console.log("path Name", location.pathname)
-    if (location.pathname.split("/").includes("addMoreDetails") || location.pathname.split("/").includes("businessignup")) {
-      setCustomClassName("missing-screen")
-    } else if (location.pathname.split("/").includes("mylistings") || location.pathname.split("/").includes("businessHome")) 
-    {
+    if (location.pathname.split("/").includes("findMissingItem") ||
+      location.pathname.split("/").includes("addMoreDetails") || location.pathname.split("/").includes("businessignup")) {
+
+      console.log("hi from first if")
+
+      if (location.pathname.split("/").includes("findMissingItem")) {
+        if (searchValue?.list?.length === undefined) {
+          console.log("hi from zero")
+          setCustomClassName("no-missing-items")
+        }
+        if (searchValue?.list?.length < 4) {
+          console.log("hi from less than 4")
+          setCustomClassName("missing-items")
+        }
+        if (searchValue?.list?.length > 4 && searchValue?.list?.length < 8) {
+          console.log("hi from less than 8")
+          setCustomClassName("missing-items-half-page")
+        }
+        if (searchValue?.list?.length > 8) {
+          console.log("hi from greater than 8")
+          setCustomClassName("missing-items-full-page")
+        }
+      } else {
+        console.log("hi from first else")
+        setCustomClassName("missing-screen")
+      }
+
+    } else if (location.pathname.split("/").includes("mylistings") || location.pathname.split("/").includes("businessHome")) {
+
+      console.log("hi from second if")
       setCustomClassName("my-listing")
-    } else if(location.pathname.split("/").includes("")){
+
+    } else if (location.pathname.split("/").includes("")) {
+
+      console.log("hi from third if")
       setCustomClassName("main-screen")
-    }
 
-    if (location.pathname.split("/").includes("findMissingItem")){
-      if(searchValue?.list?.length<4){
-        setCustomClassName("missing-items")
-      }
-      if(searchValue?.list?.length>4){
-        setCustomClassName("missing-items-page")
-      }
-      if(searchValue?.list?.length>8){
-        setCustomClassName("missing-items-eight")
-      }
     }
-
-  }, [location, customClassName])
+  }, [location, customClassName, searchValue])
 
 
   return (

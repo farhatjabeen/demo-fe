@@ -17,15 +17,19 @@
     background-size: 100% 25%;
 }
 
-.authLayout-missing-items-page{
+.authLayout-missing-items-half-page{
     background-size: 100% 30%;
+}
+
+.authLayout-no-missing-items{
+    background-size: 100% 35%;
 }
 
 .authLayout-missing-items{
     background-size: 100% 40%;
 }
-.authLayout-missing-items-eight{
-    background-size: 100% 40%;
+.authLayout-missing-items-full-page{
+    background-size: 100% 30%;
 }
 
 .authLayout-default,

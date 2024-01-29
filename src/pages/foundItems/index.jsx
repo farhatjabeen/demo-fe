@@ -8,7 +8,7 @@ import Table from "../../components/tables";
 import Pagination from "../../components/common/pagination";
 import { useDispatch, useSelector } from 'react-redux';
 import { adminExportItems, adminFetchItems, foundItemDetails, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -23,26 +23,20 @@ function FoundItems() {
   const searchItem = useParams();
   const [searchTerm, setSearchTerm] = useState('');
   const tableData = useSelector(foundItemDetails);
-  const [currentPage, setCurrentPage] = useState(tableData?.pageMeta?.page);
+  const [currentPage, setCurrentPage] = useState(1);
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
   const location = useLocation();
-localStorage.setItem("firstpage",true);
-  useEffect(() => {
-    const pageNow = localStorage.getItem("firstpage")
-    dispatch(adminFetchItems(currentPage, PageLimit))
-    if (!searchItem.item) {
-      navigate('/admin/user/foundItems')
-    }
-  }, [currentPage, PageLimit]);
+const [searchParams] = useSearchParams();
+const pageNow = searchParams.get('page');
+  
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page");
-    if (page) {
-      setPageChange(parseInt(page, 10));
-    }
+    dispatch(adminFetchItems(page, PageLimit))
   }, [location.search]);
+
 
   useEffect(() => {
     dispatch(itemDropdownValues());
@@ -62,20 +56,6 @@ localStorage.setItem("firstpage",true);
   //   setData(res?.data?.list)
   // })
   // },[searchTerm])
-
-  // const searchItems = async()=>{
-  //   const searchTermNow = searcItem.item;
-  //     console.log(searchTermNow,"searcItem.item")
-  //     if(isNaN(+searchTerm)){
-  //       setItemName(searchTermNow);
-  //       setItemCode("");
-  //       console.log(itemName,"itemName")
-  //     }else{
-  //       setItemCode(searcItem.item);
-  //       setItemName("");
-  //       console.log(itemCode,"itemCode")
-  //     }
-  // }
 
   const handleExport = () => {
     dispatch(adminExportItems(selectedCategory,searchTerm))
@@ -114,7 +94,7 @@ localStorage.setItem("firstpage",true);
 
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    navigate(`/admin/user/foundItems?page=${pageNumber}`)
   };
   return (
     <div className="m-4">
@@ -181,7 +161,7 @@ localStorage.setItem("firstpage",true);
         data={searchItem.item ? data?.list : tableData?.list}
         showEdit={true}
         context="foundItems"
-        currentPage={currentPage} />
+        currentPage={pageNow} />
 
       <Pagination
         isBlueBackground={true}

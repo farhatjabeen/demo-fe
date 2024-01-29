@@ -7,6 +7,7 @@ import Pagination from "../../components/common/pagination";
 import Tabs from "../../components/tabs";
 import { useDispatch, useSelector } from 'react-redux';
 import { adminFetchUser, userDetails, adminFetchBusinessUser, businessUserDetails } from "../../redux/reducers/itemsSlice";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 
 function User() {
@@ -18,16 +19,23 @@ function User() {
   const PageLimit = 10;
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
-  const [currentPageForUser, setCurrentPageForUser] = useState(tableData?.pageMeta?.page);
-  const [currentPageForBusiness, setCurrentPageForBusiness] = useState(tableBusinessData?.pageMeta?.page);
+  const [currentPageForUser, setCurrentPageForUser] = useState(1);
+  const [currentPageForBusiness, setCurrentPageForBusiness] = useState(1);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const pageNow = searchParams.get('page');
+    console.log(pageNow,"pageNow");
 
   const searchRegex = /^[0-9]+$/;
 
   useEffect(() => {
-    dispatch(adminFetchUser(currentPageForUser, PageLimit))
-    dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit))
-  }, [currentPageForUser, currentPageForBusiness, PageLimit]);
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page");
+    dispatch(adminFetchUser(page, PageLimit))
+    dispatch(adminFetchBusinessUser(page, PageLimit))
+  }, [location.search, PageLimit]);
 
   const handleReset = async (tab) => {
     setResetHandle(true)
@@ -66,10 +74,10 @@ function User() {
 
 
   const handlePageChange1 = (pageNumber) => {
-    setCurrentPageForUser(pageNumber);
+    navigate(`/admin/user/users?page=${pageNumber}`)
   };
   const handlePageChange2 = (pageNumber) => {
-    setCurrentPageForBusiness(pageNumber);
+    navigate(`/admin/user/businessUser?page=${pageNumber}`)
   };
   const userHeaders = [
     { key: "userCode", label: "User ID" },
@@ -137,7 +145,7 @@ function User() {
             {resetHandle ?
               <p>Loading...</p>
               :
-              <Table currentPage={currentPageForUser} headers={userHeaders} data={tableData?.list} context="user" />
+              <Table currentPage={pageNow} headers={userHeaders} data={tableData?.list} context="user" />
             }
             <Pagination
               isBlueBackground={true}
@@ -180,7 +188,7 @@ function User() {
               :
               <p className="text-sm text-red">Valid ID required</p>
             }
-            <Table currentPage={currentPageForBusiness} headers={businessHeaders} data={tableBusinessData?.list} context="businessUser" />
+            <Table currentPage={pageNow} headers={businessHeaders} data={tableBusinessData?.list} context="businessUser" />
             <Pagination
               isBlueBackground={true}
               currentPage={tableBusinessData?.pageMeta?.page}

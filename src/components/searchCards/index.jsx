@@ -8,8 +8,8 @@ export default function SearchCards(props) {
         <div className='mt-16 h-96 flex flex-col items-center relative'>
 
             <div className='h-full'>
-                {props.imageName[0] ?
-                    <img src={`${props.imageName[0]}`} className='rounded-2xl xl:h-60 xl:w-80 md:h-48 md:w-56 sm:h-44 sm:w-52' alt='keys' />
+                {props.imageName[0]?.length ?
+                    <img src={props.imageName[0]} className='rounded-2xl xl:h-60 xl:w-80 md:h-48 md:w-56 sm:h-44 sm:w-52' alt='keys' />
                     :
                     <div className='flex justify-center items-center bg-white rounded-2xl xl:h-60 xl:w-80 md:h-48 md:w-56 sm:h-44 sm:w-52 border border-solid border-white-grey'>
                         <p>No Image</p>

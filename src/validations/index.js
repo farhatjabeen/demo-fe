@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@.#$%^&*()_+]{8,20}$/;
-const emailRexExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{1,3}$/;
+const emailRexExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|su|co\.su)$/;
 const nameRegex = /^(?!.*\d)(?!.*\s{2,})[a-zA-Z]([a-zA-Z0-9\s]*[a-zA-Z])?$/;
 const spaceRegex = /^(?!\s)(?!.*\s{2,})(.*\S.*)?$/;
 const specialCharacterRegex = /^[a-zA-Z0-9\s]+$/;

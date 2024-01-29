@@ -101,10 +101,10 @@ const Header = (props) => {
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown userName={loader ? "Loading..." : businessUserInformation?.name} linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems'
+                                    <HeaderDropdown userName={loader ? "Loading..." : businessUserInformation?.name} linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems?page=1'
                                         titleTwo='My Profile' navigateTwo='/companyprofile' handleLogout={handleLogout} />
                                     :
-                                    <HeaderDropdown userName={loader ? "Loading..." : generalUserInformation?.name} linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings'
+                                    <HeaderDropdown userName={loader ? "Loading..." : generalUserInformation?.name} linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings?page=1'
                                         titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />
                             }
                         </div>
