@@ -39,7 +39,7 @@ function SignInView() {
     try {
       const login = await dispatch(loginAdminUser(data));
       if (login) {
-        navigate('/admin/user/foundItems')
+        navigate('/admin/user/foundItems?page=1')
       }
     }
     catch (error) {

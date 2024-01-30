@@ -29,7 +29,7 @@ function FoundItems() {
   const location = useLocation();
 const [searchParams] = useSearchParams();
 const pageNow = searchParams.get('page');
-  
+  console.log(searchItem,"searchItem category")
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -41,7 +41,7 @@ const pageNow = searchParams.get('page');
   useEffect(() => {
     dispatch(itemDropdownValues());
     if (searchItem.item || searchItem.category || selectedCategory) {
-        const searchNow = dispatch(adminFetchItems(pageChange, PageLimit, searchItem.category ? searchItem.category : selectedCategory, !searchTerm ? "" : searchItem.item, ));
+        const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, searchItem.category ? searchItem.category : selectedCategory, !searchTerm ? "" : searchItem.item, ));
         searchNow.then((res) => {
           setData(res?.data)
         })
@@ -70,11 +70,11 @@ const pageNow = searchParams.get('page');
 
   const handleSearch = async () => {
     if (selectedCategory&&!searchTerm) {
-      navigate(`/admin/user/foundItems/${selectedCategory}`)
+      navigate(`/admin/user/foundItems/${selectedCategory}?page=1`)
     } else if(selectedCategory&&searchTerm){
-      navigate(`/admin/user/foundItems/${searchTerm}/${selectedCategory}`)
+      navigate(`/admin/user/foundItems/${searchTerm}/${selectedCategory}?page=1`)
     } else if(searchTerm&&!selectedCategory){
-      navigate(`/admin/user/foundItems/${searchTerm}`)
+      navigate(`/admin/user/foundItems/${searchTerm}?page=1`)
     }
     const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, searchTerm));
     searchNow.then((res) => {
@@ -156,7 +156,7 @@ const pageNow = searchParams.get('page');
       </div>
       <Table
         headers={tableHeaders}
-        category={searchItem.category ? searchItem.category : selectedCategory}
+        category={searchItem?.category?.length>0 ? searchItem?.category : selectedCategory}
         searchTerm={searchTerm}
         data={searchItem.item ? data?.list : tableData?.list}
         showEdit={true}

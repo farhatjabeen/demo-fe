@@ -64,10 +64,10 @@ export const itemsSlice = createSlice({
 });
 
 //get items
-export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
+export const fetchItems = (currentPage, PageLimit = 2) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
-            url: `${endpoints.apiPath.items.fetchItems}`,
+            url: `${endpoints.apiPath.items.fetchItems}?page=${currentPage}&limit=${PageLimit}`,
             method: endpoints.ApiMethods.GET,
             isAuth: true,
             tokenType: 'businessUserToken'
@@ -75,7 +75,7 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
             console.log(res.data, 'ress')
             const { list, pageMeta } = res.data
             dispatch(saveItemDetails({ list, pageMeta }))
-            return resolve(true);
+            return resolve(res);
         }).catch(err => {
             console.log(err)
             return err
@@ -84,24 +84,25 @@ export const fetchItems = (currentPage, PageLimit = 10) => (dispatch) => {
 }
 //delete in businessuser
 export const deleteBusinessItem = (itemId) => (dispatch) => {
-    try {
+    return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.deleteBusinessUserItem}?itemId=${itemId}`,
             method: endpoints.ApiMethods.DELETE,
             isAuth: true,
             tokenType: 'businessUserToken',
-        });
-        dispatch(fetchItems());
-        Toast({ type: "success", message: "Item deleted successfully." });
-    } catch (error) {
-        console.error(error);
-        if (error?.status === 400 && error?.data === "Item not found") {
-            Toast({ type: "error", message: "Item not found. Please refresh the page." });
-        } else {
-            Toast({ type: "error", message: "Error deleting item." });
-        }
-    }
-};
+        }).then(()=>{
+            Toast({ type: "success", message: "Item deleted successfully." });
+            return resolve(true)
+        }).catch (error=>{
+            console.error(error);
+            if (error?.status === 400 && error?.data === "Item not found") {
+                Toast({ type: "error", message: "Item not found. Please refresh the page." });
+            } else {
+                Toast({ type: "error", message: "Error deleting item." });
+            }
+        })
+    })
+}
 //edit in businessuser
 export const businessUpdateItems = (itemId, data) => (dispatch) => {
     return new Promise((resolve, reject) => {

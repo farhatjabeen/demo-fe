@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
@@ -16,17 +16,36 @@ export default function AllItems() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const tableData = useSelector(itemDetails);
-    const handleDeleteClick = (id) => {
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
+    const pageNow = searchParams.get('page');
+
+    const handleDeleteClick = async (id) => {
         setSelectedItemId(id);
         setDeleteModalOpen(true);
+        
+        
     };
+
+    const handleDeleteItem = async() => {
+        console.log(`Deleting item with ID ${selectedItemId}`);
+        const afterDelete = await dispatch(deleteBusinessItem(selectedItemId));
+        if (afterDelete){
+            dispatch(fetchItems(pageNow));
+        }
+        setDeleteModalOpen(false);
+        setSelectedItemId(null);
+    }
+
     useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const page = queryParams.get("page");
         goToTop();
-        dispatch(fetchItems(currentPage))
-    }, [currentPage]);
+        dispatch(fetchItems(page))
+    }, [location.search]);
 
     const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+        navigate(`/allitems?page=${pageNumber}`)
     };
     const itemsDescription = (description) => {
         const words = description.split(' ');
@@ -46,7 +65,7 @@ export default function AllItems() {
 
                 <div className='h-32 mb-10 p-5 flex flex-col space-y-10 rounded-lg w-full bg-gradient-to-r from-dark-yellow to-yellow'>
                     <div className='text-base font-medium text-white'>TOTAL FOUND ITEMS</div>
-                    <div className='text-4xl font-bold text-white'>{tableData?.list?.length}</div>
+                    <div className='text-4xl font-bold text-white'>{tableData?.pageMeta?.total}</div>
                 </div>
 
                 {tableData?.list?.length ?
@@ -126,12 +145,7 @@ export default function AllItems() {
                                     setDeleteModalOpen(false);
                                     setSelectedItemId(null);
                                 }}
-                                onDelete={() => {
-                                    console.log(`Deleting item with ID ${selectedItemId}`);
-                                    dispatch(deleteBusinessItem(selectedItemId));
-                                    setDeleteModalOpen(false);
-                                    setSelectedItemId(null);
-                                }}
+                                onDelete={handleDeleteItem}
                                 selectedItemId={selectedItemId}
                             />
                         </div>
