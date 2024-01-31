@@ -17,33 +17,33 @@ const Header = (props) => {
     const generalUserInformation = useSelector(generalUserData);
     const businessUserInformation = useSelector(userProfile);
     const [backButton, setBackButton] = useState(false);
-    const [loader,setLoader] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     console.log(businessUserInformation, 'userName')
 
-    useEffect(()=>{
-        if(window.location.pathname !='/businessignup' && window.location.pathname !='/termsOfUse'){
-            sessionStorage.setItem("enteredData",null);
+    useEffect(() => {
+        if (window.location.pathname !== '/businessignup' && window.location.pathname !== '/termsOfUse') {
+            sessionStorage.setItem("enteredData", null);
         }
-        if(window.location.pathname === "/businesshome/detailpage"){
+        if (window.location.pathname === "/businesshome/detailpage") {
             setBackButton(true)
-        }else{
+        } else {
             setBackButton(false)
         }
-    },[navigate])
+    }, [navigate])
 
     useEffect(() => {
         checkUser();
     }, [userDetails])
 
-    const checkUser = async() => {
+    const checkUser = async () => {
         try {
             if (userDetails?.role === 'USER') {
                 setLogin(true);
                 setIsBusiness(false);
                 setLoader(true)
                 const user = await dispatch(generalUserDetails())
-                if(user){
+                if (user) {
                     setLoader(false)
                 }
             }
@@ -52,7 +52,7 @@ const Header = (props) => {
                 setIsBusiness(true);
                 setLoader(true)
                 const user = await dispatch(companyProfileData())
-                if(user){
+                if (user) {
                     setLoader(false)
                 }
             }
@@ -82,11 +82,14 @@ const Header = (props) => {
 
     }
 
-    console.log(generalUserInformation?.name?.length,"generalUserInformation?.name?.length")
+    console.log(generalUserInformation?.name?.length, "generalUserInformation?.name?.length")
     return (
         <div className="headerContainer" style={{ position: 'relative', zIndex: 50 }}>
-                
-            {backButton && <button className='cursor-pointer absolute left-5 text-2xl top-20 xl:mt-2' onClick={() => window.history.back()}><IoMdArrowBack /></button>}
+
+            {backButton && <button className='cursor-pointer absolute left-5 text-2xl top-20 xl:mt-2'
+                onClick={() => window.history.back()}>
+                <IoMdArrowBack />
+            </button>}
             <div className="flex justify-between items-center h-22 m-14 rounded-full bg-white shadow-lg">
                 <div className='flex justify-start grow p-5 xl:pl-12 md:pl-10 sm:pl-8'>
                     <img
@@ -101,20 +104,24 @@ const Header = (props) => {
                             {
                                 isBusiness
                                     ?
-                                    <HeaderDropdown userName={loader ? "Loading..." : businessUserInformation?.name} linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard' navigateOne='/allitems?page=1'
-                                        titleTwo='My Profile' navigateTwo='/companyprofile' handleLogout={handleLogout} />
+                                    <HeaderDropdown userName={loader ? "Loading..." : businessUserInformation?.name}
+                                        linkTo='/businesssignin' isBusiness={isBusiness} titleOne='Dashboard'
+                                        navigateOne='/allitems?page=1' titleTwo='My Profile'
+                                        navigateTwo='/companyprofile' handleLogout={handleLogout} />
                                     :
-                                    <HeaderDropdown userName={loader ? "Loading..." : generalUserInformation?.name} linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings?page=1'
+                                    <HeaderDropdown userName={loader ? "Loading..." : generalUserInformation?.name}
+                                        linkTo='/' isBusiness={isBusiness} titleOne='My listing' navigateOne='/mylistings?page=1'
                                         titleTwo='My Profile' navigateTwo='/user/myprofile' handleLogout={handleLogout} />
                             }
                         </div>
                         :
                         <div className="flex">
                             <button
-                                className="cursor-pointer xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
+                                className="cursor-pointer xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg 
+                                sm:w-36 sm:h-12 sm:text-sm font-bold border rounded-full border-primary-color text-primary-color  mx-3"
                                 onClick={() => navigate('/businessHome')}
                             >
-                                Ilost for Business
+                                <p>Ilost for Business</p>
                             </button>
                             <PopoverComponent />
                         </div>

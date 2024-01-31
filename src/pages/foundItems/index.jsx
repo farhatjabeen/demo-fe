@@ -12,7 +12,6 @@ import { useLocation, useNavigate, useParams, useSearchParams } from "react-rout
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
-
   const PageLimit = 10;
   const [data, setData] = useState([])
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ function FoundItems() {
   const searchItem = useParams();
   const [searchTerm, setSearchTerm] = useState('');
   const tableData = useSelector(foundItemDetails);
-  const [currentPage, setCurrentPage] = useState(1);
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
   const location = useLocation();
@@ -29,19 +27,12 @@ function FoundItems() {
   const currentItem = searchParams.get('item');
   const currentCategory = searchParams.get('category');
 
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(location.search);
-  //   const page = queryParams.get("page");
-  //   dispatch(adminFetchItems(page, PageLimit))
-  // }, [location.search]);
-
-
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page");
     dispatch(itemDropdownValues());
     if (currentItem || currentCategory) {
-      const searchNow = dispatch(adminFetchItems(page, PageLimit, currentCategory, currentItem,));
+      const searchNow = dispatch(adminFetchItems(page, PageLimit, currentCategory ? currentCategory : "", currentItem ? currentItem : ""));
       searchNow.then((res) => {
         setData(res?.data)
       })
@@ -57,17 +48,8 @@ function FoundItems() {
     }
   }, [location.search]);
 
-  // useEffect(()=>{
-  //   searchItems();
-  // const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
-  // searchNow.then((res)=>{
-  //   console.log(res,"res")
-  //   setData(res?.data?.list)
-  // })
-  // },[searchTerm])
-
   const handleExport = () => {
-    dispatch(adminExportItems(currentCategory, currentItem))
+    dispatch(adminExportItems(currentCategory ? currentCategory : "", currentItem ? currentItem : ""))
   };
 
   const handleReset = () => {
@@ -77,7 +59,7 @@ function FoundItems() {
     dispatch(adminFetchItems(pageNow, PageLimit))
   };
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (selectedCategory && !searchTerm) {
       navigate(`/admin/user/foundItems?category=${selectedCategory}&page=1`)
     } else if (selectedCategory && searchTerm) {
@@ -85,7 +67,7 @@ function FoundItems() {
     } else if (searchTerm && !selectedCategory) {
       navigate(`/admin/user/foundItems?item=${searchTerm}&page=1`)
     }
-    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, currentCategory, currentItem));
+    const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, currentCategory, currentItem));
     searchNow.then((res) => {
       setData(res?.data)
     })
@@ -103,7 +85,15 @@ function FoundItems() {
 
 
   const handlePageChange = (pageNumber) => {
-    navigate(`/admin/user/foundItems?page=${pageNumber}`)
+    if (currentCategory && !currentItem) {
+      navigate(`/admin/user/foundItems?category=${currentCategory}&page=${pageNumber}`)
+    } else if (currentCategory && currentItem) {
+      navigate(`/admin/user/foundItems?item=${currentItem}&category=${currentCategory}&page=${pageNumber}`)
+    } else if (currentItem && !currentCategory) {
+      navigate(`/admin/user/foundItems?item=${currentItem}&page=${pageNumber}`)
+    } else if (!currentItem && !currentCategory) {
+      navigate(`/admin/user/foundItems?page=${pageNumber}`)
+    }
   };
   return (
     <div className="m-4">

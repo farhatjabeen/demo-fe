@@ -26,7 +26,6 @@ export default function BusinessSignIn() {
     const handleForgot = async () => {
         try {
             await methods.trigger('emailMailId');
-
             if (methods.formState.errors.emailMailId) {
                 console.log('Email is not valid');
                 return;
@@ -38,7 +37,7 @@ export default function BusinessSignIn() {
         }
     };
 
-    const submitData = async(data) => {
+    const submitData = async (data) => {
         try {
             const login = await dispatch(loginUser(data));
             if (login) {
@@ -78,12 +77,6 @@ export default function BusinessSignIn() {
                                     required
                                     setShowPassword={() => setShowPassword(!showPassword)}
                                 />
-                                {/* <div className='flex justify-between mt-3'>
-                                    <div className='flex justify-between w-24'>
-                                        <input type='checkbox' />
-                                        <div className='text-xs text-Gray30 font-light'>Remember me</div>
-                                    </div>
-                                </div> */}
                                 <button
                                     className='cursor-pointer bg-primary-color w-full h-14 rounded-md mt-8'
                                     type="submit"
@@ -104,7 +97,10 @@ export default function BusinessSignIn() {
 
                 </div>
                 <div className='text-Gray49 font-light mt-14 flex justify-center'>
-                    Don't have an Account&nbsp;? <Link className='text-black font-semibold' to='/businessignup'>&nbsp;Sign Up</Link>
+                    Don't have an Account&nbsp;?
+                    <Link className='text-black font-semibold' to='/businessignup'>
+                        &nbsp;Sign Up
+                    </Link>
                 </div>
             </div>
         </div >

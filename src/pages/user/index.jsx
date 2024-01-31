@@ -19,37 +19,32 @@ function User() {
   const PageLimit = 10;
   const tableData = useSelector(userDetails);
   const tableBusinessData = useSelector(businessUserDetails);
-  const [currentPageForUser, setCurrentPageForUser] = useState(1);
-  const [currentPageForBusiness, setCurrentPageForBusiness] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const pageNow = searchParams.get('page');
   const currentUser = searchParams.get('name');
-    console.log(pageNow,"pageNow");
-
-  const searchRegex = /^[0-9]+$/;
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page");
 
-    if(!currentUser && window.location.pathname === '/admin/user/users'){
+    if (!currentUser && window.location.pathname === '/admin/user/users') {
       setSearchUserTerm("");
       dispatch(adminFetchUser(page, PageLimit))
     }
 
-    if(!currentUser && window.location.pathname === '/admin/user/businessUser'){
-    dispatch(adminFetchBusinessUser(page, PageLimit))
+    if (!currentUser && window.location.pathname === '/admin/user/businessUser') {
+      setSearchUserTerm("");
+      dispatch(adminFetchBusinessUser(page, PageLimit))
     }
 
-console.log(window.location,"window.location.pathname")
     if (currentUser && window.location.pathname === '/admin/user/users') {
-      dispatch(adminFetchUser(currentPageForUser, PageLimit, currentUser));
-  } else if (currentUser && window.location.pathname === '/admin/user/businessUser') {
-      dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit, currentUser));
-  }
+      dispatch(adminFetchUser(page, PageLimit, currentUser));
+    } else if (currentUser && window.location.pathname === '/admin/user/businessUser') {
+      dispatch(adminFetchBusinessUser(page, PageLimit, currentUser));
+    }
 
   }, [location.search, PageLimit]);
 
@@ -57,13 +52,13 @@ console.log(window.location,"window.location.pathname")
     setResetHandle(true)
     if (tab === 1) {
       setSearchUserTerm("");
-      const values = await dispatch(adminFetchUser(currentPageForUser, PageLimit))
+      const values = await dispatch(adminFetchUser(pageNow, PageLimit))
       if (values) {
         setResetHandle(false)
       }
     } else if (tab === 2) {
       setSearchBusinessTerm("");
-      const values = await dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit))
+      const values = await dispatch(adminFetchBusinessUser(pageNow, PageLimit))
       if (values) {
         setResetHandle(false)
       }
@@ -72,7 +67,7 @@ console.log(window.location,"window.location.pathname")
 
   const handleSearch = (tab) => {
     if (tab === 1) {
-        navigate(`?name=${searchUserTerm}&page=1`)
+      navigate(`?name=${searchUserTerm}&page=1`)
     } else if (tab === 2) {
       navigate(`?name=${searchBusinessTerm}&page=1`)
     }
@@ -84,6 +79,7 @@ console.log(window.location,"window.location.pathname")
   const handlePageChange2 = (pageNumber) => {
     navigate(`/admin/user/businessUser?page=${pageNumber}`)
   };
+
   const userHeaders = [
     { key: "userCode", label: "User ID" },
     { key: "name", label: "User Name" },
@@ -109,8 +105,8 @@ console.log(window.location,"window.location.pathname")
     <>
       <div className="my-4 ml-4">
         <h1 className="text-black font-bold mb-4 text-4xl mt-10">User Management</h1>
-        <Tabs className="my-8"  >
-          <div  label="General" route="/admin/user/users">
+        <Tabs className="my-8">
+          <div label="General" route="/admin/user/users">
             <div className={`flex  ${isId ? "my-8" : "mt-8 mb-0"}`}>
               <input
                 type="text"

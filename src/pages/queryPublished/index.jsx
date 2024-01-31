@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { FaMap, FaCalendar, FaClock } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { viewDetails, viewUserItemById } from '../../redux/reducers/itemsSlice';
@@ -36,7 +36,8 @@ export default function QueryPublished() {
                         )}
 
                     </div>
-                    <div className='xl:h-72 xl:w-2/3 md:h-60 md:w-8/12 sm:h-48 sm:w-10/12 ml-7 rounded-[24px] border border-white-grey bg-white'>
+                    <div className='xl:h-72 xl:w-2/3 md:h-60 md:w-8/12 sm:h-48 sm:w-10/12 ml-7 rounded-[24px] 
+                    border border-white-grey bg-white'>
                         <div className='xl:p-7 md:px-5 md:pt-4 sm:pl-4'>
                             <div className='font-bold text-4xl pb-1' >{itemDetailsFromApi?.itemName}</div>
                             <div className='m-2'>
@@ -58,14 +59,17 @@ export default function QueryPublished() {
                             </div>
                             <div className='flex justify-between xl:w-80 xl:mt-8 md:w-80 md:mt-7 sm:w-72 sm:mt-5'>
                                 <div >
-                                    <button 
-                                    onClick={() => handleEditItem(itemId.id)}
-                                    className='cursor-pointer xl:h-14 xl:w-48 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-primary-color border-none font-normal sm:text-base text-lg'>
+                                    <button
+                                        onClick={() => handleEditItem(itemId.id)}
+                                        className='cursor-pointer xl:h-14 xl:w-48 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg 
+                                    bg-primary-color border-none font-normal sm:text-base text-lg'>
                                         Edit Content
                                     </button>
                                 </div>
                                 <div >
-                                    <button onClick={()=>navigate('/contactus')} className='cursor-pointer xl:h-14 xl:ml-4 xl:w-48 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color text-primary-color font-normal sm:text-base text-lg'>
+                                    <button onClick={() => navigate('/contactus')} className='cursor-pointer xl:h-14 xl:ml-4 
+                                    xl:w-48 md:h-12 md:w-36 sm:h-10 sm:w-32 rounded-lg bg-white border border-primary-color 
+                                    text-primary-color font-normal sm:text-base text-lg'>
                                         Contact Us
                                     </button>
                                 </div>

@@ -17,7 +17,8 @@ function ItemDetails() {
     })
   }, [dispatch, id]);
   const foundItemDetails = useSelector(getItemId);
-  const { userName, itemCode, mobileNumber, foundDate, emailMailId, keywords, locationIdentifiers, foundTime, location, itemName, itemCategory, itemDescription } = foundItemDetails || {};
+  const { userName, itemCode, mobileNumber, foundDate, emailMailId, keywords, locationIdentifiers, foundTime,
+    location, itemName, itemCategory, itemDescription } = foundItemDetails || {};
 
   return (
     <div className="m-4">

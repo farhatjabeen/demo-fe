@@ -1,30 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa6";
 import { RxChevronDown } from "react-icons/rx";
 import { MdOutlineBusiness } from "react-icons/md";
 import { Menu, Transition } from '@headlessui/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { clearItemData } from '../../../redux/reducers/itemsSlice';
-import { clearUserData, generalUserDetails, getUserDetails, userData } from '../../../redux/reducers/userSlice';
+import { clearUserData } from '../../../redux/reducers/userSlice';
 
 export default function HeaderDropdown({ isBusiness, linkTo, navigateOne, userName, titleOne, navigateTwo, titleTwo, handleLogout }) {
     const [select, setSelect] = useState(false);
-    
-    const [user, setUser] = useState('');
     const dispatch = useDispatch();
-    const userDetails = useSelector(userData);
-console.log(userDetails,"userDetails")
-    // useEffect(()=>{
-    //     setLoader(false);
-    //     if(!userDetails?.name){
-    //         setLoader(true);
-    //     }else
-    //     if(userName){
-    //         setLoader(true);
-    //     }
-        
-    // },[user])
 
     return (
         <Menu as="div" className="relative text-left">
@@ -41,15 +27,10 @@ console.log(userDetails,"userDetails")
                                     :
                                     <FaRegUser className="text-primary-color mb-1 h-5 w-5" />
                             }
-
-                            {/* {loader ? */}
                             <h1
                                 className="ml-2 text-primary-color ">
                                 Hi, {userName ? userName?.split(' ')[0] : "User"}!
                             </h1>
-                            {/* :
-                            <h1 className="ml-2 text-primary-color ">Loading...</h1>
-                            }  */}
                         </div>
                         <div>
                             <RxChevronDown className='h-6 w-6' />
@@ -70,7 +51,8 @@ console.log(userDetails,"userDetails")
                     <Menu.Item>
                         <Link
                             to={navigateOne}
-                            className='w-full border border-x-0 border-t-0 border-greys hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal '
+                            className='w-full border border-x-0 border-t-0 border-greys hover:bg-gray-200/30 
+                            flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal '
                         >
                             {titleOne}
                         </Link>
@@ -78,7 +60,8 @@ console.log(userDetails,"userDetails")
                     <Menu.Item>
                         <Link
                             to={navigateTwo}
-                            className='w-full border border-x-0 border-t-0 border-greys hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
+                            className='w-full border border-x-0 border-t-0 border-greys hover:bg-gray-200/30 
+                            flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
                         >
                             {titleTwo}
                         </Link>
@@ -86,7 +69,8 @@ console.log(userDetails,"userDetails")
                     <Menu.Item>
                         <Link
                             to='/contactUs'
-                            className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-greys flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
+                            className='w-full hover:bg-gray-200/30 border border-x-0 border-t-0 border-greys 
+                            flex justify-center items-center xl:h-12 md:h-12 sm:h-10 no-underline text-xl font-normal'
                         >
                             Need Help?
                         </Link>
@@ -95,7 +79,8 @@ console.log(userDetails,"userDetails")
                         <Link
                             to={linkTo}
                             onClick={() => { handleLogout(); dispatch(clearItemData()); dispatch(clearUserData()); }}
-                            className='w-full hover:bg-gray-200/30 flex justify-center items-center xl:h-12 md:h-12 sm:h-10 text-xl font-normal'
+                            className='w-full hover:bg-gray-200/30 flex justify-center items-center xl:h-12 
+                            md:h-12 sm:h-10 text-xl font-normal'
                         >
                             Sign Out
                         </Link>

@@ -1,8 +1,7 @@
 import './index.css'
 import React, { forwardRef, useState } from "react";
 
-
-function Loader(props, ref) {
+function Loader() {
 
     const [loaders, setLoader] = useState(false);
     const [isAuthPage, setIsAuthPage] = useState(false)

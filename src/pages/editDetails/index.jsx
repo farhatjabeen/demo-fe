@@ -15,7 +15,6 @@ import DropdownMenu from '../../components/common/dropdown';
 import { goToTop } from '../../utils/helper';
 
 export default function EditBusinessDetails() {
-    const [filesFromDb, setFilesFromDb] = useState([]);
     const [isLoader, setIsLoader] = useState(true);
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
@@ -24,8 +23,6 @@ export default function EditBusinessDetails() {
     const [cloudinaryId, setCloudinaryId] = useState([]);
     const [itemImage, setItemImage] = useState([]);
     const [isImage, setIsImage] = useState(true);
-
-
     const navigate = useNavigate();
     const { id } = useParams();
     const dispatch = useDispatch();
@@ -34,7 +31,6 @@ export default function EditBusinessDetails() {
     const itemCategories = items ? Object.values(items) : [];
     const locations = useSelector(locationDetails);
     const locationCategory = locations ? Object.values(locations) : [];
-
 
     const methods = useForm({
         defaultValues: {
@@ -53,6 +49,7 @@ export default function EditBusinessDetails() {
         },
         resolver
     });
+
     useEffect(() => {
         goToTop();
         setIsLoader(true);
@@ -62,12 +59,6 @@ export default function EditBusinessDetails() {
     }, [id]);
 
     const itemDetails = useSelector(viewDetails);
-
-    useEffect(() => {
-        if (itemDetails?.cloudinary_id) {
-            setFilesFromDb(itemDetails?.cloudinary_id);
-        }
-    }, [itemDetails.cloudinary_id]);
 
     useEffect(() => {
         if (itemImage?.length) {
@@ -253,10 +244,15 @@ export default function EditBusinessDetails() {
                                             <div className='flex flex-wrap w-96'>
                                                 {itemImage?.map((items, i) => (
                                                     <div>
-                                                        <div key={i} className=' mb-2 mr-2 w-fit px-2 pt-2 pb-1 bg-white rounded-lg border border-primary-color'>
+                                                        <div key={i} 
+                                                        className=' mb-2 mr-2 w-fit px-2 pt-2 pb-1 bg-white rounded-lg border 
+                                                        border-primary-color'>
                                                             <div className='flex'>
                                                                 <img className='w-20 h-20' src={items} alt={i}></img>
-                                                                <div className='flex items-center ml-2' onClick={() => handleRemoveFile(i)}><MdClose /></div>
+                                                                <div className='flex items-center ml-2' 
+                                                                onClick={() => handleRemoveFile(i)}>
+                                                                    <MdClose />
+                                                                    </div>
                                                             </div>
                                                             <div className='flex justify-center'>{i + 1}</div>
                                                         </div>
@@ -276,7 +272,9 @@ export default function EditBusinessDetails() {
 
                                             {itemDetails?.itemImage || isUploaded ?
                                                 <div>
-                                                    <button onClick={(e) => handleReset(e)} className='cursor-pointer h-12 w-11 bg-primary-color ml-2 rounded-lg flex justify-center items-center'>
+                                                    <button onClick={(e) => handleReset(e)} 
+                                                    className='cursor-pointer h-12 w-11 bg-primary-color ml-2 rounded-lg 
+                                                    flex justify-center items-center'>
                                                         <IoMdRefresh className='h-6 w-6' />
                                                     </button>
                                                 </div>
@@ -370,11 +368,19 @@ export default function EditBusinessDetails() {
                             </div>
                             <div className='flex flex-col items-center justify-between mt-20'>
                                 <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
-                                    <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-white rounded-lg text-lg cursor-pointer' onClick={(e) => {
+                                    <div><button className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border 
+                                    border-greys bg-white rounded-lg text-lg cursor-pointer' onClick={(e) => {
                                         window.history.back()
                                         e.preventDefault()
                                     }}>Cancel</button></div>
-                                    <div><button type='submit' onClick={() => itemImage?.length ? setIsImage(true) : setIsImage(false)} className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-primary-color rounded-lg text-lg cursor-pointer' >Edit Form</button></div>                            </div>
+                                    <div><button type='submit' 
+                                    onClick={() => itemImage?.length ? setIsImage(true) : setIsImage(false)} 
+                                    className='xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys 
+                                    bg-primary-color rounded-lg text-lg cursor-pointer' >
+                                        Edit Form
+                                        </button>
+                                        </div> 
+                                        </div>
                             </div>
                         </div>
                     </form>
