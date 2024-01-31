@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import image from "../../assets/images/image.png";
+import React, { useState, useEffect } from 'react'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import image from '../../assets/images/image.png'
 
 const settings = {
   dots: true,
@@ -12,52 +12,50 @@ const settings = {
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 2000,
-  customPaging: () => (
-    <button className="slick-dots"></button>
-  ),
-};
+  customPaging: () => <button className="slick-dots"></button>,
+}
 
 const contentData = [
   {
     image: image,
-    title: "VejIko",
-    role: "CEO, ILost",
+    title: 'VejIko',
+    role: 'CEO, ILost',
     description:
-      "1Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,",
+      '1Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,',
   },
   {
     image: image,
-    title: "Michael",
-    role: "CEO, ILost",
+    title: 'Michael',
+    role: 'CEO, ILost',
     description:
-      "2Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,",
+      '2Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,',
   },
   {
     image: image,
-    title: "Jhonson",
-    role: "CEO, ILost",
+    title: 'Jhonson',
+    role: 'CEO, ILost',
     description:
-      "3Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,",
+      '3Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,',
   },
   {
     image: image,
-    title: "Robert",
-    role: "CEO, ILost",
+    title: 'Robert',
+    role: 'CEO, ILost',
     description:
-      "4Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,",
+      '4Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam at soluta perspiciatis esse, fugiat odio doloremque iure impedit? Ut nisi id amet, pariatur sapiente eius soluta dignissimos quas odio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit aperiam amet,',
   },
-];
+]
 
 const Carousel = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % contentData.length);
-    }, 2000);
+      setActiveIndex((prevIndex) => (prevIndex + 1) % contentData.length)
+    }, 2000)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -74,7 +72,7 @@ const Carousel = () => {
             <li key={index} className="mx-1">
               <button
                 className={`cursor-pointer h-2 w-2 rounded-full ${
-                  index === activeIndex? "bg-admin-slider"   :"bg-grey"
+                  index === activeIndex ? 'bg-admin-slider' : 'bg-grey'
                 }`}
               ></button>
             </li>
@@ -82,15 +80,12 @@ const Carousel = () => {
         </ul>
       </div>
       <div className="absolute text-white top-1/2 left-16 mt-20 left-12 right-12">
-        <h1 className="text-4xl pt-20 font-bold">
-          {contentData[activeIndex].title}
-        </h1>
+        <h1 className="text-4xl pt-20 font-bold">{contentData[activeIndex].title}</h1>
         <p className="mb-4">{contentData[activeIndex].role}</p>
         <p className="text-sm">{contentData[activeIndex].description}</p>
       </div>
-      
     </div>
-  );
-};
+  )
+}
 
-export default Carousel;
+export default Carousel

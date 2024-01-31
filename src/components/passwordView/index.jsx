@@ -1,40 +1,38 @@
-import React, { useState } from "react";
-import logo from "../../assets/images/logo.svg";
-import { useNavigate } from "react-router-dom";
-import { AdminChangePasswordSchema } from '../../validations';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import useValidationResolver from '../../hooks/useValidationResolver';
-import TextInput from "../../components/common/textInput";
-import { adminChangePassword } from "../../redux/reducers/userSlice";
-
+import React, { useState } from 'react'
+import logo from '../../assets/images/logo.svg'
+import { useNavigate } from 'react-router-dom'
+import { AdminChangePasswordSchema } from '../../validations'
+import { FormProvider, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import useValidationResolver from '../../hooks/useValidationResolver'
+import TextInput from '../../components/common/textInput'
+import { adminChangePassword } from '../../redux/reducers/userSlice'
 
 const PasswordView = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const resolver = useValidationResolver(AdminChangePasswordSchema);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const resolver = useValidationResolver(AdminChangePasswordSchema)
   const methods = useForm({
     defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: ""
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
     },
-    resolver
-  });
+    resolver,
+  })
   const submitData = async (data) => {
     try {
       const reset = dispatch(adminChangePassword(data))
       if (reset) {
-        navigate('/businessSignin');
-      }
-      else{
-        console.log("Password reset failed");
+        navigate('/businessSignin')
+      } else {
+        console.log('Password reset failed')
       }
     } catch (error) {
-      console.log("submitData errors", error)
+      console.log('submitData errors', error)
     }
-  };
+  }
 
   return (
     <div className=" pt-16 h-screen px-28 ">
@@ -94,10 +92,8 @@ const PasswordView = () => {
           </div>
         </form>
       </FormProvider>
-
     </div>
-  );
+  )
 }
-
 
 export default PasswordView

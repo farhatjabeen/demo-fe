@@ -1,5 +1,5 @@
-import React from "react";
-import Drawer from "../components/drawer";
+import React from 'react'
+import Drawer from '../components/drawer'
 
 export function AdminMainLayout(props) {
   return (
@@ -9,6 +9,5 @@ export function AdminMainLayout(props) {
         <main>{props?.children}</main>
       </div>
     </div>
-  );
+  )
 }
-

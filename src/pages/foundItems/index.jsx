@@ -1,63 +1,78 @@
-import { React, useState, useEffect } from "react";
-import { AiOutlineArrowUp } from "react-icons/ai";
-import { IoSearchSharp } from "react-icons/io5";
-import { FaRotateLeft } from "react-icons/fa6";
-import DropdownMenu from "../../components/common/dropdown";
-import CustomCombinedButton from "../../components/common/adminButton";
-import Table from "../../components/tables";
-import Pagination from "../../components/common/pagination";
-import { useDispatch, useSelector } from 'react-redux';
-import { adminExportItems, adminFetchItems, foundItemDetails, itemDropdown, itemDropdownValues } from '../../redux/reducers/itemsSlice';
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { React, useState, useEffect } from 'react'
+import { AiOutlineArrowUp } from 'react-icons/ai'
+import { IoSearchSharp } from 'react-icons/io5'
+import { FaRotateLeft } from 'react-icons/fa6'
+import DropdownMenu from '../../components/common/dropdown'
+import CustomCombinedButton from '../../components/common/adminButton'
+import Table from '../../components/tables'
+import Pagination from '../../components/common/pagination'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  adminExportItems,
+  adminFetchItems,
+  foundItemDetails,
+  itemDropdown,
+  itemDropdownValues,
+} from '../../redux/reducers/itemsSlice'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 function FoundItems() {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const PageLimit = 10;
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const PageLimit = 10
   const [data, setData] = useState([])
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const searchItem = useParams();
-  const [searchTerm, setSearchTerm] = useState('');
-  const tableData = useSelector(foundItemDetails);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const searchItem = useParams()
+  const [searchTerm, setSearchTerm] = useState('')
+  const tableData = useSelector(foundItemDetails)
   const items = useSelector(itemDropdown)
-  const dropdownValues = items ? Object.values(items) : [];
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const pageNow = searchParams.get('page');
-  const currentItem = searchParams.get('item');
-  const currentCategory = searchParams.get('category');
+  const dropdownValues = items ? Object.values(items) : []
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const pageNow = searchParams.get('page')
+  const currentItem = searchParams.get('item')
+  const currentCategory = searchParams.get('category')
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const page = queryParams.get("page");
-    dispatch(itemDropdownValues());
+    const queryParams = new URLSearchParams(location.search)
+    const page = queryParams.get('page')
+    dispatch(itemDropdownValues())
     if (currentItem || currentCategory) {
-      const searchNow = dispatch(adminFetchItems(page, PageLimit, currentCategory ? currentCategory : "", currentItem ? currentItem : ""));
+      const searchNow = dispatch(
+        adminFetchItems(
+          page,
+          PageLimit,
+          currentCategory ? currentCategory : '',
+          currentItem ? currentItem : ''
+        )
+      )
       searchNow.then((res) => {
         setData(res?.data)
       })
     }
 
     if (!currentItem && !currentCategory && pageNow) {
-      setSearchTerm("");
-      setSelectedCategory("");
-      const searchNow = dispatch(adminFetchItems(page));
+      setSearchTerm('')
+      setSelectedCategory('')
+      const searchNow = dispatch(adminFetchItems(page))
       searchNow.then((res) => {
         setData(res?.data)
       })
     }
-  }, [location.search]);
+  }, [location.search])
 
   const handleExport = () => {
-    dispatch(adminExportItems(currentCategory ? currentCategory : "", currentItem ? currentItem : ""))
-  };
+    dispatch(
+      adminExportItems(currentCategory ? currentCategory : '', currentItem ? currentItem : '')
+    )
+  }
 
   const handleReset = () => {
-    setSearchTerm("");
-    setSelectedCategory("");
+    setSearchTerm('')
+    setSelectedCategory('')
     navigate(`/admin/user/foundItems?page=1`)
     dispatch(adminFetchItems(pageNow, PageLimit))
-  };
+  }
 
   const handleSearch = () => {
     if (selectedCategory && !searchTerm) {
@@ -67,34 +82,35 @@ function FoundItems() {
     } else if (searchTerm && !selectedCategory) {
       navigate(`/admin/user/foundItems?item=${searchTerm}&page=1`)
     }
-    const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, currentCategory, currentItem));
+    const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, currentCategory, currentItem))
     searchNow.then((res) => {
       setData(res?.data)
     })
-  };
+  }
 
   const tableHeaders = [
-    { key: "itemCode", label: "Item ID" },
-    { key: "itemName", label: "Item Name" },
-    { key: "location", label: "Location" },
-    { key: "foundTime", label: "Time Found" },
-    { key: "userName", label: "Found By" },
-    { key: "mobileNumber", label: "Phone Number" },
-    { key: "action", label: "Actions" },
-  ];
-
+    { key: 'itemCode', label: 'Item ID' },
+    { key: 'itemName', label: 'Item Name' },
+    { key: 'location', label: 'Location' },
+    { key: 'foundTime', label: 'Time Found' },
+    { key: 'userName', label: 'Found By' },
+    { key: 'mobileNumber', label: 'Phone Number' },
+    { key: 'action', label: 'Actions' },
+  ]
 
   const handlePageChange = (pageNumber) => {
     if (currentCategory && !currentItem) {
       navigate(`/admin/user/foundItems?category=${currentCategory}&page=${pageNumber}`)
     } else if (currentCategory && currentItem) {
-      navigate(`/admin/user/foundItems?item=${currentItem}&category=${currentCategory}&page=${pageNumber}`)
+      navigate(
+        `/admin/user/foundItems?item=${currentItem}&category=${currentCategory}&page=${pageNumber}`
+      )
     } else if (currentItem && !currentCategory) {
       navigate(`/admin/user/foundItems?item=${currentItem}&page=${pageNumber}`)
     } else if (!currentItem && !currentCategory) {
       navigate(`/admin/user/foundItems?page=${pageNumber}`)
     }
-  };
+  }
   return (
     <div className="m-4">
       <div className="flex justify-between mt-10">
@@ -108,7 +124,6 @@ function FoundItems() {
             onClick={handleExport}
             isReset={false}
             buttonColor="blue"
-
           />
         </div>
       </div>
@@ -126,7 +141,7 @@ function FoundItems() {
               dropdownValues={dropdownValues}
               value={selectedCategory}
               onChange={setSelectedCategory}
-              valueFromLink={currentCategory && currentCategory?.length > 0 ? currentCategory : ""}
+              valueFromLink={currentCategory && currentCategory?.length > 0 ? currentCategory : ''}
               placeholder="Filter by Category"
               additionalClass="h-14"
             />
@@ -160,7 +175,8 @@ function FoundItems() {
         data={searchItem.item ? data?.list : tableData?.list}
         showEdit={true}
         context="foundItems"
-        currentPage={pageNow} />
+        currentPage={pageNow}
+      />
 
       <Pagination
         isBlueBackground={true}
@@ -169,7 +185,7 @@ function FoundItems() {
         onPageChange={handlePageChange}
       />
     </div>
-  );
+  )
 }
 
-export default FoundItems;
+export default FoundItems

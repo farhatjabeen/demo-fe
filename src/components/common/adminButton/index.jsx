@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const CustomCombinedButton = ({ text, icon, onClick, isReset, buttonColor, additionalClasses }) => {
   const blueButton = (
@@ -9,7 +9,7 @@ const CustomCombinedButton = ({ text, icon, onClick, isReset, buttonColor, addit
       {icon && <span className="">{icon}</span>}
       {text}
     </button>
-  );
+  )
 
   const otherButton = (
     <button
@@ -19,12 +19,11 @@ const CustomCombinedButton = ({ text, icon, onClick, isReset, buttonColor, addit
       {icon && <span className="">{icon}</span>}
       {text ? text : 'Default Text'}
     </button>
-  );
+  )
 
-  const combinedButton = buttonColor === 'blue' ? blueButton : otherButton;
+  const combinedButton = buttonColor === 'blue' ? blueButton : otherButton
 
-  return combinedButton;
-};
+  return combinedButton
+}
 
-export default CustomCombinedButton;
-
+export default CustomCombinedButton

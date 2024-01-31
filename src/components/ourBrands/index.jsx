@@ -1,11 +1,11 @@
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import starbucks from '../../assets/images/startbucks.png';
-import amazon from '../../assets/images/amazon.png';
-import airarabia from '../../assets/images/airarabia.png';
-import suitcase from '../../assets/images/suitcase.png';
+import React from 'react'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import starbucks from '../../assets/images/startbucks.png'
+import amazon from '../../assets/images/amazon.png'
+import airarabia from '../../assets/images/airarabia.png'
+import suitcase from '../../assets/images/suitcase.png'
 
 const settings = {
   dots: false,
@@ -18,13 +18,13 @@ const settings = {
   cssEase: 'linear',
   arrows: false,
   variableWidth: true,
-};
+}
 
 const ImageSlide = ({ imageSrc, altText, margin }) => (
   <div className="w-48 h-44 bg-white rounded-xl shadow-md p-2 m-2">
     <img src={imageSrc} alt={altText} className={`w-auto h-auto  ${margin}`} />
   </div>
-);
+)
 
 const OurBrands = ({ asTrustedBy = false }) => {
   const images = [
@@ -32,18 +32,17 @@ const OurBrands = ({ asTrustedBy = false }) => {
     { src: amazon, alt: 'Amazon', margin: 'my-16 mx-6' },
     { src: airarabia, alt: 'Air Arabia', margin: 'my-12 mx-6' },
     { src: suitcase, alt: 'Suitcase', margin: 'my-4 mx-12' },
-  ];
+  ]
 
-  const generateImageSlides = () => (
+  const generateImageSlides = () =>
     images.map((image, index) => (
       <ImageSlide key={index} imageSrc={image.src} altText={image.alt} margin={image.margin} />
     ))
-  );
 
   return (
     <div className="w-full overflow-hidden py-6">
-      <div className='font-bold xl:text-4xl md:text-3xl sm:text-3xl text-granite-gray pl-14 py-6'>
-      {asTrustedBy ? 'As Trusted By' : 'Businesses that use our platform'}
+      <div className="font-bold xl:text-4xl md:text-3xl sm:text-3xl text-granite-gray pl-14 py-6">
+        {asTrustedBy ? 'As Trusted By' : 'Businesses that use our platform'}
       </div>
       <div>
         <Slider {...settings}>
@@ -52,8 +51,7 @@ const OurBrands = ({ asTrustedBy = false }) => {
         </Slider>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OurBrands;
-
+export default OurBrands

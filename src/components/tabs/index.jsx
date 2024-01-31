@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useLocation ,useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Tabs = ({ children, className }) => {
-  const location = useLocation();
-  const navigate =useNavigate();
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const tabs = React.Children.map(children, (child) => ({
     label: child.props.label,
     route: child.props.route,
-  }));
+  }))
 
   useEffect(() => {
-    const activeTab = tabs.findIndex((tab) => location.pathname.includes(tab.route));
-    setActiveTab(activeTab >= 0 ? activeTab : 0);
-  }, [location.pathname, tabs]);
+    const activeTab = tabs.findIndex((tab) => location.pathname.includes(tab.route))
+    setActiveTab(activeTab >= 0 ? activeTab : 0)
+  }, [location.pathname, tabs])
 
-
-  const [activeTab, setActiveTab] = useState(0);
-  const handleClick = (e, newActiveTab,route) => {
-    e.preventDefault();
-    setActiveTab(newActiveTab);
+  const [activeTab, setActiveTab] = useState(0)
+  const handleClick = (e, newActiveTab, route) => {
+    e.preventDefault()
+    setActiveTab(newActiveTab)
     navigate(route)
-  };
+  }
 
   return (
     <div className={className}>
@@ -29,8 +28,9 @@ const Tabs = ({ children, className }) => {
         {tabs.map((tab, index) => (
           <div key={index}>
             <li
-              className={`cursor-pointer p-2 relative ${activeTab === index ? "border-b-2 border-black" : ""
-                }`}
+              className={`cursor-pointer p-2 relative ${
+                activeTab === index ? 'border-b-2 border-black' : ''
+              }`}
               onClick={(e) => handleClick(e, index, tab.route)}
             >
               {tab.label}
@@ -40,7 +40,7 @@ const Tabs = ({ children, className }) => {
       </ul>
       <div>{children[activeTab].props.children}</div>
     </div>
-  );
-};
+  )
+}
 
-export default Tabs;
+export default Tabs

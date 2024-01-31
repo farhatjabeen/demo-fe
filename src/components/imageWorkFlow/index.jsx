@@ -1,12 +1,12 @@
 import React from 'react'
-import workFlow from '../../assets/images/workFlow.png';
+import workFlow from '../../assets/images/workFlow.png'
 
 export default function ImageWorkFlow() {
-    return (
-        <div className='w-full'>
-            <div className='bg-baby-blue w-full bg-no-repeat'>
-                <img className='w-full' height="243" src={workFlow} alt='doodleBackground' ></img>
-            </div>
-        </div>
-    )
+  return (
+    <div className="w-full">
+      <div className="bg-baby-blue w-full bg-no-repeat">
+        <img className="w-full" height="243" src={workFlow} alt="doodleBackground"></img>
+      </div>
+    </div>
+  )
 }

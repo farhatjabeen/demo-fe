@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Breadcrumbs({ items }) {
   return (
@@ -9,7 +9,10 @@ function Breadcrumbs({ items }) {
           <li key={index} className={`flex items-center ${item.className || ''}`}>
             {index > 0 && <span className="mx-2 text-sm">&#62;&#62;</span>}
             {item.link ? (
-              <Link to={item.link} className="text-blue-500 hover:underline focus:outline-none focus:underline">
+              <Link
+                to={item.link}
+                className="text-blue-500 hover:underline focus:outline-none focus:underline"
+              >
                 {item.label}
               </Link>
             ) : (
@@ -19,7 +22,7 @@ function Breadcrumbs({ items }) {
         ))}
       </ol>
     </nav>
-  );
+  )
 }
 
-export default Breadcrumbs;
+export default Breadcrumbs

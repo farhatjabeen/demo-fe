@@ -1,6 +1,6 @@
-import React from "react";
-import SignView from "../../components/signView";
-import Carousel from "../../components/carousel";
+import React from 'react'
+import SignView from '../../components/signView'
+import Carousel from '../../components/carousel'
 
 function AdminSignIn() {
   return (
@@ -12,6 +12,6 @@ function AdminSignIn() {
         <SignView />
       </div>
     </div>
-  );
+  )
 }
-export default AdminSignIn;
+export default AdminSignIn

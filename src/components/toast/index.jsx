@@ -1,13 +1,13 @@
-import { NotificationManager } from "react-notifications";
+import { NotificationManager } from 'react-notifications'
 
 //Toast
-export const Toast = ({ type = "success", message, time = 4000 }) => {
+export const Toast = ({ type = 'success', message, time = 4000 }) => {
   if (Array.isArray(message)) {
-    let item;
+    let item
     for (item of message) {
-      NotificationManager[type](item.message, "", time);
+      NotificationManager[type](item.message, '', time)
     }
   } else {
-    NotificationManager[type](message, "", time);
+    NotificationManager[type](message, '', time)
   }
-};
+}

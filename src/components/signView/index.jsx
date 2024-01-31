@@ -1,50 +1,49 @@
-import React, { useState } from "react";
-import logo from "../../assets/images/logo.svg";
-import { useNavigate } from "react-router-dom";
-import { AdminSignInSchema } from '../../validations';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import useValidationResolver from '../../hooks/useValidationResolver';
-import TextInput from "../../components/common/textInput";
-import { adminForgotPassword, loginAdminUser } from "../../redux/reducers/userSlice";
+import React, { useState } from 'react'
+import logo from '../../assets/images/logo.svg'
+import { useNavigate } from 'react-router-dom'
+import { AdminSignInSchema } from '../../validations'
+import { FormProvider, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import useValidationResolver from '../../hooks/useValidationResolver'
+import TextInput from '../../components/common/textInput'
+import { adminForgotPassword, loginAdminUser } from '../../redux/reducers/userSlice'
 
 function SignInView() {
   const [showPassword, setShowPassword] = useState(false)
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const resolver = useValidationResolver(AdminSignInSchema);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const resolver = useValidationResolver(AdminSignInSchema)
   const methods = useForm({
     defaultValues: {
-      emailMailId: "",
-      password: ""
+      emailMailId: '',
+      password: '',
     },
-    resolver
-  });
+    resolver,
+  })
   const handleForgot = async () => {
     try {
-      await methods.trigger('emailMailId');
+      await methods.trigger('emailMailId')
 
       if (methods.formState.errors.emailMailId) {
-        console.log('Email is not valid');
-        return;
+        console.log('Email is not valid')
+        return
       }
-      const emailMailId = methods.getValues().emailMailId;
-      dispatch(adminForgotPassword({ emailMailId }));
+      const emailMailId = methods.getValues().emailMailId
+      dispatch(adminForgotPassword({ emailMailId }))
     } catch (error) {
-      console.log('handleForgot error', error);
+      console.log('handleForgot error', error)
     }
-  };
-  const submitData =async(data) => {
+  }
+  const submitData = async (data) => {
     try {
-      const login = await dispatch(loginAdminUser(data));
+      const login = await dispatch(loginAdminUser(data))
       if (login) {
         navigate('/admin/user/foundItems?page=1')
       }
+    } catch (error) {
+      console.log('submitData errors', error)
     }
-    catch (error) {
-      console.log("submitData errors", error)
-    }
-  };
+  }
 
   return (
     <div className="pt-28 px-28">
@@ -53,9 +52,7 @@ function SignInView() {
       </div>
       <div className="pt-20 ">
         <h1 className="font-bold text-4xl">Sign In</h1>
-        <p className="text-grey font-bold pt-2">
-          Sign in to the admin portal of ilost
-        </p>
+        <p className="text-grey font-bold pt-2">Sign in to the admin portal of ilost</p>
       </div>
       <div className="relative">
         <FormProvider {...methods}>
@@ -73,7 +70,7 @@ function SignInView() {
               <TextInput
                 type="password"
                 name="password"
-                eyeClass='absolute top-4 left-3/4 ml-24'
+                eyeClass="absolute top-4 left-3/4 ml-24"
                 autoComplete="off"
                 placeholder="Enter password"
                 className="w-full py-4 px-3 border border-gray-300 rounded-md"
@@ -93,14 +90,13 @@ function SignInView() {
           </form>
         </FormProvider>
         <div className=" absolute bottom-24 mt-4 right-2 ">
-          <button
-            className='cursor-pointer text-base font-normal' onClick={handleForgot}>
+          <button className="cursor-pointer text-base font-normal" onClick={handleForgot}>
             Forgot Password?
           </button>
         </div>
       </div>
-      </div>
-      );
+    </div>
+  )
 }
 
-      export default SignInView;
+export default SignInView

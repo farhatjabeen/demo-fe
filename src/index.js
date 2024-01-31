@@ -1,20 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
+import reportWebVitals from './reportWebVitals'
 
 // import './theme/variables.scss';
 import './assets/css/common.css'
-import AppRoutes from './routes';
-import { Provider } from 'react-redux';
-import { store, persister } from './redux/store';
+import AppRoutes from './routes'
+import { Provider } from 'react-redux'
+import { store, persister } from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import { injectStore } from "./services";
+import { injectStore } from './services'
 
-injectStore(store);
+injectStore(store)
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   // This StrictMode is used to identify the warnings in development, post development it can be removed
@@ -25,9 +25,9 @@ root.render(
       </PersistGate>
     </Provider>
   </React.StrictMode>
-);
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()
