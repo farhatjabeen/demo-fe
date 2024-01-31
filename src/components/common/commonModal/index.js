@@ -1,6 +1,6 @@
 import React from "react";
 
-const CommonModal = ({ isOpen, onCancel, onConfirm, title, description, additionalContent, context, confirmText }) => {
+const CommonModal = ({ isOpen, onCancel, onConfirm, title, description, additionalContent, confirmText }) => {
     if (!isOpen) {
         return null;
     }

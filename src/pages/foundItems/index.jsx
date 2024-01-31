@@ -12,11 +12,7 @@ import { useLocation, useNavigate, useParams, useSearchParams } from "react-rout
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
-
-  const [pageChange, setPageChange] = useState();
   const PageLimit = 10;
-  const [itemCode, setItemCode] = useState('');
-  const [itemName, setItemName] = useState('');
   const [data, setData] = useState([])
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,7 +43,7 @@ function FoundItems() {
     const page = queryParams.get("page");
     dispatch(itemDropdownValues());
     if (currentItem || currentCategory) {
-      const searchNow = dispatch(adminFetchItems(page, PageLimit, currentCategory, currentItem,));
+      const searchNow = dispatch(adminFetchItems(page, PageLimit, currentCategory ? currentCategory : "", currentItem ? currentItem : ""));
       searchNow.then((res) => {
         setData(res?.data)
       })
@@ -71,9 +67,9 @@ function FoundItems() {
   //   setData(res?.data?.list)
   // })
   // },[searchTerm])
-
+  
   const handleExport = () => {
-    dispatch(adminExportItems(currentCategory, currentItem))
+    dispatch(adminExportItems(currentCategory ? currentCategory : "", currentItem ? currentItem : ""))
   };
 
   const handleReset = () => {
@@ -83,7 +79,7 @@ function FoundItems() {
     dispatch(adminFetchItems(pageNow, PageLimit))
   };
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (selectedCategory && !searchTerm) {
       navigate(`/admin/user/foundItems?category=${selectedCategory}&page=1`)
     } else if (selectedCategory && searchTerm) {
@@ -109,7 +105,16 @@ function FoundItems() {
 
 
   const handlePageChange = (pageNumber) => {
-    navigate(`/admin/user/foundItems?page=${pageNumber}`)
+    if (currentCategory && !currentItem) {
+      navigate(`/admin/user/foundItems?category=${currentCategory}&page=${pageNumber}`)
+    } else if (currentCategory && currentItem) {
+      navigate(`/admin/user/foundItems?item=${currentItem}&category=${currentCategory}&page=${pageNumber}`)
+    } else if (currentItem && !currentCategory) {
+      navigate(`/admin/user/foundItems?item=${currentItem}&page=${pageNumber}`)
+    } else if(!currentItem && !currentCategory){
+      navigate(`/admin/user/foundItems?page=${pageNumber}`)
+    }
+    // navigate(`/admin/user/foundItems?page=${pageNumber}`)
   };
   return (
     <div className="m-4">
