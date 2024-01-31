@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation ,useNavigate } from 'react-router-dom'
 
-
 const Tabs = ({ children, className }) => {
   const location = useLocation();
   const navigate =useNavigate();

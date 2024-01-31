@@ -5,7 +5,8 @@ import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 import { Toast } from '../../toast';
 
-export default function ImageUpload({ name, type="file", designClass, disabled, onclick, multiple, handleFileUpload, isEdit, fileInputRef }) {
+export default function ImageUpload({ name, type = "file", designClass, disabled,
+    multiple, handleFileUpload, isEdit }) {
     return (
         <ConnectForm>
             {({ errors, control }) => (
@@ -33,10 +34,9 @@ export default function ImageUpload({ name, type="file", designClass, disabled, 
                                         disabled={disabled}
                                         className="hidden"
                                         multiple={multiple}
-                                        onClick={() => type === "text" ? Toast({type:"error",message:"Only 3 images allowed"}) : ""}
+                                        onClick={() => type === "text" ? Toast({ type: "error", message: "Only 3 images allowed" }) : ""}
                                         onChange={isEdit ? handleFileUpload : (e) => {
                                             field.onChange(e);
-                                            // If you need to perform additional actions on file upload, call handleFileUpload here
                                             if (handleFileUpload) {
                                                 handleFileUpload(e);
                                             }

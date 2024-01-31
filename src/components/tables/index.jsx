@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteItem } from "../../redux/reducers/itemsSlice";
 import { useDispatch } from "react-redux";
 
-const Table = ({ headers, data, showEdit = false, context, searchTerm,category, currentPage }) => {
+const Table = ({ headers, data, showEdit = false, context, searchTerm, category, currentPage }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const navigate = useNavigate();
@@ -18,10 +18,10 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm,category, 
   };
 
   const handleSelect = (item) => {
-    if (window.location.pathname === "/admin/user/foundItems" || 
-    window.location.pathname === `/admin/user/foundItems/${searchTerm}/${category}` || 
-    window.location.pathname === `/admin/user/foundItems/${searchTerm}` ||
-    window.location.pathname === `/admin/user/foundItems/${category}`) {
+    if (window.location.pathname === "/admin/user/foundItems" ||
+      window.location.pathname === `/admin/user/foundItems/${searchTerm}/${category}` ||
+      window.location.pathname === `/admin/user/foundItems/${searchTerm}` ||
+      window.location.pathname === `/admin/user/foundItems/${category}`) {
       navigate(`/admin/user/foundItems/itemDetails/${item._id}`);
     }
   };
@@ -34,7 +34,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm,category, 
             {headers?.map((header) => (
               <th
                 key={header.key}
-                className="px-6 py-4 text-left cursor-pointer"
+                className="px-2 py-4 text-sm text-left cursor-pointer"
               >
                 <div>
                   <p>{header.label}</p>
@@ -75,10 +75,12 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm,category, 
                   ) : (
                     <td
                       key={header.key}
-                      className={`py-4 px-6 text-sm text-gray48 ${header.key === 'userCode' ? "font-bold":""} ${header.key === 'itemCode' ? "font-bold":""}`}
+                      className={`px-2 text-sm text-gray48 
+                      ${header.key === 'userCode' ? "font-bold" : ""} 
+                      ${header.key === 'itemCode' ? "font-bold" : ""}`}
                       onClick={() => handleSelect(item)}
                     >
-                      {`${header.key === 'userCode' ? "#":""}`}{`${header.key === 'itemCode' ? "#":""}`}{item[header.key]}
+                      {`${header.key === 'userCode' ? "#" : ""}`}{`${header.key === 'itemCode' ? "#" : ""}`}{item[header.key]}
                     </td>
                   )
                 )}
@@ -109,7 +111,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm,category, 
         }}
         selectedItemId={selectedItemId}
         context={context}
-        currentPage ={currentPage}
+        currentPage={currentPage}
       />
     </div>
   );

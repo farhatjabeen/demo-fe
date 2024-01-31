@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumbs from '../../components/common/breadcrumbs';
 import { useParams } from "react-router-dom";
 import { foundItemById, getItemId } from "../../redux/reducers/itemsSlice";
@@ -13,11 +13,12 @@ function ItemDetails() {
   useEffect(() => {
     setIsLoader(true);
     dispatch(foundItemById(id)).then(() => {
-      setIsLoader(false); 
+      setIsLoader(false);
     })
   }, [dispatch, id]);
   const foundItemDetails = useSelector(getItemId);
-  const { userName, itemCode, mobileNumber, foundDate, emailMailId, keywords, locationIdentifiers, foundTime, location, itemName, itemCategory, itemDescription } = foundItemDetails || {};
+  const { userName, itemCode, mobileNumber, foundDate, emailMailId, keywords, locationIdentifiers, foundTime,
+    location, itemName, itemCategory, itemDescription } = foundItemDetails || {};
 
   return (
     <div className="m-4">

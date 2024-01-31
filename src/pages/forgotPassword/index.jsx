@@ -7,6 +7,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { businessUserForgotSchema } from '../../validations';
 import { businessResetPassword } from '../../redux/reducers/userSlice';
 import { useParams } from 'react-router-dom';
+import { Toast } from '../../components/toast';
 
 export default function ForgotPassword() {
     const [createShowPassword, setCreateShowPassword] = useState(false)
@@ -26,12 +27,11 @@ export default function ForgotPassword() {
     const password = methods.getValues().password;
     const submitData = async () => {
         try {
-            const reset = await dispatch(businessResetPassword({password}, token));
-
+            const reset = await dispatch(businessResetPassword({ password }, token));
             if (reset) {
                 navigate('/businessSignin');
             } else {
-                console.log("Password reset failed");
+                Toast({ type: "error", message: "Password reset failed" });
             }
         } catch (error) {
             console.error("submitData errors", error);

@@ -19,7 +19,6 @@ function FoundItems() {
   const searchItem = useParams();
   const [searchTerm, setSearchTerm] = useState('');
   const tableData = useSelector(foundItemDetails);
-  const [currentPage, setCurrentPage] = useState(1);
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
   const location = useLocation();
@@ -30,13 +29,6 @@ function FoundItems() {
   const currentItem = searchParams.get('item');
   const currentCategory = searchParams.get('category');
   console.log(searchItem, "searchItem category")
-
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(location.search);
-  //   const page = queryParams.get("page");
-  //   dispatch(adminFetchItems(page, PageLimit))
-  // }, [location.search]);
-
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -59,15 +51,6 @@ function FoundItems() {
     }
   }, [location.search]);
 
-  // useEffect(()=>{
-  //   searchItems();
-  // const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, itemName, itemCode));
-  // searchNow.then((res)=>{
-  //   console.log(res,"res")
-  //   setData(res?.data?.list)
-  // })
-  // },[searchTerm])
-  
   const handleExport = () => {
     dispatch(adminExportItems(currentCategory ? currentCategory : "", currentItem ? currentItem : ""))
   };
@@ -87,7 +70,7 @@ function FoundItems() {
     } else if (searchTerm && !selectedCategory) {
       navigate(`/admin/user/foundItems?item=${searchTerm}&page=1`)
     }
-    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, currentCategory, currentItem));
+    const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, currentCategory, currentItem));
     searchNow.then((res) => {
       setData(res?.data)
     })
@@ -111,10 +94,9 @@ function FoundItems() {
       navigate(`/admin/user/foundItems?item=${currentItem}&category=${currentCategory}&page=${pageNumber}`)
     } else if (currentItem && !currentCategory) {
       navigate(`/admin/user/foundItems?item=${currentItem}&page=${pageNumber}`)
-    } else if(!currentItem && !currentCategory){
+    } else if (!currentItem && !currentCategory) {
       navigate(`/admin/user/foundItems?page=${pageNumber}`)
     }
-    // navigate(`/admin/user/foundItems?page=${pageNumber}`)
   };
   return (
     <div className="m-4">

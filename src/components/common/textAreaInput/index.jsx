@@ -7,7 +7,7 @@ import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function TextAreaInput({ placeholder, name, disable, className: inputClassName, showPassword, setShowPassword }) {
+function TextAreaInput({ placeholder, name, disable, className: inputClassName }) {
 
     return (
         <ConnectForm>

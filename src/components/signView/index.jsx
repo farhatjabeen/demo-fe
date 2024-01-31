@@ -13,7 +13,6 @@ function SignInView() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const resolver = useValidationResolver(AdminSignInSchema);
-
   const methods = useForm({
     defaultValues: {
       emailMailId: "",

@@ -12,7 +12,6 @@ import { adminChangePassword } from "../../redux/reducers/userSlice";
 const Settings = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [show, setShow] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const dispatch = useDispatch();
@@ -45,17 +44,8 @@ const Settings = () => {
             </h1>
             <div className='flex justify-between mt-24 border-b border-grey pb-4  mr-10'>
                 <div className='flex'>
-                <GoLock size={24} color='blue' />
-                <p className='text-black font-bold ml-10 text-2xl'>Reset Password</p>
-                </div>
-                <div>
-                {/* <button onClick={() => setShow(!show)}>
-                    {show ?
-                        <IoIosArrowDown />
-                        :
-                        <IoIosArrowUp />
-                    }
-                </button> */}
+                    <GoLock size={24} color='blue' />
+                    <p className='text-black font-bold ml-10 text-2xl'>Reset Password</p>
                 </div>
             </div>
 
@@ -137,7 +127,7 @@ const Settings = () => {
                                 <div className="mt-14">
                                     <button
                                         type="submit"
-                                        className="cursor-pointer w-full bg-primary-color  text-white font-bold py-4 rounded-md "
+                                        className="cursor-pointer w-full bg-primary-color text-white font-bold py-4 rounded-md "
                                     >
                                         Submit
                                     </button>
