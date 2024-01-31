@@ -37,7 +37,7 @@ export default function AddMoreDetails() {
     const reportDetails = useParams();
     console.log(reportDetails, "reportDetails");
 
-    const imageTitle= ["User Item image of missing", "Item", "Business User Item image of missing things"]
+    const imageTitle = ["User Item image of missing", "Item", "Business User Item image of missing things"]
 
     useEffect(() => {
         dispatch(locationDropdownValues())
@@ -64,10 +64,6 @@ export default function AddMoreDetails() {
         setImageLoader(true);
         // }
     }, []);
-
-    useEffect(()=>{
-
-    },[fileName])
 
     useEffect(() => {
 
@@ -125,7 +121,7 @@ export default function AddMoreDetails() {
         }
         if (itemImage?.length === 3) {
             setImageDisable(true);
-        }else{
+        } else {
             setImageDisable(false);
         }
     }, [itemImage])
@@ -136,50 +132,48 @@ export default function AddMoreDetails() {
             console.log("from submit form");
 
             if (userDetails?.role === 'BUSINESS' && !reportDetails.id) {
-                const inputString = methods.getValues().keywords;
-                methods.setValue('keywords', inputString.split(','));
-                methods.setValue("itemImage", itemImage);
-                methods.setValue("cloudinary_id", cloudinaryId);
-                // const datas = methods.getValues()
-                console.log(cloudinaryId?.length, "cloudinaryId.length")
+                if (itemImage) {
+                    const inputString = methods.getValues().keywords;
+                    methods.setValue('keywords', inputString.split(','));
+                    methods.setValue("itemImage", itemImage);
+                    methods.setValue("cloudinary_id", cloudinaryId);
+                    // const datas = methods.getValues()
+                    console.log(cloudinaryId?.length, "cloudinaryId.length")
 
-                console.log("hi from businessAddMoreDetails")
-                const addedItem = await dispatch(businessAddMoreDetails(data));
-                if (addedItem) {
-                    navigate('/allitems')
+                    console.log("hi from businessAddMoreDetails")
+                    const addedItem = await dispatch(businessAddMoreDetails(data));
+                    if (addedItem) {
+                        navigate('/allitems?page=1')
+                    }
                 }
 
-
             } else if (userDetails?.role === 'USER' && !reportDetails.id) {
-                const inputString = methods.getValues().keywords;
-                methods.setValue('keywords', inputString.split(','));
-                methods.setValue("itemImage", itemImage);
-                methods.setValue("cloudinary_id", cloudinaryId);
-                const addItem = dispatch(userAddMoreDetails(data));
-                console.log('itemadded', addItem)
-                addItem?.then((res) => {
-                    setNewItemId(res.data._id)
-                })
+                if (itemImage) {
+                    const inputString = methods.getValues().keywords;
+                    methods.setValue('keywords', inputString.split(','));
+                    methods.setValue("itemImage", itemImage);
+                    methods.setValue("cloudinary_id", cloudinaryId);
+                    const addItem = dispatch(userAddMoreDetails(data));
+                    console.log('itemadded', addItem)
+                    addItem?.then((res) => {
+                        setNewItemId(res?.data?._id)
+                    })
+                }
 
             } else {
-                const inputString = methods.getValues().keywords;
-                console.log(JSON.stringify(inputString), "inputString")
 
-                methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
-                console.log(methods.getValues().keywords, "keywords")
 
-                // methods.setValue("itemImage", itemImage?.map(item => item));
-                // methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
-                methods.setValue("itemImage", itemImage);
-                methods.setValue("cloudinary_id", cloudinaryId);
-                const dataNow = methods.getValues();
-                console.log(dataNow, "datanow")
-                console.log(itemImage, "itemImage")
-                console.log(cloudinaryId, "cloudinaryId")
-
-                if (itemImage?.length > 0 && cloudinaryId?.length > 0) {
+                if (itemImage?.length > 0) {
                     setImageLoader(true)
-                    const isEdited = await dispatch(userEditItemDetails(reportDetails.id, data))
+                    const inputString = methods.getValues().keywords;
+                    console.log(JSON.stringify(inputString), "inputString")
+
+                    methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
+                    console.log(methods.getValues().keywords, "keywords")
+                    methods.setValue("itemImage", itemImage);
+                    methods.setValue("cloudinary_id", cloudinaryId);
+                    const dataNow = methods.getValues();
+                    const isEdited = await dispatch(userEditItemDetails(reportDetails.id, dataNow))
 
                     isEdited && setItemImage([]);
                     isEdited && setCloudinaryId([]);
@@ -388,7 +382,7 @@ export default function AddMoreDetails() {
                                                 :
                                                 "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
                                             multiple={true}
-                                            type = {imageDisable ? "text" : "file"}
+                                            type={imageDisable ? "text" : "file"}
                                             isEdit={reportDetails.id ? true : false}
                                             handleFileUpload={handleFileUpload}
                                         />

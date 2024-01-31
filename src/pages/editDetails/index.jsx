@@ -148,9 +148,8 @@ export default function EditBusinessDetails() {
 
     const submitData = async () => {
         try {
+            if(itemImage){
             const inputString = methods.getValues().keywords;
-            console.log(JSON.stringify(inputString), "inputString")
-
             methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
             methods.setValue('itemImage', itemImage)
             methods.setValue('cloudinary_id', cloudinaryId)
@@ -166,6 +165,7 @@ export default function EditBusinessDetails() {
             } else {
                 setIsImage(false)
             }
+        }
         } catch (error) {
             console.error('Update failed:', error);
         }

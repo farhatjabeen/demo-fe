@@ -18,7 +18,7 @@ export default function FindMissingItem() {
   const searchParameters = useParams();
   const [isLoader, setIsLoader] = useState(false);
   const [ValueByLocation, setValueByLocation] = useState([])
-  const [pageByLocation,setPageByLocation] = useState([])
+  const [pageByLocation, setPageByLocation] = useState([])
   const dispatch = useDispatch();
   const resolver = useValidationResolver(searchByKeywordSchema);
   const searchValue = useSelector(searchKey);
@@ -44,17 +44,18 @@ export default function FindMissingItem() {
   }, [dispatch]);
 
   useEffect(() => {
+
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page");
-    console.log(page,"page")
+    console.log(page, "page")
+
     if (searchParameters?.location && searchParameters?.location?.length > 0) {
       console.log(searchParameters?.location, "searchParameters?.location")
       setIsLoader(true)
       const locationItem = dispatch(searchByLocation(searchParameters?.itemName, searchParameters?.location, page));
       locationItem.then((res) => {
         setIsLoader(false)
-        setValueByLocation(res?.data?.list)
-        setPageByLocation(res?.data?.pageMeta)
+        setValueByLocation(res?.data)
       })
     }
     if (searchParameters?.itemNameAgain) {
@@ -62,11 +63,11 @@ export default function FindMissingItem() {
       const keywordItem = dispatch(searchItem(searchParameters?.itemNameAgain, page));
       keywordItem.then((res) => {
         setIsLoader(false)
-        setValueByLocation(res?.data?.list)
-        setPageByLocation(res?.data)
+        setValueByLocation(res?.data)
       })
     }
-  }, [searchParameters, location.search, searchValue]);
+
+  }, [searchParameters, location.search]);
 
   const handlePageChange = (pageNumber) => {
     if (searchParameters?.location && searchParameters?.location?.length > 0) {
@@ -83,7 +84,6 @@ export default function FindMissingItem() {
       if (productName.keyword && productName.location) {
         navigate(`/findMissingItem/${productName.keyword}/${productName.location}?page=1`)
         console.log("hi from locate")
-
       } else if (productName.keyword) {
         navigate(`/findMissingItem/${productName.keyword}?page=1`)
         setIsLoader(true)
@@ -94,7 +94,6 @@ export default function FindMissingItem() {
       } else {
         Toast({ type: 'error', message: 'Enter Item Name' })
       }
-
     } catch (error) {
       console.log("submitData errors", error)
     }
@@ -152,7 +151,7 @@ export default function FindMissingItem() {
         <p className='font-bold pt-24 flex justify-center ml-7 w-full text-md'>Loading...</p>
         :
         <div className='flex flex-wrap justify-center items-center w-full mr-7'>
-          {ValueByLocation?.length ? ValueByLocation?.map((items, i) => {
+          {ValueByLocation?.list?.length ? ValueByLocation?.list?.map((items, i) => {
             return (
               <div className='sm:w-60 md:w-52 xl:w-80 xl:ml-10 md:ml-5 mt-8 sm:flex sm:items-center'>
                 <SearchCards key={i} idx={i} itemId={items._id} imageName={items.itemImage || ''} itemName={items.itemName} location={items.location} date={items.foundDate} time={items.foundTime} />
@@ -166,8 +165,8 @@ export default function FindMissingItem() {
       <div className='mb-10 mt-32'>
         <Pagination
           isBlueBackground={false}
-          currentPage={pageByLocation.length>0 ? pageByLocation?.page : searchValue?.pageMeta?.page}
-          totalPages={pageByLocation.length>0 ? pageByLocation?.totalPages : searchValue?.pageMeta?.totalPages}
+          currentPage={ValueByLocation?.pageMeta?.page}
+          totalPages={ValueByLocation?.pageMeta?.totalPages}
           onPageChange={handlePageChange} />
       </div>
       {isLastPage && (

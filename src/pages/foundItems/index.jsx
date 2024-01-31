@@ -12,7 +12,7 @@ import { useLocation, useNavigate, useParams, useSearchParams } from "react-rout
 
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
-    
+
   const [pageChange, setPageChange] = useState();
   const PageLimit = 10;
   const [itemCode, setItemCode] = useState('');
@@ -27,26 +27,41 @@ function FoundItems() {
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
   const location = useLocation();
-const [searchParams] = useSearchParams();
-const pageNow = searchParams.get('page');
-  console.log(searchItem,"searchItem category")
+  console.log(location, "location")
+  const [searchParams] = useSearchParams();
+  console.log(location.search, "searchParams")
+  const pageNow = searchParams.get('page');
+  const currentItem = searchParams.get('item');
+  const currentCategory = searchParams.get('category');
+  console.log(searchItem, "searchItem category")
+
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams(location.search);
+  //   const page = queryParams.get("page");
+  //   dispatch(adminFetchItems(page, PageLimit))
+  // }, [location.search]);
+
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page");
-    dispatch(adminFetchItems(page, PageLimit))
-  }, [location.search]);
-
-
-  useEffect(() => {
     dispatch(itemDropdownValues());
-    if (searchItem.item || searchItem.category || selectedCategory) {
-        const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, searchItem.category ? searchItem.category : selectedCategory, !searchTerm ? "" : searchItem.item, ));
-        searchNow.then((res) => {
-          setData(res?.data)
-        })
+    if (currentItem || currentCategory) {
+      const searchNow = dispatch(adminFetchItems(page, PageLimit, currentCategory, currentItem,));
+      searchNow.then((res) => {
+        setData(res?.data)
+      })
     }
-  }, [searchItem]);
+
+    if (!currentItem && !currentCategory && pageNow) {
+      setSearchTerm("");
+      setSelectedCategory("");
+      const searchNow = dispatch(adminFetchItems(page));
+      searchNow.then((res) => {
+        setData(res?.data)
+      })
+    }
+  }, [location.search]);
 
   // useEffect(()=>{
   //   searchItems();
@@ -58,25 +73,25 @@ const pageNow = searchParams.get('page');
   // },[searchTerm])
 
   const handleExport = () => {
-    dispatch(adminExportItems(selectedCategory,searchTerm))
+    dispatch(adminExportItems(currentCategory, currentItem))
   };
 
   const handleReset = () => {
     setSearchTerm("");
     setSelectedCategory("");
-    navigate(`/admin/user/foundItems`)
-    dispatch(adminFetchItems(currentPage, PageLimit))
+    navigate(`/admin/user/foundItems?page=1`)
+    dispatch(adminFetchItems(pageNow, PageLimit))
   };
 
   const handleSearch = async () => {
-    if (selectedCategory&&!searchTerm) {
-      navigate(`/admin/user/foundItems/${selectedCategory}?page=1`)
-    } else if(selectedCategory&&searchTerm){
-      navigate(`/admin/user/foundItems/${searchTerm}/${selectedCategory}?page=1`)
-    } else if(searchTerm&&!selectedCategory){
-      navigate(`/admin/user/foundItems/${searchTerm}?page=1`)
+    if (selectedCategory && !searchTerm) {
+      navigate(`/admin/user/foundItems?category=${selectedCategory}&page=1`)
+    } else if (selectedCategory && searchTerm) {
+      navigate(`/admin/user/foundItems?item=${searchTerm}&category=${selectedCategory}&page=1`)
+    } else if (searchTerm && !selectedCategory) {
+      navigate(`/admin/user/foundItems?item=${searchTerm}&page=1`)
     }
-    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, selectedCategory, searchTerm));
+    const searchNow = dispatch(adminFetchItems(currentPage, PageLimit, currentCategory, currentItem));
     searchNow.then((res) => {
       setData(res?.data)
     })
@@ -127,7 +142,7 @@ const pageNow = searchParams.get('page');
               dropdownValues={dropdownValues}
               value={selectedCategory}
               onChange={setSelectedCategory}
-              valueFromLink={searchItem.category ? searchItem.category : ""}
+              valueFromLink={currentCategory && currentCategory?.length > 0 ? currentCategory : ""}
               placeholder="Filter by Category"
               additionalClass="h-14"
             />
@@ -156,7 +171,7 @@ const pageNow = searchParams.get('page');
       </div>
       <Table
         headers={tableHeaders}
-        category={searchItem?.category?.length>0 ? searchItem?.category : selectedCategory}
+        category={searchItem?.item}
         searchTerm={searchTerm}
         data={searchItem.item ? data?.list : tableData?.list}
         showEdit={true}

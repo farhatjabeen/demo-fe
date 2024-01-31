@@ -26,6 +26,7 @@ function User() {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const pageNow = searchParams.get('page');
+  const currentUser = searchParams.get('name');
     console.log(pageNow,"pageNow");
 
   const searchRegex = /^[0-9]+$/;
@@ -33,8 +34,23 @@ function User() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page");
-    dispatch(adminFetchUser(page, PageLimit))
+
+    if(!currentUser && window.location.pathname === '/admin/user/users'){
+      setSearchUserTerm("");
+      dispatch(adminFetchUser(page, PageLimit))
+    }
+
+    if(!currentUser && window.location.pathname === '/admin/user/businessUser'){
     dispatch(adminFetchBusinessUser(page, PageLimit))
+    }
+
+console.log(window.location,"window.location.pathname")
+    if (currentUser && window.location.pathname === '/admin/user/users') {
+      dispatch(adminFetchUser(currentPageForUser, PageLimit, currentUser));
+  } else if (currentUser && window.location.pathname === '/admin/user/businessUser') {
+      dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit, currentUser));
+  }
+
   }, [location.search, PageLimit]);
 
   const handleReset = async (tab) => {
@@ -56,22 +72,11 @@ function User() {
 
   const handleSearch = (tab) => {
     if (tab === 1) {
-      // if (searchRegex.test(searchUserTerm)) {
-        // setIsId(true)
-        dispatch(adminFetchUser(currentPageForUser, PageLimit, searchUserTerm));
-      // } else {
-      //   setIsId(false)
-      // }
+        navigate(`?name=${searchUserTerm}&page=1`)
     } else if (tab === 2) {
-      // if (searchRegex.test(searchBusinessTerm)) {
-        // setIsId(true)
-        dispatch(adminFetchBusinessUser(currentPageForBusiness, PageLimit, searchBusinessTerm));
-      // } else {
-      //   setIsId(false)
-      // }
+      navigate(`?name=${searchBusinessTerm}&page=1`)
     }
   };
-
 
   const handlePageChange1 = (pageNumber) => {
     navigate(`/admin/user/users?page=${pageNumber}`)
@@ -102,12 +107,11 @@ function User() {
 
   return (
     <>
-      <div className="m-4">
+      <div className="my-4 ml-4">
         <h1 className="text-black font-bold mb-4 text-4xl mt-10">User Management</h1>
         <Tabs className="my-8"  >
-          <div label="General" route="/admin/user/users">
+          <div  label="General" route="/admin/user/users">
             <div className={`flex  ${isId ? "my-8" : "mt-8 mb-0"}`}>
-              {/* <div className="my-8"> */}
               <input
                 type="text"
                 placeholder="Search"
@@ -115,7 +119,6 @@ function User() {
                 value={searchUserTerm}
                 onChange={(event) => setSearchUserTerm(event.target.value)}
               />
-              {/* </div> */}
 
               <div className="basis-1/12">
                 <CustomCombinedButton
