@@ -1,44 +1,61 @@
-import React, { useState, useEffect } from "react";
-import Breadcrumbs from '../../components/common/breadcrumbs';
-import { useParams } from "react-router-dom";
-import { foundItemById, getItemId } from "../../redux/reducers/itemsSlice";
-import { useDispatch, useSelector } from "react-redux";
-
+import React, { useState, useEffect } from 'react'
+import Breadcrumbs from '../../components/common/breadcrumbs'
+import { useParams } from 'react-router-dom'
+import { foundItemById, getItemId } from '../../redux/reducers/itemsSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 function ItemDetails() {
-  const [isLoader, setIsLoader] = useState(true);
-  const { id } = useParams();
-  const dispatch = useDispatch();
+  const [isLoader, setIsLoader] = useState(true)
+  const { id } = useParams()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    setIsLoader(true);
+    setIsLoader(true)
     dispatch(foundItemById(id)).then(() => {
-      setIsLoader(false);
+      setIsLoader(false)
     })
-  }, [dispatch, id]);
-  const foundItemDetails = useSelector(getItemId);
-  const { userName, itemCode, mobileNumber, foundDate, emailMailId, keywords, locationIdentifiers, foundTime,
-    location, itemName, itemCategory, itemDescription } = foundItemDetails || {};
+  }, [dispatch, id])
+  const foundItemDetails = useSelector(getItemId)
+  const {
+    userName,
+    itemCode,
+    mobileNumber,
+    foundDate,
+    emailMailId,
+    keywords,
+    locationIdentifiers,
+    foundTime,
+    location,
+    itemName,
+    itemCategory,
+    itemDescription,
+  } = foundItemDetails || {}
 
   return (
     <div className="m-4">
       <div>
         <Breadcrumbs
           items={[
-            { label: 'Found Items', link: '/admin/user/foundItems', className: 'text-black   xl:text-4xl sm:text-xl mt-10' },
-            { label: `Item Details (#${itemCode})`, className: 'text-black font-bold  xl:text-4xl sm:text-xl mt-10' },
+            {
+              label: 'Found Items',
+              link: '/admin/user/foundItems',
+              className: 'text-black   xl:text-4xl sm:text-xl mt-10',
+            },
+            {
+              label: `Item Details (#${itemCode})`,
+              className: 'text-black font-bold  xl:text-4xl sm:text-xl mt-10',
+            },
           ]}
         />
       </div>
-      {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
-        :
+      {isLoader ? (
+        <p className="font-bold p-24 flex justify-center w-full text-md">Loading...</p>
+      ) : (
         <>
           <div className="bg-white mt-10 rounded-lg p-4 shadow-md">
             <div className=" border-b pb-4 mx-4 justify-between">
               <div>
-                <h1 className="text-navy-blue font-bold text-xl mt-2">
-                  Founder Details
-                </h1>
+                <h1 className="text-navy-blue font-bold text-xl mt-2">Founder Details</h1>
               </div>
             </div>
             <div className="p-4 ">
@@ -56,7 +73,7 @@ function ItemDetails() {
                   <p>{emailMailId}</p>
                 </div>
               </div>
-              <div className='xl:flex lg:flex md:flex xs:block '>
+              <div className="xl:flex lg:flex md:flex xs:block ">
                 <div className="mb-4 xl:w-1/3 xs:w-full md:w-1/2">
                   <p className="font-bold mb-2">Found Date</p>
                   <p>{foundDate}</p>
@@ -67,9 +84,7 @@ function ItemDetails() {
                 </div>
                 <div className="mb-4 xl:w-1/3 xs:w-full md:w-1/2">
                   <p className="font-bold mb-2">Found Location </p>
-                  <p>
-                    {location}
-                  </p>
+                  <p>{location}</p>
                 </div>
               </div>
             </div>
@@ -94,31 +109,25 @@ function ItemDetails() {
             </div>
             <div className="px-4">
               <p className="font-bold mb-2">Landmark</p>
-              <p>
-                {locationIdentifiers}
-              </p>
+              <p>{locationIdentifiers}</p>
             </div>
             <div className="p-4  max-w-screen-xl">
               <p className="font-bold mb-2">Item Description</p>
-              <p>
-                {itemDescription}
-              </p>
+              <p>{itemDescription}</p>
             </div>
             <div className="p-4">
               <p className="font-bold mb-2">Images</p>
               <div className="flex gap-2">
                 {foundItemDetails?.itemImage.map((items, i) => {
-                  return (
-                    <img src={items} alt="key" className="h-40 w-40" />
-                  );
+                  return <img src={items} alt="key" className="h-40 w-40" />
                 })}
               </div>
             </div>
           </div>
         </>
-      }
+      )}
     </div>
-  );
-};
+  )
+}
 
-export default ItemDetails;
+export default ItemDetails

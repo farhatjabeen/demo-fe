@@ -1,69 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { IoSearchSharp } from "react-icons/io5";
-import { FaRotateLeft } from "react-icons/fa6";
-import CustomCombinedButton from "../../components/common/adminButton";
-import Table from "../../components/tables";
-import Pagination from "../../components/common/pagination";
-import Tabs from "../../components/tabs";
-import { useDispatch, useSelector } from 'react-redux';
-import { adminFetchUser, userDetails, adminFetchBusinessUser, businessUserDetails } from "../../redux/reducers/itemsSlice";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-
+import React, { useState, useEffect } from 'react'
+import { IoSearchSharp } from 'react-icons/io5'
+import { FaRotateLeft } from 'react-icons/fa6'
+import CustomCombinedButton from '../../components/common/adminButton'
+import Table from '../../components/tables'
+import Pagination from '../../components/common/pagination'
+import Tabs from '../../components/tabs'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  adminFetchUser,
+  userDetails,
+  adminFetchBusinessUser,
+  businessUserDetails,
+} from '../../redux/reducers/itemsSlice'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 function User() {
   // Local states
-  const [searchUserTerm, setSearchUserTerm] = useState("");
-  const [resetHandle, setResetHandle] = useState(false);
-  const [isId, setIsId] = useState(true);
-  const [searchBusinessTerm, setSearchBusinessTerm] = useState("");
-  const PageLimit = 10;
-  const tableData = useSelector(userDetails);
-  const tableBusinessData = useSelector(businessUserDetails);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const pageNow = searchParams.get('page');
-  const currentUser = searchParams.get('name');
+  const [searchUserTerm, setSearchUserTerm] = useState('')
+  const [resetHandle, setResetHandle] = useState(false)
+  const [isId, setIsId] = useState(true)
+  const [searchBusinessTerm, setSearchBusinessTerm] = useState('')
+  const PageLimit = 10
+  const tableData = useSelector(userDetails)
+  const tableBusinessData = useSelector(businessUserDetails)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const pageNow = searchParams.get('page')
+  const currentUser = searchParams.get('name')
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const page = queryParams.get("page");
+    const queryParams = new URLSearchParams(location.search)
+    const page = queryParams.get('page')
 
     if (!currentUser && window.location.pathname === '/admin/user/users') {
-      setSearchUserTerm("");
+      setSearchUserTerm('')
       dispatch(adminFetchUser(page, PageLimit))
     }
 
     if (!currentUser && window.location.pathname === '/admin/user/businessUser') {
-      setSearchUserTerm("");
+      setSearchUserTerm('')
       dispatch(adminFetchBusinessUser(page, PageLimit))
     }
 
     if (currentUser && window.location.pathname === '/admin/user/users') {
-      dispatch(adminFetchUser(page, PageLimit, currentUser));
+      dispatch(adminFetchUser(page, PageLimit, currentUser))
     } else if (currentUser && window.location.pathname === '/admin/user/businessUser') {
-      dispatch(adminFetchBusinessUser(page, PageLimit, currentUser));
+      dispatch(adminFetchBusinessUser(page, PageLimit, currentUser))
     }
-
-  }, [location.search, PageLimit]);
+  }, [location.search, PageLimit])
 
   const handleReset = async (tab) => {
     setResetHandle(true)
     if (tab === 1) {
-      setSearchUserTerm("");
+      setSearchUserTerm('')
       const values = await dispatch(adminFetchUser(pageNow, PageLimit))
       if (values) {
         setResetHandle(false)
       }
     } else if (tab === 2) {
-      setSearchBusinessTerm("");
+      setSearchBusinessTerm('')
       const values = await dispatch(adminFetchBusinessUser(pageNow, PageLimit))
       if (values) {
         setResetHandle(false)
       }
     }
-  };
+  }
 
   const handleSearch = (tab) => {
     if (tab === 1) {
@@ -71,35 +74,34 @@ function User() {
     } else if (tab === 2) {
       navigate(`?name=${searchBusinessTerm}&page=1`)
     }
-  };
+  }
 
   const handlePageChange1 = (pageNumber) => {
     navigate(`/admin/user/users?page=${pageNumber}`)
-  };
+  }
   const handlePageChange2 = (pageNumber) => {
     navigate(`/admin/user/businessUser?page=${pageNumber}`)
-  };
+  }
 
   const userHeaders = [
-    { key: "userCode", label: "User ID" },
-    { key: "name", label: "User Name" },
-    { key: "count", label: "Listing Count" },
-    { key: "emailMailId", label: "Mail ID" },
-    { key: "mobileNumber", label: "Mobile Number" },
-    { key: "action", label: "Actions" },
-
-  ];
+    { key: 'userCode', label: 'User ID' },
+    { key: 'name', label: 'User Name' },
+    { key: 'count', label: 'Listing Count' },
+    { key: 'emailMailId', label: 'Mail ID' },
+    { key: 'mobileNumber', label: 'Mobile Number' },
+    { key: 'action', label: 'Actions' },
+  ]
 
   const businessHeaders = [
-    { key: "userCode", label: "Business ID" },
-    { key: "companyName", label: "Company Name" },
-    { key: "companyCategory", label: "Company Category" },
-    { key: "name", label: "Contact Name" },
-    { key: "emailMailId", label: "Mail ID" },
-    { key: "mobileNumber", label: "Contact Phone" },
-    { key: "count", label: "Listing Count" },
-    { key: "action", label: "Actions" },
-  ];
+    { key: 'userCode', label: 'Business ID' },
+    { key: 'companyName', label: 'Company Name' },
+    { key: 'companyCategory', label: 'Company Category' },
+    { key: 'name', label: 'Contact Name' },
+    { key: 'emailMailId', label: 'Mail ID' },
+    { key: 'mobileNumber', label: 'Contact Phone' },
+    { key: 'count', label: 'Listing Count' },
+    { key: 'action', label: 'Actions' },
+  ]
 
   return (
     <>
@@ -107,7 +109,7 @@ function User() {
         <h1 className="text-black font-bold mb-4 text-4xl mt-10">User Management</h1>
         <Tabs className="my-8">
           <div label="General" route="/admin/user/users">
-            <div className={`flex  ${isId ? "my-8" : "mt-8 mb-0"}`}>
+            <div className={`flex  ${isId ? 'my-8' : 'mt-8 mb-0'}`}>
               <input
                 type="text"
                 placeholder="Search"
@@ -135,17 +137,17 @@ function User() {
                 />
               </div>
             </div>
-            {isId
-              ?
-              ""
-              :
-              <p className="text-sm text-red">Valid ID required</p>
-            }
-            {resetHandle ?
+            {isId ? '' : <p className="text-sm text-red">Valid ID required</p>}
+            {resetHandle ? (
               <p>Loading...</p>
-              :
-              <Table currentPage={pageNow} headers={userHeaders} data={tableData?.list} context="user" />
-            }
+            ) : (
+              <Table
+                currentPage={pageNow}
+                headers={userHeaders}
+                data={tableData?.list}
+                context="user"
+              />
+            )}
             <Pagination
               isBlueBackground={true}
               currentPage={tableData?.pageMeta?.page}
@@ -154,7 +156,7 @@ function User() {
             />
           </div>
           <div label="Business" route="/admin/user/businessUser">
-            <div className={`flex  ${isId ? "my-8" : "mt-8 mb-0"}`}>
+            <div className={`flex  ${isId ? 'my-8' : 'mt-8 mb-0'}`}>
               <input
                 type="text"
                 placeholder="Search"
@@ -181,13 +183,13 @@ function User() {
                 />
               </div>
             </div>
-            {isId
-              ?
-              ""
-              :
-              <p className="text-sm text-red">Valid ID required</p>
-            }
-            <Table currentPage={pageNow} headers={businessHeaders} data={tableBusinessData?.list} context="businessUser" />
+            {isId ? '' : <p className="text-sm text-red">Valid ID required</p>}
+            <Table
+              currentPage={pageNow}
+              headers={businessHeaders}
+              data={tableBusinessData?.list}
+              context="businessUser"
+            />
             <Pagination
               isBlueBackground={true}
               currentPage={tableBusinessData?.pageMeta?.page}
@@ -198,7 +200,7 @@ function User() {
         </Tabs>
       </div>
     </>
-  );
+  )
 }
 
-export default User;
+export default User

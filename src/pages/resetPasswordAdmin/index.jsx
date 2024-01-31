@@ -1,6 +1,6 @@
-import React from "react";
-import Carousel from "../../components/carousel";
-import ResetPasswordView from "../../components/resetPasswordview";
+import React from 'react'
+import Carousel from '../../components/carousel'
+import ResetPasswordView from '../../components/resetPasswordview'
 
 function AdminResetPassword() {
   return (
@@ -9,9 +9,9 @@ function AdminResetPassword() {
         <Carousel />
       </div>
       <div className="h-screen w-1/2 ">
-        <ResetPasswordView/>
+        <ResetPasswordView />
       </div>
     </div>
-  );
+  )
 }
-export default AdminResetPassword;
+export default AdminResetPassword

@@ -1,44 +1,41 @@
-import { config } from '../config';
+import { config } from '../config'
 
-const CryptoJS = require('crypto-js');
+const CryptoJS = require('crypto-js')
 
 class Encryption {
   decrypt = (cipherText, type) => {
-    const { AES_SECRET_KEY } = config;
+    const { AES_SECRET_KEY } = config
 
-    const bytes = CryptoJS.AES.decrypt(cipherText, AES_SECRET_KEY);
+    const bytes = CryptoJS.AES.decrypt(cipherText, AES_SECRET_KEY)
 
-    let originalText = '';
+    let originalText = ''
 
     if (type === 'object') {
-      originalText = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      originalText = JSON.parse(bytes.toString(CryptoJS.enc.Utf8))
     } else {
-      originalText = bytes.toString(CryptoJS.enc.Utf8);
+      originalText = bytes.toString(CryptoJS.enc.Utf8)
     }
 
-    return originalText;
-  };
+    return originalText
+  }
 
   encrypt = (plainData) => {
-    const { AES_SECRET_KEY } = config;
+    const { AES_SECRET_KEY } = config
 
-    let encryptedText = '';
+    let encryptedText = ''
 
-    let tempPlainData = '';
+    let tempPlainData = ''
 
     if (typeof plainData === 'string') {
-      tempPlainData = plainData;
+      tempPlainData = plainData
     } else {
-      tempPlainData = JSON.stringify(plainData);
+      tempPlainData = JSON.stringify(plainData)
     }
 
-    encryptedText = CryptoJS.AES.encrypt(
-      tempPlainData,
-      AES_SECRET_KEY
-    ).toString();
+    encryptedText = CryptoJS.AES.encrypt(tempPlainData, AES_SECRET_KEY).toString()
 
-    return encryptedText;
-  };
+    return encryptedText
+  }
 }
 
-export default new Encryption();
+export default new Encryption()

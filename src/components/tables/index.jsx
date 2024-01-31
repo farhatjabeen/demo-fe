@@ -1,30 +1,32 @@
-import React, { useState } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
-import { FiEdit } from "react-icons/fi";
-import DeleteModal from "../deleteModal";
-import { useNavigate } from "react-router-dom";
-import { deleteItem } from "../../redux/reducers/itemsSlice";
-import { useDispatch } from "react-redux";
+import React, { useState } from 'react'
+import { AiOutlineDelete } from 'react-icons/ai'
+import { FiEdit } from 'react-icons/fi'
+import DeleteModal from '../deleteModal'
+import { useNavigate } from 'react-router-dom'
+import { deleteItem } from '../../redux/reducers/itemsSlice'
+import { useDispatch } from 'react-redux'
 
 const Table = ({ headers, data, showEdit = false, context, searchTerm, category, currentPage }) => {
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [selectedItemId, setSelectedItemId] = useState(null);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [selectedItemId, setSelectedItemId] = useState(null)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleDeleteClick = (id) => {
-    setSelectedItemId(id);
-    setDeleteModalOpen(true);
-  };
+    setSelectedItemId(id)
+    setDeleteModalOpen(true)
+  }
 
   const handleSelect = (item) => {
-    if (window.location.pathname === "/admin/user/foundItems" ||
+    if (
+      window.location.pathname === '/admin/user/foundItems' ||
       window.location.pathname === `/admin/user/foundItems/${searchTerm}/${category}` ||
       window.location.pathname === `/admin/user/foundItems/${searchTerm}` ||
-      window.location.pathname === `/admin/user/foundItems/${category}`) {
-      navigate(`/admin/user/foundItems/itemDetails/${item._id}`);
+      window.location.pathname === `/admin/user/foundItems/${category}`
+    ) {
+      navigate(`/admin/user/foundItems/itemDetails/${item._id}`)
     }
-  };
+  }
 
   return (
     <div className="my-5">
@@ -32,10 +34,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
         <thead>
           <tr className="border border-x-0 border-y-grey text-navy-blue">
             {headers?.map((header) => (
-              <th
-                key={header.key}
-                className="px-2 py-4 text-sm text-left cursor-pointer"
-              >
+              <th key={header.key} className="px-2 py-4 text-sm text-left cursor-pointer">
                 <div>
                   <p>{header.label}</p>
                 </div>
@@ -46,12 +45,9 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
         <tbody className="cursor-pointer">
           {data?.length > 0 ? (
             data.map((item, index) => (
-              <tr
-                key={item._id}
-                className={index % 2 === 0 ? "bg-gray" : "bg-white"}
-              >
+              <tr key={item._id} className={index % 2 === 0 ? 'bg-gray' : 'bg-white'}>
                 {headers.map((header) =>
-                  header.key === "action" ? (
+                  header.key === 'action' ? (
                     <td
                       className={`py-6 px-6 flex cursor-pointer text-gray48 hover:text-black `}
                       key={header.key}
@@ -65,9 +61,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
                         <FiEdit
                           size={24}
                           onClick={() =>
-                            navigate(
-                              `/admin/user/foundItems/editfoundItems/${item._id}`
-                            )
+                            navigate(`/admin/user/foundItems/editfoundItems/${item._id}`)
                           }
                         />
                       )}
@@ -76,11 +70,13 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
                     <td
                       key={header.key}
                       className={`px-2 text-sm text-gray48 
-                      ${header.key === 'userCode' ? "font-bold" : ""} 
-                      ${header.key === 'itemCode' ? "font-bold" : ""}`}
+                      ${header.key === 'userCode' ? 'font-bold' : ''} 
+                      ${header.key === 'itemCode' ? 'font-bold' : ''}`}
                       onClick={() => handleSelect(item)}
                     >
-                      {`${header.key === 'userCode' ? "#" : ""}`}{`${header.key === 'itemCode' ? "#" : ""}`}{item[header.key]}
+                      {`${header.key === 'userCode' ? '#' : ''}`}
+                      {`${header.key === 'itemCode' ? '#' : ''}`}
+                      {item[header.key]}
                     </td>
                   )
                 )}
@@ -89,9 +85,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
           ) : (
             <tr>
               <td colSpan={headers.length} className="text-center">
-                <p className="font-bold p-10 flex justify-center w-full text-md">
-                  No Data Found
-                </p>
+                <p className="font-bold p-10 flex justify-center w-full text-md">No Data Found</p>
               </td>
             </tr>
           )}
@@ -100,21 +94,21 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
       <DeleteModal
         isOpen={deleteModalOpen}
         onCancel={() => {
-          setDeleteModalOpen(false);
-          setSelectedItemId(null);
+          setDeleteModalOpen(false)
+          setSelectedItemId(null)
         }}
         onDelete={() => {
-          console.log(`Deleting item with ID ${selectedItemId}`);
-          dispatch(deleteItem(selectedItemId));
-          setDeleteModalOpen(false);
-          setSelectedItemId(null);
+          console.log(`Deleting item with ID ${selectedItemId}`)
+          dispatch(deleteItem(selectedItemId))
+          setDeleteModalOpen(false)
+          setSelectedItemId(null)
         }}
         selectedItemId={selectedItemId}
         context={context}
         currentPage={currentPage}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table
