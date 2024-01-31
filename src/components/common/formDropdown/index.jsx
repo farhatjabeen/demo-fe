@@ -1,13 +1,13 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './index.css';
 import { Controller } from 'react-hook-form';
-// import { RxChevronDown, RxChevronUp } from "react-icons/rx";
 import { ConnectForm } from '../../../context/ConnectForm';
 import { getFormErrorMessage } from "../../../utils/helper"
 import { FormErrorMessage } from '../FormErrorMessage';
 
-function FormDropdown({ name, editButton, iscleared, dropdownValues, firstOptionName, isBusinesSignUp = false, isSearchReport = false, valueFromDb, optionButtonClass }) {
+function FormDropdown({ name, editButton, iscleared, dropdownValues, firstOptionName, 
+    isBusinesSignUp = false, isSearchReport = false, valueFromDb, optionButtonClass }) {
 
     return (
         <ConnectForm>
@@ -29,7 +29,9 @@ function FormDropdown({ name, editButton, iscleared, dropdownValues, firstOption
                                             ref={ref}
                                             id={name}
                                             disabled={!editButton}
-                                            className={`${optionButtonClass} ${isSearchReport ? "custom-arrow" : isBusinesSignUp ? "custom-arrow-for-business" : "custom-arrow-for-companyProfile"} ${getFormErrorMessage(errors, name) && isSearchReport ? 'text-red' : ""}`}
+                                            className={`${optionButtonClass} 
+                                            ${isSearchReport ? "custom-arrow" : isBusinesSignUp ? "custom-arrow-for-business" : "custom-arrow-for-companyProfile"} 
+                                            ${getFormErrorMessage(errors, name) && isSearchReport ? 'text-red' : ""}`}
                                             onChange={onChange}
                                         >
 

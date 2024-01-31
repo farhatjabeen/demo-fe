@@ -14,10 +14,8 @@ import { locationDetails, locationDropdownValues } from '../../redux/reducers/it
 
 export default function SearchReport() {
     const [buttonActive, setButtonActive] = useState(true);
-
     const cities = useSelector(locationDetails);
     const citiesInSerbia = cities ? Object.values(cities) : [];
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const resolver = useValidationResolver(buttonActive ? searchSchema : reportSchema);
@@ -26,7 +24,7 @@ export default function SearchReport() {
         defaultValues: {
             itemName: "",
             location: "",
-            locations:""
+            locations: ""
         },
         resolver
     });
@@ -42,9 +40,9 @@ export default function SearchReport() {
             if (buttonActive) {
                 if (locations && locations.length > 0) {
                     navigate(`/findMissingItem/${itemName}/${locations}?page=1`);
-                  } else {
+                } else {
                     navigate(`/findMissingItem/${itemName}?page=1`);
-                  }
+                }
             } else {
                 if (isUser) {
                     navigate(`/addMoreDetails/${itemName}/${methods.getValues().locations}`);
@@ -66,11 +64,11 @@ export default function SearchReport() {
         setButtonActive(!buttonActive);
     }
 
-    const [toggleState, setToggleState] = useState('search');
+    // const [toggleState, setToggleState] = useState('search');
 
-    const handleToggle = () => {
-        setToggleState((prevState) => (prevState === 'search' ? 'report' : 'search'));
-    };
+    // const handleToggle = () => {
+    //     setToggleState((prevState) => (prevState === 'search' ? 'report' : 'search'));
+    // };
 
     return (
         <div className='flex xl:w-11/12 xl:justify-between xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center'>
@@ -98,7 +96,8 @@ export default function SearchReport() {
                 </Switch> */}
                 {
                     buttonActive ?
-                        <div className='flex items-center mt-6 xl:h-fit xl:py-2 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-greys border-solid border-opacity-50'>
+                        <div className='flex items-center mt-6 xl:h-fit xl:py-2 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl 
+                        md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-greys border-solid border-opacity-50'>
                             <FormProvider {...methods}>
                                 <form onSubmit={methods.handleSubmit(submitData)} className='w-full'>
                                     <div className='flex'>
@@ -106,28 +105,36 @@ export default function SearchReport() {
                                             type="text"
                                             placeholder="Search..."
                                             name="itemName"
-                                            className={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-greys`}
+                                            className={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 
+                                            xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 
+                                            border border-solid border-greys`}
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 
+                                            md:text-sm sm:text-xs mt-1"
                                         />
 
                                         <FormDropdown
                                             placeholder="Location"
                                             name="location"
                                             editButton={true}
-                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 py-4 pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-greys`}
+                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 py-4 
+                                            pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 
+                                            border border-solid border-greys`}
                                             autoComplete="off"
                                             required
                                             firstOptionName="Location"
                                             isSearchReport="true"
                                             dropdownValues={citiesInSerbia}
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm 
+                                            sm:text-xs mt-1"
                                         />
                                         <button
                                             type='submit'
-                                            className='cursor-pointer xl:w-52 xl:h-20 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white bg-primary-color border border-solid border-greys mx-2.5'
+                                            className='cursor-pointer xl:w-52 xl:h-20 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 
+                                            md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white 
+                                            bg-primary-color border border-solid border-greys mx-2.5'
                                         >
                                             Search
                                         </button>
@@ -136,7 +143,8 @@ export default function SearchReport() {
                             </FormProvider>
                         </div>
                         :
-                        <div className='flex items-center mt-6 xl:h-fit xl:py-2 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-greys border-solid border-opacity-50'>
+                        <div className='flex items-center mt-6 xl:h-fit xl:py-2 xl:w-xl xl:rounded-3xl md:h-16 md:w-xl 
+                        md:rounded-2xl sm:w-xl sm:h-14 sm:rounded-2xl bg-white border border-greys border-solid border-opacity-50'>
                             <FormProvider {...methods}>
                                 <form onSubmit={methods.handleSubmit(submitData)}>
                                     <div className='flex'>
@@ -144,27 +152,35 @@ export default function SearchReport() {
                                             type="text"
                                             placeholder="Describe Item"
                                             name="itemName"
-                                            className={`placeholder:text-black placeholder:text-ba se xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-greys`}
+                                            className={`placeholder:text-black placeholder:text-ba se xl:w-80 xl:h-20 p-4 
+                                            xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border 
+                                            border-solid border-greys`}
                                             autoComplete="off"
                                             required
                                             isSearchReport="true"
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm 
+                                            sm:text-xs mt-1"
                                         />
                                         <FormDropdown
                                             placeholder="Location"
                                             name="locations"
                                             editButton={true}
-                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border border-solid border-greys`}
+                                            optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 
+                                            xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border 
+                                            border-solid border-greys`}
                                             autoComplete="off"
                                             required
                                             firstOptionName="Location"
                                             isSearchReport="true"
                                             dropdownValues={citiesInSerbia}
-                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm sm:text-xs mt-1"
+                                            errorClass="absolute xl:bottom-7 md:bottom-4 sm:bottom-3 left-6 text-red-600 md:text-sm 
+                                            sm:text-xs mt-1"
                                         />
                                         <button
                                             type='submit'
-                                            className='cursor-pointer xl:w-52 xl:h-20 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white bg-primary-color border border-solid border-greys mx-2.5'
+                                            className='cursor-pointer xl:w-52 xl:h-20 xl:rounded-2xl xl:text-2xl md:w-38 md:h-12 
+                                            md:rounded-xl md:text-lg sm:h-10 sm:w-32 sm:rounded-xl font-semibold text-white 
+                                            bg-primary-color border border-solid border-greys mx-2.5'
                                         >
                                             Continue
                                         </button>
@@ -174,7 +190,12 @@ export default function SearchReport() {
                         </div>
                 }
             </div>
-            <div className='h-full w-full xl:pl-8'><img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12' src={addressMan} alt='addressMan' ></img></div>
+            <div className='h-full w-full xl:pl-8'>
+                <img className='xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12'
+                    src={addressMan}
+                    alt='addressMan' >
+                </img>
+            </div>
         </div>
     )
 };

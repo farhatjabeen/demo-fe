@@ -17,8 +17,6 @@ const SideMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
-
   const handleToggleCollapse = () => {
     setCollapsed(!isCollapsed);
     if (isCollapsed) {
@@ -29,7 +27,7 @@ const SideMenu = () => {
   const handleLogout = async () => {
     dispatch(clearUserData());
     const logout = dispatch(adminLogout());
-    logout&&navigate('/admin/signIn')
+    logout && navigate('/admin/signIn')
   }
 
   const settingsTabWidth = isCollapsed ? "w-12" : "w-52";
@@ -82,7 +80,9 @@ const SideMenu = () => {
         </li>
         {!isCollapsed && showSubUser && (
           <>
-            <li className={`mb-4 w-64 pl-2 ${window.location.pathname === "/admin/user/users" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
+            <li
+              className={`mb-4 w-64 pl-2 
+            ${window.location.pathname === "/admin/user/users" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
               <Link to="/admin/user/users?page=1">
                 <span className="pl-8 flex" >
                   <FiUser size={24} />
@@ -90,7 +90,8 @@ const SideMenu = () => {
               </Link>
             </li>
 
-            <li className={`mb-4 w-64 pl-2 ${window.location.pathname === "/admin/user/businessUser" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
+            <li className={`mb-4 w-64 pl-2 
+            ${window.location.pathname === "/admin/user/businessUser" ? "bg-light-blue text-blue font-bold py-2 rounded-lg" : ""}`}>
               <Link to="/admin/user/businessUser?page=1" >
                 <span className="pl-8 flex" >
                   <PiSuitcaseBold size={24} />
@@ -99,7 +100,9 @@ const SideMenu = () => {
             </li>
           </>
         )}
-        <li className={`fixed bottom-12 w-60 h-10 flex items-center mb-3 ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold rounded-lg " : ""}${settingsTabWidth}`}>
+        <li className={`fixed bottom-12 w-60 h-10 flex items-center mb-3 
+        ${window.location.pathname === "/admin/user/settings" ? "bg-light-blue text-blue font-bold rounded-lg " : ""}
+        ${settingsTabWidth}`}>
           <Link to="/admin/user/settings" >
             <span className="pl-2 flex">
               <FiSettings size={26} />
@@ -109,7 +112,11 @@ const SideMenu = () => {
             </span>
           </Link>
         </li>
-        <li onClick={() => { setOpenModal(!openModal); }} className={`cursor-pointer pl-2 w-60 h-10 flex items-center fixed bottom-4 ${openModal ? "bg-light-blue text-blue font-bold rounded-lg " : ""}${settingsTabWidth}`}>
+        <li onClick={() => { setOpenModal(!openModal); }}
+          className={`cursor-pointer pl-2 w-60 h-10 flex items-center fixed bottom-4 
+        ${openModal ? "bg-light-blue text-blue font-bold rounded-lg " : ""}
+        ${settingsTabWidth}`}
+        >
           <Link className="flex" to="/admin/user/logout" >
             <RiLogoutBoxLine size={26} />
             <p className={`pl-4 ${!isCollapsed ? '' : 'hidden'}`}>Logout</p>
@@ -117,9 +124,9 @@ const SideMenu = () => {
         </li>
       </ul>
       <CommonModal isOpen={openModal} onCancel={() => setOpenModal(false)}
-        title="Logout" 
-        description="Are you sure" 
-        confirmText="Logout" 
+        title="Logout"
+        description="Are you sure"
+        confirmText="Logout"
         onConfirm={handleLogout}
         additionalContent='you want to logout?'>
 

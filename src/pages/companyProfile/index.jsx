@@ -5,7 +5,7 @@ import useValidationResolver from '../../hooks/useValidationResolver';
 import { FormProvider, useForm } from 'react-hook-form';
 import TextInput from '../../components/common/textInput';
 import { companyProfile } from '../../validations';
-import { companyProfileData, editCompanyProfileData, userDetails, userProfile } from '../../redux/reducers/userSlice';
+import { companyProfileData, editCompanyProfileData, userProfile } from '../../redux/reducers/userSlice';
 import { categoryDetails, categoryDropdownValues, locationDetails, locationDropdownValues } from '../../redux/reducers/itemsSlice';
 import FormDropdown from '../../components/common/formDropdown';
 
@@ -24,6 +24,8 @@ export default function CompanyProfile() {
     console.log(userProfileData.companyLocation, "userProfileData.location")
     const [checkCurrentPassword, setCheckCurrentPassword] = useState(true);
     const [checkRetypePassword, setCheckRetypePassword] = useState(true);
+    const dispatch = useDispatch();
+    const resolver = useValidationResolver(companyProfile);
 
     const handleEditButton = () => {
         setEditButton(!editButton);
@@ -44,11 +46,7 @@ export default function CompanyProfile() {
             newPassword: "",
             confirmPassword: ""
         })
-
     }
-
-    const dispatch = useDispatch();
-    const resolver = useValidationResolver(companyProfile);
 
     useEffect(() => {
         const getUser = dispatch(companyProfileData())
@@ -115,9 +113,11 @@ export default function CompanyProfile() {
                 }
             }
             else {
-                 setCheckCurrentPassword(true)
-                 setCheckRetypePassword(true)
-                const changeDetails = await dispatch(editCompanyProfileData({ name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }))
+                setCheckCurrentPassword(true)
+                setCheckRetypePassword(true)
+                const changeDetails = await dispatch(editCompanyProfileData(
+                    { name, emailMailId, mobileNumber, companyName, companyCategory, companyLocation }
+                ))
                 if (changeDetails) {
                     dispatch(companyProfileData());
                 }
@@ -135,16 +135,16 @@ export default function CompanyProfile() {
         if (!currentPassword) {
             if (newPassword || retypePassword) {
                 setCheckCurrentPassword(false)
-                if (retypePassword&&!newPassword) {
+                if (retypePassword && !newPassword) {
                     setCheckRetypePassword(false)
                 } else {
                     setCheckRetypePassword(true)
                 }
-            }else{
+            } else {
                 setCheckCurrentPassword(true)
                 setCheckRetypePassword(true)
             }
-        }else{
+        } else {
             setCheckCurrentPassword(true)
             setCheckRetypePassword(true)
         }
@@ -154,10 +154,13 @@ export default function CompanyProfile() {
         <div className='flex justify-center items-center flex-col md:container md:mx-auto'>
             <div className='flex w-full justify-center p-6'>
                 <div className='font-bold xl:text-4xl md:text-4xl sm:text-3xl mb-16 mr-4'>Company Profile</div>
-                {editButton ? null : <div><button className='cursor-pointer w-24 h-10 rounded-xl bg-primary-color border-none text-sm flex justify-center items-center' onClick={handleEditButton}> Edit <FaPenToSquare style={{ marginLeft: "5px" }} /></button> </div>}
+                {editButton ? null : <div><button className='cursor-pointer w-24 h-10 rounded-xl bg-primary-color 
+                border-none text-sm flex justify-center items-center' onClick={handleEditButton}>
+                    Edit <FaPenToSquare style={{ marginLeft: "5px" }} />
+                </button>
+                </div>}
             </div>
             <FormProvider {...methods}>
-                {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
                 <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
                     <div className='w-full px-24'>
                         <div className='mb-20'>
@@ -170,7 +173,8 @@ export default function CompanyProfile() {
                                     type="text"
                                     placeholder="Enter your Company Name"
                                     name="companyName"
-                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                    className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl 
+                                    ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                     autoComplete="off"
                                     disable={!editButton}
                                 />
@@ -183,7 +187,8 @@ export default function CompanyProfile() {
                                 </div>
                                 <FormDropdown
                                     name='companyCategory'
-                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88 opacity-100'}`}
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-greys rounded-xl 
+                                    ${editButton ? 'bg-white' : 'bg-grey88 opacity-100'}`}
                                     editButton={editButton}
                                     firstOptionName="Select Category"
                                     valueFromDb={userProfileData?.companyCategory}
@@ -198,10 +203,10 @@ export default function CompanyProfile() {
                                 </div>
                                 <FormDropdown
                                     name='companyLocation'
-                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88 opacity-100'}`}
+                                    optionButtonClass={`xl:w-96 md:w-72 sm:w-60 p-4 border border-solid border-greys 
+                                    rounded-xl ${editButton ? 'bg-white' : 'bg-grey88 opacity-100'}`}
                                     editButton={editButton}
                                     firstOptionName="Select Location"
-                                    // isBusinesSignUp={false}
                                     valueFromDb={userProfileData?.companyLocation}
                                     dropdownValues={citiesInSerbia}
                                 />
@@ -219,7 +224,8 @@ export default function CompanyProfile() {
                                         type="text"
                                         placeholder="Enter your Name"
                                         name="name"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl 
+                                        ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         disable={!editButton}
                                     />
@@ -234,7 +240,8 @@ export default function CompanyProfile() {
                                         type="text"
                                         placeholder="Enter your Number"
                                         name="mobileNumber"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl 
+                                        ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         required
                                         disable={!editButton}
@@ -250,7 +257,8 @@ export default function CompanyProfile() {
                                         type="text"
                                         placeholder="abc@xyz.com"
                                         name="emailMailId"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl 
+                                        ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         required
                                         disable={true}
@@ -270,7 +278,8 @@ export default function CompanyProfile() {
                                             placeholder="Current password"
                                             eyeClass='absolute bottom-3 left-80 pl-5'
                                             name="currentPassword"
-                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys 
+                                            rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                             autoComplete="off"
                                             disable={!editButton}
                                             showPassword={showRegisterPassword}
@@ -283,7 +292,6 @@ export default function CompanyProfile() {
                                                 <p className='flex justify-start text-red'>Current password required</p>
                                         }
                                     </div>
-                                    {/* <input className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl  ${editButton ? 'bg-white' : 'bg-grey88'}`} type="password" name='currentpassword' value={currentPassword} disabled={!editButton} onChange={(e) => setCurrentPassword(e.target.value)} placeholder='Enter your current password' /> */}
                                 </div>
                                 <div className='flex justify-between mb-9'>
                                     <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Enter New password</label>
@@ -292,7 +300,8 @@ export default function CompanyProfile() {
                                             type="password"
                                             placeholder="New password"
                                             name="newPassword"
-                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                            className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys 
+                                            rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                             autoComplete="off"
                                             required
                                             disable={!editButton}
@@ -309,13 +318,16 @@ export default function CompanyProfile() {
                                     </div>
                                 </div>
                                 <div className='flex justify-between'>
-                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>Re - Enter New password</label>
+                                    <label className='xl:text-lg md:text-base sm:text-sm font-bold mt-3.5'>
+                                        Re - Enter New password
+                                    </label>
                                     <TextInput
                                         type="password"
                                         eyeClass='absolute bottom-3 left-80 pl-5'
                                         placeholder="New password"
                                         name="confirmPassword"
-                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl ${editButton ? 'bg-white' : 'bg-grey88'}`}
+                                        className={`xl:w-96 md:w-72 sm:w-60 h-12 p-4 border border-solid border-greys rounded-xl 
+                                        ${editButton ? 'bg-white' : 'bg-grey88'}`}
                                         autoComplete="off"
                                         required
                                         disable={!editButton}
@@ -327,14 +339,19 @@ export default function CompanyProfile() {
                         </div>
 
                         {editButton ?
-                            <div className='xl:w-4/12 md:w-7/12 sm:w-8/12 flex xl:ml-80 md:ml-32 sm:ml-12 mb-10 items-center justify-between'>
+                            <div className='xl:w-4/12 md:w-7/12 sm:w-8/12 flex xl:ml-80 md:ml-32 sm:ml-12 mb-10 items-center 
+                            justify-between'>
                                 <div>
-                                    <button onClick={handleEditButton} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-greys bg-white rounded-xl xl:text-lg md:text-lg sm:text-base'>
+                                    <button onClick={handleEditButton} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 
+                                    md:h-14 sm:h-12 border border-[solid] border-greys bg-white rounded-xl xl:text-lg md:text-lg 
+                                    sm:text-base'>
                                         Cancel
                                     </button>
                                 </div>
                                 <div>
-                                    <button type='submit' onClick={handleClick} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl xl:text-lg md:text-lg sm:text-base'>
+                                    <button type='submit' onClick={handleClick} className='cursor-pointer xl:w-44 md:w-44 sm:w-36 
+                                    xl:h-14 md:h-14 sm:h-12 border border-[solid] border-primary-color bg-primary-color rounded-xl 
+                                    xl:text-lg md:text-lg sm:text-base'>
                                         Save Changes
                                     </button>
                                 </div>

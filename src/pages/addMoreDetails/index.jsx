@@ -7,23 +7,20 @@ import TextInput from '../../components/common/textInput';
 import TextAreaInput from '../../components/common/textAreaInput';
 import { IoMdRefresh } from "react-icons/io";
 import { MdClose } from "react-icons/md";
-import { businessAddMoreDetails, clearItemData, filesUploadAPI, itemDropdown, itemDropdownValues, locationDetails, locationDropdownValues, newItemId, searchDetailsById, searchItemById, userAddMoreDetails, userEditItemDetails } from '../../redux/reducers/itemsSlice';
+import { businessAddMoreDetails, clearItemData, filesUploadAPI, itemDropdown, itemDropdownValues, locationDetails, locationDropdownValues, searchDetailsById, searchItemById, userAddMoreDetails, userEditItemDetails } from '../../redux/reducers/itemsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import FormDropdown from '../../components/common/formDropdown';
 import ImageUpload from '../../components/common/imageUpload';
 import { userData } from '../../redux/reducers/userSlice';
-import { Toast } from '../../components/toast';
 
 export default function AddMoreDetails() {
     const [newItemId, setNewItemId] = useState('');
-    const [fileName, setFileName] = useState('');
     const [files, setFiles] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isImageUploaded, setIsImageUploaded] = useState(false);
-    const [isLoader, setIsLoader] = useState(false);
     const [imageLoader, setImageLoader] = useState(true);
     const items = useSelector(itemDropdown);
     const itemCategories = items ? Object.values(items) : [];
@@ -35,26 +32,16 @@ export default function AddMoreDetails() {
     const itemDetailsById = useSelector(searchDetailsById);
     const [imageDisable, setImageDisable] = useState(false);
     const reportDetails = useParams();
-    console.log(reportDetails, "reportDetails");
-
-    const imageTitle= ["User Item image of missing", "Item", "Business User Item image of missing things"]
 
     useEffect(() => {
         dispatch(locationDropdownValues())
         dispatch(itemDropdownValues())
-        setIsLoader(true)
         const addData = async () => {
-
             if (reportDetails.id) {
-                const getDetails = await dispatch(searchItemById(reportDetails.id))
-                if (getDetails) {
-                    setIsLoader(false)
-                }
+                dispatch(searchItemById(reportDetails.id))
             }
         }
         addData();
-
-        // if (reportDetails.newItem || reportDetails==={}) {
         methods.setValue("itemName", reportDetails?.newItem)
         methods.setValue("location", reportDetails?.location)
         methods.setValue("itemImage", null)
@@ -62,15 +49,9 @@ export default function AddMoreDetails() {
         methods.setValue("keywords", null)
         setIsUploaded(false)
         setImageLoader(true);
-        // }
     }, []);
 
-    useEffect(()=>{
-
-    },[fileName])
-
     useEffect(() => {
-
         if (itemDetailsById && reportDetails.id) {
             setItemImage(itemDetailsById?.itemImage);
             setCloudinaryId(itemDetailsById?.cloudinary_id);
@@ -79,7 +60,7 @@ export default function AddMoreDetails() {
             }
             methods.reset({
                 emailMailId: itemDetailsById?.emailMailId || "",
-                mobileNumber: itemDetailsById?.mobileNumber != undefined ? `${itemDetailsById?.mobileNumber}` : "",
+                mobileNumber: itemDetailsById?.mobileNumber !== undefined ? `${itemDetailsById?.mobileNumber}` : "",
                 userName: itemDetailsById?.userName || "",
                 location: itemDetailsById?.location || "",
                 locationIdentifiers: itemDetailsById?.locationIdentifiers || "",
@@ -125,62 +106,45 @@ export default function AddMoreDetails() {
         }
         if (itemImage?.length === 3) {
             setImageDisable(true);
-        }else{
+        } else {
             setImageDisable(false);
         }
     }, [itemImage])
 
     const submitData = async (data) => {
         try {
-
-            console.log("from submit form");
-
             if (userDetails?.role === 'BUSINESS' && !reportDetails.id) {
-                const inputString = methods.getValues().keywords;
-                methods.setValue('keywords', inputString.split(','));
-                methods.setValue("itemImage", itemImage);
-                methods.setValue("cloudinary_id", cloudinaryId);
-                // const datas = methods.getValues()
-                console.log(cloudinaryId?.length, "cloudinaryId.length")
-
-                console.log("hi from businessAddMoreDetails")
-                const addedItem = await dispatch(businessAddMoreDetails(data));
-                if (addedItem) {
-                    navigate('/allitems')
+                if (itemImage) {
+                    const inputString = methods.getValues().keywords;
+                    methods.setValue('keywords', inputString.split(','));
+                    methods.setValue("itemImage", itemImage);
+                    methods.setValue("cloudinary_id", cloudinaryId);
+                    const addedItem = await dispatch(businessAddMoreDetails(data));
+                    if (addedItem) {
+                        navigate('/allitems?page=1')
+                    }
                 }
 
-
             } else if (userDetails?.role === 'USER' && !reportDetails.id) {
-                const inputString = methods.getValues().keywords;
-                methods.setValue('keywords', inputString.split(','));
-                methods.setValue("itemImage", itemImage);
-                methods.setValue("cloudinary_id", cloudinaryId);
-                const addItem = dispatch(userAddMoreDetails(data));
-                console.log('itemadded', addItem)
-                addItem?.then((res) => {
-                    setNewItemId(res.data._id)
-                })
-
+                if (itemImage) {
+                    const inputString = methods.getValues().keywords;
+                    methods.setValue('keywords', inputString.split(','));
+                    methods.setValue("itemImage", itemImage);
+                    methods.setValue("cloudinary_id", cloudinaryId);
+                    const addItem = dispatch(userAddMoreDetails(data));
+                    addItem?.then((res) => {
+                        setNewItemId(res?.data?._id)
+                    })
+                }
             } else {
-                const inputString = methods.getValues().keywords;
-                console.log(JSON.stringify(inputString), "inputString")
-
-                methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
-                console.log(methods.getValues().keywords, "keywords")
-
-                // methods.setValue("itemImage", itemImage?.map(item => item));
-                // methods.setValue("cloudinary_id", cloudinaryId?.map(item => item));
-                methods.setValue("itemImage", itemImage);
-                methods.setValue("cloudinary_id", cloudinaryId);
-                const dataNow = methods.getValues();
-                console.log(dataNow, "datanow")
-                console.log(itemImage, "itemImage")
-                console.log(cloudinaryId, "cloudinaryId")
-
-                if (itemImage?.length > 0 && cloudinaryId?.length > 0) {
+                if (itemImage?.length > 0) {
                     setImageLoader(true)
-                    const isEdited = await dispatch(userEditItemDetails(reportDetails.id, data))
-
+                    const inputString = methods.getValues().keywords;
+                    methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','));
+                    methods.setValue("itemImage", itemImage);
+                    methods.setValue("cloudinary_id", cloudinaryId);
+                    const dataNow = methods.getValues();
+                    const isEdited = await dispatch(userEditItemDetails(reportDetails.id, dataNow))
                     isEdited && setItemImage([]);
                     isEdited && setCloudinaryId([]);
                     isEdited && (navigate(window.history.back()))
@@ -188,7 +152,6 @@ export default function AddMoreDetails() {
                     setImageLoader(false)
                 }
             }
-
         } catch (error) {
             console.log(error, 'submitted errors')
         }
@@ -215,31 +178,22 @@ export default function AddMoreDetails() {
     }
 
     const handleDbFileDelete = (index) => {
-
         setItemImage((prevFiles) => prevFiles.filter((_, i) => i !== index));
         setCloudinaryId((prevFiles) => prevFiles.filter((_, i) => i !== index));
         if (!reportDetails.id) {
             setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
         }
-
     };
 
     useEffect(() => {
-        console.log(files?.length, "files?.length")
         if (files && files?.length > 0) {
-            console.log("hi file")
             let formData = new FormData();
             files?.map((items, i) => {
                 return (
                     formData.append("item", items)
                 );
             })
-            console.log(formData, 'formData')
-
             setIsImageUploaded(true)
-            // if (reportDetails.id) {
-            //     setImageLoader(false);
-            // }
             const imagesResponse = dispatch(filesUploadAPI(formData));
             imagesResponse?.then((res) => {
                 if (imagesResponse) {
@@ -251,18 +205,11 @@ export default function AddMoreDetails() {
                     }
                 }
             }).then(() => {
-
-                // setIsImageUploaded(true)
                 if (itemImage && reportDetails.id) {
                     setItemImage((filesInside) => filesInside ? [...filesInside, ...itemImage] : itemImage)
                     setCloudinaryId((filesInside) => filesInside ? [...filesInside, ...cloudinaryId] : cloudinaryId)
-                    // setIsImageUploaded(false)
-                    // if(itemImage.length>0 && cloudinaryId.length>0){
-                    //     setImageLoader(true);
-                    // }else{
                     setImageLoader(true);
                     setFiles([])
-                    // }
                 }
             });
         }
@@ -282,10 +229,7 @@ export default function AddMoreDetails() {
             </div>
 
             <FormProvider {...methods}>
-                {/* <form onSubmit={(e) => submitData(e)} className='flex justify-around w-full'> */}
                 <form onSubmit={methods.handleSubmit(submitData)} className='flex justify-around w-full'>
-                    {/* {isLoader ? <p className='font-bold p-24 flex justify-center w-full text-md'>Loading...</p>
-                        : */}
                     <div className='w-full px-24'>
                         <div>
                             <div className='flex justify-between mb-9'>
@@ -364,12 +308,18 @@ export default function AddMoreDetails() {
                                                     {itemImage?.map((items, i) => {
                                                         return (
                                                             <div>
-                                                                <div key={i} className=' mb-2 mr-2 w-32 h-fit px-2 pt-2 pb-1 bg-white rounded-lg border border-primary-color'>
+                                                                <div key={i} className=' mb-2 mr-2 w-32 h-fit px-2 pt-2 pb-1 
+                                                                bg-white rounded-lg border border-primary-color'>
                                                                     <div className='flex w-20'>
                                                                         <img className='w-20 h-20' src={items} alt={i}></img>
-                                                                        <div className='flex items-center ml-2' onClick={() => handleDbFileDelete(i)}><MdClose /></div>
+                                                                        <div className='flex items-center ml-2'
+                                                                            onClick={() => handleDbFileDelete(i)}>
+                                                                            <MdClose />
+                                                                        </div>
                                                                     </div>
-                                                                    <div className='flex justify-center text-sm'>{files?.name}</div>
+                                                                    <div className='flex justify-center text-sm'>
+                                                                        {files?.name}
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         );
@@ -388,14 +338,17 @@ export default function AddMoreDetails() {
                                                 :
                                                 "xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer"}
                                             multiple={true}
-                                            type = {imageDisable ? "text" : "file"}
+                                            type={imageDisable ? "text" : "file"}
                                             isEdit={reportDetails.id ? true : false}
                                             handleFileUpload={handleFileUpload}
                                         />
 
                                         {cloudinaryId?.length > 0 || isUploaded ?
                                             <div>
-                                                <button onClick={handleReset} className='cursor-pointer h-12 w-11 bg-primary-color ml-3 rounded-lg flex justify-center items-center'>
+                                                <button
+                                                    onClick={handleReset}
+                                                    className='cursor-pointer h-12 w-11 bg-primary-color ml-3 rounded-lg 
+                                                flex justify-center items-center'>
                                                     <IoMdRefresh className='h-6 w-6' />
                                                 </button>
                                             </div>
@@ -418,7 +371,8 @@ export default function AddMoreDetails() {
                                     </div>
                                     <FormDropdown
                                         name='location'
-                                        optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 border border-solid border-greys`}
+                                        optionButtonClass={`flex w-96 h-12 items-center justify-between rounded-lg bg-white px-4 4
+                                        border border-solid border-greys`}
                                         editButton={true}
                                         selection={true}
                                         firstOptionName="Select Location"
@@ -491,7 +445,8 @@ export default function AddMoreDetails() {
                             <div className='xl:w-4/12 md:w-2/5 sm:w-80 flex justify-between items-center mb-10'>
                                 <div>
                                     <button
-                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-white rounded-lg text-lg'
+                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 
+                                        border border-greys bg-white rounded-lg text-lg'
                                         onClick={handleCancel}
                                     >
                                         Cancel
@@ -500,7 +455,8 @@ export default function AddMoreDetails() {
                                 <div>
                                     <button
                                         type='submit'
-                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 border border-greys bg-primary-color rounded-lg text-lg'
+                                        className='cursor-pointer xl:w-44 xl:h-14 md:w-40 md:h-14 sm:w-36 sm:h-12 
+                                        border border-greys bg-primary-color rounded-lg text-lg'
                                     >
                                         {itemDetailsById && reportDetails.id ? <p>Edit form</p> : <p>Submit form</p>}
                                     </button>
@@ -508,7 +464,6 @@ export default function AddMoreDetails() {
                             </div>
                         </div>
                     </div>
-                    {/* } */}
                 </form>
             </FormProvider>
         </div>

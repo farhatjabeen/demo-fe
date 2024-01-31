@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import { IoTriangleSharp } from "react-icons/io5";
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -11,7 +11,6 @@ import { checkGeneralUserEmail, generalForgotPassword, generalResetPassword, gen
 import { generalUserLoginSchema, generalUserMailSchema, generalUserRegisterSchema } from '../../validations';
 import TextInput from '../common/textInput';
 import { Toast } from '../toast';
-import { type } from '@testing-library/user-event/dist/type';
 const PopoverComponent = () => {
     // local states
     const [passwordBox, setPasswordBox] = useState(false);
@@ -64,15 +63,14 @@ const PopoverComponent = () => {
 
     }, [navigate])
 
-    useEffect(()=>{
-        console.log(window.location.pathname,"window.location.pathname")
-        if(window.location.pathname === '/businessSignIn' || 
-        window.location.pathname === '/businesssignin' ||
-        window.location.pathname === '/businessignup' || 
-        window.location.pathname === '/businessHome'){
+    useEffect(() => {
+        if (window.location.pathname === '/businessSignIn' ||
+            window.location.pathname === '/businesssignin' ||
+            window.location.pathname === '/businessignup' ||
+            window.location.pathname === '/businessHome') {
             setDisablePopover(true)
 
-        }else{
+        } else {
             setDisablePopover(false)
         }
     }, [navigate])
@@ -258,7 +256,6 @@ const PopoverComponent = () => {
     const handleForgot = async () => {
         try {
             await methods.trigger('emailMailId');
-
             if (methods.formState.errors.emailMailId) {
                 return;
             }
@@ -270,9 +267,9 @@ const PopoverComponent = () => {
     };
 
     const togglePopover = () => {
-        !disablePopover&&setIsPopoverOpen((prev) => !prev)
-        if(disablePopover){
-            Toast({type:"error",message:"General users will not be allowed to log in here"})
+        !disablePopover && setIsPopoverOpen((prev) => !prev)
+        if (disablePopover) {
+            Toast({ type: "error", message: "General users will not be allowed to log in here" })
         }
     };
 
@@ -285,16 +282,14 @@ const PopoverComponent = () => {
             <Popover open={isPopoverOpen} onClose={closePopover}>
                 {({ open }) => (
                     <div>
-                        {/* <button onClick={disablePopover ? Toast({type:"error",message:"General users will not be allowed to login here"}) : ""}> */}
                         <Popover.Button onClick={togglePopover}>
                             <div className="cursor-pointer flex justify-center items-center xl:w-72 xl:h-14 xl:text-2xl md:w-52 md:h-14 md:text-lg sm:w-36 sm:h-12 sm:text-sm font-bold bg-primary-color text-white rounded-full xl:mx-1">
                                 Login / Register
-                            </div> 
+                            </div>
                         </Popover.Button>
-                        {/* </button> */}
                         {isPopoverOpen &&
                             <div onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                                className={isPopoverOpen ?"fixed inset-0 bg-black opacity-30" : ""}>
+                                className={isPopoverOpen ? "fixed inset-0 bg-black opacity-30" : ""}>
                             </div>}
                         <Transition
                             show={open || isPopoverOpen}
@@ -305,7 +300,8 @@ const PopoverComponent = () => {
                             leave="transition ease-in duration-150"
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-1">
-                            <Popover.Panel className={`fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36 ${disablePopover ? "hidden" : ""}`}>
+                            <Popover.Panel className={`fixed z-50 inset-y-0 sm:mr-20 right-0 bg-white rounded-3xl px-10 pb-6 
+                            w-max h-max xl:mt-40 md:mt-40 xl:mr:20 md:mr-28 sm:mt-36 ${disablePopover ? "hidden" : ""}`}>
                                 <div className='pt-7 w-96'>
                                     {restPasswordBox ? <div>
                                         <FormProvider {...methodsForRegister}>
@@ -317,7 +313,9 @@ const PopoverComponent = () => {
                                                             Create a strong, secure password for your account.
                                                         </p>
                                                     </div>
-                                                    <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
+                                                    <div className=' text-sm font-medium text-light-grey mb-1.5'>
+                                                        Enter Password
+                                                    </div>
                                                     <TextInput
                                                         type='password'
                                                         name="password"
@@ -335,11 +333,16 @@ const PopoverComponent = () => {
                                                     }
                                                     {
                                                         validatePassword ?
-                                                            <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
+                                                            <p className='text-red'>
+                                                                Password must be 8-20 characters with at least one letter,
+                                                                one number, and one special character
+                                                            </p>
                                                             :
                                                             ""
                                                     }
-                                                    <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
+                                                    <div className='text-sm font-medium text-light-grey mt-2.5'>
+                                                        Re-enter Password
+                                                    </div>
                                                     <TextInput
                                                         type='password'
                                                         name='newPassword'
@@ -377,10 +380,14 @@ const PopoverComponent = () => {
                                                     {mailIdFromApi?.isAlreadyRegistered ?
                                                         <div className='mb-5'>
                                                             <div className="xl:w-full md:w-full sm:w-full">
-                                                                <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                    <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Enter Password</div>
-                                                                    <div className='pb-14 xl:text-lg md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
-                                                                        Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
+                                                                <div className=' xl:w-full md:w-full sm:w-full flex 
+                                                                flex-col justify-center'>
+                                                                    <div className=' xl:text-4xl md:text-3xl sm:text-xl 
+                                                                    text-blacks font-bold'>Enter Password</div>
+                                                                    <div className='pb-14 xl:text-lg md:text-lg sm:text-sm 
+                                                                    font-normal text-light-grey pt-1'>
+                                                                        Lorem ipsum dolor sit amet, consectetur<br></br>
+                                                                        adipiscing elit onsectetur
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -388,12 +395,15 @@ const PopoverComponent = () => {
                                                                 <FormProvider {...methodsForLogin}>
                                                                     <form onSubmit={methodsForLogin.handleSubmit(handleLogin)}>
                                                                         <div >
-                                                                            <div className='text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
+                                                                            <div className='text-sm font-medium text-light-grey mb-1.5'>
+                                                                                Enter Password
+                                                                            </div>
                                                                             <TextInput
                                                                                 type='password'
                                                                                 name='password'
                                                                                 eyeClass='absolute top-3 left-3/4 ml-16'
-                                                                                className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
+                                                                                className='w-full rounded-lg h-12 p-4 font-medium 
+                                                                                text-base bg-blue-light'
                                                                                 autoComplete="off"
                                                                                 showPassword={showPassword}
                                                                                 required
@@ -407,7 +417,9 @@ const PopoverComponent = () => {
                                                                         </div>
                                                                         <button
                                                                             type='submit'
-                                                                            className='cursor-pointer w-full h-11 rounded-md mt-12 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'>
+                                                                            className='cursor-pointer w-full h-11 rounded-md mt-12 
+                                                                            bg-cyan text-white flex justify-center items-center 
+                                                                            text-sm font-medium border-none'>
                                                                             LOGIN
                                                                         </button>
                                                                     </form>
@@ -424,21 +436,30 @@ const PopoverComponent = () => {
                                                         :
                                                         <div className='mb-5'>
                                                             <div className="xl:w-full md:w-full sm:w-full">
-                                                                <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                                    <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-extrabold'>Enter Password</div>
-                                                                    <div className='pb-14 xl:text   -xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
-                                                                        Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
+                                                                <div className=' xl:w-full md:w-full sm:w-full flex flex-col 
+                                                                justify-center'>
+                                                                    <div className=' xl:text-4xl md:text-3xl sm:text-xl 
+                                                                    text-blacks font-extrabold'>
+                                                                        Enter Password
+                                                                    </div>
+                                                                    <div className='pb-14 xl:text md:text-lg sm:text-sm font-normal 
+                                                                    text-light-grey pt-1'>
+                                                                        Lorem ipsum dolor sit amet, consectetur<br></br>
+                                                                        adipiscing elit onsectetur
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <FormProvider {...methodsForRegister}>
                                                                 <form onSubmit={methodsForRegister.handleSubmit(registerButton)}>
                                                                     <div>
-                                                                        <div className=' text-sm font-medium text-light-grey mb-1.5'>Enter Password</div>
+                                                                        <div className=' text-sm font-medium text-light-grey mb-1.5'>
+                                                                            Enter Password
+                                                                        </div>
                                                                         <TextInput
                                                                             type='password'
                                                                             name="password"
-                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
+                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base 
+                                                                            bg-blue-light'
                                                                             autoComplete="off"
                                                                             required
                                                                             eyeClass='absolute top-3 left-3/4 ml-16'
@@ -452,16 +473,22 @@ const PopoverComponent = () => {
                                                                         }
                                                                         {
                                                                             validatePassword ?
-                                                                                <p className='text-red'>Password must be 8-20 characters with at least one letter, one number, and one special character</p>
+                                                                                <p className='text-red'>Password must be 8-20
+                                                                                    characters with at least one letter, one number,
+                                                                                    and one special character
+                                                                                </p>
                                                                                 :
                                                                                 ""
                                                                         }
-                                                                        <div className='text-sm font-medium text-light-grey mt-2.5'>Re-enter Password</div>
+                                                                        <div className='text-sm font-medium text-light-grey mt-2.5'>
+                                                                            Re-enter Password
+                                                                        </div>
                                                                         <TextInput
                                                                             type='password'
                                                                             name='newPassword'
                                                                             eyeClass='absolute top-3 left-3/4 ml-16'
-                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base bg-blue-light'
+                                                                            className='w-full rounded-lg h-12 p-4 font-medium text-base 
+                                                                            bg-blue-light'
                                                                             autoComplete="off"
                                                                             showPassword={showRegisterPassword}
                                                                             required
@@ -470,7 +497,9 @@ const PopoverComponent = () => {
                                                                         {isPasswordRetyped ?
                                                                             ""
                                                                             :
-                                                                            <p className='text-red'>Password confirmation required</p>
+                                                                            <p className='text-red'>
+                                                                                Password confirmation required
+                                                                            </p>
                                                                         }
                                                                         {passwordMatch ? ""
                                                                             :
@@ -480,8 +509,15 @@ const PopoverComponent = () => {
                                                                     </div>
                                                                     <button
                                                                         type='submit'
-                                                                        onClick={()=>methodsForRegister.getValues().newPassword === "" && methodsForRegister.getValues().password === ""? setIsPasswordRetyped(false) : setIsPasswordRetyped(true)}
-                                                                        className='cursor-pointer w-full h-11 rounded-md mt-6 bg-cyan text-white flex justify-center items-center text-sm font-medium border-none'
+                                                                        onClick={
+                                                                            () => methodsForRegister.getValues().newPassword === ""
+                                                                                && methodsForRegister.getValues().password === "" ?
+                                                                                setIsPasswordRetyped(false)
+                                                                                :
+                                                                                setIsPasswordRetyped(true)}
+                                                                        className='cursor-pointer w-full h-11 rounded-md mt-6 
+                                                                        bg-cyan text-white flex justify-center items-center 
+                                                                        text-sm font-medium border-none'
                                                                     >
                                                                         REGISTER
                                                                     </button>
@@ -493,21 +529,31 @@ const PopoverComponent = () => {
                                                 :
                                                 <div>
                                                     <div className="xl:w-full md:w-full sm:w-full">
-                                                        <div className=' xl:w-full md:w-full sm:w-full flex flex-col justify-center'>
-                                                            <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks font-bold'>Login/Register</div>
-                                                            <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal text-light-grey pt-1'>
-                                                                Lorem ipsum dolor sit amet, consectetur<br></br> adipiscing elit onsectetur
+                                                        <div className=' xl:w-full md:w-full sm:w-full flex flex-col 
+                                                        justify-center'>
+                                                            <div className=' xl:text-4xl md:text-3xl sm:text-xl text-blacks 
+                                                            font-bold'>
+                                                                Login/Register
+                                                            </div>
+                                                            <div className='pb-12 xl:text-xl md:text-lg sm:text-sm font-normal 
+                                                            text-light-grey pt-1'>
+                                                                Lorem ipsum dolor sit amet, consectetur<br></br>
+                                                                adipiscing elit onsectetur
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <FormProvider {...methods}>
                                                         <form onSubmit={methods.handleSubmit(handleContinue)}>
-                                                            <div className='xl:text-sm md:text-sm sm:text-xs font-medium text-light-grey mb-1.5'>Email Address</div>
+                                                            <div className='xl:text-sm md:text-sm sm:text-xs font-medium 
+                                                            text-light-grey mb-1.5'>
+                                                                Email Address
+                                                            </div>
                                                             <div>
                                                                 <TextInput
                                                                     type='email'
                                                                     name="emailMailId"
-                                                                    className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 font-medium text-base bg-blue-light'
+                                                                    className='w-full rounded-lg xl:h-12 md:h-11 sm:h-10 p-4 
+                                                                    font-medium text-base bg-blue-light'
                                                                     autoComplete="off"
                                                                     required
                                                                     onChange={(e) => {
@@ -517,23 +563,35 @@ const PopoverComponent = () => {
                                                             </div>
                                                             <button
                                                                 type='submit'
-                                                                className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 rounded-md mt-5 ${isEmailValid ? 'bg-cyan' : 'bg-aluminium'} text-white flex justify-center items-center xl:text-sm md:text-sm sm:text-xs font-medium border-none`}>
+                                                                className={`cursor-pointer w-full xl:h-11 md:h-11 sm:h-9 
+                                                                rounded-md mt-5 ${isEmailValid ? 'bg-cyan' : 'bg-aluminium'} 
+                                                                text-white flex justify-center items-center xl:text-sm md:text-sm 
+                                                                sm:text-xs font-medium border-none`}>
                                                                 CONTINUE
                                                             </button>
                                                             <div className="flex items-center mt-8">
                                                                 <hr className="flex-1 border border-t border-light-grey" />
-                                                                <span className="mx-4 text-gray-500 xl:text-base md:text-sm sm:text-xs">or</span>
+                                                                <span className="mx-4 text-gray-500 xl:text-base md:text-sm 
+                                                                sm:text-xs">or</span>
                                                                 <hr className="flex-1 border border-t border-light-grey" />
                                                             </div>
                                                             <div className='flex items-center justify-between w-full h-6 mt-2'>
-                                                                <div className='w-fit font-semibold xl:text-sm md:text-xs sm:text-xs'>Are you a business owner?</div>
+                                                                <div className='w-fit font-semibold xl:text-sm md:text-xs 
+                                                                sm:text-xs'>
+                                                                    Are you a business owner?
+                                                                </div>
                                                                 <div className='flex items-center w-fit '>
                                                                     <div className='flex items-center xl:mr-2.5 md:mr-1.5 sm:mr-1'>
-                                                                        <img src={linkSymbol} alt='linksymbol' className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' />
+                                                                        <img src={linkSymbol} alt='linksymbol'
+                                                                            className='xl:h-3 xl:w-3 sm:h-3 sm:w-3' />
                                                                     </div>
                                                                     <Popover.Button
-                                                                        onClick={() => {setIsPopoverOpen(false); navigate('/businessSignIn'); }}
-                                                                        className='cursor-pointer xl:text-base md:text-sm sm:text-xs font-semibold text-cyan'>
+                                                                        onClick={() => {
+                                                                            setIsPopoverOpen(false);
+                                                                            navigate('/businessSignIn');
+                                                                        }}
+                                                                        className='cursor-pointer xl:text-base md:text-sm 
+                                                                        sm:text-xs font-semibold text-cyan'>
                                                                         Sign in for business
                                                                     </Popover.Button>
                                                                 </div>
@@ -546,11 +604,14 @@ const PopoverComponent = () => {
                                     }
                                 </div>
                                 <div className="w-full flex justify-end xl:pr-20 md:pr-14 sm:pr-16">
-                                    <IoTriangleSharp className='absolute xl:-top-6 md:-top-5 sm:-top-4 xl:h-7 xl:w-7 md:h-6 md:w-6 sm:h-5 sm:w-5 text-white' />
+                                    <IoTriangleSharp className='absolute xl:-top-6 md:-top-5 sm:-top-4 xl:h-7 xl:w-7 md:h-6 
+                                    md:w-6 sm:h-5 sm:w-5 text-white' />
                                 </div>
                                 <div className="w-full flex justify-end pr-3 xl:ml-9 md:ml-8 sm:ml-5">
-                                    <Popover.Button onClick={handleClose} className='absolute top-4 border-none bg-white space-x-end'>
-                                        <AiFillCloseCircle className='cursor-pointer xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 text-cyan' />
+                                    <Popover.Button onClick={handleClose} className='absolute top-4 border-none bg-white 
+                                    space-x-end'>
+                                        <AiFillCloseCircle className='cursor-pointer xl:h-9 xl:w-9 md:h-8 md:w-8 sm:h-7 sm:w-7 
+                                        text-cyan' />
                                     </Popover.Button>
                                 </div>
                             </Popover.Panel>
