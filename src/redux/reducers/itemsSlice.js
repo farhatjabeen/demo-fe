@@ -90,10 +90,10 @@ export const deleteBusinessItem = (itemId) => (dispatch) => {
             method: endpoints.ApiMethods.DELETE,
             isAuth: true,
             tokenType: 'businessUserToken',
-        }).then(()=>{
+        }).then(() => {
             Toast({ type: "success", message: "Item deleted successfully." });
             return resolve(true)
-        }).catch (error=>{
+        }).catch(error => {
             console.error(error);
             if (error?.status === 400 && error?.data === "Item not found") {
                 Toast({ type: "error", message: "Item not found. Please refresh the page." });
@@ -113,9 +113,9 @@ export const businessUpdateItems = (itemId, data) => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken'
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err);
@@ -124,7 +124,7 @@ export const businessUpdateItems = (itemId, data) => (dispatch) => {
     });
 };
 //get items in admin
-export const adminFetchItems = (currentPage=1, PageLimit = 10, selectedCategory, itemName) => (dispatch) => {
+export const adminFetchItems = (currentPage = 1, PageLimit = 10, selectedCategory, itemName) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
             url: `${endpoints.apiPath.items.fetchFoundItems}?page=${currentPage}&limit=${PageLimit}&category=${selectedCategory || ''}&itemName=${itemName || ''}`,
@@ -190,9 +190,9 @@ export const searchItem = (itemName, currentPage = 1, PageLimit = 10) => (dispat
             method: endpoints.ApiMethods.GET,
             isLoader: false
         }).then((res) => {
-            if(res?.status === 200){
-            const { list, pageMeta } = res.data
-            dispatch(saveItemData({ list, pageMeta }))
+            if (res?.status === 200) {
+                const { list, pageMeta } = res.data
+                dispatch(saveItemData({ list, pageMeta }))
             }
             return resolve(res)
         }).catch(err => {
@@ -227,9 +227,9 @@ export const deleteMyListingItems = ({ itemId }) => async (dispatch) => {
             method: endpoints.ApiMethods.DELETE,
             isAuth: true
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true)
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true)
             }
         }).catch(err => {
             console.log(err)
@@ -245,10 +245,10 @@ export const searchByLocation = (itemName, location, page = 1, limit = 10) => (d
             url: `${endpoints.apiPath.items.searchByLocation}?page=${page}&limit=${limit}&itemName=${itemName}&location=${location}`,
             method: endpoints.ApiMethods.GET
         }).then((res) => {
-            if(res?.status === 200){
-            const { list, pageMeta } = res.data
-            dispatch(viewItemDetailsByLocation({ list, pageMeta }))
-            return resolve(res)
+            if (res?.status === 200) {
+                const { list, pageMeta } = res.data
+                dispatch(viewItemDetailsByLocation({ list, pageMeta }))
+                return resolve(res)
             }
         }).catch(err => {
             console.log(err)
@@ -272,16 +272,18 @@ export const searchItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.searchById}/${itemId}`,
             method: endpoints.ApiMethods.GET
         }).then((res) => {
-            
-            const { _id, itemImage, itemCategory, itemCode, 
-            locationIdentifiers, userName, cloudinary_id, mobileNumber, 
-            emailMailId, itemDescription, keywords, itemName, location, 
-            foundDate, foundTime } = res.data
 
-            dispatch(saveItemDataById({ _id, itemImage, itemCategory, 
-                itemCode, locationIdentifiers, userName, cloudinary_id, 
-                mobileNumber, emailMailId, itemDescription, keywords, 
-                itemName, location, foundDate, foundTime }))
+            const { _id, itemImage, itemCategory, itemCode,
+                locationIdentifiers, userName, cloudinary_id, mobileNumber,
+                emailMailId, itemDescription, keywords, itemName, location,
+                foundDate, foundTime } = res.data
+
+            dispatch(saveItemDataById({
+                _id, itemImage, itemCategory,
+                itemCode, locationIdentifiers, userName, cloudinary_id,
+                mobileNumber, emailMailId, itemDescription, keywords,
+                itemName, location, foundDate, foundTime
+            }))
 
             return resolve(true)
         }).catch(err => {
@@ -306,7 +308,6 @@ export const viewItemById = (itemId) => (dispatch) => {
                 userName, mobileNumber, emailMailId
             } = res.data
 
-
             dispatch(viewItemDetailsById({
                 itemImage, itemName, itemCategory, itemDescription,
                 keywords, location, locationIdentifiers, userName,
@@ -328,14 +329,16 @@ export const viewUserItemById = (itemId) => (dispatch) => {
             url: `${endpoints.apiPath.items.generalUserItemsById}/${itemId}`,
             method: endpoints.ApiMethods.GET,
         }).then((res) => {
-            const { itemImage, itemCode, foundDate, foundTime, 
-                itemName, itemCategory, itemDescription, keywords, 
-                location, locationIdentifiers, userName, 
+            const { itemImage, itemCode, foundDate, foundTime,
+                itemName, itemCategory, itemDescription, keywords,
+                location, locationIdentifiers, userName,
                 mobileNumber, emailMailId } = res.data;
 
-            dispatch(viewItemDetailsById({ itemImage, foundDate, foundTime, 
-                itemCode, itemName, itemCategory, itemDescription, keywords, 
-                location, locationIdentifiers, userName, mobileNumber, emailMailId }))
+            dispatch(viewItemDetailsById({
+                itemImage, foundDate, foundTime,
+                itemCode, itemName, itemCategory, itemDescription, keywords,
+                location, locationIdentifiers, userName, mobileNumber, emailMailId
+            }))
 
             return resolve(true)
         }).catch(err => {
@@ -444,9 +447,9 @@ export const userAddMoreDetails = (data) => (dispatch) => {
             isAuth: true
 
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(res)
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(res)
             }
         }).catch(err => {
             console.log(err)
@@ -466,9 +469,9 @@ export const businessAddMoreDetails = (data) => (dispatch) => {
             tokenType: 'businessUserToken'
 
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true)
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true)
             }
         }).catch(err => {
             console.log(err)
@@ -485,9 +488,9 @@ export const userEditItemDetails = (itemId, data) => (dispatch) => {
             data: data,
             isAuth: true
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true)
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true)
             }
         }).catch(err => {
             console.log(err)
@@ -511,7 +514,7 @@ export const itemDropdownValues = () => (dispatch) => {
             return err;
         })
     })
-}
+};
 
 export const clearItemData = () => (dispatch) => {
     try {
@@ -519,8 +522,9 @@ export const clearItemData = () => (dispatch) => {
     } catch (error) {
         return error
     }
-}
-//getbyid in admin
+};
+
+//getById in admin
 export const foundItemById = (itemId) => (dispatch) => {
     return new Promise((resolve, reject) => {
         apiRequest({
@@ -549,9 +553,9 @@ export const adminUpdateFoundItems = (itemId, data) => (dispatch) => {
             isAuth: true,
             tokenType: 'adminToken'
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err);
@@ -609,14 +613,14 @@ export const deleteItem = (itemId, context, currentPage) => (dispatch) => {
 };
 
 //admin export file 
-export const adminExportItems = (itemCategory,itemName) => async (dispatch) => {
+export const adminExportItems = (itemCategory, itemName) => async (dispatch) => {
     try {
         const response = await getExportFileStream({
             url: `${endpoints.apiPath.items.itemReport}?itemCategory=${itemCategory}&itemName=${itemName}`,
             isAuth: true,
             tokenType: "adminToken"
         });
-        console.log(response,"responseexport")
+        console.log(response, "responseExport")
         const data = response?.data
         if (data) {
             let a = window.document.createElement('a')

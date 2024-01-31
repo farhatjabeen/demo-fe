@@ -40,8 +40,8 @@ export const userSlice = createSlice({
         getLogo: (state, action) => {
             state.getLogoImage = { ...action.payload };
         },
-        getUserDetails: (state,action) => {
-            state.getGeneralUser = {...action.payload};
+        getUserDetails: (state, action) => {
+            state.getGeneralUser = { ...action.payload };
         },
 
         clearData: () => initialState
@@ -56,13 +56,13 @@ export const loginUser = (data) => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            const { role, name, emailMailId, _id, token } = res.data
-            removeLocalStorageItem("userToken");
-            dispatch(saveUserData({ role, name, emailMailId, _id }))
-            setEncryptedLocalStorageData("businessUserToken", token);
-            Toast({type:"success",message:res?.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                const { role, name, emailMailId, _id, token } = res.data
+                removeLocalStorageItem("userToken");
+                dispatch(saveUserData({ role, name, emailMailId, _id }))
+                setEncryptedLocalStorageData("businessUserToken", token);
+                Toast({ type: "success", message: res?.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -81,11 +81,11 @@ export const checkGeneralUserEmail = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            const {status} = res
-            const { emailMailId, isAlreadyRegistered } = res.data
-            dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered, status }))
-            return resolve(true);
+            if (res?.status === 200) {
+                const { status } = res
+                const { emailMailId, isAlreadyRegistered } = res.data
+                dispatch(saveGeneralUserMail({ emailMailId, isAlreadyRegistered, status }))
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -103,9 +103,9 @@ export const generalUserRegister = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -121,13 +121,13 @@ export const generalUserLogin = (data) => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            removeLocalStorageItem("businessUserToken");
-            const { role, emailMailId, mobileNumber, name, _id, token } = res.data
-            dispatch(saveUserData({ role, emailMailId, mobileNumber, name, _id }))
-            setEncryptedLocalStorageData("userToken", token);
-            Toast({type:"success",message: res.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                removeLocalStorageItem("businessUserToken");
+                const { role, emailMailId, mobileNumber, name, _id, token } = res.data
+                dispatch(saveUserData({ role, emailMailId, mobileNumber, name, _id }))
+                setEncryptedLocalStorageData("userToken", token);
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -145,10 +145,10 @@ export const generalUserLogout = () => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             isAuth: true,
         }).then((res) => {
-            if(res?.status === 200){
-            removeLocalStorageItem("userToken");
-            Toast({type:"success",message: res.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                removeLocalStorageItem("userToken");
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -166,9 +166,9 @@ export const businessUserRegister = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({type:"success",message: res.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -184,9 +184,9 @@ export const generalForgotPassword = (data) => async () => {
             method: endpoints.ApiMethods.POST,
             data: data,
         }).then(res => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             reject(err);
@@ -202,9 +202,9 @@ export const generalResetPassword = (data, token) => async () => {
             method: endpoints.ApiMethods.POST,
             data: data,
         }).then(res => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(res);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(res);
             }
         }).catch(err => {
             reject(err);
@@ -220,9 +220,9 @@ export const businessForgotPassword = (data) => async () => {
             method: endpoints.ApiMethods.POST,
             data: data,
         }).then(res => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             reject(err);
@@ -239,9 +239,9 @@ export const businessResetPassword = (data, token) => async () => {
             data: data,
             tokenType: 'businessUserToken',
         }).then(res => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(res);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(res);
             }
         }).catch(err => {
             reject(err);
@@ -259,10 +259,10 @@ export const businessUserLogout = () => (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
         }).then((res) => {
-            if(res?.status === 200){
-            removeLocalStorageItem("businessUserToken");
-            Toast({type:"success",message: res.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                removeLocalStorageItem("businessUserToken");
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -279,12 +279,12 @@ export const loginAdminUser = (data) => (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            const { role, emailMailId, _id, token } = res.data
-            dispatch(saveUserData({ role, emailMailId, _id }))
-            setEncryptedLocalStorageData("adminToken", token);
-            Toast({type:"success",message: res.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                const { role, emailMailId, _id, token } = res.data
+                dispatch(saveUserData({ role, emailMailId, _id }))
+                setEncryptedLocalStorageData("adminToken", token);
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             console.log(err)
@@ -310,9 +310,9 @@ export const adminForgotPassword = (data) => async () => {
             method: endpoints.ApiMethods.POST,
             data: data,
         }).then(res => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             reject(err);
@@ -328,9 +328,9 @@ export const adminResetPassword = (data, token) => async () => {
             data: data,
             tokenType: 'adminToken',
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({ type: "success", message: res.message })
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             reject(err);
@@ -362,10 +362,10 @@ export const adminChangePassword = (data) => async () => {
             isAuth: true,
             tokenType: 'adminToken',
         }).then((res) => {
-            if(res?.status === 200){
-            console.log(res.data, 'changing')
-            Toast({type:"success",message: res.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                console.log(res.data, 'changing')
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch(err => {
             reject(err);
@@ -412,12 +412,12 @@ export const userProfileData = (data) => async (dispatch) => {
             isAuth: true,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({type:"success",message:res.message})
-            return resolve(true)
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true)
             }
         }).catch((err) => {
-            console.log(err,"errr")
+            console.log(err, "errr")
             return err;
         })
     })
@@ -468,10 +468,10 @@ export const editCompanyProfileData = (data) => async (dispatch) => {
             isAuth: true,
             tokenType: 'businessUserToken',
             data: data
-        }).then( (res) => {
-            if(res?.status === 200){
-            Toast({type:"success",message:res.message})
-            return resolve(true)
+        }).then((res) => {
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true)
             }
         }).catch(err => {
             console.log(err)
@@ -487,9 +487,9 @@ export const contactAdmin = (data) => async (dispatch) => {
             method: endpoints.ApiMethods.POST,
             data: data
         }).then((res) => {
-            if(res?.status === 200){
-            Toast({type:"success",message:res.message})
-            return resolve(true);
+            if (res?.status === 200) {
+                Toast({ type: "success", message: res.message })
+                return resolve(true);
             }
         }).catch((err) => {
             reject(err)

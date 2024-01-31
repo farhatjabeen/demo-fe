@@ -13,10 +13,7 @@ import { useLocation, useNavigate, useParams, useSearchParams } from "react-rout
 function FoundItems() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const [pageChange, setPageChange] = useState();
   const PageLimit = 10;
-  const [itemCode, setItemCode] = useState('');
-  const [itemName, setItemName] = useState('');
   const [data, setData] = useState([])
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,13 +24,10 @@ function FoundItems() {
   const items = useSelector(itemDropdown)
   const dropdownValues = items ? Object.values(items) : [];
   const location = useLocation();
-  console.log(location, "location")
   const [searchParams] = useSearchParams();
-  console.log(location.search, "searchParams")
   const pageNow = searchParams.get('page');
   const currentItem = searchParams.get('item');
   const currentCategory = searchParams.get('category');
-  console.log(searchItem, "searchItem category")
 
   // useEffect(() => {
   //   const queryParams = new URLSearchParams(location.search);
