@@ -22,6 +22,8 @@ import {
 } from '../../validations'
 import TextInput from '../common/textInput'
 import { Toast } from '../toast'
+import ScrollLock from './scrollLock.js';
+
 const PopoverComponent = () => {
   // local states
   const [passwordBox, setPasswordBox] = useState(false)
@@ -281,7 +283,8 @@ const PopoverComponent = () => {
 
   return (
     <div>
-      <Popover open={isPopoverOpen} onClose={closePopover}>
+      <ScrollLock isOpen={isPopoverOpen} />
+      <Popover open={isPopoverOpen}>
         {({ open }) => (
           <div>
             <Popover.Button onClick={togglePopover}>
