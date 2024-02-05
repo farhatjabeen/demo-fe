@@ -136,7 +136,11 @@ const SideMenu = () => {
           </Link>
         </li>
       </ul>
-      <AdminLogout openModal={openModal} setOpenModal={() => setOpenModal(false)} handleLogout={handleLogout} />
+      <AdminLogout
+        openModal={openModal}
+        setOpenModal={() => setOpenModal(false)}
+        handleLogout={handleLogout}
+      />
     </div>
   )
 }

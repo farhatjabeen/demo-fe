@@ -1,10 +1,10 @@
 import React from 'react'
 import CommonModal from '../../components/common/commonModal'
 
-const AdminLogout = ({openModal, setOpenModal, handleLogout}) => {
+const AdminLogout = ({ openModal, setOpenModal, handleLogout }) => {
   return (
     <div>
-        <CommonModal
+      <CommonModal
         isOpen={openModal}
         onCancel={setOpenModal}
         title="Logout"
