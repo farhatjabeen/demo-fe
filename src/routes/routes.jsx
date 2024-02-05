@@ -98,7 +98,7 @@ const routers = [
         component: 'AddMoreDetails',
         childPath: '/addMoreDetails/:id',
       },
-      
+
       {
         component: 'QueryPublished',
         childPath: '/querypublished/:id',
@@ -168,7 +168,7 @@ const routers = [
         childPath: '/settings',
       },
       {
-        component: 'user',
+        component: 'adminLogout',
         childPath: '/logout',
       },
       {

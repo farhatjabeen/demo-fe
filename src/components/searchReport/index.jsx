@@ -45,7 +45,7 @@ export default function SearchReport() {
         }
       } else {
         if (isUser) {
-          navigate(`/addMoreDetails/${itemName}/${methods.getValues().locations}`)
+          navigate(`/user/addMoreDetails/${itemName}/${methods.getValues().locations}`)
         } else {
           Toast({ type: 'error', message: 'Login Required' })
         }

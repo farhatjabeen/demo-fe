@@ -34,7 +34,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
         <thead>
           <tr className="border border-x-0 border-y-grey text-navy-blue">
             {headers?.map((header) => (
-              <th key={header.key} className="px-2 py-4 text-sm text-left cursor-pointer">
+              <th key={header.key} className="px-2 py-4 text-sm text-left">
                 <div>
                   <p>{header.label}</p>
                 </div>
@@ -69,7 +69,7 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
                   ) : (
                     <td
                       key={header.key}
-                      className={`px-2 text-sm text-gray48 
+                      className={`px-2 ${showEdit ? 'cursor-pointer' : 'cursor-default'} text-sm text-gray48 
                       ${header.key === 'userCode' ? 'font-bold' : ''} 
                       ${header.key === 'itemCode' ? 'font-bold' : ''}`}
                       onClick={() => handleSelect(item)}

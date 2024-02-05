@@ -9,6 +9,7 @@ import { RiLogoutBoxLine } from 'react-icons/ri'
 import CommonModal from '../common/commonModal'
 import { useDispatch } from 'react-redux'
 import { adminLogout, clearUserData } from '../../redux/reducers/userSlice'
+import AdminLogout from '../../pages/adminLogout'
 
 const SideMenu = () => {
   const [isCollapsed, setCollapsed] = useState(false)
@@ -135,15 +136,11 @@ const SideMenu = () => {
           </Link>
         </li>
       </ul>
-      <CommonModal
-        isOpen={openModal}
-        onCancel={() => setOpenModal(false)}
-        title="Logout"
-        description="Are you sure"
-        confirmText="Logout"
-        onConfirm={handleLogout}
-        additionalContent="you want to logout?"
-      ></CommonModal>
+      <AdminLogout
+        openModal={openModal}
+        setOpenModal={() => setOpenModal(false)}
+        handleLogout={handleLogout}
+      />
     </div>
   )
 }

@@ -22,7 +22,7 @@ import {
 } from '../../validations'
 import TextInput from '../common/textInput'
 import { Toast } from '../toast'
-import ScrollLock from './scrollLock.js';
+import ScrollLock from './scrollLock.js'
 
 const PopoverComponent = () => {
   // local states
@@ -402,8 +402,8 @@ const PopoverComponent = () => {
                                     className="pb-14 xl:text-lg md:text-lg sm:text-sm 
                                                                     font-normal text-light-grey pt-1"
                                   >
-                                    Lorem ipsum dolor sit amet, consectetur<br></br>
-                                    adipiscing elit onsectetur
+                                    Submit your password, paving the way for a<br></br>
+                                    safe and secured journey.
                                   </div>
                                 </div>
                               </div>
@@ -460,7 +460,7 @@ const PopoverComponent = () => {
                                 >
                                   <div
                                     className=" xl:text-4xl md:text-3xl sm:text-xl 
-                                                                    text-blacks font-extrabold"
+                                                                    text-blacks font-bold"
                                   >
                                     Enter Password
                                   </div>
@@ -468,8 +468,8 @@ const PopoverComponent = () => {
                                     className="pb-14 xl:text md:text-lg sm:text-sm font-normal 
                                                                     text-light-grey pt-1"
                                   >
-                                    Lorem ipsum dolor sit amet, consectetur<br></br>
-                                    adipiscing elit onsectetur
+                                    Join us to aid people in finding their lost<br></br>
+                                    belongings and make a positive impact.
                                   </div>
                                 </div>
                               </div>
@@ -568,8 +568,8 @@ const PopoverComponent = () => {
                                 className="pb-12 xl:text-xl md:text-lg sm:text-sm font-normal 
                                                             text-light-grey pt-1"
                               >
-                                Lorem ipsum dolor sit amet, consectetur<br></br>
-                                adipiscing elit onsectetur
+                                Open the door to possibilities – enter your <br></br>
+                                email and ignite the connection.
                               </div>
                             </div>
                           </div>

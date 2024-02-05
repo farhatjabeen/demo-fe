@@ -125,22 +125,24 @@ const EditFoundItems = () => {
 
   const submitData = async () => {
     try {
-      const data = methods.getValues()
-      data.keywords = data.keywords.split(',').map((keyword) => keyword.trim())
-      methods.setValue('itemImage', itemImage)
-      methods.setValue('itemCategory', selectedCategory)
-      const inputString = methods.getValues().keywords
-      methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','))
-      const dataNow = methods.getValues()
-      console.log(itemImage, 'itemImage')
-      if (itemImage.length) {
-        setIsImage(true)
-        const updateNow = await dispatch(adminUpdateFoundItems(id, dataNow))
-        if (updateNow) {
-          navigate('/admin/user/foundItems')
+      if (itemImage) {
+        const data = methods.getValues()
+        data.keywords = data.keywords.split(',').map((keyword) => keyword.trim())
+        methods.setValue('itemImage', itemImage)
+        methods.setValue('itemCategory', selectedCategory)
+        const inputString = methods.getValues().keywords
+        methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','))
+        const dataNow = methods.getValues()
+        console.log(itemImage, 'itemImage')
+        if (itemImage.length) {
+          setIsImage(true)
+          const updateNow = await dispatch(adminUpdateFoundItems(id, dataNow))
+          if (updateNow) {
+            navigate('/admin/user/foundItems')
+          }
+        } else {
+          setIsImage(false)
         }
-      } else {
-        setIsImage(false)
       }
     } catch (error) {
       console.error('Update failed:', error)

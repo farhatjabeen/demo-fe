@@ -108,7 +108,7 @@ export const generalUserRegister = (data) => async (dispatch) => {
       data: data,
     })
       .then((res) => {
-        if (res?.status === 200) {
+        if (res?.status === 201) {
           Toast({ type: 'success', message: res.message })
           return resolve(true)
         }
@@ -177,7 +177,7 @@ export const businessUserRegister = (data) => async (dispatch) => {
       data: data,
     })
       .then((res) => {
-        if (res?.status === 200) {
+        if (res?.status === 201) {
           Toast({ type: 'success', message: res.message })
           return resolve(true)
         }
