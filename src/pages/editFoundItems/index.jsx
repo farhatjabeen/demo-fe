@@ -32,7 +32,6 @@ const EditFoundItems = () => {
   const dropdownValues = items ? Object.values(items) : []
   const [files, setFiles] = useState([])
   const [isUploaded, setIsUploaded] = useState(false)
-  const [cloudinaryId, setCloudinaryId] = useState([])
   const [itemImage, setItemImage] = useState([])
   const [isLoader, setIsLoader] = useState(true)
   const [isImage, setIsImage] = useState(true)
@@ -45,7 +44,6 @@ const EditFoundItems = () => {
       keywords: '',
       locationIdentifiers: '',
       itemImage: '',
-      cloudinary_id: '',
     },
     resolver,
   })
@@ -61,7 +59,6 @@ const EditFoundItems = () => {
   useEffect(() => {
     if (foundItemDetails) {
       setItemImage(foundItemDetails?.itemImage)
-      setCloudinaryId(foundItemDetails?.cloudinary_id)
       methods.reset({
         itemName: foundItemDetails?.itemName,
         keywords: `${foundItemDetails?.keywords}`,
@@ -69,7 +66,6 @@ const EditFoundItems = () => {
         locationIdentifiers: foundItemDetails?.locationIdentifiers,
         itemCategory: foundItemDetails?.itemCategory,
         itemImage: itemImage || '',
-        cloudinary_id: cloudinaryId || '',
       })
     }
   }, [foundItemDetails])
@@ -101,7 +97,6 @@ const EditFoundItems = () => {
   }
   const handleRemoveFile = (indexToRemove) => {
     setItemImage((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove))
-    setCloudinaryId((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove))
   }
 
   const handleReset = (e) => {
@@ -109,7 +104,6 @@ const EditFoundItems = () => {
     setFiles([])
     setIsUploaded(false)
     setItemImage([])
-    setCloudinaryId([])
   }
   useEffect(() => {
     if (files && files.length > 0) {
@@ -121,9 +115,6 @@ const EditFoundItems = () => {
       upload.then((res) => {
         setItemImage((prevFiles) =>
           prevFiles ? [...prevFiles, ...res.data.itemImage] : res.data.itemImage
-        )
-        setCloudinaryId((prevFiles) =>
-          prevFiles ? [...prevFiles, ...res.data.cloudinary_id] : res.data.cloudinary_id
         )
         setFiles([])
       })
@@ -137,7 +128,6 @@ const EditFoundItems = () => {
       const data = methods.getValues()
       data.keywords = data.keywords.split(',').map((keyword) => keyword.trim())
       methods.setValue('itemImage', itemImage)
-      methods.setValue('cloudinary_id', cloudinaryId)
       methods.setValue('itemCategory', selectedCategory)
       const inputString = methods.getValues().keywords
       methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','))
@@ -308,7 +298,7 @@ const EditFoundItems = () => {
                     </div>
                     {isUploaded || foundItemDetails?.itemImage ? (
                       <div className="flex ml-1 flex-wrap w-96">
-                        {cloudinaryId?.map((file, i) => (
+                        {itemImage?.map((file, i) => (
                           <div
                             key={i}
                             className="flex w-fit p-2 bg-white rounded-lg border border-primary-color my-2 mr-2"

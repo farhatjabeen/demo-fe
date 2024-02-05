@@ -38,7 +38,6 @@ export default function MyProfile() {
     const getUser = dispatch(generalUserDetails())
 
     getUser?.then((res) => {
-      console.log(res, 'respi')
       methods.reset({
         emailMailId: res?.emailMailId || '',
         mobileNumber: res?.mobileNumber || '',

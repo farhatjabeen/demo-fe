@@ -50,7 +50,7 @@ export default function BusinessHome() {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % contentData.length)
-    }, 2000)
+    }, 2050)
     return () => clearInterval(interval)
   }, [])
 
