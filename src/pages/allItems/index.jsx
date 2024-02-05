@@ -12,6 +12,7 @@ import { goToTop } from '../../utils/helper'
 export default function AllItems() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [selectedItemId, setSelectedItemId] = useState(null)
+  const [loader, setLoader] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const tableData = useSelector(itemDetails)
@@ -26,9 +27,11 @@ export default function AllItems() {
 
   const handleDeleteItem = async () => {
     console.log(`Deleting item with ID ${selectedItemId}`)
+    setLoader(true)
     const afterDelete = await dispatch(deleteBusinessItem(selectedItemId))
     if (afterDelete) {
       dispatch(fetchItems(pageNow))
+      setLoader(false)
     }
     setDeleteModalOpen(false)
     setSelectedItemId(null)
@@ -38,7 +41,9 @@ export default function AllItems() {
     const queryParams = new URLSearchParams(location.search)
     const page = queryParams.get('page')
     goToTop()
-    dispatch(fetchItems(page))
+    setLoader(true)
+    const fetchedItems = dispatch(fetchItems(page))
+    fetchedItems?.then(()=>setLoader(false))
   }, [location.search])
 
   const handlePageChange = (pageNumber) => {
@@ -72,114 +77,116 @@ export default function AllItems() {
           <div className="text-base font-medium text-white">TOTAL FOUND ITEMS</div>
           <div className="text-4xl font-bold text-white">{tableData?.pageMeta?.total}</div>
         </div>
+        {loader ? <p className='flex justify-center mb-7 font-bold'>Loading...</p>
+          :
+          tableData?.list?.length ? (
+            <>
+              <div className="mt-10 mb-4 font-semibold text-2xl">All Items</div>
 
-        {tableData?.list?.length ? (
-          <>
-            <div className="mt-10 mb-4 font-semibold text-2xl">All Items</div>
+              <div className="w-full flex flex-col justify-center items-center mb-20 ">
+                <table className="w-full ">
+                  <thead>
+                    <tr>
+                      <th className="px-6 py-6 text-left cursor-pointer">
+                        <div className=" w-fit">
+                          <p className="text-navy-blue  md:text-base">Item Code</p>
+                        </div>
+                      </th>
 
-            <div className="w-full flex flex-col justify-center items-center mb-20 ">
-              <table className="w-full ">
-                <thead>
-                  <tr>
-                    <th className="px-6 py-6 text-left cursor-pointer">
-                      <div className=" w-fit">
-                        <p className="text-navy-blue  md:text-base">Item Code</p>
-                      </div>
-                    </th>
+                      <th className="px-6 py-6 text-left cursor-pointer">
+                        <div>
+                          <p className="text-navy-blue">Item Name</p>
+                        </div>
+                      </th>
 
-                    <th className="px-6 py-6 text-left cursor-pointer">
-                      <div>
-                        <p className="text-navy-blue">Item Name</p>
-                      </div>
-                    </th>
+                      <th className="px-6 py-6 text-left cursor-pointer">
+                        <div>
+                          <p className="text-navy-blue">Description</p>
+                        </div>
+                      </th>
 
-                    <th className="px-6 py-6 text-left cursor-pointer">
-                      <div>
-                        <p className="text-navy-blue">Description</p>
-                      </div>
-                    </th>
+                      <th className="px-6 py-6 text-left cursor-pointer">
+                        <p className="text-navy-blue">Location</p>
+                      </th>
 
-                    <th className="px-6 py-6 text-left cursor-pointer">
-                      <p className="text-navy-blue">Location</p>
-                    </th>
+                      <th className="px-6 py-6 text-left cursor-pointer">
+                        <p className="text-navy-blue">Location Identifiers</p>
+                      </th>
 
-                    <th className="px-6 py-6 text-left cursor-pointer">
-                      <p className="text-navy-blue">Location Identifiers</p>
-                    </th>
-
-                    <th className="px-6 py-6 text-left cursor-pointer">
-                      <p className="text-navy-blue">Listing Date</p>
-                    </th>
-                    <th className="px-6 py-6 text-left cursor-pointer">
-                      <p className="text-navy-blue">Action</p>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tableData?.list?.length &&
-                    tableData.list.map((items, i) => {
-                      return (
-                        <tr
-                          key={i}
-                          className={`cursor-pointer 
+                      <th className="px-6 py-6 text-left cursor-pointer">
+                        <p className="text-navy-blue">Listing Date</p>
+                      </th>
+                      <th className="px-6 py-6 text-left cursor-pointer">
+                        <p className="text-navy-blue">Action</p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableData?.list?.length &&
+                      tableData.list.map((items, i) => {
+                        return (
+                          <tr
+                            key={i}
+                            className={`cursor-pointer 
                                             ${i % 2 === 0 ? 'bg-gray12 bg-opacity-30' : 'bg-inherit'}`}
-                          onClick={() => navigate(`/businessitemdetails/${items._id}`)}
-                        >
-                          <td className="py-6 px-6 text-gray48 text-sm font-semibold">
-                            {items.itemCode}
-                          </td>
-                          <td className="py-6 px-6 text-gray48 text-sm font-normal">
-                            {items.itemName}
-                          </td>
-                          <td className="py-6 px-6 text-gray48 text-sm font-normal">
-                            {itemsDescription(items.itemDescription)}
-                          </td>
-                          <td className="py-6 px-6 text-gray48 text-sm font-normal">
-                            {items.location}
-                          </td>
-                          <td className="py-6 px-6 text-gray48 text-sm font-normal">
-                            {items.locationIdentifiers}
-                          </td>
-                          <td className="py-6 px-6 text-gray48 text-sm font-normal">
-                            {items.foundDate}
-                          </td>
-                          <td className="py-6 px-6 text-gray48 text-sm font-normal flex">
-                            <AiOutlineDelete
-                              size={24}
-                              onClick={(e) => {
-                                handleDeleteClick(items._id)
-                                e.stopPropagation()
-                              }}
-                              className="text-gray-500 hover:text-black cursor-pointer"
-                            />
-                            <FiEdit
-                              size={24}
-                              className="text-gray-500 hover:text-black ml-1 cursor-pointer"
-                              onClick={(e) => {
-                                navigate(`/user/editdetails/${items._id}`)
-                                e.stopPropagation()
-                              }}
-                            />
-                          </td>
-                        </tr>
-                      )
-                    })}
-                </tbody>
-              </table>
-              <DeleteModal
-                isOpen={deleteModalOpen}
-                onCancel={() => {
-                  setDeleteModalOpen(false)
-                  setSelectedItemId(null)
-                }}
-                onDelete={handleDeleteItem}
-                selectedItemId={selectedItemId}
-              />
-            </div>
-          </>
-        ) : (
-          <p className="flex justify-center mb-7 font-bold">No items found</p>
-        )}
+                            onClick={() => navigate(`/businessitemdetails/${items._id}`)}
+                          >
+                            <td className="py-6 px-6 text-gray48 text-sm font-semibold">
+                              {items.itemCode}
+                            </td>
+                            <td className="py-6 px-6 text-gray48 text-sm font-normal">
+                              {items.itemName}
+                            </td>
+                            <td className="py-6 px-6 text-gray48 text-sm font-normal">
+                              {itemsDescription(items.itemDescription)}
+                            </td>
+                            <td className="py-6 px-6 text-gray48 text-sm font-normal">
+                              {items.location}
+                            </td>
+                            <td className="py-6 px-6 text-gray48 text-sm font-normal">
+                              {items.locationIdentifiers}
+                            </td>
+                            <td className="py-6 px-6 text-gray48 text-sm font-normal">
+                              {items.foundDate}
+                            </td>
+                            <td className="py-6 px-6 text-gray48 text-sm font-normal flex">
+                              <AiOutlineDelete
+                                size={24}
+                                onClick={(e) => {
+                                  handleDeleteClick(items._id)
+                                  e.stopPropagation()
+                                }}
+                                className="text-gray-500 hover:text-black cursor-pointer"
+                              />
+                              <FiEdit
+                                size={24}
+                                className="text-gray-500 hover:text-black ml-1 cursor-pointer"
+                                onClick={(e) => {
+                                  navigate(`/user/editdetails/${items._id}`)
+                                  e.stopPropagation()
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        )
+                      })}
+                  </tbody>
+                </table>
+                <DeleteModal
+                  isOpen={deleteModalOpen}
+                  onCancel={() => {
+                    setDeleteModalOpen(false)
+                    setSelectedItemId(null)
+                  }}
+                  onDelete={handleDeleteItem}
+                  selectedItemId={selectedItemId}
+                />
+              </div>
+            </>
+          ) : (
+            <p className="flex justify-center mb-7 font-bold">No items found</p>
+          )
+        }
       </div>
       <div className=" flex justify-center mb-20">
         <Pagination
