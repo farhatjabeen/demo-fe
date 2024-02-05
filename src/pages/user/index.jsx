@@ -29,11 +29,9 @@ function User() {
   const [searchParams] = useSearchParams()
   const pageNow = searchParams.get('page')
   const currentUser = searchParams.get('name')
-
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
     const page = queryParams.get('page')
-
     if (!currentUser && window.location.pathname === '/admin/user/users') {
       setSearchUserTerm('')
       dispatch(adminFetchUser(page, PageLimit))
@@ -49,7 +47,7 @@ function User() {
     } else if (currentUser && window.location.pathname === '/admin/user/businessUser') {
       dispatch(adminFetchBusinessUser(page, PageLimit, currentUser))
     }
-  }, [location.search, PageLimit])
+  }, [location.search, navigate, PageLimit])
 
   const handleReset = async (tab) => {
     setResetHandle(true)
@@ -108,7 +106,7 @@ function User() {
       <div className="my-4 ml-4">
         <h1 className="text-black font-bold mb-4 text-4xl mt-10">User Management</h1>
         <Tabs className="my-8">
-          <div label="General" route="/admin/user/users">
+          <div label="General" route="/admin/user/users?page=1">
             <div className={`flex  ${isId ? 'my-8' : 'mt-8 mb-0'}`}>
               <input
                 type="text"
@@ -155,7 +153,7 @@ function User() {
               onPageChange={handlePageChange1}
             />
           </div>
-          <div label="Business" route="/admin/user/businessUser">
+          <div label="Business" route="/admin/user/businessUser?page=1">
             <div className={`flex  ${isId ? 'my-8' : 'mt-8 mb-0'}`}>
               <input
                 type="text"

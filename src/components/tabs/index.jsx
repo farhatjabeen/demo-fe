@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const Tabs = ({ children, className }) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const [activeTab, setActiveTab] = useState(0)
+
 
   const tabs = React.Children.map(children, (child) => ({
     label: child.props.label,
@@ -11,11 +13,10 @@ const Tabs = ({ children, className }) => {
   }))
 
   useEffect(() => {
-    const activeTab = tabs.findIndex((tab) => location.pathname.includes(tab.route))
-    setActiveTab(activeTab >= 0 ? activeTab : 0)
+    const activeTab = tabs.findIndex((tab) => `${location.pathname}?page=1`.includes(tab.route))
+    setActiveTab(activeTab ? activeTab : 0)
   }, [location.pathname, tabs])
 
-  const [activeTab, setActiveTab] = useState(0)
   const handleClick = (e, newActiveTab, route) => {
     e.preventDefault()
     setActiveTab(newActiveTab)

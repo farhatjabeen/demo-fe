@@ -168,7 +168,7 @@ const routers = [
         childPath: '/settings',
       },
       {
-        component: 'user',
+        component: 'adminLogout',
         childPath: '/logout',
       },
       {
