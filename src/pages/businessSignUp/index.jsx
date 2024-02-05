@@ -28,12 +28,9 @@ export default function BusinessSignUp() {
   const categories = categoryValue ? Object.values(categoryValue) : []
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [cloudinaryId, setCloudinaryId] = useState('')
   const [companyLogo, setCompanyLogo] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  console.log(companyLogo, 'companyLogo')
-  console.log(cloudinaryId, 'cloudinaryId')
-  console.log(imageFiles, 'imageFiles')
+  
   const methods = useForm({
     defaultValues: {
       name: '',
@@ -43,7 +40,6 @@ export default function BusinessSignUp() {
       companyName: '',
       companyCategory: '',
       companylogo: '',
-      cloudinary_id: '',
     },
     resolver,
   })
@@ -64,7 +60,6 @@ export default function BusinessSignUp() {
 
   const handleFileUpload = (e) => {
     const selectedFiles = e.target.files
-    console.log(selectedFiles, 'selectedFiles')
     setImageFiles(() => {
       if (selectedFiles) {
         setIsUploaded(true)
@@ -85,7 +80,6 @@ export default function BusinessSignUp() {
 
           imageResponse.then((res) => {
             setCompanyLogo(res.data.companylogo)
-            setCloudinaryId(res.data.cloudinary_id)
           })
         }
       }
@@ -99,12 +93,7 @@ export default function BusinessSignUp() {
       'companylogo',
       methods.getValues().companylogo ? methods.getValues().companylogo : companyLogo
     )
-    methods.setValue(
-      'cloudinary_id',
-      methods.getValues().cloudinary_id ? methods.getValues().cloudinary_id : cloudinaryId
-    )
     const companylogo = methods.getValues('companylogo')
-    console.log(companylogo, 'companylogo2')
     const dataNow = methods.getValues()
     if (companyLogo || methods.getValues().companylogo) {
       setIsImage(true)
@@ -135,10 +124,8 @@ export default function BusinessSignUp() {
 
   const handleImageDelete = () => {
     setImageFiles('')
-    setCloudinaryId('')
     setCompanyLogo('')
     methods.setValue('companylogo', null)
-    methods.setValue('cloudinary_id', null)
   }
 
   const handleTerms = () => {

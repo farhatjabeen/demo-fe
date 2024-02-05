@@ -98,7 +98,6 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
           setSelectedItemId(null)
         }}
         onDelete={() => {
-          console.log(`Deleting item with ID ${selectedItemId}`)
           dispatch(deleteItem(selectedItemId))
           setDeleteModalOpen(false)
           setSelectedItemId(null)

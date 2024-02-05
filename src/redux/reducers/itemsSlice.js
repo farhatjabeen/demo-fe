@@ -75,7 +75,6 @@ export const fetchItems =
         tokenType: 'businessUserToken',
       })
         .then((res) => {
-          console.log(res.data, 'ress')
           const { list, pageMeta } = res.data
           dispatch(saveItemDetails({ list, pageMeta }))
           return resolve(res)
@@ -521,7 +520,6 @@ export const fileUploadAPI = (data) => (dispatch) => {
       isFile: true,
     })
       .then((res) => {
-        // No need to store in redux can handle from local state
         return resolve(res)
       })
       .catch((err) => {
@@ -542,7 +540,6 @@ export const filesUploadAPI = (data) => (dispatch) => {
       isFile: true,
     })
       .then((res) => {
-        // No need to store in redux can handle from local state
         return resolve(res)
       })
       .catch((err) => {
@@ -741,7 +738,6 @@ export const adminExportItems = (itemCategory, itemName) => async (dispatch) => 
       isAuth: true,
       tokenType: 'adminToken',
     })
-    console.log(response, 'responseExport')
     const data = response?.data
     if (data) {
       let a = window.document.createElement('a')

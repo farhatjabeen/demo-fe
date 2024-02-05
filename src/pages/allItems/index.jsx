@@ -26,7 +26,6 @@ export default function AllItems() {
   }
 
   const handleDeleteItem = async () => {
-    console.log(`Deleting item with ID ${selectedItemId}`)
     setLoader(true)
     const afterDelete = await dispatch(deleteBusinessItem(selectedItemId))
     if (afterDelete) {

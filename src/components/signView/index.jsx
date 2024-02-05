@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import useValidationResolver from '../../hooks/useValidationResolver'
 import TextInput from '../../components/common/textInput'
 import { adminForgotPassword, loginAdminUser } from '../../redux/reducers/userSlice'
+import { Toast } from '../toast'
 
 function SignInView() {
   const [showPassword, setShowPassword] = useState(false)
@@ -25,7 +26,7 @@ function SignInView() {
       await methods.trigger('emailMailId')
 
       if (methods.formState.errors.emailMailId) {
-        console.log('Email is not valid')
+        Toast({type:"error", message:'Email is not valid'})
         return
       }
       const emailMailId = methods.getValues().emailMailId

@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
-
 // import './theme/variables.scss';
 import './assets/css/common.css'
 import AppRoutes from './routes'

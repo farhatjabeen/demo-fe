@@ -8,6 +8,7 @@ import useValidationResolver from '../../hooks/useValidationResolver'
 import TextInput from '../../components/common/textInput'
 import { adminResetPassword } from '../../redux/reducers/userSlice'
 import { useParams } from 'react-router-dom'
+import { Toast } from '../toast'
 
 function ResetPasswordView() {
   const [showPassword, setShowPassword] = useState(false)
@@ -31,8 +32,6 @@ function ResetPasswordView() {
       const reset = dispatch(adminResetPassword({ password }, token))
       if (reset) {
         navigate('/admin/signin')
-      } else {
-        console.log('Password reset failed')
       }
     } catch (error) {
       console.log('submitData errors', error)

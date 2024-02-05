@@ -1,4 +1,3 @@
-// ScrollLock.js
 import { useEffect } from 'react';
 
 const ScrollLock = ({ isOpen }) => {

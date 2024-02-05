@@ -9,10 +9,8 @@ export function AuthLayout(props) {
   const [customClassName, setCustomClassName] = useState('default')
   const location = useLocation()
   const searchValue = useSelector(searchKey)
-  console.log(searchValue?.list?.length, 'searchValue')
 
   useEffect(() => {
-    console.log('path Name', location.pathname)
     if (
       location.pathname.split('/').includes('findMissingItem') ||
       location.pathname.split('/').includes('addMoreDetails') ||
@@ -38,10 +36,8 @@ export function AuthLayout(props) {
       location.pathname.split('/').includes('mylistings') ||
       location.pathname.split('/').includes('businessHome')
     ) {
-      console.log('hi from second if')
       setCustomClassName('my-listing')
     } else if (location.pathname.split('/').includes('')) {
-      console.log('hi from third if')
       setCustomClassName('main-screen')
     }
   }, [location, customClassName, searchValue])
