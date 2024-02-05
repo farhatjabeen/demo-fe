@@ -20,32 +20,8 @@ const routers = [
         childPath: '/findmissingitem/:itemNameAgain',
       },
       {
-        component: 'AddMoreDetails',
-        childPath: '/addMoredetails/:newItem/:location',
-      },
-      {
-        component: 'AddMoreDetails',
-        childPath: '/addMoreDetails',
-      },
-      {
-        component: 'AddMoreDetails',
-        childPath: '/addMoreDetails/:id',
-      },
-      {
-        component: 'BusinessItemDetails',
-        childPath: '/businessitemdetails/:id',
-      },
-      {
-        component: 'QueryPublished',
-        childPath: '/querypublished/:id',
-      },
-      {
         component: 'ClaimItem',
         childPath: '/claimitem/:id',
-      },
-      {
-        component: 'MyListings',
-        childPath: '/mylistings',
       },
       {
         component: 'ContactUs',
@@ -71,18 +47,6 @@ const routers = [
         component: 'BusinessSignUp',
         childPath: '/businessignup',
       },
-      {
-        component: 'CompanyProfile',
-        childPath: '/companyprofile',
-      },
-      {
-        component: 'AllItems',
-        childPath: '/allitems',
-      },
-      {
-        component: 'editDetails',
-        childPath: '/editdetails/:id',
-      },
 
       {
         component: 'AboutUs',
@@ -105,6 +69,10 @@ const routers = [
         childPath: '/businesshome/detailpage',
       },
       {
+        component: 'BusinessItemDetails',
+        childPath: '/businessitemdetails/:id',
+      },
+      {
         component: 'changePassword',
         childPath: '/changepassword',
       },
@@ -117,6 +85,39 @@ const routers = [
       {
         component: 'MyProfile',
         childPath: '/myProfile',
+      },
+      {
+        component: 'AddMoreDetails',
+        childPath: '/addMoredetails/:newItem/:location',
+      },
+      {
+        component: 'AddMoreDetails',
+        childPath: '/addMoreDetails',
+      },
+      {
+        component: 'AddMoreDetails',
+        childPath: '/addMoreDetails/:id',
+      },
+      
+      {
+        component: 'QueryPublished',
+        childPath: '/querypublished/:id',
+      },
+      {
+        component: 'MyListings',
+        childPath: '/mylistings',
+      },
+      {
+        component: 'CompanyProfile',
+        childPath: '/companyprofile',
+      },
+      {
+        component: 'AllItems',
+        childPath: '/allitems',
+      },
+      {
+        component: 'editDetails',
+        childPath: '/editdetails/:id',
       },
     ],
   },

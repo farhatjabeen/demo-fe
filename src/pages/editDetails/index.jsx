@@ -29,7 +29,6 @@ export default function EditBusinessDetails() {
   const [isUploaded, setIsUploaded] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(' ')
   const [selectedLocation, setSelectedLocation] = useState(' ')
-  const [cloudinaryId, setCloudinaryId] = useState([])
   const [itemImage, setItemImage] = useState([])
   const [isImage, setIsImage] = useState(true)
   const navigate = useNavigate()
@@ -53,7 +52,6 @@ export default function EditBusinessDetails() {
       locationIdentifiers: '',
       keywords: '',
       itemImage: '',
-      cloudinary_id: '',
     },
     resolver,
   })
@@ -86,7 +84,6 @@ export default function EditBusinessDetails() {
   useEffect(() => {
     if (itemDetails) {
       setItemImage(itemDetails?.itemImage)
-      setCloudinaryId(itemDetails?.cloudinary_id)
 
       methods.reset({
         itemName: itemDetails?.itemName || '',
@@ -99,7 +96,6 @@ export default function EditBusinessDetails() {
         locationIdentifiers: itemDetails?.locationIdentifiers || '',
         keywords: `${itemDetails?.keywords}` || '',
         itemImage: itemImage || '',
-        cloudinary_id: cloudinaryId || '',
       })
     }
   }, [itemDetails])
@@ -109,7 +105,6 @@ export default function EditBusinessDetails() {
     setFiles([])
     setIsUploaded(false)
     setItemImage([])
-    setCloudinaryId([])
   }
 
   const handleFileUpload = (e) => {
@@ -124,7 +119,6 @@ export default function EditBusinessDetails() {
   }
   const handleRemoveFile = (indexToRemove) => {
     setItemImage((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove))
-    setCloudinaryId((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove))
   }
 
   useEffect(() => {
@@ -139,9 +133,6 @@ export default function EditBusinessDetails() {
         setItemImage((prevFiles) =>
           prevFiles ? [...prevFiles, ...res.data.itemImage] : res.data.itemImage
         )
-        setCloudinaryId((prevFiles) =>
-          prevFiles ? [...prevFiles, ...res.data.cloudinary_id] : res.data.cloudinary_id
-        )
         setFiles([])
       })
     } else {
@@ -155,7 +146,6 @@ export default function EditBusinessDetails() {
         const inputString = methods.getValues().keywords
         methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','))
         methods.setValue('itemImage', itemImage)
-        methods.setValue('cloudinary_id', cloudinaryId)
         methods.setValue('itemCategory', selectedCategory)
         methods.setValue('location', selectedLocation)
         const dataNow = methods.getValues()
@@ -163,7 +153,7 @@ export default function EditBusinessDetails() {
           setIsImage(true)
           const updateNow = await dispatch(businessUpdateItems(id, dataNow))
           if (updateNow) {
-            navigate('/allItems')
+            navigate('/user/allItems')
           }
         } else {
           setIsImage(false)

@@ -32,7 +32,7 @@ export default function MyListings() {
   }, [location.search])
 
   const handleEditItem = (itemId) => {
-    navigate(`/addMoreDetails/${itemId}`)
+    navigate(`/user/addMoreDetails/${itemId}`)
   }
 
   const handleListingDelete = (itemId) => {
@@ -45,7 +45,7 @@ export default function MyListings() {
   }
 
   const handlePageChange = (pageNumber) => {
-    navigate(`/mylistings?page=${pageNumber}`)
+    navigate(`/user/mylistings?page=${pageNumber}`)
   }
 
   return (

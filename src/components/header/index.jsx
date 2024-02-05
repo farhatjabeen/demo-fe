@@ -117,22 +117,22 @@ const Header = (props) => {
             <div>
               {isBusiness ? (
                 <HeaderDropdown
-                  userName={loader ? 'Loading...' : businessUserInformation?.name}
+                  userName={loader ? '...' : businessUserInformation?.name}
                   linkTo="/businesssignin"
                   isBusiness={isBusiness}
                   titleOne="Dashboard"
-                  navigateOne="/allitems?page=1"
+                  navigateOne="/user/allitems?page=1"
                   titleTwo="My Profile"
-                  navigateTwo="/companyprofile"
+                  navigateTwo="/user/companyprofile"
                   handleLogout={handleLogout}
                 />
               ) : (
                 <HeaderDropdown
-                  userName={loader ? 'Loading...' : generalUserInformation?.name}
+                  userName={loader ? '...' : generalUserInformation?.name}
                   linkTo="/"
                   isBusiness={isBusiness}
                   titleOne="My listing"
-                  navigateOne="/mylistings?page=1"
+                  navigateOne="/user/mylistings?page=1"
                   titleTwo="My Profile"
                   navigateTwo="/user/myprofile"
                   handleLogout={handleLogout}

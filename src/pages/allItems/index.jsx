@@ -42,7 +42,7 @@ export default function AllItems() {
   }, [location.search])
 
   const handlePageChange = (pageNumber) => {
-    navigate(`/allitems?page=${pageNumber}`)
+    navigate(`/user/allitems?page=${pageNumber}`)
   }
   const itemsDescription = (description) => {
     const words = description.split(' ')
@@ -58,7 +58,7 @@ export default function AllItems() {
           <div className=" flex justify-end w-full">
             <button
               className="cursor-pointer h-10 w-36 bg-primary-color rounded-lg flex justify-center items-center"
-              onClick={() => navigate('/addMoreDetails')}
+              onClick={() => navigate('/user/addMoreDetails')}
             >
               <HiPlus className="mr-2" /> Add Item
             </button>
@@ -156,7 +156,7 @@ export default function AllItems() {
                               size={24}
                               className="text-gray-500 hover:text-black ml-1 cursor-pointer"
                               onClick={(e) => {
-                                navigate(`/editdetails/${items._id}`)
+                                navigate(`/user/editdetails/${items._id}`)
                                 e.stopPropagation()
                               }}
                             />

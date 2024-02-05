@@ -38,7 +38,6 @@ export default function AddMoreDetails() {
   const itemCategories = items ? Object.values(items) : []
   const cities = useSelector(locationDetails)
   const citiesInSerbia = cities ? Object.values(cities) : []
-  const [cloudinaryId, setCloudinaryId] = useState([])
   const [itemImage, setItemImage] = useState([])
   const userDetails = useSelector(userData)
   const itemDetailsById = useSelector(searchDetailsById)
@@ -57,7 +56,6 @@ export default function AddMoreDetails() {
     methods.setValue('itemName', reportDetails?.newItem)
     methods.setValue('location', reportDetails?.location)
     methods.setValue('itemImage', null)
-    methods.setValue('cloudinary_id', null)
     methods.setValue('keywords', null)
     setIsUploaded(false)
     setImageLoader(true)
@@ -66,7 +64,6 @@ export default function AddMoreDetails() {
   useEffect(() => {
     if (itemDetailsById && reportDetails.id) {
       setItemImage(itemDetailsById?.itemImage)
-      setCloudinaryId(itemDetailsById?.cloudinary_id)
       if (itemDetailsById?.itemImage) {
         setImageLoader(true)
       }
@@ -82,7 +79,6 @@ export default function AddMoreDetails() {
         itemName: itemDetailsById?.itemName || '',
         keywords: `${itemDetailsById?.keywords}` || '',
         itemImage: itemImage || '',
-        cloudinary_id: cloudinaryId || '',
       })
     }
   }, [itemDetailsById])
@@ -103,14 +99,13 @@ export default function AddMoreDetails() {
       itemName: '',
       keywords: '',
       itemImage: '',
-      cloudinary_id: '',
     },
     resolver,
   })
 
   useEffect(() => {
     if (newItemId) {
-      navigate(`/querypublished/${newItemId}`)
+      navigate(`/user/querypublished/${newItemId}`)
     }
   }, [newItemId])
 
@@ -132,10 +127,9 @@ export default function AddMoreDetails() {
           const inputString = methods.getValues().keywords
           methods.setValue('keywords', inputString.split(','))
           methods.setValue('itemImage', itemImage)
-          methods.setValue('cloudinary_id', cloudinaryId)
           const addedItem = await dispatch(businessAddMoreDetails(data))
           if (addedItem) {
-            navigate('/allitems?page=1')
+            navigate('/user/allitems?page=1')
           }
         }
       } else if (userDetails?.role === 'USER' && !reportDetails.id) {
@@ -143,7 +137,6 @@ export default function AddMoreDetails() {
           const inputString = methods.getValues().keywords
           methods.setValue('keywords', inputString.split(','))
           methods.setValue('itemImage', itemImage)
-          methods.setValue('cloudinary_id', cloudinaryId)
           const addItem = dispatch(userAddMoreDetails(data))
           addItem?.then((res) => {
             setNewItemId(res?.data?._id)
@@ -155,11 +148,9 @@ export default function AddMoreDetails() {
           const inputString = methods.getValues().keywords
           methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','))
           methods.setValue('itemImage', itemImage)
-          methods.setValue('cloudinary_id', cloudinaryId)
           const dataNow = methods.getValues()
           const isEdited = await dispatch(userEditItemDetails(reportDetails.id, dataNow))
           isEdited && setItemImage([])
-          isEdited && setCloudinaryId([])
           isEdited && navigate(window.history.back())
         } else {
           setImageLoader(false)
@@ -174,7 +165,6 @@ export default function AddMoreDetails() {
     setFiles([])
     setIsUploaded(false)
     setItemImage([])
-    setCloudinaryId([])
   }
 
   const handleFileUpload = (e) => {
@@ -192,7 +182,6 @@ export default function AddMoreDetails() {
 
   const handleDbFileDelete = (index) => {
     setItemImage((prevFiles) => prevFiles.filter((_, i) => i !== index))
-    setCloudinaryId((prevFiles) => prevFiles.filter((_, i) => i !== index))
     if (!reportDetails.id) {
       setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index))
     }
@@ -210,7 +199,6 @@ export default function AddMoreDetails() {
         ?.then((res) => {
           if (imagesResponse) {
             setIsImageUploaded(false)
-            setCloudinaryId(res?.data?.cloudinary_id)
             setItemImage(res?.data?.itemImage)
             if (reportDetails.id) {
               setImageLoader(true)
@@ -221,9 +209,6 @@ export default function AddMoreDetails() {
           if (itemImage && reportDetails.id) {
             setItemImage((filesInside) =>
               filesInside ? [...filesInside, ...itemImage] : itemImage
-            )
-            setCloudinaryId((filesInside) =>
-              filesInside ? [...filesInside, ...cloudinaryId] : cloudinaryId
             )
             setImageLoader(true)
             setFiles([])
@@ -359,7 +344,7 @@ export default function AddMoreDetails() {
                     <ImageUpload
                       name={reportDetails?.id ? 'imageUploads' : 'itemImage'}
                       designClass={
-                        cloudinaryId?.length > 0 || isUploaded
+                        itemImage?.length > 0 || isUploaded
                           ? 'xl:w-80 xl:mr-2 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer'
                           : 'xl:w-96 md:w-96 sm:w-64 h-14 sm:h-12 rounded-lg bg-primary-color flex items-center justify-center cursor-pointer'
                       }
@@ -369,7 +354,7 @@ export default function AddMoreDetails() {
                       handleFileUpload={handleFileUpload}
                     />
 
-                    {cloudinaryId?.length > 0 || isUploaded ? (
+                    {itemImage?.length > 0 || isUploaded ? (
                       <div>
                         <button
                           onClick={handleReset}
