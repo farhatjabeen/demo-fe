@@ -687,48 +687,50 @@ export const adminUpdateFoundItems = (itemId, data) => (dispatch) => {
 }
 
 //delete in admin
-export const deleteItem = (itemId, context, currentPage, category='', searchTerm='') => (dispatch) => {
-  try {
-    if (context === 'foundItems') {
-      apiRequest({
-        url: `${endpoints.apiPath.items.deleteItem}?itemId=${itemId}`,
-        method: endpoints.ApiMethods.DELETE,
-        isAuth: true,
-        tokenType: 'adminToken',
-      }).then(() => {
-        Toast({ type: 'success', message: 'Item deleted successfully.' })
-      })
-      dispatch(adminFetchItems(currentPage,10,category,searchTerm))
-    } else if (context === 'user') {
-      apiRequest({
-        url: `${endpoints.apiPath.items.deleteUser}?userId=${itemId}`,
-        method: endpoints.ApiMethods.DELETE,
-        isAuth: true,
-        tokenType: 'adminToken',
-      }).then(() => {
-        Toast({ type: 'success', message: 'Item deleted successfully.' })
-      })
-      dispatch(adminFetchUser(currentPage,10,category,searchTerm))
-    } else if (context === 'businessUser') {
-      apiRequest({
-        url: `${endpoints.apiPath.items.deleteBusinessUser}?userId=${itemId}`,
-        method: endpoints.ApiMethods.DELETE,
-        isAuth: true,
-        tokenType: 'adminToken',
-      }).then(() => {
-        Toast({ type: 'success', message: 'Item deleted successfully.' })
-      })
-      dispatch(adminFetchBusinessUser(currentPage,10,category,searchTerm))
-    }
-  } catch (error) {
-    console.error(error)
-    if (error?.status === 400 && error?.data === 'Item not found') {
-      Toast({ type: 'error', message: 'Item not found. Please refresh the page.' })
-    } else {
-      Toast({ type: 'error', message: 'Error deleting item.' })
+export const deleteItem =
+  (itemId, context, currentPage, category = '', searchTerm = '') =>
+  (dispatch) => {
+    try {
+      if (context === 'foundItems') {
+        apiRequest({
+          url: `${endpoints.apiPath.items.deleteItem}?itemId=${itemId}`,
+          method: endpoints.ApiMethods.DELETE,
+          isAuth: true,
+          tokenType: 'adminToken',
+        }).then(() => {
+          Toast({ type: 'success', message: 'Item deleted successfully.' })
+        })
+        dispatch(adminFetchItems(currentPage, 10, category, searchTerm))
+      } else if (context === 'user') {
+        apiRequest({
+          url: `${endpoints.apiPath.items.deleteUser}?userId=${itemId}`,
+          method: endpoints.ApiMethods.DELETE,
+          isAuth: true,
+          tokenType: 'adminToken',
+        }).then(() => {
+          Toast({ type: 'success', message: 'Item deleted successfully.' })
+        })
+        dispatch(adminFetchUser(currentPage, 10, category, searchTerm))
+      } else if (context === 'businessUser') {
+        apiRequest({
+          url: `${endpoints.apiPath.items.deleteBusinessUser}?userId=${itemId}`,
+          method: endpoints.ApiMethods.DELETE,
+          isAuth: true,
+          tokenType: 'adminToken',
+        }).then(() => {
+          Toast({ type: 'success', message: 'Item deleted successfully.' })
+        })
+        dispatch(adminFetchBusinessUser(currentPage, 10, category, searchTerm))
+      }
+    } catch (error) {
+      console.error(error)
+      if (error?.status === 400 && error?.data === 'Item not found') {
+        Toast({ type: 'error', message: 'Item not found. Please refresh the page.' })
+      } else {
+        Toast({ type: 'error', message: 'Error deleting item.' })
+      }
     }
   }
-}
 
 //admin export file
 export const adminExportItems = (itemCategory, itemName) => async (dispatch) => {

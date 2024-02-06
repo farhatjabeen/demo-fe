@@ -148,10 +148,7 @@ export const addMoreDetailsItemSchema = yup.object().shape({
 })
 
 export const myProfileSchema = yup.object({
-  emailMailId: yup
-    .string()
-    .email()
-    .required('Email required'),
+  emailMailId: yup.string().email().required('Email required'),
   mobileNumber: yup
     .string()
     .matches(serbiaMobileNumberRegExp, 'Invalid number')

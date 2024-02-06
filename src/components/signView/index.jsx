@@ -26,7 +26,7 @@ function SignInView() {
       await methods.trigger('emailMailId')
 
       if (methods.formState.errors.emailMailId) {
-        Toast({type:"error", message:'Email is not valid'})
+        Toast({ type: 'error', message: 'Email is not valid' })
         return
       }
       const emailMailId = methods.getValues().emailMailId

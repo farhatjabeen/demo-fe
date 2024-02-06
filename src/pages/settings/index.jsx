@@ -30,7 +30,7 @@ const Settings = () => {
       const reset = await dispatch(adminChangePassword(data))
       if (reset) {
         navigate('/admin/signin')
-      } 
+      }
     } catch (error) {
       console.log('submitData errors', error)
     }

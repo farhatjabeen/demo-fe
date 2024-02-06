@@ -165,7 +165,6 @@ function User() {
                 />
               </>
             )}
-
           </div>
           <div label="Business" route="/admin/user/businessUser?page=1">
             <div className={`flex  ${isId ? 'my-8' : 'mt-8 mb-0'}`}>

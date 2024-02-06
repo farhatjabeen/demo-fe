@@ -153,7 +153,7 @@ export default function EditBusinessDetails() {
           setIsImage(true)
           const updateNow = await dispatch(businessUpdateItems(id, dataNow))
           if (updateNow) {
-            window.history.back();
+            window.history.back()
           }
         } else {
           setIsImage(false)

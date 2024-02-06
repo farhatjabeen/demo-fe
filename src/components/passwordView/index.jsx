@@ -27,7 +27,7 @@ const PasswordView = () => {
       const reset = dispatch(adminChangePassword(data))
       if (reset) {
         navigate('/businessSignin')
-      } 
+      }
     } catch (error) {
       console.log('submitData errors', error)
     }

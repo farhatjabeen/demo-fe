@@ -9,7 +9,6 @@ export function MainLayout(props) {
   const location = useLocation()
 
   useEffect(() => {
-    
     if (
       location.pathname.split('/').includes('findMissingItem') ||
       location.pathname.split('/').includes('addMoreDetails')

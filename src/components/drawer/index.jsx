@@ -33,7 +33,9 @@ const SideMenu = () => {
 
   // const settingsTabWidth = isCollapsed ? 'w-12' : 'w-52'
   return (
-    <div className={`sidebar relative bg-grey-light shadow-slate-50 m-4 pl-4 ${isCollapsed ? 'w-32' : 'w-64 mr-10'}`}>
+    <div
+      className={`sidebar relative bg-grey-light shadow-slate-50 m-4 pl-4 ${isCollapsed ? 'w-32' : 'w-64 mr-10'}`}
+    >
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
         {isCollapsed ? (
           <div className="flex justify-between ">
@@ -74,12 +76,12 @@ const SideMenu = () => {
         <li className={`mb-4`} onClick={() => setShowSubUSer(!showSubUser)}>
           <div className="cursor-pointer">
             <Link to="/admin/user/users?page=1">
-            <span className="pl-2 flex">
-              <FiUsers size={24} />
-              <div className="pl-4 ">
-                <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
-              </div>
-            </span>
+              <span className="pl-2 flex">
+                <FiUsers size={24} />
+                <div className="pl-4 ">
+                  <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
+                </div>
+              </span>
             </Link>
           </div>
         </li>

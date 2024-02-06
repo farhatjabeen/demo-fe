@@ -30,7 +30,7 @@ export default function BusinessSignUp() {
   const navigate = useNavigate()
   const [companyLogo, setCompanyLogo] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  
+
   const methods = useForm({
     defaultValues: {
       name: '',

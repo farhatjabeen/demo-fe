@@ -32,7 +32,7 @@ function FoundItems() {
   const pageNow = searchParams.get('page')
   const currentItem = searchParams.get('item')
   const currentCategory = searchParams.get('category')
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
@@ -177,31 +177,28 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      {
-        loader ?
-          <p>Loading...</p>
-          :
-          <>
-            <Table
-              headers={tableHeaders}
-              category={currentCategory}
-              searchTerm={currentItem}
-              data={searchItem.item ? data?.list : tableData?.list}
-              showEdit={true}
-              context="foundItems"
-              currentPage={pageNow}
-            />
+      {loader ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <Table
+            headers={tableHeaders}
+            category={currentCategory}
+            searchTerm={currentItem}
+            data={searchItem.item ? data?.list : tableData?.list}
+            showEdit={true}
+            context="foundItems"
+            currentPage={pageNow}
+          />
 
-            <Pagination
-              isBlueBackground={true}
-              currentPage={searchItem.item ? data?.page : tableData?.pageMeta?.page}
-              totalPages={searchItem.item ? data?.totalPages : tableData?.pageMeta?.totalPages}
-              onPageChange={handlePageChange}
-            />
-          </>
-      }
-
-
+          <Pagination
+            isBlueBackground={true}
+            currentPage={searchItem.item ? data?.page : tableData?.pageMeta?.page}
+            totalPages={searchItem.item ? data?.totalPages : tableData?.pageMeta?.totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </div>
   )
 }
