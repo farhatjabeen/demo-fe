@@ -687,7 +687,7 @@ export const adminUpdateFoundItems = (itemId, data) => (dispatch) => {
 }
 
 //delete in admin
-export const deleteItem = (itemId, context, currentPage) => (dispatch) => {
+export const deleteItem = (itemId, context, currentPage, category='', searchTerm='') => (dispatch) => {
   try {
     if (context === 'foundItems') {
       apiRequest({
@@ -698,7 +698,7 @@ export const deleteItem = (itemId, context, currentPage) => (dispatch) => {
       }).then(() => {
         Toast({ type: 'success', message: 'Item deleted successfully.' })
       })
-      dispatch(adminFetchItems(currentPage))
+      dispatch(adminFetchItems(currentPage,10,category,searchTerm))
     } else if (context === 'user') {
       apiRequest({
         url: `${endpoints.apiPath.items.deleteUser}?userId=${itemId}`,
@@ -708,7 +708,7 @@ export const deleteItem = (itemId, context, currentPage) => (dispatch) => {
       }).then(() => {
         Toast({ type: 'success', message: 'Item deleted successfully.' })
       })
-      dispatch(adminFetchUser(currentPage))
+      dispatch(adminFetchUser(currentPage,10,category,searchTerm))
     } else if (context === 'businessUser') {
       apiRequest({
         url: `${endpoints.apiPath.items.deleteBusinessUser}?userId=${itemId}`,
@@ -718,7 +718,7 @@ export const deleteItem = (itemId, context, currentPage) => (dispatch) => {
       }).then(() => {
         Toast({ type: 'success', message: 'Item deleted successfully.' })
       })
-      dispatch(adminFetchBusinessUser(currentPage))
+      dispatch(adminFetchBusinessUser(currentPage,10,category,searchTerm))
     }
   } catch (error) {
     console.error(error)

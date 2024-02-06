@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux'
 import { deleteItem } from '../../redux/reducers/itemsSlice'
 import CommonModal from '../common/commonModal'
 
-const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId, context, currentPage }) => {
+const DeleteModal = ({ isOpen, onCancel, onDelete, selectedItemId, category, searchTerm, context, currentPage }) => {
   const dispatch = useDispatch()
 
   const handleConfirmDelete = () => {
-    dispatch(deleteItem(selectedItemId, context, currentPage))
+    dispatch(deleteItem(selectedItemId, context, currentPage,category,searchTerm))
     onDelete()
   }
 

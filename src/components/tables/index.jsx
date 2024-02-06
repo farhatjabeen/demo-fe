@@ -104,6 +104,8 @@ const Table = ({ headers, data, showEdit = false, context, searchTerm, category,
         }}
         selectedItemId={selectedItemId}
         context={context}
+        searchTerm={searchTerm} 
+        category={category}
         currentPage={currentPage}
       />
     </div>

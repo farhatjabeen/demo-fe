@@ -29,23 +29,32 @@ function User() {
   const [searchParams] = useSearchParams()
   const pageNow = searchParams.get('page')
   const currentUser = searchParams.get('name')
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
     const page = queryParams.get('page')
     if (!currentUser && window.location.pathname === '/admin/user/users') {
       setSearchUserTerm('')
-      dispatch(adminFetchUser(page, PageLimit))
+      setResetHandle(true)
+      const fetchingUser = dispatch(adminFetchUser(page, PageLimit))
+      fetchingUser.then(() => setResetHandle(false))
     }
 
     if (!currentUser && window.location.pathname === '/admin/user/businessUser') {
       setSearchUserTerm('')
-      dispatch(adminFetchBusinessUser(page, PageLimit))
+      setResetHandle(true)
+      const fetchingUser = dispatch(adminFetchBusinessUser(page, PageLimit))
+      fetchingUser.then(() => setResetHandle(false))
     }
 
     if (currentUser && window.location.pathname === '/admin/user/users') {
-      dispatch(adminFetchUser(page, PageLimit, currentUser))
+      setResetHandle(true)
+      const fetchingUser = dispatch(adminFetchUser(page, PageLimit, currentUser))
+      fetchingUser.then(() => setResetHandle(false))
     } else if (currentUser && window.location.pathname === '/admin/user/businessUser') {
-      dispatch(adminFetchBusinessUser(page, PageLimit, currentUser))
+      setResetHandle(true)
+      const fetchingUser = dispatch(adminFetchBusinessUser(page, PageLimit, currentUser))
+      fetchingUser.then(() => setResetHandle(false))
     }
   }, [location.search, navigate, PageLimit])
 
@@ -53,12 +62,14 @@ function User() {
     setResetHandle(true)
     if (tab === 1) {
       setSearchUserTerm('')
+      navigate('/admin/user/users?page=1')
       const values = await dispatch(adminFetchUser(pageNow, PageLimit))
       if (values) {
         setResetHandle(false)
       }
     } else if (tab === 2) {
       setSearchBusinessTerm('')
+      navigate('/admin/user/businessUser?page=1')
       const values = await dispatch(adminFetchBusinessUser(pageNow, PageLimit))
       if (values) {
         setResetHandle(false)
@@ -139,19 +150,22 @@ function User() {
             {resetHandle ? (
               <p>Loading...</p>
             ) : (
-              <Table
-                currentPage={pageNow}
-                headers={userHeaders}
-                data={tableData?.list}
-                context="user"
-              />
+              <>
+                <Table
+                  currentPage={pageNow}
+                  headers={userHeaders}
+                  data={tableData?.list}
+                  context="user"
+                />
+                <Pagination
+                  isBlueBackground={true}
+                  currentPage={tableData?.pageMeta?.page}
+                  totalPages={tableData?.pageMeta?.totalPages}
+                  onPageChange={handlePageChange1}
+                />
+              </>
             )}
-            <Pagination
-              isBlueBackground={true}
-              currentPage={tableData?.pageMeta?.page}
-              totalPages={tableData?.pageMeta?.totalPages}
-              onPageChange={handlePageChange1}
-            />
+
           </div>
           <div label="Business" route="/admin/user/businessUser?page=1">
             <div className={`flex  ${isId ? 'my-8' : 'mt-8 mb-0'}`}>
@@ -182,18 +196,25 @@ function User() {
               </div>
             </div>
             {isId ? '' : <p className="text-sm text-red">Valid ID required</p>}
-            <Table
-              currentPage={pageNow}
-              headers={businessHeaders}
-              data={tableBusinessData?.list}
-              context="businessUser"
-            />
-            <Pagination
-              isBlueBackground={true}
-              currentPage={tableBusinessData?.pageMeta?.page}
-              totalPages={tableBusinessData?.pageMeta?.totalPages}
-              onPageChange={handlePageChange2}
-            />
+
+            {resetHandle ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                <Table
+                  currentPage={pageNow}
+                  headers={businessHeaders}
+                  data={tableBusinessData?.list}
+                  context="businessUser"
+                />
+                <Pagination
+                  isBlueBackground={true}
+                  currentPage={tableBusinessData?.pageMeta?.page}
+                  totalPages={tableBusinessData?.pageMeta?.totalPages}
+                  onPageChange={handlePageChange2}
+                />
+              </>
+            )}
           </div>
         </Tabs>
       </div>
