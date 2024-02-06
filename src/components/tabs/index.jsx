@@ -6,7 +6,6 @@ const Tabs = ({ children, className }) => {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState(0)
 
-
   const tabs = React.Children.map(children, (child) => ({
     label: child.props.label,
     route: child.props.route,

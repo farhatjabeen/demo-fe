@@ -22,7 +22,7 @@ import {
 } from '../../validations'
 import TextInput from '../common/textInput'
 import { Toast } from '../toast'
-import ScrollLock from './scrollLock.js';
+import ScrollLock from './scrollLock.js'
 
 const PopoverComponent = () => {
   // local states
