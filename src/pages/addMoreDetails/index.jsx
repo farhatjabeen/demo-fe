@@ -169,8 +169,6 @@ export default function AddMoreDetails() {
 
   const handleFileUpload = (e) => {
     const selectedFiles = e.target.files
-    console.log(selectedFiles, 'selectedFiles')
-    console.log(selectedFiles?.name, 'selectedFiles?.name')
     setFiles((prevFiles) => {
       const newFiles = prevFiles ? [...prevFiles, ...selectedFiles] : selectedFiles
       if (newFiles) {

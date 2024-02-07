@@ -12,6 +12,7 @@ import { goToTop } from '../../utils/helper'
 export default function AllItems() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [selectedItemId, setSelectedItemId] = useState(null)
+  const [loader, setLoader] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const tableData = useSelector(itemDetails)
@@ -25,10 +26,11 @@ export default function AllItems() {
   }
 
   const handleDeleteItem = async () => {
-    console.log(`Deleting item with ID ${selectedItemId}`)
+    setLoader(true)
     const afterDelete = await dispatch(deleteBusinessItem(selectedItemId))
     if (afterDelete) {
       dispatch(fetchItems(pageNow))
+      setLoader(false)
     }
     setDeleteModalOpen(false)
     setSelectedItemId(null)
@@ -38,7 +40,9 @@ export default function AllItems() {
     const queryParams = new URLSearchParams(location.search)
     const page = queryParams.get('page')
     goToTop()
-    dispatch(fetchItems(page))
+    setLoader(true)
+    const fetchedItems = dispatch(fetchItems(page))
+    fetchedItems?.then(() => setLoader(false))
   }, [location.search])
 
   const handlePageChange = (pageNumber) => {
@@ -72,8 +76,9 @@ export default function AllItems() {
           <div className="text-base font-medium text-white">TOTAL FOUND ITEMS</div>
           <div className="text-4xl font-bold text-white">{tableData?.pageMeta?.total}</div>
         </div>
-
-        {tableData?.list?.length ? (
+        {loader ? (
+          <p className="flex justify-center mb-7 font-bold">Loading...</p>
+        ) : tableData?.list?.length ? (
           <>
             <div className="mt-10 mb-4 font-semibold text-2xl">All Items</div>
 

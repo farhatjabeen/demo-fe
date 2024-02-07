@@ -29,7 +29,6 @@ export default function CompanyProfile() {
   const categories = useSelector(categoryDetails)
   const companyCategories = categories ? Object.values(categories) : []
   const userProfileData = useSelector(userProfile)
-  console.log(userProfileData.companyLocation, 'userProfileData.location')
   const [checkCurrentPassword, setCheckCurrentPassword] = useState(true)
   const [checkRetypePassword, setCheckRetypePassword] = useState(true)
   const dispatch = useDispatch()
@@ -62,7 +61,6 @@ export default function CompanyProfile() {
     dispatch(categoryDropdownValues())
 
     getUser?.then((res) => {
-      console.log(res?.data?.companyLocation, 'respi')
       methods.reset({
         companyName: res?.data?.companyName || '',
         companyCategory: res?.data?.companyCategory || '',

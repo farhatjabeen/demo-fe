@@ -47,10 +47,8 @@ export default function FindMissingItem() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
     const page = queryParams.get('page')
-    console.log(page, 'page')
 
     if (searchParameters?.location && searchParameters?.location?.length > 0) {
-      console.log(searchParameters?.location, 'searchParameters?.location')
       setIsLoader(true)
       const locationItem = dispatch(
         searchByLocation(searchParameters?.itemName, searchParameters?.location, page)

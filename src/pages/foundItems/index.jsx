@@ -32,12 +32,14 @@ function FoundItems() {
   const pageNow = searchParams.get('page')
   const currentItem = searchParams.get('item')
   const currentCategory = searchParams.get('category')
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
     const page = queryParams.get('page')
     dispatch(itemDropdownValues())
     if (currentItem || currentCategory) {
+      setLoader(true)
       const searchNow = dispatch(
         adminFetchItems(
           page,
@@ -48,15 +50,18 @@ function FoundItems() {
       )
       searchNow.then((res) => {
         setData(res?.data)
+        setLoader(false)
       })
     }
 
     if (!currentItem && !currentCategory && pageNow) {
       setSearchTerm('')
       setSelectedCategory('')
+      setLoader(true)
       const searchNow = dispatch(adminFetchItems(page))
       searchNow.then((res) => {
         setData(res?.data)
+        setLoader(false)
       })
     }
   }, [location.search])
@@ -70,8 +75,12 @@ function FoundItems() {
   const handleReset = () => {
     setSearchTerm('')
     setSelectedCategory('')
-    navigate(`/admin/user/foundItems?page=1`)
-    dispatch(adminFetchItems(pageNow, PageLimit))
+    navigate('/admin/user/foundItems?page=1')
+    setLoader(true)
+    const resetting = dispatch(adminFetchItems(pageNow, PageLimit))
+    resetting.then(() => {
+      setLoader(false)
+    })
   }
 
   const handleSearch = () => {
@@ -82,10 +91,10 @@ function FoundItems() {
     } else if (searchTerm && !selectedCategory) {
       navigate(`/admin/user/foundItems?item=${searchTerm}&page=1`)
     }
-    const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, currentCategory, currentItem))
-    searchNow.then((res) => {
-      setData(res?.data)
-    })
+    // const searchNow = dispatch(adminFetchItems(pageNow, PageLimit, currentCategory, currentItem))
+    // searchNow.then((res) => {
+    //   setData(res?.data)
+    // })
   }
 
   const tableHeaders = [
@@ -168,22 +177,28 @@ function FoundItems() {
           </div>
         </div>
       </div>
-      <Table
-        headers={tableHeaders}
-        category={searchItem?.item}
-        searchTerm={searchTerm}
-        data={searchItem.item ? data?.list : tableData?.list}
-        showEdit={true}
-        context="foundItems"
-        currentPage={pageNow}
-      />
+      {loader ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <Table
+            headers={tableHeaders}
+            category={currentCategory}
+            searchTerm={currentItem}
+            data={searchItem.item ? data?.list : tableData?.list}
+            showEdit={true}
+            context="foundItems"
+            currentPage={pageNow}
+          />
 
-      <Pagination
-        isBlueBackground={true}
-        currentPage={searchItem.item ? data?.page : tableData?.pageMeta?.page}
-        totalPages={searchItem.item ? data?.totalPages : tableData?.pageMeta?.totalPages}
-        onPageChange={handlePageChange}
-      />
+          <Pagination
+            isBlueBackground={true}
+            currentPage={searchItem.item ? data?.page : tableData?.pageMeta?.page}
+            totalPages={searchItem.item ? data?.totalPages : tableData?.pageMeta?.totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </div>
   )
 }

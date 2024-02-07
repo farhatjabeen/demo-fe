@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import useValidationResolver from '../../hooks/useValidationResolver'
 import TextInput from '../../components/common/textInput'
 import { adminChangePassword } from '../../redux/reducers/userSlice'
+import { Toast } from '../toast'
 
 const PasswordView = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -26,8 +27,6 @@ const PasswordView = () => {
       const reset = dispatch(adminChangePassword(data))
       if (reset) {
         navigate('/businessSignin')
-      } else {
-        console.log('Password reset failed')
       }
     } catch (error) {
       console.log('submitData errors', error)

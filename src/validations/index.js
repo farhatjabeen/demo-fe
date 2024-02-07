@@ -81,7 +81,6 @@ export const addMoreDetailsSchema = yup.object({
   location: yup.string().required('Location required'),
   locationIdentifiers: yup
     .string()
-    // .matches(spaceRegex, 'Invalid characters found')
     .matches(descriptionRegex, 'Invalid characters found')
     .required('Landmark required'),
   itemDescription: yup
@@ -124,8 +123,6 @@ export const addMoreDetailsItemSchema = yup.object().shape({
   locationIdentifiers: yup
     .string()
     .matches(descriptionRegex, 'Invalid characters found')
-    // .matches(spaceRegex, 'Invalid characters found')
-    // .matches(nameRegex, 'Invalid characters used')
     .required('Landmark required'),
   itemDescription: yup
     .string()
@@ -151,11 +148,7 @@ export const addMoreDetailsItemSchema = yup.object().shape({
 })
 
 export const myProfileSchema = yup.object({
-  emailMailId: yup
-    .string()
-    .email()
-    // .matches(emailRexExp, 'Invalid email address')
-    .required('Email required'),
+  emailMailId: yup.string().email().required('Email required'),
   mobileNumber: yup
     .string()
     .matches(serbiaMobileNumberRegExp, 'Invalid number')

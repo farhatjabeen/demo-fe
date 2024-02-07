@@ -133,7 +133,6 @@ const EditFoundItems = () => {
         const inputString = methods.getValues().keywords
         methods.setValue('keywords', inputString.replace(/^"(.*)"$/, '$1').split(','))
         const dataNow = methods.getValues()
-        console.log(itemImage, 'itemImage')
         if (itemImage.length) {
           setIsImage(true)
           const updateNow = await dispatch(adminUpdateFoundItems(id, dataNow))

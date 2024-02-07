@@ -80,7 +80,6 @@ const Pagination = ({ isBlueBackground, currentPage = 1, totalPages = 0, onPageC
             ${currentPage === totalPages || totalPages === 0 ? 'cursor-not-allowed  text-grey' : ''}`}
               onClick={(event) => {
                 if (currentPage < totalPages) {
-                  // console.log("pages", currentPage, totalPages, currentPage < totalPages)
                   onPageChange(currentPage + 1)
                 }
                 event.preventDefault()

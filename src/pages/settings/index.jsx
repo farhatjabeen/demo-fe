@@ -8,6 +8,7 @@ import useValidationResolver from '../../hooks/useValidationResolver'
 import TextInput from '../../components/common/textInput'
 import adminPasswordimage from '../../assets/images/adminPasswordimage.png'
 import { adminChangePassword } from '../../redux/reducers/userSlice'
+import { Toast } from '../../components/toast'
 
 const Settings = () => {
   const navigate = useNavigate()
@@ -29,8 +30,6 @@ const Settings = () => {
       const reset = await dispatch(adminChangePassword(data))
       if (reset) {
         navigate('/admin/signin')
-      } else {
-        console.log('Password reset failed')
       }
     } catch (error) {
       console.log('submitData errors', error)

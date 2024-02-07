@@ -28,8 +28,6 @@ const Header = (props) => {
   const [backButton, setBackButton] = useState(false)
   const [loader, setLoader] = useState(false)
 
-  console.log(businessUserInformation, 'userName')
-
   useEffect(() => {
     if (
       window.location.pathname !== '/businessignup' &&
@@ -92,7 +90,6 @@ const Header = (props) => {
     }
   }
 
-  console.log(generalUserInformation?.name?.length, 'generalUserInformation?.name?.length')
   return (
     <div className="headerContainer" style={{ position: 'relative', zIndex: 50 }}>
       {backButton && (

@@ -7,6 +7,7 @@ import useValidationResolver from '../../hooks/useValidationResolver'
 import { loginSchema } from '../../validations'
 import { businessForgotPassword, loginUser } from '../../redux/reducers/userSlice'
 import { Link } from 'react-router-dom'
+import { Toast } from '../../components/toast'
 
 export default function BusinessSignIn() {
   const [showPassword, setShowPassword] = useState(false)
@@ -26,7 +27,7 @@ export default function BusinessSignIn() {
     try {
       await methods.trigger('emailMailId')
       if (methods.formState.errors.emailMailId) {
-        console.log('Email is not valid')
+        Toast({ type: 'error', message: 'Email is not valid' })
         return
       }
       const emailMailId = methods.getValues().emailMailId

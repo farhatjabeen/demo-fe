@@ -31,9 +31,11 @@ const SideMenu = () => {
     logout && navigate('/admin/signIn')
   }
 
-  const settingsTabWidth = isCollapsed ? 'w-12' : 'w-52'
+  // const settingsTabWidth = isCollapsed ? 'w-12' : 'w-52'
   return (
-    <div className={`sidebar relative bg-grey-light shadow-slate-50 m-4 pl-4`}>
+    <div
+      className={`sidebar relative bg-grey-light shadow-slate-50 m-4 pl-4 ${isCollapsed ? 'w-32' : 'w-64 mr-10'}`}
+    >
       <div className="toggle-collapse " onClick={handleToggleCollapse}>
         {isCollapsed ? (
           <div className="flex justify-between ">
@@ -45,7 +47,7 @@ const SideMenu = () => {
         ) : (
           <div className="flex justify-between">
             <img src={logo} alt="Logo" className="h-16 w-auto" />
-            <div className="p-4 cursor-pointer pl-4">
+            <div className="p-4 cursor-pointer pl-20">
               <AiOutlineMenuFold size={30} color="grey" />
             </div>
           </div>
@@ -56,8 +58,8 @@ const SideMenu = () => {
           <li
             className={`${
               window.location.pathname.includes('/admin/user/foundItems')
-                ? ' bg-light-blue text-blue font-bold py-2 rounded-lg'
-                : ' '
+                ? ' bg-light-blue text-blue font-bold h-9 flex items-center rounded-lg'
+                : 'h-9 flex items-center'
             } ${!isCollapsed ? '' : 'w-10'}`}
           >
             <Link to="/admin/user/foundItems?page=1">
@@ -73,19 +75,21 @@ const SideMenu = () => {
 
         <li className={`mb-4`} onClick={() => setShowSubUSer(!showSubUser)}>
           <div className="cursor-pointer">
-            <span className="pl-2 flex">
-              <FiUsers size={24} onClick={handleToggleCollapse} />
-              <div className="pl-4 ">
-                <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
-              </div>
-            </span>
+            <Link to="/admin/user/users?page=1">
+              <span className="pl-2 flex">
+                <FiUsers size={24} />
+                <div className="pl-4 ">
+                  <p className={!isCollapsed ? '' : 'hidden'}>Users</p>
+                </div>
+              </span>
+            </Link>
           </div>
         </li>
         {!isCollapsed && showSubUser && (
           <>
             <li
-              className={`mb-4 w-64 pl-2 
-            ${window.location.pathname === '/admin/user/users' ? 'bg-light-blue text-blue font-bold py-2 rounded-lg' : ''}`}
+              className={` w-64 pl-2 
+            ${window.location.pathname === '/admin/user/users' ? 'bg-light-blue text-blue font-bold h-10 flex items-center rounded-lg' : 'h-10 flex items-center'}`}
             >
               <Link to="/admin/user/users?page=1">
                 <span className="pl-8 flex">
@@ -97,7 +101,7 @@ const SideMenu = () => {
 
             <li
               className={`mb-4 w-64 pl-2 
-            ${window.location.pathname === '/admin/user/businessUser' ? 'bg-light-blue text-blue font-bold py-2 rounded-lg' : ''}`}
+            ${window.location.pathname === '/admin/user/businessUser' ? 'bg-light-blue text-blue font-bold h-10 flex items-center rounded-lg' : 'h-10 flex items-center'}`}
             >
               <Link to="/admin/user/businessUser?page=1">
                 <span className="pl-8 flex">
@@ -109,9 +113,9 @@ const SideMenu = () => {
           </>
         )}
         <li
-          className={`fixed bottom-12 w-60 h-10 flex items-center mb-3 
+          className={`fixed bottom-12 h-10 flex items-center mb-3 
         ${window.location.pathname === '/admin/user/settings' ? 'bg-light-blue text-blue font-bold rounded-lg ' : ''}
-        ${settingsTabWidth}`}
+        ${!isCollapsed ? 'w-60' : 'w-10'}`}
         >
           <Link to="/admin/user/settings">
             <span className="pl-2 flex">
@@ -126,9 +130,9 @@ const SideMenu = () => {
           onClick={() => {
             setOpenModal(!openModal)
           }}
-          className={`cursor-pointer pl-2 w-60 h-10 flex items-center fixed bottom-4 
+          className={`cursor-pointer pl-2 h-10 flex items-center fixed bottom-4 
         ${openModal ? 'bg-light-blue text-blue font-bold rounded-lg ' : ''}
-        ${settingsTabWidth}`}
+        ${!isCollapsed ? 'w-60' : 'w-10'}`}
         >
           <Link className="flex" to="/admin/user/logout">
             <RiLogoutBoxLine size={26} />

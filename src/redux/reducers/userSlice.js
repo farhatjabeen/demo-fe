@@ -74,8 +74,6 @@ export const loginUser = (data) => (dispatch) => {
   })
 }
 
-export const userDetails = (state) => console.log(state, 'state')
-
 export const checkGeneralUserEmail = (data) => async (dispatch) => {
   return new Promise((resolve, reject) => {
     apiRequest({
@@ -391,7 +389,6 @@ export const adminChangePassword = (data) => async () => {
     })
       .then((res) => {
         if (res?.status === 200) {
-          console.log(res.data, 'changing')
           Toast({ type: 'success', message: res.message })
           return resolve(true)
         }
@@ -485,24 +482,6 @@ export const generalUserDetails = () => (dispatch) => {
       })
   })
 }
-
-// get business user details
-// export const businessUserDetails = () => (dispatch) => {
-//     return new Promise((resolve, reject) => {
-//         apiRequest({
-//             url: endpoints.apiPath.userDetails,
-//             method: endpoints.ApiMethods.GET,
-//             isAuth: true,
-//         }).then((res) => {
-//             const { emailMailId, name, mobileNumber,companyLocation,companyCategory } = res.data
-//             dispatch(getUserDetails({ emailMailId, name, mobileNumber,companyLocation,companyCategory   }))
-//             return resolve(res)
-//         }).catch(err => {
-//             console.log(err)
-//             return err;
-//         })
-//     })
-// }
 
 // company profile
 export const editCompanyProfileData = (data) => async (dispatch) => {

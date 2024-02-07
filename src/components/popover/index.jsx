@@ -89,7 +89,6 @@ const PopoverComponent = () => {
 
   useEffect(() => {
     if (tokens) {
-      // Open the Popover if the resetPassword route parameter is present
       setRestPasswordBox(true)
       setIsPopoverOpen(true)
     }
