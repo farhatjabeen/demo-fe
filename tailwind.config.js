@@ -57,7 +57,7 @@ module.exports = {
       'Gray49': '#7D7D7D',
       'light-red': '#E3A903',
       'light-cyan': '#F1FFFF',
-      'White Smoke': '#F3F3F3',
+      'white-smoke': '#F3F3F3',
       'light-yellow': '#FFFAE9',
       'dark-red': '#BC0000',
       'blue-light': '#E8EDF1',

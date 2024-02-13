@@ -49,7 +49,7 @@ export default function ContactUs() {
         <div className="sm:h-56 xl:h-28 xl:w-11/12 sm:mt-0 md:mt-0 xl:mt-8 flex md:flex-row sm:flex-col sm:items-center">
           <div
             className="sm:h-32 sm:w-80 md:w-80 xl:w-11/12 rounded-2xl flex flex-col justify-center items-center 
-                    bg-White Smoke"
+                    bg-white-smoke"
           >
             <div className="flex justify-between">
               <div className="w-8 flex items-center">
@@ -61,7 +61,7 @@ export default function ContactUs() {
           </div>
           <div
             className="sm:h-32 sm:w-80 md:w-80 xl:w-11/12 sm:ml-0 md:mt-0 md:ml-5 sm:mt-0 xl:ml-7 h-28 rounded-2xl 
-                    flex flex-col justify-center items-center bg-White Smoke"
+                    flex flex-col justify-center items-center bg-white-smoke"
           >
             <div className="flex justify-between">
               <div className="w-8 flex items-center">

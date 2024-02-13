@@ -79,7 +79,7 @@ export default function BusinessSignUp() {
           const imageResponse = dispatch(fileUploadAPI(formData))
 
           imageResponse.then((res) => {
-            setCompanyLogo(res.data.companylogo)
+            setCompanyLogo(res?.data?.companylogo)
           })
         }
       }

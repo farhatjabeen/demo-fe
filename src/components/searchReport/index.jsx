@@ -70,7 +70,7 @@ export default function SearchReport() {
   // };
 
   return (
-    <div className="flex xl:w-11/12 xl:justify-between xl:flex-row md:flex-col sm:flex-col md:items-center sm:items-center">
+    <div className="flex xl:w-11/12 xl:justify-between xl:flex-row md:flex-col sm:flex-col md:justify-center md:items-center sm:items-center">
       <div className="xl:my-20 flex xl:items-start md:flex-col sm:flex-col items-center">
         <div className="flex sm:items-center p-2 bg-white border-solid xl:rounded-2xl xl:h-1/5 xl:w-fit md:rounded-3xl md:h-14 md:w-80 sm:h-12 sm:rounded-2xl sm:w-64 border border-greys border-opacity-50">
           <button
@@ -133,10 +133,9 @@ export default function SearchReport() {
                   />
 
                   <FormDropdown
-                    placeholder="Location"
                     name="location"
                     editButton={true}
-                    optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 py-4 
+                    optionButtonClass={`text-base xl:w-80 xl:h-20 xl:p-4 md:p-3 sm:p-2 
                                             pl-4 xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 
                                             border border-solid border-greys`}
                     autoComplete="off"
@@ -171,7 +170,7 @@ export default function SearchReport() {
                     type="text"
                     placeholder="Describe Item"
                     name="itemName"
-                    className={`placeholder:text-black placeholder:text-ba se xl:w-80 xl:h-20 p-4 
+                    className={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 
                                             xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border 
                                             border-solid border-greys`}
                     autoComplete="off"
@@ -181,10 +180,9 @@ export default function SearchReport() {
                                             sm:text-xs mt-1"
                   />
                   <FormDropdown
-                    placeholder="Location"
                     name="locations"
                     editButton={true}
-                    optionButtonClass={`placeholder:text-black placeholder:text-base xl:w-80 xl:h-20 p-4 
+                    optionButtonClass={`text-base xl:w-80 xl:h-20 xl:p-4 md:p-3 sm:p-2
                                             xl:rounded-2xl md:h-12 md:w-52 md:rounded-xl sm:rounded-xl sm:w-40 sm:h-10 ml-2.5 border 
                                             border-solid border-greys`}
                     autoComplete="off"
@@ -209,9 +207,9 @@ export default function SearchReport() {
           </div>
         )}
       </div>
-      <div className="h-full w-full xl:pl-8">
+      <div className="h-full w-full xl:ml-8 md:ml-56 sm:ml-80">
         <img
-          className="xl:h-full xl:w-full md:h-11/12 md:w-11/12 sm:h-10/12 sm:w-10/12"
+          className="xl:h-full xl:w-full md:h-9/12 md:w-9/12 sm:h-8/12 sm:w-8/12"
           src={addressMan}
           alt="addressMan"
         ></img>
