@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: demo-fe
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: demo-fe
   ports:
