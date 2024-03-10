@@ -19,7 +19,7 @@ spec:
         app: demo-fe
     spec:
       containers:
-        - image: DOCKER_IMAGE 
+        - image: farhat18/demo-fe:latest 
           name: demo-fe
           imagePullPolicy: Always
           resources:
