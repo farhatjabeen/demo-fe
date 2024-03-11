@@ -27,6 +27,6 @@ jobs:
       - name: Update Deployment YAML
         run: |
           sed -i "s|image: farhat18/demo-fe:latest|image: ${DOCKER_IMAGE_NAME}:latest|" manifest/deployment.yaml
-          echo deployment.yaml
+          echo manifest/deployment.yaml
         env:
           DOCKER_IMAGE_NAME: farhat18/demo-fe
